@@ -1,0 +1,1111 @@
+<title>키즈 금융 시장 진단</title>
+<style>
+:root{
+  --ink:#16202E; --ink-2:#25344A;
+  --paper:#FBFCFD; --surface:#F1F4F7; --surface-2:#E6ECF1;
+  --rule:#DCE3EA; --rule-2:#C3CDD7;
+  --muted:#5B6B7C; --muted-2:#7A8A99;
+  --accent:#0F6E6E; --accent-deep:#0F5E52; --accent-wash:#DCEAE7;
+  --gA:#1F7A5C; --gB:#8A6B14; --gC:#A24B2E;
+  --flag:#B2431F; --flag-wash:#FBEDE8;
+  --sans:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  --mono:"SF Mono","JetBrains Mono","D2Coding",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--ink); color:var(--ink);
+  font-family:var(--sans); -webkit-font-smoothing:antialiased;
+  overflow:hidden; display:flex; align-items:center; justify-content:center;
+}
+#viewport{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+#stage{
+  width:1280px;height:720px;flex:none;background:var(--paper);
+  transform-origin:center center;position:relative;overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+}
+
+/* ── 상단 목차 레일 ───────────────────── */
+#toc{
+  position:absolute;inset:0 0 auto 0;height:52px;display:flex;align-items:stretch;
+  background:var(--ink);color:#FFF;padding:0 26px;gap:2px;z-index:5;
+}
+#toc .brand{
+  display:flex;align-items:center;font-family:var(--mono);font-size:11px;
+  letter-spacing:.14em;color:#8FA3B5;padding-right:20px;margin-right:6px;
+  border-right:1px solid #2C3B4F;white-space:nowrap;
+}
+#toc button{
+  appearance:none;background:none;border:0;color:#93A5B6;cursor:pointer;
+  font-family:var(--sans);font-size:12.5px;letter-spacing:-.01em;
+  padding:0 11px;position:relative;transition:color .18s;white-space:nowrap;
+}
+#toc button .n{font-family:var(--mono);font-size:10px;opacity:.65;margin-right:5px}
+#toc button:hover{color:#D6E0E9}
+#toc button[aria-current="true"]{color:#FFF}
+#toc button[aria-current="true"]::after{
+  content:"";position:absolute;left:8px;right:8px;bottom:0;height:2px;background:var(--accent);
+}
+#toc button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:2px}
+
+/* ── 슬라이드 ─────────────────────────── */
+.slide{
+  position:absolute;inset:52px 0 0 0;padding:34px 58px 44px;
+  display:none;flex-direction:column;overflow:hidden;
+}
+.slide.on{display:flex}
+.eyebrow{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.17em;color:var(--accent);
+  text-transform:uppercase;margin:0 0 11px;display:flex;align-items:center;gap:9px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--rule)}
+h2{
+  margin:0 0 6px;font-size:30px;line-height:1.28;font-weight:700;letter-spacing:-.022em;
+  text-wrap:balance;color:var(--ink);
+}
+h2 em{font-style:normal;color:var(--accent)}
+.dek{margin:0 0 20px;font-size:14.5px;line-height:1.62;color:var(--muted);max-width:74ch}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:15px}
+
+/* 출처 레일 */
+.src{
+  position:absolute;left:0;right:0;bottom:0;height:34px;
+  display:flex;align-items:center;gap:9px;padding:0 58px;
+  background:var(--surface);border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:10.5px;color:var(--muted);
+  letter-spacing:.005em;overflow:hidden;white-space:nowrap;
+}
+.src b{color:var(--ink-2);font-weight:600}
+.src .tag{
+  font-size:9px;letter-spacing:.13em;color:var(--muted-2);
+  border:1px solid var(--rule-2);border-radius:2px;padding:2px 6px;flex:none;
+}
+
+/* ── 근거 등급 배지 ───────────────────── */
+.g{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:9.5px;font-weight:700;line-height:1;
+  width:17px;height:17px;border-radius:2px;color:#FFF;vertical-align:2px;flex:none;
+}
+.g.a{background:var(--gA)} .g.b{background:var(--gB)} .g.c{background:var(--gC)}
+
+/* ── 공용 컴포넌트 ───────────────────── */
+table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.5}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{
+  font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;border-bottom:1px solid var(--rule-2);padding-bottom:6px;
+}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hi td{background:var(--accent-wash)}
+tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+td b{font-weight:700}
+.dim{color:var(--muted-2)}
+
+.grid{display:grid;gap:13px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+
+.card{
+  background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:14px 16px;display:flex;flex-direction:column;gap:5px;min-width:0;
+}
+.card.mark{background:var(--accent-wash);border-color:var(--accent)}
+.card.warn{background:var(--flag-wash);border-color:#E3BFB1}
+.card .k{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;color:var(--muted);
+  text-transform:uppercase;
+}
+.card .v{font-size:27px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.card.mark .v{color:var(--accent-deep)}
+.card .s{font-size:12px;line-height:1.5;color:var(--muted)}
+
+.note{
+  border-left:3px solid var(--accent);background:var(--accent-wash);
+  padding:11px 15px;font-size:13px;line-height:1.6;border-radius:0 3px 3px 0;
+}
+.note.warn{border-left-color:var(--flag);background:var(--flag-wash)}
+.note.plain{border-left-color:var(--rule-2);background:var(--surface)}
+.note b{font-weight:700}
+.note .lbl{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--flag);display:block;margin-bottom:4px;
+}
+.note .lbl.ok{color:var(--accent-deep)}
+
+pre.calc{
+  margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.85;
+  background:var(--ink);color:#D8E2EC;padding:16px 20px;border-radius:3px;
+  overflow-x:auto;font-variant-numeric:tabular-nums;
+}
+pre.calc .r{color:#6BC5B4} pre.calc .m{color:#8FA3B5} pre.calc .w{color:#E3A77F}
+
+.chart{
+  flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+  background:var(--paper);
+}
+.chart svg{max-width:100%;max-height:100%;height:auto;width:auto}
+
+ul.pts{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+ul.pts li{
+  font-size:13.5px;line-height:1.6;padding-left:19px;position:relative;color:var(--ink-2);
+}
+ul.pts li::before{
+  content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;
+  background:var(--accent);border-radius:50%;
+}
+ul.pts li b{color:var(--ink)}
+
+.flow{
+  font-family:var(--mono);font-size:12.5px;line-height:2.05;color:var(--ink-2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:16px 20px;
+}
+.flow .hl{color:var(--flag);font-weight:700}
+
+/* 표지 */
+.cover{
+  position:absolute;inset:0;background:var(--ink);color:#FFF;
+  display:none;flex-direction:column;justify-content:center;padding:0 92px;
+}
+.cover.on{display:flex}
+.cover .rule{width:64px;height:3px;background:var(--accent);margin-bottom:30px}
+.cover .kicker{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:#7FB5AC;
+  text-transform:uppercase;margin-bottom:18px;
+}
+.cover h1{
+  margin:0 0 16px;font-size:57px;line-height:1.16;font-weight:700;letter-spacing:-.035em;
+  text-wrap:balance;
+}
+.cover .sub{font-size:19px;color:#A9BCCC;margin:0 0 42px;letter-spacing:-.01em}
+.cover .meta{
+  display:flex;gap:34px;font-family:var(--mono);font-size:11.5px;color:#8FA3B5;
+  border-top:1px solid #2C3B4F;padding-top:20px;flex-wrap:wrap;
+}
+.cover .meta b{color:#DCE6EF;font-weight:600}
+.cover .hint{
+  position:absolute;right:92px;bottom:44px;font-family:var(--mono);font-size:11px;color:#6C8296;
+}
+.cover .hint kbd{
+  font-family:var(--mono);border:1px solid #3A4C63;border-radius:3px;
+  padding:2px 7px;margin:0 2px;color:#A9BCCC;
+}
+
+/* 진행 표시 */
+#bar{position:absolute;left:0;bottom:0;height:2px;background:var(--accent);z-index:8;transition:width .22s ease}
+#count{
+  position:absolute;right:16px;top:16px;z-index:9;font-family:var(--mono);font-size:11px;
+  color:var(--muted);background:rgba(251,252,253,.9);padding:3px 9px;border-radius:3px;
+  font-variant-numeric:tabular-nums;border:1px solid var(--rule);
+}
+.cover ~ #count{color:#8FA3B5}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div id="viewport">
+<div id="stage">
+
+<nav id="toc" aria-label="목차"></nav>
+<div id="count">1 / 39</div>
+
+<!-- 1 ─────────────────────────────────────────────── -->
+<section class="cover on" data-sec="0">
+  <div class="rule"></div>
+  <div class="kicker">Market Sizing &amp; Segmentation</div>
+  <h1>키즈 금융교육·행동 보상<br>시장 진단</h1>
+  <p class="sub">TAM–SAM–SOM 및 고객 세분화 — 초등 저학년 중심</p>
+  <div class="meta">
+    <span><b>작성</b>&nbsp;&nbsp;송유림 · 팀장/통합</span>
+    <span><b>최종 수정</b>&nbsp;&nbsp;2026-08-16</span>
+    <span><b>환율 가정</b>&nbsp;&nbsp;1,400원/$</span>
+  </div>
+  <div class="hint"><kbd>←</kbd><kbd>→</kbd> 로 이동</div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-sec="0">
+  <p class="eyebrow">한 장 요약</p>
+  <h2>세 문장으로 끝내는 결론</h2>
+  <div class="body">
+    <div class="grid g3">
+      <div class="card">
+        <span class="k">01 · 시장 규모</span>
+        <span class="v">5.9<span style="font-size:16px">조원</span></span>
+        <span class="s">글로벌 TAM. 게이미피케이션 결합 SAM은 <b>1.2~2.6조원</b>. 다만 국내에서 실제로 돈이 오가는 시장은 <b>29~50억원</b>에 불과하다.</span>
+      </div>
+      <div class="card mark">
+        <span class="k">02 · 핵심 고객</span>
+        <span class="v">29.3<span style="font-size:16px">만명</span></span>
+        <span class="s">용돈 받는 초등 저학년 81.8만명을 4분할했을 때 1차 타깃 <b>성장증명형</b>이 <b>35.8%</b>로 가장 크다.</span>
+      </div>
+      <div class="card">
+        <span class="k">03 · 1년차 목표</span>
+        <span class="v">2,600<span style="font-size:16px">만원</span></span>
+        <span class="s">유료 <b>440가구</b> 수준. 구독 단독으로는 규모가 안 나오므로 <b>결제 수수료·제휴</b>가 수익모델 전제다.</span>
+      </div>
+    </div>
+    <div class="note">
+      <span class="lbl ok">이 덱의 관점</span>
+      숫자를 크게 부르는 것보다 <b>어디까지가 확인된 사실이고 어디부터가 추정인지</b>를 분리하는 데 집중했습니다. 모든 수치에 근거 등급이 붙어 있습니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">기준</span> 원화 환산 1,400원/$ · 국내 모집단은 2026년 교육부 추계 기준</footer>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-sec="0">
+  <p class="eyebrow">읽는 법</p>
+  <h2>처음 보시는 분을 위해</h2>
+  <p class="dek">시장 크기를 세 단계로 좁혀갑니다. 뒤로 갈수록 범위는 작아지고 확실성은 높아집니다.</p>
+  <div class="body">
+    <table>
+      <tr><th style="width:112px">단계</th><th style="width:250px">뜻</th><th>이 프로젝트에서는</th></tr>
+      <tr><td><b>TAM</b><br><span class="dim" style="font-size:11px">Total Addressable</span></td><td>이 분야 전체 시장</td><td>키즈 금융교육·행동 보상 서비스 전부</td></tr>
+      <tr><td><b>SAM</b><br><span class="dim" style="font-size:11px">Serviceable Available</span></td><td>그중 우리 방식으로 가능한 시장</td><td>게임 요소를 핵심 UX로 쓰는 디지털 서비스만</td></tr>
+      <tr class="hi"><td><b>SOM</b><br><span class="dim" style="font-size:11px">Serviceable Obtainable</span></td><td>그중 1년 안에 실제로 딸 수 있는 몫</td><td>특정 고객군 × 실제 유료 결제</td></tr>
+    </table>
+    <div class="grid g3">
+      <div class="card"><span class="k"><span class="g a">A</span>&nbsp; 직접 확인</span><span class="s">원출처를 직접 열어 수치까지 대조함</span></div>
+      <div class="card"><span class="k"><span class="g b">B</span>&nbsp; 부분 확인</span><span class="s">출처는 확인, 일부 수치만 대조 가능</span></div>
+      <div class="card"><span class="k"><span class="g c">C</span>&nbsp; 미확인</span><span class="s"><b>단독 근거로 인용하지 말 것</b></span></div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">등급</span> 모든 수치 옆의 <b>A / B / C</b> 배지는 원출처 확인 결과를 뜻합니다</footer>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-sec="1">
+  <p class="eyebrow">01 · 시장 정의</p>
+  <h2>세 단계를 한 문장씩으로 고정한다</h2>
+  <p class="dek">이후 모든 숫자는 이 정의에 종속됩니다. 정의가 흔들리면 숫자도 전부 흔들립니다.</p>
+  <div class="body">
+    <table>
+      <tr><th style="width:78px">단계</th><th>정의</th></tr>
+      <tr><td><b>TAM</b></td><td>미성년자(주로 초등학생)를 대상으로 <b>금융 학습</b>과 <b>실제 금융 행동</b>을 연결하고, 그 행동을 <b>용돈·포인트로 보상</b>하는 모든 서비스</td></tr>
+      <tr><td><b>SAM</b></td><td>위 중에서 <b>퀴즈·미션·포인트·레벨·배지·캐릭터·챌린지</b> 등 게임 요소를 핵심 UX로 사용하는 디지털 솔루션</td></tr>
+      <tr class="hi"><td><b>SOM</b></td><td>위 중에서 <b>초등 저학년(1~3학년) 자녀에게 정기적으로 용돈을 주면서, 실제 소비·저축 습관 개선까지 원하는 부모</b>가 1년 내 유료 결제하는 규모</td></tr>
+    </table>
+    <div class="note plain">
+      <b>정의상 경계</b> — 학교 대상 B2B 금융교육 솔루션, 성인 금융교육, 교육·보상 요소가 없는 단순 용돈 송금 앱은 SAM에서 <b>제외</b>합니다. 우리 서비스는 <i>부모가 결제하고 아이가 매일 쓰는 B2C 금융행동 서비스</i>에 가깝기 때문입니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">정의</span> 자체 설정 · 이후 모든 산출의 기준선</footer>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-sec="2">
+  <p class="eyebrow">02 · TAM</p>
+  <h2>글로벌 <em>약 5.9조원</em>, 10년간 3배로</h2>
+  <div class="body">
+    <div class="grid g3">
+      <div class="card mark"><span class="k">2025년</span><span class="v">$4.2B</span><span class="s">약 5.9조원</span></div>
+      <div class="card"><span class="k">2034년 전망</span><span class="v">$12.8B</span><span class="s">약 17.9조원</span></div>
+      <div class="card"><span class="k">연평균 성장률</span><span class="v">13.2%</span><span class="s">CAGR 2025–2034</span></div>
+    </div>
+    <div class="note">
+      <span class="lbl ok">발표자료 권장 문구</span>
+      “글로벌 <b>키즈 금융·용돈 플랫폼</b> 시장 <b>$4.2B(약 5.9조원, 2025)</b> → <b>$12.8B(2034), CAGR 13.2%</b>”
+    </div>
+    <p style="margin:0;font-size:13.5px;line-height:1.65;color:var(--muted)">
+      <b style="color:var(--ink)">Kids Debit Card Platform</b>(아이용 선불·체크카드 플랫폼 = 용돈 충전 + 소비 + 부모 관리)은 우리 TAM 정의와 실질적으로 가장 가까운 공개 시장입니다.
+    </p>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>Dataintelo</b>, Kids Debit Card Platform Market Report 2034 &nbsp;·&nbsp; dataintelo.com/report/kids-debit-card-platform-market</footer>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-sec="2">
+  <p class="eyebrow">02 · TAM</p>
+  <h2>참고용 인접 시장 — 그리고 경고</h2>
+  <p class="dek">정의가 다른 인접 시장입니다. TAM으로 바로 쓰면 안 되고, 규모 감각을 잡는 용도입니다.</p>
+  <div class="body">
+    <table>
+      <tr><th>시장 정의</th><th class="num">2025</th><th class="num">2034</th><th class="num">CAGR</th><th style="width:44px">등급</th></tr>
+      <tr><td>디지털 용돈관리 앱</td><td class="num">$4.8B</td><td class="num">$14.2B</td><td class="num">12.8%</td><td><span class="g c">C</span></td></tr>
+      <tr><td>금융문해교육 (전 연령)</td><td class="num">$12.8B</td><td class="num">$28.6B</td><td class="num">9.3%</td><td><span class="g c">C</span></td></tr>
+    </table>
+    <div class="note warn">
+      <span class="lbl">시장조사기관 신뢰도 주의</span>
+      Dataintelo·MarketIntelo 계열은 <b>자동 생성형 리포트 벤더</b>로, 학술·공공 통계와 동급으로 취급하면 안 됩니다.<br>
+      <b>TAM 슬라이드에는 반드시 “민간 시장조사기관 추정치” 라벨을 붙이세요.</b>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g c">C</span> &nbsp;원출처 미확인 — 심층리서치 기재값 · 발표 전 재확인 필요</footer>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-sec="2">
+  <p class="eyebrow">02 · TAM</p>
+  <h2>시장조사기관 숫자보다 <em>실제 실적</em>이 강하다</h2>
+  <p class="dek">해외에서는 이미 부모가 매달 돈을 내고 있습니다. 지불의사에 대한 가장 직접적인 증거입니다.</p>
+  <div class="body">
+    <div class="grid g2">
+      <div class="card">
+        <span class="k">Greenlight · 미국 &nbsp;<span class="g a">A</span></span>
+        <ul class="pts" style="margin-top:6px">
+          <li>2024년 추정 매출 <b>$228.5M</b> (전년 대비 +16%)</li>
+          <li>2024년 아이들이 관리한 금액 <b>$20억+</b></li>
+          <li>요금 월 <b>$5.99</b> / $10.98 / $15.98 / $24.98</li>
+          <li>2025년 5월 <b>부모+자녀 합산 650만명</b><br><span class="dim" style="font-size:11.5px">※ 가족 수가 아님에 주의</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="k">GoHenry · 영국 &nbsp;<span class="g c">C</span></span>
+        <ul class="pts" style="margin-top:6px">
+          <li>활성 어린이 약 <b>65만명</b></li>
+          <li>연간 총 용돈 <b>£2.8억</b> · 주당 평균 £9.62</li>
+          <li><b>행동 수행으로 번 돈 주 £0.86</b></li>
+          <li>총 저축액 <b>£5,100만</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <b>Sacra</b>, Greenlight revenue &amp; growth · <b>Greenlight</b> Year in Review 2024 &nbsp;|&nbsp; GoHenry Youth Economy Report <span class="g c">C</span> 직접 확인 실패</footer>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-sec="2">
+  <p class="eyebrow">02 · TAM</p>
+  <h2>한국은 <em>이미 인프라가 깔린</em> 시장이다</h2>
+  <div class="body">
+    <div class="grid g4">
+      <div class="card"><span class="k">퍼핀 · 레몬트리</span><span class="v">26<span style="font-size:15px">만명</span></span><span class="s">2024.09 가입자<br>카드 14만장 · <b>누적 충전 484억원</b></span></div>
+      <div class="card"><span class="k">아이쿠카</span><span class="v">36<span style="font-size:15px">만명</span></span><span class="s">2024.10 가입자</span></div>
+      <div class="card"><span class="k">토스 유스카드</span><span class="v">320<span style="font-size:15px">만장</span></span><span class="s">2021년 이후 누적 발급<br><b>중·고생 85% 이용</b></span></div>
+      <div class="card"><span class="k">카카오뱅크 mini <span class="g c">C</span></span><span class="v">만 7세<span style="font-size:15px">~</span></span><span class="s">이용 가능 연령</span></div>
+    </div>
+    <div class="note">
+      <span class="lbl ok">해석</span>
+      한국은 “키즈 금융 서비스를 써본 적 없는 시장”이 아닙니다. 우리 과제는 <i>금융 서비스 도입</i>이 아니라 <b>교육·성장 레이어의 차별화</b>입니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>전자신문</b> 2024.10.09 (퍼핀·아이쿠카) · <b>아시아에이</b> (토스 유스카드 320만장 / 틴즈 300만명)</footer>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-sec="2">
+  <p class="eyebrow">02 · TAM</p>
+  <h2>부모는 이미 초등 교육에 돈을 쓴다</h2>
+  <p class="dek">TAM 자체는 아니지만, <b>지불능력</b>에 대한 가장 강한 공식 통계입니다.</p>
+  <div class="body">
+    <div class="grid g4">
+      <div class="card"><span class="k">초·중·고 사교육비 총액</span><span class="v">29.2<span style="font-size:15px">조원</span></span><span class="s">2024년 · 전년비 +7.7%</span></div>
+      <div class="card mark"><span class="k">초등학교</span><span class="v">13.2<span style="font-size:15px">조원</span></span><span class="s">학교급 중 최대</span></div>
+      <div class="card"><span class="k">초등 사교육 참여율</span><span class="v">87.7%</span><span class="s">10명 중 9명</span></div>
+      <div class="card"><span class="k">1인당 월평균</span><span class="v">44.2<span style="font-size:15px">만원</span></span><span class="s">전체 초등학생 기준</span></div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>통계청·교육부</b> 「2024년 초중고사교육비조사」 · 전국 약 3,000개 학급 7.4만명 대상</footer>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-sec="3">
+  <p class="eyebrow">03 · SAM</p>
+  <h2>게이미피케이션으로 좁히면</h2>
+  <div class="body">
+    <div class="grid g3">
+      <div class="card"><span class="k">글로벌 SAM</span><span class="v">1.2<span style="font-size:15px">~</span>2.6<span style="font-size:15px">조원</span></span><span class="s">$0.84B ~ $1.89B<br>Base $1.26B · 약 1.8조원</span></div>
+      <div class="card"><span class="k">국내 SAM — 잠재</span><span class="v">110<span style="font-size:15px">~</span>250<span style="font-size:15px">억원</span></span><span class="s">톱다운 추정 · <b>상한에 가까움</b></span></div>
+      <div class="card mark"><span class="k">국내 SAM — 현재 화폐화</span><span class="v">29<span style="font-size:15px">~</span>50<span style="font-size:15px">억원</span></span><span class="s">실제 사업자 매출로 역산</span></div>
+    </div>
+    <div class="note">
+      <span class="lbl ok">핵심</span>
+      국내는 <b>잠재와 현실의 격차가 4~5배</b>입니다. 이 격차가 곧 <b>미개척 여지</b>이자, 동시에 <b>지불의사가 아직 검증되지 않았다는 리스크</b>입니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">산출</span> 다음 3개 슬라이드에서 각 값의 계산 과정을 제시합니다</footer>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-sec="3">
+  <p class="eyebrow">03 · SAM</p>
+  <h2>글로벌 SAM 산출</h2>
+  <div class="body">
+    <pre class="calc">글로벌 키즈 금융 플랫폼 TAM     <span class="r">$4.2B</span>
+  × 게이미피케이션 적용 비중     <span class="w">20% ~ 45%</span>
+<span class="m">─────────────────────────────────────────</span>
+= 글로벌 SAM                   <span class="r">$0.84B ~ $1.89B</span>   <span class="m">(약 1.2조 ~ 2.6조원)</span></pre>
+    <div class="grid g2">
+      <table>
+        <tr><th>적용 비중 20~45%의 근거</th><th class="num" style="width:96px">값</th><th style="width:44px">등급</th></tr>
+        <tr><td>게이미피케이션 교육 시장 중 K-12 비중 (FMI)</td><td class="num">44.8%</td><td><span class="g c">C</span></td></tr>
+        <tr><td>글로벌 게이미피케이션 교육 시장 규모</td><td class="num">$0.82~3.5B</td><td><span class="g c">C</span></td></tr>
+        <tr><td>키즈 금융 앱은 게임화 UX를 적극 사용하나 전부는 아님</td><td class="num dim">정성 판단</td><td class="dim">—</td></tr>
+      </table>
+      <div class="note warn" style="align-self:start">
+        <span class="lbl">기관별 추정 편차가 4배</span>
+        Market Glass $0.82B · MarketDataForecast $1.55B · TBRC $2.5B · FMI $2.96B · GIA $3.5B<br>
+        <b>특정 1개 기관 숫자를 단독 인용하면 안 됩니다.</b>
+      </div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g c">C</span> &nbsp;Future Market Insights 외 게이미피케이션 교육 시장 추정 · 기관별 원출처 미확인</footer>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-sec="3">
+  <p class="eyebrow">03 · SAM</p>
+  <h2>국내 잠재 규모 — 톱다운</h2>
+  <div class="body">
+    <pre class="calc">한국 EdTech 시장 (2024)        <span class="r">$6,241.3M</span>  <span class="m">[A] GlobalData</span>
+  × K-12 + Pre-K12 비중         <span class="w">54.8%</span>      <span class="m">[B]</span>
+= 한국 K-12 EdTech              <span class="r">$3.42B</span>
+  × 금융교육 비중 Proxy          <span class="w">1.15%</span>      <span class="m">[가정] $4.2B ÷ 글로벌 EdTech $364.5B</span>
+= 한국 디지털 키즈 금융교육      <span class="r">$39M</span>
+  × 게이미피케이션 적용          <span class="w">20% ~ 45%</span>  <span class="m">[가정]</span>
+<span class="m">─────────────────────────────────────────────────────────────</span>
+= 국내 SAM (잠재)               <span class="r">$7.8M ~ $17.6M</span>   <span class="m">≒ 110억 ~ 250억원</span></pre>
+    <div class="note warn">
+      <span class="lbl">이 값은 상한에 가깝습니다</span>
+      글로벌 비율(1.15%)을 한국에 그대로 적용했으나, 한국은 <b>금감원 어린이 금융스쿨·은행연합회 AR 금융교육 등 무료 공공 교육의 비중이 커</b> 유료 시장 비중은 글로벌 평균보다 낮을 가능성이 높습니다. 또한 비율 4개를 연쇄 곱셈했고 그중 2개가 가정이라 <b>오차가 곱으로 누적</b>됩니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> <b>GlobalData</b>, South Korea EdTech Market ($6,241.3M / 2024, CAGR 11.2%) &nbsp;·&nbsp; K-12 비중 54.8%는 <span class="g b">B</span></footer>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-sec="3">
+  <p class="eyebrow">03 · SAM</p>
+  <h2>국내 화폐화 규모 — <em>바텀업 교차검증</em></h2>
+  <p class="dek">실제 국내 사업자 매출로 시장을 역산하면, 톱다운 값과 4~5배 차이가 납니다.</p>
+  <div class="body">
+    <pre class="calc">퍼핀 매출 (2025)        약 <span class="r">14억원</span>   <span class="m">[C]</span>
+아이쿠카 매출 (2024)    약 <span class="r"> 6억원</span>   <span class="m">[C]</span>
+<span class="m">────────────────────────────────</span>
+상위 2사 합산           약 <span class="r">20억원</span>
+
+<span class="m">신생 니치 시장에서 상위 2사 점유율을 40~70%로 가정하면</span>
+  20억 ÷ 0.70 = <span class="r">29억원</span>   <span class="m">(상위 2사가 70% 점유 시)</span>
+  20억 ÷ 0.40 = <span class="r">50억원</span>   <span class="m">(상위 2사가 40% 점유 시)</span></pre>
+    <div class="note">
+      <span class="lbl ok">왜 40~70%인가</span>
+      플레이어가 소수인 초기 니치 시장에서는 상위 2사 합산 점유율이 통상 40~70%에 형성됩니다. 잠재값 180억원이 맞다면 상위 2사 점유율이 <b>11%에 불과</b>하다는 뜻인데, 플레이어가 5곳 남짓인 시장에서 성립하기 어렵습니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g c">C</span> &nbsp;퍼핀·아이쿠카 매출은 심층리서치 기재값 · <b>원출처 확보가 우선 과제</b></footer>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-sec="3">
+  <p class="eyebrow">03 · SAM</p>
+  <h2>국내 SAM은 두 값을 함께 쓴다</h2>
+  <div class="body">
+    <table>
+      <tr><th style="width:210px">구분</th><th class="num" style="width:150px">값</th><th>의미</th></tr>
+      <tr><td><b>잠재 시장</b><br><span class="dim" style="font-size:11px">Potential</span></td><td class="num">110억 ~ 250억원</td><td>게임화 키즈 금융교육이 EdTech 지출을 정상 비율만큼 가져갔을 때의 <b>상한</b></td></tr>
+      <tr class="hi"><td><b>현재 화폐화 시장</b><br><span class="dim" style="font-size:11px">Monetized</span></td><td class="num"><b>29억 ~ 50억원</b></td><td>지금 <b>실제로 돈이 오가는</b> 규모</td></tr>
+    </table>
+    <div class="note">
+      <span class="lbl ok">발표자료 권장 문구</span>
+      “국내 SAM은 <b>현재 화폐화 기준 약 30~50억원</b>, <b>잠재 기준 약 110~250억원</b>.<br>이 격차(약 4~5배)가 곧 <b>미개척 여지</b>이며, 동시에 <b>아직 지불의사가 검증되지 않았다는 리스크</b>다.”
+    </div>
+  </div>
+  <footer class="src"><span class="tag">방법</span> 톱다운(GlobalData 기반) · 바텀업(사업자 매출 역산) 두 접근의 병기</footer>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-sec="4">
+  <p class="eyebrow">04 · 문제 구조</p>
+  <h2>이 시장의 핵심 실패 루프</h2>
+  <p class="dek">세그먼트 축을 「부모 관여도 × 아이 금융행동 문제」로 잡은 이유입니다.</p>
+  <div class="body">
+    <div class="flow">
+      금전 보상 지급<br>
+      &nbsp;&nbsp;→ 아이는 '배우는 것'보다 <span class="hl">'돈 받는 것'</span>을 목표로 함<br>
+      &nbsp;&nbsp;→ 미션은 빨리 끝내지만 금융 개념을 실제 상황에 적용하지 못함<br>
+      &nbsp;&nbsp;→ 부모: <span class="hl">"앱에서 돈은 벌었는데, 금융교육이 된 건가?"</span><br>
+      &nbsp;&nbsp;→ 아이: 자기 금융 역량이 성장했다는 증거를 체감 못 함<br>
+      &nbsp;&nbsp;→ <span class="hl">신뢰 하락 · 이탈</span>
+    </div>
+    <div class="note plain">
+      인구통계(성별·지역·소득)보다 <b>Need State</b>가 구매 가능성을 훨씬 잘 설명합니다. 그 근거를 다음 슬라이드에서 제시합니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">근거</span> 다음 4개 슬라이드의 메타분석·OECD 데이터에서 도출</footer>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-sec="4">
+  <p class="eyebrow">04 · 문제 구조</p>
+  <h2>학술 근거 4가지</h2>
+  <div class="body">
+    <table style="font-size:12.5px">
+      <tr><th style="width:30%">발견</th><th>수치</th><th style="width:24%">출처</th></tr>
+      <tr><td><b>금융교육은 '아는 것'은 올리지만 '하는 것'은 잘 못 바꾼다</b></td><td>지식 <b>+0.33 SD</b> vs 행동 <b>+0.07 SD</b> (37개 실험)<br>RCT 18개만 보면 지식 +0.15 SD, 행동 +0.07 SD</td><td>Kaiser &amp; Menkhoff (2020)<br><span class="dim">Econ. of Education Review</span></td></tr>
+      <tr><td><b>금전 보상은 내재적 동기를 깎고, 아동에게 더 해롭다</b></td><td>참여조건 <b>d=−0.40</b> / 완료조건 <b>d=−0.36</b> / 성과조건 <b>d=−0.28</b><br>유형적 보상은 대학생보다 <b>아동에게 더 부정적</b></td><td>Deci, Koestner &amp; Ryan (1999)<br><span class="dim">Psych. Bulletin · 128개 실험</span></td></tr>
+      <tr><td><b>게임화만으로는 동기가 크게 오르지 않는다</b></td><td>전체 <b>Hedges' g=0.257</b> (작은 효과)<br>자율성 0.638 · 관계성 1.776 · <b>역량감 0.277로 최저</b></td><td>Educational Tech R&amp;D (2024)<br><span class="dim">35개 개입 · 2,500명</span></td></tr>
+      <tr><td><b>금융이해력은 실제 행동으로 나타난다</b></td><td>상위권은 하위권 대비 저축 <b>+72%</b>, 가격비교 <b>+50%</b><br>부모와 돈 이야기 월 1회 이상 <b>68%</b></td><td>OECD PISA 2022<br><span class="dim">금융이해력 Volume IV</span></td></tr>
+    </table>
+    <div class="note warn" style="padding:8px 15px;font-size:12.5px">
+      <b>적용 한계</b> — <b>한국은 PISA 2022 금융이해력 평가에 참여하지 않았습니다.</b> “OECD가 한국 아이들에 대해 말했다”는 식으로 인용하면 안 됩니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;4건 모두 원논문·원보고서 초록 직접 대조 완료 · 부록 참조</footer>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-sec="4">
+  <p class="eyebrow">04 · 문제 구조</p>
+  <h2>“그럼 돈을 주지 말자”는 <em>잘못된 결론</em></h2>
+  <p class="dek">반대 증거를 함께 봐야 설계를 그르치지 않습니다.</p>
+  <div class="body">
+    <ul class="pts">
+      <li>초등 5학년 <b>106명</b>(보상군 50 / 통제군 56) 대상 교육게임 실험에서, 외적 보상이 <b>동기·흥미를 훼손하지 않았고 오히려 개념 이해도 향상이 더 컸습니다.</b> <span class="g c">C</span></li>
+      <li>OECD PISA 2022에서, 정기적으로 집안일을 하고 용돈을 받는 학생이 <b>오히려 금융이해력이 낮게 나온 국가가 10곳</b> 있었습니다. (OECD도 인과 해석에 주의를 요구) <span class="g c">C</span></li>
+    </ul>
+    <div class="note">
+      <span class="lbl ok">결론</span>
+      <b>보상의 존재 여부가 아니라, 보상이 무엇에 연결되어 있는가가 문제입니다.</b>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g c">C</span> &nbsp;ScienceDirect 게재 실험(원문 직접 확인 실패) · OECD PISA 2022 Volume IV</footer>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-sec="4">
+  <p class="eyebrow">04 · 문제 구조 · 핵심</p>
+  <h2>부모가 원하는 것과 아이가 하는 것의 <em>정면 충돌</em></h2>
+  <div class="body">
+    <div class="grid g2">
+      <div class="card">
+        <span class="k">부모가 하려는 교육</span>
+        <table style="margin-top:4px;font-size:13px">
+          <tr class="hi"><td><b>저축 습관 만들기</b></td><td class="num"><b>65.8%</b> <span class="dim">1위</span></td></tr>
+          <tr><td>용돈 스스로 관리</td><td class="num">50.1%</td></tr>
+          <tr><td>이자 등 금융지식</td><td class="num">20.3%</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <span class="k">아이가 용돈을 실제 쓰는 곳</span>
+        <table style="margin-top:4px;font-size:13px">
+          <tr><td>간식·군것질</td><td class="num">77.0% <span class="dim">1위</span></td></tr>
+          <tr><td>문구·학용품</td><td class="num">47.5%</td></tr>
+          <tr class="hi"><td><b>저축</b></td><td class="num"><b>12.8%</b> <span class="dim">최하위</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="note">
+      <span class="lbl ok">이것이 우리 서비스의 문제 정의입니다</span>
+      부모가 1순위로 원하는 교육(<b>저축 65.8%</b>)이 아이의 실제 행동에서는 꼴찌(<b>12.8%</b>) — 격차 <b>53.0%p</b>.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>윤선생</b> 설문 (2025.10.15~20 · 초등 학부모 586명 · 금융의 날 기념) · 두 문항 모두 복수응답</footer>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-sec="4">
+  <p class="eyebrow">04 · 문제 구조</p>
+  <h2>결제 인프라는 <em>이미 깔려 있다</em></h2>
+  <div class="body">
+    <div class="grid g3">
+      <div class="card mark"><span class="k">체크카드 · 충전식</span><span class="v">64.2%</span><span class="s">초등 가정의 약 3분의 2</span></div>
+      <div class="card"><span class="k">현금</span><span class="v">48.9%</span><span class="s">여전히 병행 사용</span></div>
+      <div class="card"><span class="k">부모 명의 신용카드</span><span class="v">2.6%</span><span class="s">사실상 미미</span></div>
+    </div>
+    <div class="note">
+      <span class="lbl ok">진입장벽이 그만큼 낮다</span>
+      우리 서비스는 <i>새 결제수단을 설득할 필요가 없고</i>, 기존 카드 위에 <b>교육·성장 레이어를 얹는 문제</b>입니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>윤선생</b> 설문 (초등 학부모 586명) · 용돈 지급 수단 문항 · 복수응답</footer>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-sec="4">
+  <p class="eyebrow">04 · 문제 구조</p>
+  <h2>실패 요인 우선순위</h2>
+  <p class="dek">연구에서 직접 측정한 점수가 아니라, 확인된 효과크기와 반복 등장 빈도를 근거로 한 <b>가설적 모델</b>입니다. <span class="g c">C</span></p>
+  <div class="body">
+    <table style="font-size:13px">
+      <tr><th style="width:44px" class="num">순위</th><th>실패 요인</th><th class="num" style="width:110px">상대 중요도</th><th style="width:200px">근거 강도</th></tr>
+      <tr class="hi"><td class="num"><b>1</b></td><td><b>금융행동으로 전이되지 않음</b></td><td class="num"><b>100</b></td><td>매우 강함 <span class="dim">Kaiser &amp; Menkhoff</span></td></tr>
+      <tr><td class="num">2</td><td>성장 증거가 없음</td><td class="num">90</td><td>강함</td></tr>
+      <tr><td class="num">3</td><td>부모가 교육 효과를 확인 못 함</td><td class="num">85</td><td>간접근거 강함</td></tr>
+      <tr><td class="num">4</td><td>보상이 학습보다 목적이 됨</td><td class="num">80</td><td>매우 강함 <span class="dim">Deci et al.</span></td></tr>
+      <tr><td class="num">5</td><td>역량감 부족</td><td class="num">75</td><td>강함 <span class="dim">게임화 메타분석</span></td></tr>
+      <tr><td class="num dim">6–9</td><td class="dim">콘텐츠 반복 50 · 재미 부족 40 · UI 불편 25 · 캐릭터 15</td><td class="num dim">≤50</td><td class="dim">일반론 · 보조적</td></tr>
+    </table>
+    <div class="note">
+      <span class="lbl ok">핵심 시사점</span>
+      <i>“돈이 적어서 재미없다”</i> 보다 <b>“돈은 받는데 내가 뭘 잘하게 됐는지 모르겠다”</b> 가 훨씬 중요합니다. 부모에게 필요한 건 <b>Reward Report(활동량)</b>가 아니라 <b>Growth Evidence(성장 증거)</b>입니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">방법</span> <span class="g c">C</span> &nbsp;효과크기 기반 상대 우선순위 모델 · 직접 측정값 아님</footer>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화</p>
+  <h2>기초 모집단 — 초등 저학년 97.6만명</h2>
+  <div class="body">
+    <div class="grid g2">
+      <table>
+        <tr><th>학년</th><th class="num">2026년 학생 수</th><th style="width:44%">근거</th></tr>
+        <tr><td>초1</td><td class="num"><b>298,178</b></td><td>교육부 학생 수 추계 보정 결과</td></tr>
+        <tr><td>초2</td><td class="num"><b>324,040</b></td><td>2025년 초1 실측 코호트 연결</td></tr>
+        <tr><td>초3</td><td class="num"><b>353,713</b></td><td>2024년 초1 실측 코호트 연결</td></tr>
+        <tr class="hi"><td><b>합계</b></td><td class="num"><b>975,931</b></td><td><b>97.6만명</b></td></tr>
+      </table>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <pre class="calc" style="font-size:12px">초등 1~3학년          <span class="r">975,931명</span>
+  × 용돈 지급률 83.8%  <span class="m">[A] 윤선생 조사</span>
+<span class="m">──────────────────────────────</span>
+= 세분화 기초 모집단   <span class="r">817,830명</span>  <span class="m">(81.8만명)</span></pre>
+        <div class="note plain" style="font-size:12.5px">
+          용돈을 주지 않는 <b>158,101명(16.2%)</b>은 용돈 연동 서비스의 초기 대상이 아니므로 <b>시장 외부</b>로 둡니다.
+        </div>
+      </div>
+    </div>
+    <div class="note warn" style="padding:8px 15px;font-size:12.5px">
+      초2·초3은 직전 연도 초1 실측치를 <b>코호트로 연결한 추정치</b>입니다. 전입·전출·유예를 반영한 2026년 확정 학년별 통계가 아닙니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>교육부</b> 「2025년 초·중·고 학생 수 추계 보정 결과(2026~2031)」 · <b>윤선생</b> 설문 (용돈 지급률 83.8%)</footer>
+</section>
+
+<!-- 22 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화</p>
+  <h2>모집단은 <em>매년 줄어든다</em></h2>
+  <p class="dek">초등학교 1학년 학생 수 추이 — 2026년 처음으로 30만명이 무너졌습니다.</p>
+  <div class="body">
+    <table style="font-size:13px">
+      <tr><th>연도</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">2027</th><th class="num">2030</th><th class="num">2031</th></tr>
+      <tr class="hi"><td><b>초1 학생 수</b></td><td class="num">401,752</td><td class="num">353,713</td><td class="num">324,040</td><td class="num"><b>298,178</b></td><td class="num">277,674</td><td class="num">232,268</td><td class="num">220,481</td></tr>
+      <tr><td class="dim">전년 대비</td><td class="num dim">—</td><td class="num dim">−12.0%</td><td class="num dim">−8.4%</td><td class="num dim">−8.0%</td><td class="num dim">−6.9%</td><td class="num dim">—</td><td class="num dim">−5.1%</td></tr>
+    </table>
+    <div class="note warn">
+      <span class="lbl">전략적 함의</span>
+      <b>연 5~8% 감소.</b> 5년 뒤 모집단은 지금의 약 <b>74% 수준</b>입니다. → <b>시장 진입 속도 자체가 경쟁력</b>이며, 장기 성장은 <b>1인당 ARPU 상승</b> 또는 <b>연령 확장</b>으로만 가능합니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>교육부</b> 학생 수 실측(2023–2025) 및 추계 보정 결과(2026–2031) · 아시아경제 2026.01.13 보도</footer>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화</p>
+  <h2>세분화 축 — 인구통계가 아니라 Need State</h2>
+  <div class="body">
+    <table>
+      <tr><th style="width:58px">축</th><th style="width:180px">변수</th><th>대리지표 (Proxy)</th><th class="num" style="width:130px">값</th></tr>
+      <tr><td><b>X</b></td><td>부모의 금융교육 관여도</td><td>자녀에게 경제교육을 실시 중인가</td><td class="num">실시 <b>68.8%</b><br><span class="dim">미실시 31.2%</span></td></tr>
+      <tr><td><b>Y</b></td><td>아이의 금융행동 문제 강도</td><td>「계획 없는 충동구매」또는「절약 없이 모두 사용」을 걱정하는가</td><td class="num"><b>52.1%</b><br><span class="dim">41.2~63.0%</span></td></tr>
+    </table>
+    <div class="note warn">
+      <span class="lbl">Y축 값 산정 주의 — 복수응답 문항입니다</span>
+      원자료 전 항목: 충동구매 41.2% / 모두 사용 21.8% / 친구 정산 11.6% / 더 달라고 함 6.5% / 분실 6.3% / 고가 구매 3.9% → <b>합계 91.3%</b><br>
+      복수응답 비율은 응답자가 중복되므로 <b>두 항목을 더할 수 없습니다.</b> 합집합은 <b>하한 41.2%</b>(완전 포함) ~ <b>상한 63.0%</b>(전혀 겹치지 않음) 범위이며, 본 분석은 <b>중앙값 52.1%를 Base로 채택</b>하고 세그먼트 규모를 범위로 제시합니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>윤선생</b> 설문 (초등 학부모 586명) · 경제교육 실시율 68.8% · 용돈 걱정 문항(복수응답)</footer>
+</section>
+
+<!-- 24 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화</p>
+  <h2>네 칸으로 정확히 나눠떨어지게</h2>
+  <div class="body">
+    <pre class="calc" style="font-size:12.5px">기초 모집단 <span class="r">817,830명</span>
+├─ 관여 있음 68.8% → 562,667명
+│   ├─ 문제 있음 52.1% → <span class="r">① 성장증명형   293,149명</span>
+│   └─ 문제 없음 47.9% →    ② 습관관리형   269,518명
+└─ 관여 없음 31.2% → 255,163명
+    ├─ 문제 있음 52.1% →    ③ 소비통제형   132,940명
+    └─ 문제 없음 47.9% →    ④ 잠재관심형   122,223명
+<span class="m">                              ─────────────────────────</span>
+<span class="m">                              합계 = 817,830명  ✔ 일치</span></pre>
+    <div class="note warn">
+      <span class="lbl">독립성 가정</span>
+      관여도와 문제 강도의 <b>교차조사 데이터가 공개된 바 없어</b> 두 변수가 독립이라고 가정했습니다. 실제로는 상관이 있을 수 있으므로(예: 관여도 높은 부모가 문제를 더 민감하게 인지) <b>모델값이며 관측값이 아닙니다.</b>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">방법</span> 독립성 가정 하의 2×2 분할 · 네 칸의 합이 모집단과 일치하도록 구성</footer>
+</section>
+
+<!-- 25 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화 · 지도</p>
+  <h2>Market Segment Map</h2>
+  <div class="body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0">
+      <div class="chart"><svg preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%" id="svgQuad" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" role="graphics-document document" aria-roledescription="quadrantChart"><style>#svgQuad{font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#svgQuad .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#svgQuad .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#svgQuad .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#svgQuad .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#svgQuad .edge-thickness-normal{stroke-width:1px;}#svgQuad .edge-thickness-thick{stroke-width:3.5px;}#svgQuad .edge-pattern-solid{stroke-dasharray:0;}#svgQuad .edge-thickness-invisible{stroke-width:0;fill:none;}#svgQuad .edge-pattern-dashed{stroke-dasharray:3;}#svgQuad .edge-pattern-dotted{stroke-dasharray:2;}#svgQuad .marker{fill:#0b0b0b;stroke:#0b0b0b;}#svgQuad .marker.cross{stroke:#0b0b0b;}#svgQuad svg{font-size:16px;}#svgQuad p{margin:0;}#svgQuad .node .neo-node{stroke:hsl(40.5882352941, 60%, 83.3333333333%);}#svgQuad [data-look="neo"].node rect,#svgQuad [data-look="neo"].cluster rect,#svgQuad [data-look="neo"].node polygon{stroke:url(#svgQuad-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgQuad [data-look="neo"].swimlane.cluster rect{filter:none;}#svgQuad [data-look="neo"].node path{stroke:url(#svgQuad-gradient);stroke-width:1px;}#svgQuad [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgQuad [data-look="neo"].node .neo-line path{stroke:hsl(40.5882352941, 60%, 83.3333333333%);filter:none;}#svgQuad [data-look="neo"].node circle{stroke:url(#svgQuad-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgQuad [data-look="neo"].node circle .state-start{fill:#000000;}#svgQuad [data-look="neo"].icon-shape .icon{fill:url(#svgQuad-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgQuad [data-look="neo"].icon-shape .icon-neo path{stroke:url(#svgQuad-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgQuad :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g/><g class="main"><g class="quadrants"><g class="quadrant"><rect x="263" y="45" width="232" height="212" fill="#DCEAE7"/><text x="0" y="0" fill="#0F5E52" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(379, 50) rotate(0)">성장증명형 · 1차 타깃</text></g><g class="quadrant"><rect x="31" y="45" width="232" height="212" fill="#EFF2F5"/><text x="0" y="0" fill="#43566A" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(147, 50) rotate(0)">소비통제형 · 2차 확장</text></g><g class="quadrant"><rect x="31" y="257" width="232" height="212" fill="#F7F8FA"/><text x="0" y="0" fill="#7A8A99" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(147, 262) rotate(0)">잠재관심형 · 후순위</text></g><g class="quadrant"><rect x="263" y="257" width="232" height="212" fill="#E6ECF1"/><text x="0" y="0" fill="#43566A" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(379, 262) rotate(0)">습관관리형 · 3차 확장</text></g></g><g class="border"><line x1="30" y1="45" x2="496" y2="45" style="stroke: rgb(138, 155, 171); stroke-width: 2;"/><line x1="495" y1="46" x2="495" y2="468" style="stroke: rgb(138, 155, 171); stroke-width: 2;"/><line x1="30" y1="469" x2="496" y2="469" style="stroke: rgb(138, 155, 171); stroke-width: 2;"/><line x1="31" y1="46" x2="31" y2="468" style="stroke: rgb(138, 155, 171); stroke-width: 2;"/><line x1="263" y1="46" x2="263" y2="468" style="stroke: rgb(185, 198, 210); stroke-width: 1;"/><line x1="32" y1="257" x2="494" y2="257" style="stroke: rgb(185, 198, 210); stroke-width: 1;"/></g><g class="data-points"><g class="data-point"><circle cx="383.64" cy="350.28000000000003" r="5" fill="#16202E" stroke="#16202E" stroke-width="0px"/><text x="0" y="0" fill="#16202E" font-size="12" dominant-baseline="hanging" text-anchor="middle" transform="translate(383.64, 355.28000000000003) rotate(0)">② 습관관리형 27.0만명</text></g><g class="data-point"><circle cx="142.35999999999999" cy="358.76" r="5" fill="#16202E" stroke="#16202E" stroke-width="0px"/><text x="0" y="0" fill="#16202E" font-size="12" dominant-baseline="hanging" text-anchor="middle" transform="translate(142.35999999999999, 363.76) rotate(0)">④ 잠재관심형 12.2만명</text></g><g class="data-point"><circle cx="151.64000000000001" cy="163.72000000000003" r="5" fill="#16202E" stroke="#16202E" stroke-width="0px"/><text x="0" y="0" fill="#16202E" font-size="12" dominant-baseline="hanging" text-anchor="middle" transform="translate(151.64000000000001, 168.72000000000003) rotate(0)">③ 소비통제형 13.3만명</text></g><g class="data-point"><circle cx="374.36" cy="146.76" r="5" fill="#16202E" stroke="#16202E" stroke-width="0px"/><text x="0" y="0" fill="#16202E" font-size="12" dominant-baseline="hanging" text-anchor="middle" transform="translate(374.36, 151.76) rotate(0)">① 성장증명형 29.3만명</text></g></g><g class="labels"><g class="label"><text x="0" y="0" fill="#16202E" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(147, 479) rotate(0)">부모 관여 낮음</text></g><g class="label"><text x="0" y="0" fill="#16202E" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(379, 479) rotate(0)">부모 관여 높음</text></g><g class="label"><text x="0" y="0" fill="#16202E" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(5, 363) rotate(-90)">아이 문제 약함</text></g><g class="label"><text x="0" y="0" fill="#16202E" font-size="16" dominant-baseline="hanging" text-anchor="middle" transform="translate(5, 151) rotate(-90)">아이 문제 강함</text></g></g><g class="title"><text x="0" y="0" fill="#16202E" font-size="20" dominant-baseline="hanging" text-anchor="middle" transform="translate(250, 10) rotate(0)">용돈 지급 가정 81.8만명의 Need-State 세분화</text></g></g></svg></div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:11px;min-width:0">
+        <table style="font-size:12.5px">
+          <tr><th>세그먼트</th><th class="num" style="width:88px">규모</th><th class="num" style="width:56px">비중</th></tr>
+          <tr class="hi"><td><b>① 금융성장 증명형</b> ★</td><td class="num"><b>293,149</b></td><td class="num"><b>35.8%</b></td></tr>
+          <tr><td>② 금융습관 관리형</td><td class="num">269,518</td><td class="num">33.0%</td></tr>
+          <tr><td>③ 용돈 소비통제형</td><td class="num">132,940</td><td class="num">16.3%</td></tr>
+          <tr><td>④ 금융교육 잠재관심형</td><td class="num">122,223</td><td class="num">14.9%</td></tr>
+          <tr><td class="dim">(시장 외부) 용돈 미지급</td><td class="num dim">158,101</td><td class="num dim">—</td></tr>
+        </table>
+        <div class="note plain" style="font-size:12px">
+          <b>왜 2×2 매트릭스인가</b> — 변수가 2개이고 각 조합이 서로 다른 전략을 요구하므로, <i>“어느 칸이 우리 고객인가”</i>를 한눈에 보여주는 좌표평면이 가장 적합합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">차트</span> Mermaid quadrantChart · Base 시나리오(문제 강도 52.1%) 기준 · 규모 범위는 다음 슬라이드</footer>
+</section>
+
+<!-- 26 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화</p>
+  <h2>세그먼트 정의와 규모 범위</h2>
+  <div class="body">
+    <table style="font-size:13px">
+      <tr><th style="width:210px">세그먼트</th><th style="width:110px">위치</th><th class="num" style="width:100px">규모 Base</th><th class="num" style="width:62px">비중</th><th class="num" style="width:130px">범위 (하한~상한)</th><th>전략 순서</th></tr>
+      <tr class="hi"><td><b>① 금융성장 증명형</b> ★</td><td>관여↑ · 문제↑</td><td class="num"><b>293,149</b></td><td class="num"><b>35.8%</b></td><td class="num">23.2만 ~ 35.4만</td><td><b>1차 공략</b></td></tr>
+      <tr><td>② 금융습관 관리형</td><td>관여↑ · 문제↓</td><td class="num">269,518</td><td class="num">33.0%</td><td class="num">20.8만 ~ 33.1만</td><td>3차 확장</td></tr>
+      <tr><td>③ 용돈 소비통제형</td><td>관여↓ · 문제↑</td><td class="num">132,940</td><td class="num">16.3%</td><td class="num">10.5만 ~ 16.1만</td><td>2차 확장</td></tr>
+      <tr><td>④ 금융교육 잠재관심형</td><td>관여↓ · 문제↓</td><td class="num">122,223</td><td class="num">14.9%</td><td class="num">9.4만 ~ 15.0만</td><td class="dim">후순위</td></tr>
+      <tr><td class="dim">(시장 외부) 용돈 미지급</td><td class="dim">—</td><td class="num dim">158,101</td><td class="num dim">—</td><td class="num dim">고정</td><td class="dim">대상 아님</td></tr>
+    </table>
+    <div class="note plain">
+      규모 범위는 Y축(문제 강도)의 <b>하한 41.2% ~ 상한 63.0%</b>를 적용한 값입니다. 발표에서는 <b>Base 값과 범위를 함께</b> 제시하는 편이 방어력이 높습니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">산출</span> 모집단 817,830명 × 관여도 68.8/31.2% × 문제 강도 41.2~63.0% (Base 52.1%)</footer>
+</section>
+
+<!-- 27 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화 · 1차 타깃</p>
+  <h2>① 금융성장 증명형 — <em>핵심 SOM</em></h2>
+  <p class="dek" style="font-size:16px;color:var(--ink-2);font-style:italic;margin-bottom:14px">“아이가 앱에서 돈은 벌고 있는데, 그래서 금융적으로 성장하고 있는 건가요?”</p>
+  <div class="body">
+    <table style="font-size:13px">
+      <tr><td style="width:150px"><b>규모</b></td><td><b>29.3만명</b> <span class="dim">(23.2만 ~ 35.4만)</span></td></tr>
+      <tr><td><b>상태</b></td><td>이미 경제교육 중(68.8%) + 용돈 지급(83.8%) + 아이에게 실제 소비 문제 있음</td></tr>
+      <tr><td><b>핵심 JTBD</b></td><td>“아이에게 돈을 주는 것을 금융교육으로 연결하고, 아이가 실제로 돈을 잘 관리하게 성장했음을 <b>확인</b>하고 싶다”</td></tr>
+      <tr class="hi"><td><b>왜 1차 타깃인가</b></td><td>문제를 <b>이미 인지</b>하고 있어 별도 문제인식 교육 단계가 불필요 → <b>전환 경로가 가장 짧음</b></td></tr>
+      <tr><td><b>핵심 기능</b></td><td><b>금융성장 리포트</b> — Activity Metrics → Outcome Metrics 전환</td></tr>
+      <tr><td><b>획득 메시지</b></td><td>“우리 아이가 정말 성장하고 있는지 보여드려요”</td></tr>
+    </table>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>윤선생</b> 설문 기반 규모 추정 · 문제 정의는 슬라이드 15–20의 학술 근거에서 도출</footer>
+</section>
+
+<!-- 28 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화 · 확장 시장</p>
+  <h2>나머지 세 세그먼트</h2>
+  <div class="body">
+    <div class="grid g3">
+      <div class="card">
+        <span class="k">② 금융습관 관리형 · 27.0만명</span>
+        <span class="s" style="font-style:italic;color:var(--ink-2)">“용돈은 주고 있는데, 스스로 관리하는 습관이 생겼으면 좋겠어요”</span>
+        <span class="s"><b>근거</b> 부모가 실제 하는 교육 1위 저축 습관 65.8%, 2위 용돈 스스로 관리 50.1%</span>
+        <span class="s"><b>기능</b> 저축·소비 미션<br><b>메시지</b> “용돈을 스스로 관리하는 습관을 만들어줘요”</span>
+      </div>
+      <div class="card">
+        <span class="k">③ 용돈 소비통제형 · 13.3만명</span>
+        <span class="s" style="font-style:italic;color:var(--ink-2)">“돈을 너무 많이 써서 걱정돼요”</span>
+        <span class="s"><b>특징</b> 문제는 명확하나 <b>교육 의도가 없음</b> → 메시지를 '통제'에서 '교육'으로 전환시키는 단계 필요</span>
+        <span class="s"><b>기능</b> 소비 판단 미션<br><b>메시지</b> “충동소비를 금융 미션으로 바꿔보세요”</span>
+      </div>
+      <div class="card">
+        <span class="k">④ 금융교육 잠재관심형 · 12.2만명</span>
+        <span class="s" style="font-style:italic;color:var(--ink-2)">“언젠가는 시켜야 하는데 어떻게 할지 모르겠어요”</span>
+        <span class="s"><b>후순위인 이유</b> <code style="font-family:var(--mono);font-size:11px">문제인식 → 교육 → 구매</code> 라는 <b>추가 2단계</b>가 필요해 CAC가 가장 높음</span>
+        <span class="s"><b>기능</b> 입문 콘텐츠<br><b>메시지</b> “놀이처럼 시작하는 첫 금융교육”</span>
+      </div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>윤선생</b> 설문 (경제교육 방식 · 용돈 사용 걱정 문항)</footer>
+</section>
+
+<!-- 29 -->
+<section class="slide" data-sec="5">
+  <p class="eyebrow">05 · 시장 세분화</p>
+  <h2>타깃 연령을 뒷받침하는 사실</h2>
+  <div class="body">
+    <table style="font-size:13px">
+      <tr><th style="width:190px">사실</th><th class="num" style="width:130px">값</th><th>의미</th></tr>
+      <tr class="hi"><td><b>용돈 시작 평균 나이</b></td><td class="num"><b>만 8.4세</b></td><td><b>초등 1~3학년(만 7~9세)과 정확히 일치</b> → 타깃 연령 설정의 강력한 근거</td></tr>
+      <tr><td>월평균 용돈</td><td class="num">30,740원</td><td>서비스 내 순환 자금 규모</td></tr>
+      <tr><td>정기 지급 비율</td><td class="num">82.1%</td><td>용돈 지급 가정 중 · 반복 사용 습관이 이미 존재</td></tr>
+      <tr><td>정기 지급 주기</td><td class="num">매주 61.0%</td><td><b>주 단위 미션 사이클</b>이 자연스러움 <span class="dim">(매월 32.8%)</span></td></tr>
+      <tr><td>용돈 지급 이유 1위</td><td class="num">61.5%</td><td>경제관념 형성 → 부모가 이미 <code style="font-family:var(--mono);font-size:11.5px">돈 → 교육</code> 연결을 의도 중</td></tr>
+    </table>
+    <div class="note">
+      <span class="lbl ok">만 8.4세라는 숫자가 핵심입니다</span>
+      <code style="font-family:var(--mono);font-size:12.5px">용돈 지급 시작 → 경제관념 교육 시작 → 금융습관 형성 → 게임화 개입</code> 이라는 자연스러운 고객 여정이 만들어집니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>윤선생</b> 설문 (2025.10 · 초등 학부모 586명) · 표본오차 95% 신뢰수준 ±4.0%p</footer>
+</section>
+
+<!-- 30 -->
+<section class="slide" data-sec="6">
+  <p class="eyebrow">06 · SOM</p>
+  <h2>29.3만명을 그대로 SOM이라 부르면 안 된다</h2>
+  <p class="dek">이는 <i>문제를 가진 사람의 수</i>일 뿐, <i>돈을 낼 사람의 수</i>가 아닙니다.</p>
+  <div class="body">
+    <table>
+      <tr><th style="width:180px">단계</th><th>정의</th><th class="num" style="width:120px">규모</th><th style="width:180px">상태</th></tr>
+      <tr><td><b>Level 1</b><br><span class="dim" style="font-size:11px">Problem Pool</span></td><td>초등 저학년 + 용돈 + 부모 관여 + 금융행동 문제</td><td class="num"><b>293,149명</b></td><td>추정 완료</td></tr>
+      <tr><td><b>Level 2</b><br><span class="dim" style="font-size:11px">Targetable Pool</span></td><td>위 중 <b>앱으로 금융교육을 시킬 의향</b>이 있는 부모</td><td class="num">미확인</td><td style="color:var(--flag)"><b>공개 데이터 없음 → 조사 필요</b></td></tr>
+      <tr class="hi"><td><b>Level 3</b><br><span class="dim" style="font-size:11px">Actual SOM</span></td><td>위 중 <b>실제 유료 결제</b>하는 부모</td><td class="num"><b>440가구</b></td><td>벤치마크 기반 추정</td></tr>
+    </table>
+    <div class="note warn">
+      <b>Level 2가 이 분석 전체에서 가장 큰 공백</b>입니다. 자체 검증 조사 없이는 SOM을 확정값으로 제시할 수 없습니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">방법</span> 3단계 퍼널 정의 · Level 3은 퍼핀 실측 전환율 기반 추정</footer>
+</section>
+
+<!-- 31 -->
+<section class="slide" data-sec="6">
+  <p class="eyebrow">06 · SOM</p>
+  <h2>1년차 SOM 산출</h2>
+  <div class="body">
+    <div class="grid g3">
+      <div class="card"><span class="k">유료 전환율 · 실측 <span class="g a">A</span></span><span class="v">1.54%</span><span class="s">퍼핀: 가입 26만명 중 유료 구독 4,000명 (2024.10 · 구독 출시 8개월차)</span></div>
+      <div class="card"><span class="k">1년차 가입 도달률</span><span class="v">3~8%</span><span class="s">퍼핀이 출시 1.5년만에 26만 가입자 확보한 속도 참고</span></div>
+      <div class="card"><span class="k">ARPU</span><span class="v">4,900<span style="font-size:15px">원/월</span></span><span class="s">연 58,800원 · 제안 가격대 3,900/5,900/9,900원의 중앙</span></div>
+    </div>
+    <table style="font-size:13px">
+      <tr><th>시나리오</th><th class="num">가입 도달률</th><th class="num">유료 전환율</th><th class="num">유료 가구</th><th class="num">1년차 매출</th></tr>
+      <tr><td>보수</td><td class="num">3% (8,794명)</td><td class="num">1.5% <span class="dim">퍼핀 실측</span></td><td class="num">132가구</td><td class="num">약 780만원</td></tr>
+      <tr class="hi"><td><b>Base</b></td><td class="num"><b>5% (14,657명)</b></td><td class="num"><b>3%</b></td><td class="num"><b>440가구</b></td><td class="num"><b>약 2,590만원</b></td></tr>
+      <tr><td>공격</td><td class="num">8% (23,452명)</td><td class="num">5%</td><td class="num">1,173가구</td><td class="num">약 6,900만원</td></tr>
+    </table>
+    <div class="note plain" style="font-size:12.5px">
+      <b>교차검증</b> — 국내 화폐화 시장 29~50억원의 1~3%를 신규 진입자가 1년차에 확보한다고 보면 <b>2,900만 ~ 1.5억원</b>. 위 바텀업 결과가 이 범위 하단에 들어와 <b>두 접근이 일관</b>됩니다. ✔
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <span class="g a">A</span> &nbsp;<b>전자신문</b> 2024.10.09 (퍼핀 유료 구독 4,000명 / 가입 26만명) · Base 전환율 3%는 <b>미검증 가정</b></footer>
+</section>
+
+<!-- 32 -->
+<section class="slide" data-sec="6">
+  <p class="eyebrow">06 · SOM · 가장 중요한 시사점</p>
+  <h2>구독은 이 시장의 <em>주 수익원이 아니다</em></h2>
+  <p class="dek">1년차 구독 매출 2,590만원은 사업으로 성립하기 어려운 규모입니다. 이는 추정 실패가 아니라 <b>이 시장의 구조적 특징</b>입니다.</p>
+  <div class="body">
+    <pre class="calc">퍼핀 구독 매출 (추정)   4,000명 × 5,000원 × 12개월  ≈ <span class="r">2.4억원</span>
+퍼핀 전체 매출 (2025)                              ≈ <span class="r">14억원</span>  <span class="m">[C]</span>
+<span class="m">──────────────────────────────────────────────────────────────</span>
+차액 약 <span class="w">11.6억원</span> = 카드 결제 수수료 + 충전 잔액 + 제휴 수익</pre>
+    <div class="note">
+      <span class="lbl ok">결론</span>
+      퍼핀 <b>누적 충전액 484억원</b>이 보여주듯, 실질 수익은 <b>결제 수수료(interchange)</b>와 <b>금융사 제휴</b>(퍼핀–신한투자증권 주식거래, 퍼핀–국민은행 적금·청약)에서 나옵니다.<br>
+      <b>→ 우리 서비스도 「구독 + 결제 수수료 + 제휴」 3중 수익모델을 전제로 설계해야 합니다.</b>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">출처</span> <b>전자신문</b> 2024.10.09 (구독 4,000명 · 누적 충전 484억원 · 제휴 내역) &nbsp;|&nbsp; 퍼핀 2025 매출 14억원 <span class="g c">C</span></footer>
+</section>
+
+<!-- 33 -->
+<section class="slide" data-sec="6">
+  <p class="eyebrow">06 · SOM</p>
+  <h2>발표에서 이렇게 말하세요</h2>
+  <div class="body">
+    <div class="note" style="padding:16px 20px">
+      <span class="lbl ok">권장 표기</span>
+      <div style="font-size:19px;font-weight:700;letter-spacing:-.02em;margin:8px 0 4px">Target Problem Pool ≈ 29.3만명</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">초등 저학년 중 용돈 경험 · 부모의 금융교육 관여 · 금융행동 개선 니즈를 동시에 가진 것으로 <b>추정</b>되는 고객군</div>
+      <div style="font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px">1년차 SOM ≈ 440가구 / 약 2,600만원</div>
+      <div style="font-size:13px;color:var(--muted)">구독 기준 · Base 시나리오</div>
+    </div>
+    <div class="note warn" style="padding:16px 20px">
+      <span class="lbl">이렇게 쓰면 안 됩니다</span>
+      <div style="font-size:17px;font-weight:700;text-decoration:line-through;color:var(--muted);margin:6px 0 8px">“한국 초등 저학년 금융교육 게이미피케이션 SOM = 35.6만명”</div>
+      <div style="font-size:13px">게이미피케이션 앱 <b>이용 의향</b>이 확인되지 않았고, 35.6만은 <b>복수응답을 단순 합산한 상한값</b>을 쓴 숫자입니다.</div>
+    </div>
+  </div>
+  <footer class="src"><span class="tag">주의</span> SOM은 확정값이 아닌 <b>후보 + 검증 계획</b>으로 제시할 것 · 근거는 슬라이드 23·30 참조</footer>
+</section>
+
+<!-- 34 -->
+<section class="slide" data-sec="7">
+  <p class="eyebrow">07 · 전체 구조</p>
+  <h2>TAM → SAM → 세분화 → SOM</h2>
+  <div class="body">
+    <div class="chart"><svg preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%" id="svgFlow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" viewBox="0 0 828.265625 762" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#svgFlow{font-size:15px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#svgFlow .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#svgFlow .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#svgFlow .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#svgFlow .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#svgFlow .edge-thickness-normal{stroke-width:1px;}#svgFlow .edge-thickness-thick{stroke-width:3.5px;}#svgFlow .edge-pattern-solid{stroke-dasharray:0;}#svgFlow .edge-thickness-invisible{stroke-width:0;fill:none;}#svgFlow .edge-pattern-dashed{stroke-dasharray:3;}#svgFlow .edge-pattern-dotted{stroke-dasharray:2;}#svgFlow .marker{fill:#8A9BAB;stroke:#8A9BAB;}#svgFlow .marker.cross{stroke:#8A9BAB;}#svgFlow svg{font-size:15px;}#svgFlow p{margin:0;}#svgFlow .label{color:#333;}#svgFlow .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#svgFlow .cluster-label span{color:rgb(8.5000000002, 5.7500000001, 0);}#svgFlow .cluster-label span p{background-color:transparent;}#svgFlow .label text,#svgFlow span{fill:#333;color:#333;}#svgFlow .node rect,#svgFlow .node circle,#svgFlow .node ellipse,#svgFlow .node polygon,#svgFlow .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#svgFlow .rough-node .label text,#svgFlow .node .label text,#svgFlow .image-shape .label,#svgFlow .icon-shape .label{text-anchor:middle;}#svgFlow .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#svgFlow .rough-node .label,#svgFlow .node .label,#svgFlow .image-shape .label,#svgFlow .icon-shape .label{text-align:center;}#svgFlow .node.clickable{cursor:pointer;}#svgFlow .root .anchor path{fill:#8A9BAB!important;stroke-width:0;stroke:#8A9BAB;}#svgFlow .arrowheadPath{fill:#0b0b0b;}#svgFlow .edgePath .path{stroke:#8A9BAB;stroke-width:1px;}#svgFlow .flowchart-link{stroke:#8A9BAB;fill:none;}#svgFlow .edgeLabel{background-color:#FFFFFF;text-align:center;}#svgFlow .edgeLabel p{background-color:#FFFFFF;}#svgFlow .edgeLabel rect{opacity:0.5;background-color:#FFFFFF;fill:#FFFFFF;}#svgFlow .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#svgFlow .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#svgFlow .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#svgFlow .cluster span{color:rgb(8.5000000002, 5.7500000001, 0);}#svgFlow div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#svgFlow .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#svgFlow rect.text{fill:none;stroke-width:0;}#svgFlow .icon-shape,#svgFlow .image-shape{background-color:#FFFFFF;text-align:center;}#svgFlow .icon-shape p,#svgFlow .image-shape p{background-color:#FFFFFF;padding:2px;}#svgFlow .icon-shape .label rect,#svgFlow .image-shape .label rect{opacity:0.5;background-color:#FFFFFF;fill:#FFFFFF;}#svgFlow .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#svgFlow .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#svgFlow .node .neo-node{stroke:hsl(40.5882352941, 60%, 83.3333333333%);}#svgFlow [data-look="neo"].node rect,#svgFlow [data-look="neo"].cluster rect,#svgFlow [data-look="neo"].node polygon{stroke:url(#svgFlow-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgFlow [data-look="neo"].swimlane.cluster rect{filter:none;}#svgFlow [data-look="neo"].node path{stroke:url(#svgFlow-gradient);stroke-width:1px;}#svgFlow [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgFlow [data-look="neo"].node .neo-line path{stroke:hsl(40.5882352941, 60%, 83.3333333333%);filter:none;}#svgFlow [data-look="neo"].node circle{stroke:url(#svgFlow-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgFlow [data-look="neo"].node circle .state-start{fill:#000000;}#svgFlow [data-look="neo"].icon-shape .icon{fill:url(#svgFlow-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgFlow [data-look="neo"].icon-shape .icon-neo path{stroke:url(#svgFlow-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#svgFlow :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#svgFlow .tam rect{fill:rgb(22, 32, 46)!important;stroke:rgb(22, 32, 46)!important;color:rgb(251, 252, 253)!important;stroke-width:1px!important;}#svgFlow .tam polygon{fill:rgb(22, 32, 46)!important;stroke:rgb(22, 32, 46)!important;color:rgb(251, 252, 253)!important;stroke-width:1px!important;}#svgFlow .tam ellipse{fill:rgb(22, 32, 46)!important;stroke:rgb(22, 32, 46)!important;color:rgb(251, 252, 253)!important;stroke-width:1px!important;}#svgFlow .tam circle{fill:rgb(22, 32, 46)!important;stroke:rgb(22, 32, 46)!important;color:rgb(251, 252, 253)!important;stroke-width:1px!important;}#svgFlow .tam path{fill:rgb(22, 32, 46)!important;stroke:rgb(22, 32, 46)!important;color:rgb(251, 252, 253)!important;stroke-width:1px!important;}#svgFlow .tam tspan{fill:rgb(251, 252, 253)!important;}#svgFlow .sam rect{fill:rgb(230, 236, 241)!important;stroke:rgb(67, 86, 106)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .sam polygon{fill:rgb(230, 236, 241)!important;stroke:rgb(67, 86, 106)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .sam ellipse{fill:rgb(230, 236, 241)!important;stroke:rgb(67, 86, 106)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .sam circle{fill:rgb(230, 236, 241)!important;stroke:rgb(67, 86, 106)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .sam path{fill:rgb(230, 236, 241)!important;stroke:rgb(67, 86, 106)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .sam tspan{fill:rgb(22, 32, 46)!important;}#svgFlow .pool rect{fill:rgb(251, 252, 253)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .pool polygon{fill:rgb(251, 252, 253)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .pool ellipse{fill:rgb(251, 252, 253)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .pool circle{fill:rgb(251, 252, 253)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .pool path{fill:rgb(251, 252, 253)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .pool tspan{fill:rgb(22, 32, 46)!important;}#svgFlow .target rect{fill:rgb(15, 110, 110)!important;stroke:rgb(15, 94, 82)!important;color:rgb(255, 255, 255)!important;stroke-width:2px!important;}#svgFlow .target polygon{fill:rgb(15, 110, 110)!important;stroke:rgb(15, 94, 82)!important;color:rgb(255, 255, 255)!important;stroke-width:2px!important;}#svgFlow .target ellipse{fill:rgb(15, 110, 110)!important;stroke:rgb(15, 94, 82)!important;color:rgb(255, 255, 255)!important;stroke-width:2px!important;}#svgFlow .target circle{fill:rgb(15, 110, 110)!important;stroke:rgb(15, 94, 82)!important;color:rgb(255, 255, 255)!important;stroke-width:2px!important;}#svgFlow .target path{fill:rgb(15, 110, 110)!important;stroke:rgb(15, 94, 82)!important;color:rgb(255, 255, 255)!important;stroke-width:2px!important;}#svgFlow .target tspan{fill:rgb(255, 255, 255)!important;}#svgFlow .adj rect{fill:rgb(239, 242, 245)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .adj polygon{fill:rgb(239, 242, 245)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .adj ellipse{fill:rgb(239, 242, 245)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .adj circle{fill:rgb(239, 242, 245)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .adj path{fill:rgb(239, 242, 245)!important;stroke:rgb(138, 155, 171)!important;color:rgb(22, 32, 46)!important;stroke-width:1px!important;}#svgFlow .adj tspan{fill:rgb(22, 32, 46)!important;}#svgFlow .low rect{fill:rgb(247, 248, 250)!important;stroke:rgb(195, 205, 215)!important;color:rgb(91, 107, 124)!important;stroke-width:1px!important;}#svgFlow .low polygon{fill:rgb(247, 248, 250)!important;stroke:rgb(195, 205, 215)!important;color:rgb(91, 107, 124)!important;stroke-width:1px!important;}#svgFlow .low ellipse{fill:rgb(247, 248, 250)!important;stroke:rgb(195, 205, 215)!important;color:rgb(91, 107, 124)!important;stroke-width:1px!important;}#svgFlow .low circle{fill:rgb(247, 248, 250)!important;stroke:rgb(195, 205, 215)!important;color:rgb(91, 107, 124)!important;stroke-width:1px!important;}#svgFlow .low path{fill:rgb(247, 248, 250)!important;stroke:rgb(195, 205, 215)!important;color:rgb(91, 107, 124)!important;stroke-width:1px!important;}#svgFlow .low tspan{fill:rgb(91, 107, 124)!important;}#svgFlow .som rect{fill:rgb(22, 32, 46)!important;stroke:rgb(15, 110, 110)!important;color:rgb(255, 255, 255)!important;stroke-width:3px!important;}#svgFlow .som polygon{fill:rgb(22, 32, 46)!important;stroke:rgb(15, 110, 110)!important;color:rgb(255, 255, 255)!important;stroke-width:3px!important;}#svgFlow .som ellipse{fill:rgb(22, 32, 46)!important;stroke:rgb(15, 110, 110)!important;color:rgb(255, 255, 255)!important;stroke-width:3px!important;}#svgFlow .som circle{fill:rgb(22, 32, 46)!important;stroke:rgb(15, 110, 110)!important;color:rgb(255, 255, 255)!important;stroke-width:3px!important;}#svgFlow .som path{fill:rgb(22, 32, 46)!important;stroke:rgb(15, 110, 110)!important;color:rgb(255, 255, 255)!important;stroke-width:3px!important;}#svgFlow .som tspan{fill:rgb(255, 255, 255)!important;}</style><g><marker id="svgFlow_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="svgFlow_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="svgFlow_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edgePaths"><path d="M401.156,99.5L401.156,103.667C401.156,107.833,401.156,116.167,401.156,123.833C401.156,131.5,401.156,138.5,401.156,142L401.156,145.5" id="svgFlow-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6NDAxLjE1NjI1LCJ5Ijo5OS41fSx7IngiOjQwMS4xNTYyNSwieSI6MTI0LjV9LHsieCI6NDAxLjE1NjI1LCJ5IjoxNDkuNX1d" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M401.156,286L401.156,290.167C401.156,294.333,401.156,302.667,401.156,310.333C401.156,318,401.156,325,401.156,328.5L401.156,332" id="svgFlow-L_B_P_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_P_0" data-points="W3sieCI6NDAxLjE1NjI1LCJ5IjoyODZ9LHsieCI6NDAxLjE1NjI1LCJ5IjozMTF9LHsieCI6NDAxLjE1NjI1LCJ5IjozMzZ9XQ==" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M299.492,419.582L264.167,428.818C228.841,438.054,158.19,456.527,122.865,469.264C87.539,482,87.539,489,87.539,492.5L87.539,496" id="svgFlow-L_P_C1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P_C1_0" data-points="W3sieCI6Mjk5LjQ5MjE4NzUsInkiOjQxOS41ODE2MjA3MDU5NzYxNX0seyJ4Ijo4Ny41MzkwNjI1LCJ5Ijo0NzV9LHsieCI6ODcuNTM5MDYyNSwieSI6NTAwfV0=" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M328.489,450L323.177,454.167C317.865,458.333,307.241,466.667,301.929,474.333C296.617,482,296.617,489,296.617,492.5L296.617,496" id="svgFlow-L_P_C2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P_C2_0" data-points="W3sieCI6MzI4LjQ4ODg1Mjg5NjM0MTUsInkiOjQ1MH0seyJ4IjoyOTYuNjE3MTg3NSwieSI6NDc1fSx7IngiOjI5Ni42MTcxODc1LCJ5Ijo1MDB9XQ==" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M473.824,450L479.136,454.167C484.448,458.333,495.071,466.667,500.383,474.333C505.695,482,505.695,489,505.695,492.5L505.695,496" id="svgFlow-L_P_C3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P_C3_0" data-points="W3sieCI6NDczLjgyMzY0NzEwMzY1ODUsInkiOjQ1MH0seyJ4Ijo1MDUuNjk1MzEyNSwieSI6NDc1fSx7IngiOjUwNS42OTUzMTI1LCJ5Ijo1MDB9XQ==" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M502.82,418.525L540.309,427.938C577.797,437.35,652.773,456.175,690.262,469.088C727.75,482,727.75,489,727.75,492.5L727.75,496" id="svgFlow-L_P_C4_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P_C4_0" data-points="W3sieCI6NTAyLjgyMDMxMjUsInkiOjQxOC41MjU0NTIxMDk4NDU5Nn0seyJ4Ijo3MjcuNzUsInkiOjQ3NX0seyJ4Ijo3MjcuNzUsInkiOjUwMH1d" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M87.539,591.5L87.539,597.417C87.539,603.333,87.539,615.167,107.553,628.861C127.567,642.555,167.595,658.111,187.609,665.888L207.623,673.666" id="svgFlow-L_C1_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C1_D_0" data-points="W3sieCI6ODcuNTM5MDYyNSwieSI6NTkxLjV9LHsieCI6ODcuNTM5MDYyNSwieSI6NjI3fSx7IngiOjIxMS4zNTE1NjI1LCJ5Ijo2NzUuMTE0ODY0MzU5OTEzM31d" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/><path d="M505.695,591.5L505.695,597.417C505.695,603.333,505.695,615.167,485.681,628.861C465.667,642.555,425.639,658.111,405.625,665.888L385.611,673.666" id="svgFlow-L_C3_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C3_D_0" data-points="W3sieCI6NTA1LjY5NTMxMjUsInkiOjU5MS41fSx7IngiOjUwNS42OTUzMTI1LCJ5Ijo2Mjd9LHsieCI6MzgxLjg4MjgxMjUsInkiOjY3NS4xMTQ4NjQzNTk5MTMzfV0=" data-look="classic" marker-end="url(#svgFlow_flowchart-v2-pointEnd)"/></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"/></text></g></g><g><rect class="background" style="stroke: none"/></g><g class="edgeLabel"><g class="label" data-id="L_B_P_0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"/></text></g></g><g><rect class="background" style="stroke: none"/></g><g class="edgeLabel"><g class="label" data-id="L_P_C1_0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"/></text></g></g><g><rect class="background" style="stroke: none"/></g><g class="edgeLabel"><g class="label" data-id="L_P_C2_0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"/></text></g></g><g><rect class="background" style="stroke: none"/></g><g class="edgeLabel"><g class="label" data-id="L_P_C3_0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"/></text></g></g><g><rect class="background" style="stroke: none"/></g><g class="edgeLabel"><g class="label" data-id="L_P_C4_0" transform="translate(0, 0)"><text y="-10.1" text-anchor="middle"><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"/></text></g></g><g><rect class="background" style="stroke: none"/></g><g class="edgeLabel" transform="translate(87.5390625, 627)"><g class="label" data-id="L_C1_D_0" transform="translate(0, -9.5)"><g><rect class="background" style="" x="-27.6640625" y="-1" width="55.328125" height="21"/><text y="-10.1" text-anchor="middle" style=""><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"><tspan font-style="normal" class="text-inner-tspan" font-weight="normal">1차</tspan><tspan font-style="normal" class="text-inner-tspan" font-weight="normal"> 공략</tspan></tspan></text></g></g></g><g class="edgeLabel" transform="translate(505.6953125, 627)"><g class="label" data-id="L_C3_D_0" transform="translate(0, -9.5)"><g><rect class="background" style="" x="-27.6640625" y="-1" width="55.328125" height="21"/><text y="-10.1" text-anchor="middle" style=""><tspan class="text-outer-tspan row" x="0" y="-0.1em" dy="1.1em" text-anchor="middle"><tspan font-style="normal" class="text-inner-tspan" font-weight="normal">2차</tspan><tspan font-style="normal" class="text-inner-tspan" font-weight="normal"> 확장</tspan></tspan></text></g></g></g></g><g class="nodes"><g class="node default tam" id="svgFlow-flowchart-A-0" data-look="classic" transform="translate(401.15625, 53.75)"><rect class="basic label-container" style="fill:#16202E !important;stroke:#16202E !important;stroke-width:1px !important" x="-124" y="-45.75" width="248" height="91.5"/><g class="label" style="color:#FBFCFD !important" transform="translate(-100, -33.75)"><rect/><foreignObject width="200" height="67.5"><div style="color: rgb(251, 252, 253) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#FBFCFD !important" class="nodeLabel"><p>TAM · 글로벌 키즈 금융교육 · 행동 보상  <br />약 $4.2B · 5.9조원 (2025)</p></span></div></foreignObject></g></g><g class="node default sam" id="svgFlow-flowchart-B-1" data-look="classic" transform="translate(401.15625, 217.75)"><rect class="basic label-container" style="fill:#E6ECF1 !important;stroke:#43566A !important;stroke-width:1px !important" x="-124" y="-68.25" width="248" height="136.5"/><g class="label" style="color:#16202E !important" transform="translate(-100, -56.25)"><rect/><foreignObject width="200" height="112.5"><div style="color: rgb(22, 32, 46) !important; display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#16202E !important" class="nodeLabel"><p>SAM · 게이미피케이션 결합 키즈 금융 서비스  <br />글로벌 1.2~2.6조원  <br />국내 화폐화 29~50억원  <br />국내 잠재 110~250억원</p></span></div></foreignObject></g></g><g class="node default pool" id="svgFlow-flowchart-P-3" data-look="classic" transform="translate(401.15625, 393)"><rect class="basic label-container" style="fill:#FBFCFD !important;stroke:#8A9BAB !important;stroke-width:1px !important" x="-101.6640625" y="-57" width="203.328125" height="114"/><g class="label" style="color:#16202E !important" transform="translate(-77.6640625, -45)"><rect/><foreignObject width="155.328125" height="90"><div style="color: rgb(22, 32, 46) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#16202E !important" class="nodeLabel"><p>국내 기초 모집단  <br />초등 1~3학년 97.6만명  <br />× 용돈 지급 83.8%  <br />= 81.8만명</p></span></div></foreignObject></g></g><g class="node default target" id="svgFlow-flowchart-C1-5" data-look="classic" transform="translate(87.5390625, 545.75)"><rect class="basic label-container" style="fill:#0F6E6E !important;stroke:#0F5E52 !important;stroke-width:2px !important" x="-79.5390625" y="-45.75" width="159.078125" height="91.5"/><g class="label" style="color:#FFFFFF !important" transform="translate(-55.5390625, -33.75)"><rect/><foreignObject width="111.078125" height="67.5"><div style="color: rgb(255, 255, 255) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#FFFFFF !important" class="nodeLabel"><p>① 관여↑ 문제↑  <br />금융성장 증명형  <br />29.3만명 · 35.8%</p></span></div></foreignObject></g></g><g class="node default adj" id="svgFlow-flowchart-C2-7" data-look="classic" transform="translate(296.6171875, 545.75)"><rect class="basic label-container" style="fill:#EFF2F5 !important;stroke:#8A9BAB !important;stroke-width:1px !important" x="-79.5390625" y="-45.75" width="159.078125" height="91.5"/><g class="label" style="color:#16202E !important" transform="translate(-55.5390625, -33.75)"><rect/><foreignObject width="111.078125" height="67.5"><div style="color: rgb(22, 32, 46) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#16202E !important" class="nodeLabel"><p>② 관여↑ 문제↓  <br />금융습관 관리형  <br />27.0만명 · 33.0%</p></span></div></foreignObject></g></g><g class="node default adj" id="svgFlow-flowchart-C3-9" data-look="classic" transform="translate(505.6953125, 545.75)"><rect class="basic label-container" style="fill:#EFF2F5 !important;stroke:#8A9BAB !important;stroke-width:1px !important" x="-79.5390625" y="-45.75" width="159.078125" height="91.5"/><g class="label" style="color:#16202E !important" transform="translate(-55.5390625, -33.75)"><rect/><foreignObject width="111.078125" height="67.5"><div style="color: rgb(22, 32, 46) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#16202E !important" class="nodeLabel"><p>③ 관여↓ 문제↑  <br />용돈 소비통제형  <br />13.3만명 · 16.3%</p></span></div></foreignObject></g></g><g class="node default low" id="svgFlow-flowchart-C4-11" data-look="classic" transform="translate(727.75, 545.75)"><rect class="basic label-container" style="fill:#F7F8FA !important;stroke:#C3CDD7 !important;stroke-width:1px !important" x="-92.515625" y="-45.75" width="185.03125" height="91.5"/><g class="label" style="color:#5B6B7C !important" transform="translate(-68.515625, -33.75)"><rect/><foreignObject width="137.03125" height="67.5"><div style="color: rgb(91, 107, 124) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#5B6B7C !important" class="nodeLabel"><p>④ 관여↓ 문제↓  <br />금융교육 잠재관심형  <br />12.2만명 · 14.9%</p></span></div></foreignObject></g></g><g class="node default som" id="svgFlow-flowchart-D-13" data-look="classic" transform="translate(296.6171875, 708.25)"><rect class="basic label-container" style="fill:#16202E !important;stroke:#0F6E6E !important;stroke-width:3px !important" x="-85.265625" y="-45.75" width="170.53125" height="91.5"/><g class="label" style="color:#FFFFFF !important" transform="translate(-61.265625, -33.75)"><rect/><foreignObject width="122.53125" height="67.5"><div style="color: rgb(255, 255, 255) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#FFFFFF !important" class="nodeLabel"><p>SOM · 1년차 목표  <br />유료 440가구  <br />구독 2,600만원</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="svgFlow-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter></defs><defs><filter id="svgFlow-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter></defs><linearGradient id="svgFlow-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(40.5882352941, 60%, 83.3333333333%)" stop-opacity="1"/><stop offset="100%" stop-color="hsl(-79.4117647059, 60%, 83.3333333333%)" stop-opacity="1"/></linearGradient></svg></div>
+  </div>
+  <footer class="src"><span class="tag">차트</span> Mermaid flowchart · 각 수치의 출처는 해당 섹션 슬라이드 및 부록 참조</footer>
+</section>
+
+<!-- 35 -->
+<section class="slide" data-sec="8">
+  <p class="eyebrow">08 · 결론</p>
+  <h2>한계 — 발표에서 정직하게 밝힐 것</h2>
+  <div class="body">
+    <ul class="pts">
+      <li><b>초등 저학년 직접 실증 데이터 부족</b> — 근거 중 상당수가 초등 5학년(교육게임 실험) 또는 만 15세(PISA) 대상입니다. <b>만 7~9세에 그대로 일반화할 수 없습니다.</b></li>
+      <li><b>교차조사 부재</b> — 관여도 × 문제강도 교차표가 공개된 바 없어 독립성을 가정했습니다. 세그먼트 규모는 <b>모델값</b>입니다.</li>
+      <li><b>조사 주체 편향</b> — 세분화의 기반인 윤선생 조사는 <b>영어교육 기업</b>이 실시했으며, 표본 586명 기준 표본오차는 95% 신뢰수준에서 약 <b>±4.0%p</b>입니다.</li>
+      <li><b>시장조사기관 품질</b> — Dataintelo·MarketIntelo 등은 자동 생성형 리포트 벤더로, 공공 통계와 동급으로 취급할 수 없습니다.</li>
+      <li><b>지불의사 미검증</b> — Level 2(앱 이용 의향)가 공백입니다. <b>SOM의 가장 큰 불확실성</b>입니다.</li>
+    </ul>
+  </div>
+  <footer class="src"><span class="tag">원칙</span> 한계를 먼저 밝히는 편이 질의응답에서 방어력이 높습니다</footer>
+</section>
+
+<!-- 36 -->
+<section class="slide" data-sec="8">
+  <p class="eyebrow">08 · 결론</p>
+  <h2>다음 단계</h2>
+  <div class="body">
+    <div class="note">
+      <span class="lbl ok">최우선 · SOM 검증 조사</span>
+      추가 시장조사보다 <b>자체 검증 조사</b>가 훨씬 가치가 높습니다. 부모 <b>300~500명</b> 대상 5문항.<br>
+      <span style="font-family:var(--mono);font-size:12px;line-height:1.9;display:block;margin-top:6px">
+      ① 현재 자녀에게 용돈을 주고 있는가? &nbsp; ② 용돈을 금융교육 목적으로 활용하는가?<br>
+      ③ 현재 금융교육 앱·콘텐츠를 사용하는가? &nbsp; ④ 미션 수행 시 포인트·용돈 지급 서비스에 관심이 있는가?<br>
+      ⑤ <b>월 3,900 / 5,900 / 9,900원 중 실제 결제 의향이 있는가?</b></span>
+    </div>
+    <table style="font-size:13px">
+      <tr><th class="num" style="width:52px">순위</th><th style="width:44%">과제</th><th>이유</th></tr>
+      <tr><td class="num">1</td><td><b>C등급 수치 원출처 확보</b> — GoHenry 2024, 퍼핀·아이쿠카 매출</td><td>발표 중 질문 시 방어 불가</td></tr>
+      <tr><td class="num">2</td><td><b>수익모델 재설계</b> — 구독 + 결제 수수료 + 제휴</td><td>슬라이드 32의 구조적 결론</td></tr>
+      <tr><td class="num">3</td><td><b>7~9세 대상 A/B 실험 설계</b> — 보상 중심 / 성장 피드백 중심 / 보상+성장</td><td>저학년 직접 근거 공백 해소</td></tr>
+      <tr><td class="num">4</td><td><b>Outcome Metrics 정의</b></td><td>서비스 핵심 차별점의 실체</td></tr>
+    </table>
+  </div>
+  <footer class="src"><span class="tag">교차</span> 초1·2·3 × 금융교육 관여도 × 자녀의 소비문제 → 97.6만 → 29.3만 → 실제 유료 SOM</footer>
+</section>
+
+<!-- 37 -->
+<section class="slide" data-sec="8">
+  <p class="eyebrow">08 · 결론</p>
+  <h2>서비스 설계로 이어지는 결론</h2>
+  <div class="body">
+    <div class="flow" style="font-size:12px;line-height:1.95">
+      <b>[기존 구조]</b> &nbsp;미션 → 정답 → 포인트 → 레벨업 → 끝<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">↳ "그래서 금융적으로 무엇이 성장했지?" ← 답이 없음</span><br><br>
+      <b>[바람직한 구조]</b><br>
+      &nbsp;&nbsp;금융 개념 학습 → 게임 미션 → 금융 의사결정 → 실제 행동 → 금전 보상<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;다음 금융행동 ← <span class="hl">성장 피드백</span> ← 행동 결과 기록
+    </div>
+    <div class="grid g2">
+      <div class="card warn">
+        <span class="k">✕ Activity Metrics · 현재 대부분의 앱</span>
+        <span class="s">오늘 3개 미션 완료! 500P 획득!<br>며칠 연속 접속<br>몇 문제 풀었는지</span>
+      </div>
+      <div class="card mark">
+        <span class="k">✓ Outcome Metrics · 우리의 차별점</span>
+        <span class="s">충동 소비 판단: 2회 → 5회<br>저축 목표 설정: 1회 → 3회<br>구매 전 가격 비교: 0회 → 4회</span>
+      </div>
+    </div>
+    <div class="note plain" style="font-size:12.5px">
+      <b>단, 아이에게는 다르게 보여줘야 합니다.</b> 초등 저학년에게 “금융역량 +13%”는 의미가 없습니다. → <i>“사기 전에 한 번 더 생각했어요”</i> 처럼 <b>행동 증거를 성장의 단위</b>로 제시해야 합니다.
+    </div>
+  </div>
+  <footer class="src"><span class="tag">가설</span> “보상이 <b>금융역량의 성장과 연결되지 않을 때</b> 아이에게는 돈 벌기 게임이, 부모에게는 효과를 믿기 어려운 서비스가 된다”</footer>
+</section>
+
+<!-- 38 -->
+<section class="slide" data-sec="8">
+  <p class="eyebrow">부록 · 출처 1/2</p>
+  <h2>공공 통계 · 학술 논문</h2>
+  <div class="body">
+    <table style="font-size:12px">
+      <tr><th style="width:38%">출처</th><th>사용 수치</th><th style="width:44px">등급</th></tr>
+      <tr><td><b>통계청·교육부</b><br>「2024년 초중고사교육비조사 결과」</td><td>사교육비 29.2조 · 초등 13.2조 · 참여율 87.7% · 월 44.2만원<br><span class="dim">moe.go.kr · korea.kr/briefing</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>교육부</b><br>「2025년 초·중·고 학생 수 추계 보정 결과(2026~2031)」</td><td>2026 초1 298,178명 · 2027~2031 전망<br><span class="dim">kado.net · ntoday.co.kr</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>교육부</b> 학생 수 실측</td><td>2023 초1 401,752 · 2024 353,713 · 2025 324,040<br><span class="dim">asiae.co.kr 2026.01.13</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>OECD</b><br>PISA 2022 Results (Volume IV)</td><td>저축 +72% · 가격비교 +50% · 부모 대화 68% · 참여국 20개(한국 미참여)<br><span class="dim">oecd.org/en/publications/pisa-2022-results-volume-iv</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>Kaiser, T. &amp; Menkhoff, L. (2020)</b><br><i>Financial education in schools: A meta-analysis</i> · Economics of Education Review</td><td>37개 실험 · 지식 +0.33 SD · 행동 +0.07 SD · RCT 18개 0.15·0.07<br><span class="dim">sciencedirect.com/science/article/abs/pii/S0272775718306940</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>Deci, E., Koestner, R. &amp; Ryan, R. (1999)</b><br><i>A meta-analytic review…</i> · Psychological Bulletin</td><td>128개 실험 · d=−0.40, −0.36, −0.28 · 흥미 −0.15~−0.17 · 아동에게 더 부정적<br><span class="dim">selfdeterminationtheory.org</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>Educational Technology R&amp;D (2024)</b><br><i>Gamification enhances student intrinsic motivation…</i></td><td>35개 개입 · 2,500명 · g=0.257 · 자율성 0.638 · 관계성 1.776 · 역량감 0.277<br><span class="dim">link.springer.com/article/10.1007/s11423-023-10337-7</span></td><td><span class="g a">A</span></td></tr>
+    </table>
+  </div>
+  <footer class="src"><span class="tag">확인</span> 위 7건은 모두 원출처를 직접 열어 수치까지 대조 완료</footer>
+</section>
+
+<!-- 39 -->
+<section class="slide" data-sec="8">
+  <p class="eyebrow">부록 · 출처 2/2</p>
+  <h2>국내 설문 · 사업자 · 시장조사기관</h2>
+  <div class="body">
+    <table style="font-size:12px">
+      <tr><th style="width:38%">출처</th><th>사용 수치</th><th style="width:44px">등급</th></tr>
+      <tr><td><b>윤선생</b> 설문조사<br><span class="dim">2025.10.15~20 · 초등 학부모 586명 · 금융의 날</span></td><td>경제교육 68.8% · 용돈 83.8% · 정기 82.1% · 매주 61.0% · 8.4세 · 30,740원 · 경제관념 61.5% · 저축습관 65.8% · <b>저축 사용처 12.8%</b> · <b>체크카드 64.2%</b> · 충동구매 41.2%<br><span class="dim">etoday.co.kr/news/view/2519042 · asiaa.co.kr · kgnews.co.kr</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>전자신문</b> 2024.10.09</td><td>퍼핀 가입 26만 · 카드 14만장 · 충전 484억 · <b>구독 4,000명</b>(2024.2 도입) / 아이쿠카 36만<br><span class="dim">etnews.com/20241008000165</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>아시아에이</b></td><td>토스 유스카드 누적 320만장 · 틴즈 300만명 · 중·고생 85%<br><span class="dim">asiaa.co.kr/news/articleView.html?idxno=211346</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>Sacra</b> · Greenlight</td><td>2024 매출 $228.5M(+16%) · 2025.5 부모+자녀 650만명 · 요금 $5.99·$10.98·$15.98·$24.98<br><span class="dim">sacra.com/c/greenlight</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>Greenlight</b> · Year in Review 2024</td><td>2024년 아이들이 관리한 금액 $20억+</td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>GoHenry</b> Youth Economy Report</td><td>65만명 · £2.8억 · £9.62 · £0.86 · £5,100만 &nbsp;<span style="color:var(--flag)"><b>직접 확인 실패</b></span></td><td><span class="g c">C</span></td></tr>
+      <tr><td><b>Dataintelo</b> · Kids Debit Card Platform Market</td><td>2025 $4.2B → 2034 $12.8B · CAGR 13.2%<br><span class="dim">dataintelo.com/report/kids-debit-card-platform-market</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>GlobalData</b> · South Korea EdTech Market</td><td>2024 $6,241.3M · CAGR 11.2%(2019–24) · Pre-K12+K-12 최대 세그먼트 <span class="dim">(54.8%는 B)</span></td><td><span class="g a">A</span></td></tr>
+      <tr><td><b>FMI 등</b> 게이미피케이션 교육 시장 추정</td><td>K-12 44.8% · $0.82B~$3.5B</td><td><span class="g c">C</span></td></tr>
+    </table>
+  </div>
+  <footer class="src"><span class="tag">우선 과제</span> <span class="g c">C</span> 등급 3건(GoHenry · 퍼핀/아이쿠카 매출 · FMI)의 원출처 확보</footer>
+</section>
+
+<div id="bar"></div>
+</div>
+</div>
+
+<script>
+(function(){
+  var SECTIONS=[
+    {n:"0",t:"개요"},{n:"1",t:"정의"},{n:"2",t:"TAM"},{n:"3",t:"SAM"},
+    {n:"4",t:"문제"},{n:"5",t:"세분화"},{n:"6",t:"SOM"},{n:"7",t:"구조도"},{n:"8",t:"결론"}
+  ];
+  var stage=document.getElementById('stage');
+  var slides=[].slice.call(stage.querySelectorAll('.cover,.slide'));
+  var toc=document.getElementById('toc');
+  var bar=document.getElementById('bar');
+  var count=document.getElementById('count');
+  var i=0;
+
+  // 목차 구성
+  var brand=document.createElement('span');
+  brand.className='brand';
+  brand.textContent='TAM · SAM · SOM';
+  toc.appendChild(brand);
+  SECTIONS.forEach(function(s,si){
+    var b=document.createElement('button');
+    b.type='button';
+    b.innerHTML='<span class="n">'+s.n+'</span>'+s.t;
+    b.addEventListener('click',function(){
+      for(var k=0;k<slides.length;k++){
+        if(+slides[k].dataset.sec===si){go(k);break;}
+      }
+    });
+    toc.appendChild(b);
+  });
+  var tocBtns=[].slice.call(toc.querySelectorAll('button'));
+
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){s.classList.toggle('on',k===i);});
+    var sec=+slides[i].dataset.sec;
+    tocBtns.forEach(function(b,k){b.setAttribute('aria-current',k===sec?'true':'false');});
+    bar.style.width=((i+1)/slides.length*100)+'%';
+    count.textContent=(i+1)+' / '+slides.length;
+    count.style.display=slides[i].classList.contains('cover')?'none':'';
+    if(history.replaceState) history.replaceState(null,'','#'+(i+1));
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey) return;
+    switch(e.key){
+      case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ':
+        e.preventDefault(); go(i+1); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+        e.preventDefault(); go(i-1); break;
+      case 'Home': e.preventDefault(); go(0); break;
+      case 'End': e.preventDefault(); go(slides.length-1); break;
+    }
+  });
+
+  function fit(){
+    var s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+    stage.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit);
+  fit();
+
+  var h=parseInt((location.hash||'').slice(1),10);
+  go(h>0?h-1:0);
+})();
+</script>
