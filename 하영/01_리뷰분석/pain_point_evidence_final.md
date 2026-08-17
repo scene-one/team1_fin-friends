@@ -539,9 +539,9 @@ App Store 설명에 이 문장이 있습니다.
 |---|---|
 | [`pain_point_evidence_final.csv`](pain_point_evidence_final.csv) | 최종 근거 데이터 — 921건 + 분류 + 강도 + 검수 상태 + 개발사 답변 |
 | [`pain_point_evidence_final.md`](pain_point_evidence_final.md) | 이 문서 (v2) |
-| [`finalize_evidence.py`](finalize_evidence.py) | 검수·확정 재실행 스크립트 |
+| `scripts/finalize_evidence.py` | 검수·확정 재실행 스크립트 |
 | [`classification_labels.json`](classification_labels.json) | 전수 판독 결과 + P2 하위축 분류 |
-| [`analysis_report.md`](analysis_report.md) | 2단계 분석 보고서 (판정 과정·기준 상세) |
+| [`README.md`](README.md) | 결과 요약 + 핵심 Evidence 16개 선별 |
 | [`puffin_reviews_raw.csv`](puffin_reviews_raw.csv) | 원본 리뷰 921건 |
 
-재현: `python finalize_evidence.py`
+재현: `cd scripts && python finalize_evidence.py`
