@@ -1,0 +1,28 @@
+{
+  "collected_at": "2026-08-17 16:42:26",
+  "finished_at": "2026-08-17 16:42:35",
+  "elapsed_seconds": 8.7,
+  "app_id": "family.firfin.app",
+  "app_url": "https://play.google.com/store/apps/details?id=family.firfin.app&hl=ko",
+  "lang": "ko",
+  "country": "kr",
+  "sort": "NEWEST",
+  "library": "google-play-scraper",
+  "collected_count": 921,
+  "google_reported_reviews": 920,
+  "coverage_pct": 100.1,
+  "app_meta": {
+    "title": "퍼핀 - 용돈기입장,모의투자,돈버는퀴즈",
+    "developer": "퍼핀 - 용돈은 퍼핀으로 주세요",
+    "current_version": "26.7.5",
+    "installs": "100,000+",
+    "score": 4.017544,
+    "ratings_count": 1158,
+    "reviews_count": 920,
+    "released": "2023. 3. 22.",
+    "last_updated": "2026. 7. 24."
+  },
+  "pages_fetched": 6,
+  "duplicates_skipped": 0,
+  "stop_reason": "빈 페이지 응답"
+}
