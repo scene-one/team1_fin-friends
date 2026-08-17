@@ -28,6 +28,8 @@
 
 ## 📁 파일
 
+### 1단계 — 원본 수집
+
 | 파일 | 내용 |
 |---|---|
 | `puffin_reviews_raw.csv` | 리뷰 원본 921건 — **엑셀·구글시트에서 바로 열림** (UTF-8 BOM) |
@@ -35,6 +37,22 @@
 | `collect_reviews.py` | 재수집 스크립트 |
 | `quality_report.json` | 품질 검사 결과 (평점별·월별·날짜별·버전별 집계) |
 | `collection_log.json` | 수집 실행 기록 — 언제·무엇을·몇 건 받았는지 |
+
+### 2단계 — 페인포인트 분류
+
+| 파일 | 내용 |
+|---|---|
+| 🔴 [`analysis_report.md`](analysis_report.md) | **분석 보고서 — 이것부터 읽으세요** |
+| `puffin_reviews_classified.csv` | 원본 921건 + 분류 7개 컬럼 + 근거 원문 + 분류 이유 |
+| `pain_point_summary.csv` | 항목별 건수·비율·대표 리뷰 요약표 |
+| `classification_labels.json` | 전수 판독 결과 원본 (어느 리뷰를 왜 분류했는지) |
+| `classify_reviews.py` | 라벨 병합·집계 재실행 스크립트 |
+
+> **분석 결론 요약**
+> 1차 페인포인트 검증 결과 — 아이 "성장하는 느낌 없음" **3건(0.3%) → 근거 부족**,
+> 부모 "체계적 금융학습 확인 불가" **19건(2.1%) → 일부 뒷받침됨**.
+> 반면 학습효과를 긍정 언급한 리뷰가 **154건(16.7%)** 으로 훨씬 많습니다.
+> 자세한 해석과 한계는 [`analysis_report.md`](analysis_report.md) 참고.
 
 ### 필드 정의
 
