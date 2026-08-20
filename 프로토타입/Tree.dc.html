@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #4F7A4A; text-decoration: none; }
+    a:hover { color: #3E6B3A; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 390px; min-height: 1180px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="padding: 26px 20px 18px 20px; border-bottom: 1px solid #E5DFD5;">
+    <div style="font-size: 11px; letter-spacing: 0.12em; color: #9C948A; font-weight: 700;">부모 화면</div>
+    <div style="margin-top: 7px; font-family: 'AppleMyungjo', 'Nanum Myeongjo', 'Batang', serif; font-size: 27px; letter-spacing: -0.01em;">성장 나무</div>
+    <div style="margin-top: 9px; display: flex; align-items: center; gap: 8px;">
+      <span style="font-size: 12px; color: #6B655D;">서연 · 3월</span>
+      <span style="width: 3px; height: 3px; border-radius: 50%; background: #C9C1B6;"></span>
+      <span style="font-size: 12px; color: #6B655D;">실시간</span>
+    </div>
+  </div>
+
+  <div style="margin: 16px 20px 0 20px; padding: 15px 16px; border-radius: 14px; background: #2E332C; display: flex; gap: 11px; align-items: flex-start;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 1px;">
+      <path d="M12 20V9m0 0c0-3-2.5-4.5-5-4 0 3 2 5 5 4zm0 0c0-3 2.5-4.5 5-4 0 3-2 5-5 4z" stroke="#8FB07F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <div style="font-size: 12.5px; line-height: 1.6; color: #D6DDD1;">나무는 <b style="color: #F0E6D2;">퀴즈만으로는 자라지 않습니다.</b> 각 단계마다 <b style="color: #F0E6D2;">행동 실천 횟수</b>가 조건에 들어 있어, 나무가 자랐다는 건 <b style="color: #F0E6D2;">배운 걸 실제로 했다</b>는 뜻입니다.</div>
+  </div>
+
+  <div style="padding: 16px 20px 30px 20px; display: flex; flex-direction: column; gap: 13px;">
+    <sc-for list="{{areas}}" as="a" hint-placeholder-count="4">
+      <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 17px; display: flex; flex-direction: column; gap: 14px;">
+
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <div style="width: 68px; height: 78px; border-radius: 12px; background: #F4F6F1; border: 1px solid #E3E8DE; display: flex; align-items: flex-end; justify-content: center; flex-shrink: 0; padding-bottom: 8px;">
+            <sc-if value="{{a.isSeed}}" hint-placeholder-val="{{false}}">
+              <svg width="42" height="52" viewBox="0 0 42 52" fill="none">
+                <path d="M4 47h34" stroke="#C6D0BE" stroke-width="2" stroke-linecap="round"></path>
+                <ellipse cx="21" cy="40" rx="8" ry="6" fill="#B48A5E" stroke="#8E6A44" stroke-width="1.8"></ellipse>
+                <path d="M21 34v-4" stroke="#7E9A73" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </sc-if>
+            <sc-if value="{{a.isSprout}}" hint-placeholder-val="{{false}}">
+              <svg width="42" height="52" viewBox="0 0 42 52" fill="none">
+                <path d="M4 47h34" stroke="#C6D0BE" stroke-width="2" stroke-linecap="round"></path>
+                <path d="M21 46V26" stroke="#7E6A4E" stroke-width="2.6" stroke-linecap="round"></path>
+                <path d="M21 30c-2-7-8-8-11-6 1 6 6 9 11 6z" fill="#8FB07F" stroke="#4F7A4A" stroke-width="1.7" stroke-linejoin="round"></path>
+                <path d="M21 26c2-7 8-8 11-6-1 6-6 9-11 6z" fill="#8FB07F" stroke="#4F7A4A" stroke-width="1.7" stroke-linejoin="round"></path>
+              </svg>
+            </sc-if>
+            <sc-if value="{{a.isTree}}" hint-placeholder-val="{{true}}">
+              <svg width="42" height="52" viewBox="0 0 42 52" fill="none">
+                <path d="M4 47h34" stroke="#C6D0BE" stroke-width="2" stroke-linecap="round"></path>
+                <path d="M21 47V30" stroke="#7E6A4E" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M21 33 12 27M21 30l9-6" stroke="#7E6A4E" stroke-width="2.2" stroke-linecap="round"></path>
+                <circle cx="21" cy="16" r="11" fill="#8FB07F" stroke="#4F7A4A" stroke-width="1.9"></circle>
+                <circle cx="11" cy="23" r="6.5" fill="#8FB07F" stroke="#4F7A4A" stroke-width="1.9"></circle>
+                <circle cx="31" cy="22" r="7" fill="#8FB07F" stroke="#4F7A4A" stroke-width="1.9"></circle>
+              </svg>
+            </sc-if>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 6px; flex-grow: 1;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="font-size: 17px; font-weight: 800; letter-spacing: -0.02em;">{{a.name}}</div>
+              <div style="font-family: 'AppleMyungjo', 'Batang', serif; font-size: 14px; color: {{a.stageColor}};">{{a.stage}}</div>
+            </div>
+            <div style="font-size: 12px; color: #6B655D; line-height: 1.45;">{{a.hint}}</div>
+            <div style="margin-top: 3px; display: inline-flex; align-self: flex-start; align-items: center; gap: 5px; background: #F4F1EB; border-radius: 6px; padding: 4px 8px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                <path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="#9C948A" stroke-width="2.2" stroke-linecap="round"></path>
+                <path d="M20 4v4.4h-4.4" stroke="#9C948A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <span style="font-size: 10px; color: #7E786F; font-weight: 700;">{{a.reset}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+          <div style="background: #FAF7F1; border-radius: 10px; padding: 9px 10px; display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 10px; color: #9C948A; font-weight: 700;">진도율</span>
+            <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; font-weight: 600;">{{a.progress}}<span style="font-size: 11px; font-family: 'Apple SD Gothic Neo', sans-serif;">%</span></span>
+          </div>
+          <div style="background: #FAF7F1; border-radius: 10px; padding: 9px 10px; display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 10px; color: #9C948A; font-weight: 700;">퀴즈 정답률</span>
+            <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; font-weight: 600;">{{a.accuracy}}<span style="font-size: 11px; font-family: 'Apple SD Gothic Neo', sans-serif;">%</span></span>
+          </div>
+          <div style="background: #FAF7F1; border-radius: 10px; padding: 9px 10px; display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 10px; color: #9C948A; font-weight: 700;">미션 수행률</span>
+            <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; font-weight: 600;">{{a.mission}}<span style="font-size: 11px; font-family: 'Apple SD Gothic Neo', sans-serif;">%</span></span>
+          </div>
+        </div>
+
+        <div style="border-top: 1px dashed #E5DFD5; padding-top: 13px; display: flex; flex-direction: column; gap: 9px;">
+          <div style="font-size: 11px; font-weight: 800; color: #7E786F; letter-spacing: 0.02em;">{{a.nextLabel}}</div>
+          <div style="display: flex; gap: 7px;">
+            <div style="flex-grow: 1; background: {{a.learnBg}}; border: 1px solid {{a.learnBorder}}; border-radius: 9px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-size: 10px; color: #7E786F;">학습 완주</span>
+              <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 14px; font-weight: 600; color: {{a.learnColor}};">{{a.learnText}}</span>
+            </div>
+            <div style="flex-grow: 1; background: {{a.quizBg}}; border: 1px solid {{a.quizBorder}}; border-radius: 9px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-size: 10px; color: #7E786F;">퀴즈 정답</span>
+              <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 14px; font-weight: 600; color: {{a.quizColor}};">{{a.quizText}}</span>
+            </div>
+            <div style="flex-grow: 1; background: {{a.actBg}}; border: 1px solid {{a.actBorder}}; border-radius: 9px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-size: 10px; color: {{a.actLabelColor}}; font-weight: 800;">행동 실천</span>
+              <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 14px; font-weight: 600; color: {{a.actColor}};">{{a.actText}}</span>
+            </div>
+          </div>
+          <sc-if value="{{a.blocked}}" hint-placeholder-val="{{true}}">
+            <div style="display: flex; align-items: center; gap: 7px; background: #F7EEE6; border-radius: 9px; padding: 9px 11px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
+                <path d="M12 4.5 21 19H3z" fill="none" stroke="#B36B3A" stroke-width="1.9" stroke-linejoin="round"></path>
+                <path d="M12 10v3.6" stroke="#B36B3A" stroke-width="1.9" stroke-linecap="round"></path>
+                <circle cx="12" cy="16.4" r="1.05" fill="#B36B3A"></circle>
+              </svg>
+              <span style="font-size: 11.5px; color: #8E5228; font-weight: 700; line-height: 1.4;">{{a.blockedText}}</span>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"practice":{"editor":"int","default":0,"min":0,"max":2,"unit":"회","section":"벌기 실천 횟수"},"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const practice = this.props.practice ?? 0;
+    const met = { bg: '#EDF1EA', border: '#D3DECD', color: '#3E6B3A' };
+    const unmet = { bg: '#FAF7F1', border: '#E5DFD5', color: '#A8A199' };
+    const gate = { bg: '#F7EEE6', border: '#E6D3C0', color: '#B36B3A' };
+    const chip = (have, need, isAction) => {
+      const ok = have >= need;
+      const t = ok ? met : isAction ? gate : unmet;
+      return { bg: t.bg, border: t.border, color: t.color, text: have + ' / ' + need };
+    };
+    const build = (o) => {
+      const learn = chip(o.learn, 3, false);
+      const quiz = chip(o.quiz, 5, false);
+      const act = chip(o.act, 1, true);
+      const blocked = o.learn >= 3 && o.quiz >= 5 && o.act < 1;
+      return {
+        name: o.name, hint: o.hint, stage: o.stage, reset: o.reset,
+        stageColor: o.stage === '나무' ? '#3E6B3A' : o.stage === '새싹' ? '#6B8A62' : '#A8A199',
+        isSeed: o.stage === '씨앗', isSprout: o.stage === '새싹', isTree: o.stage === '나무',
+        progress: o.progress, accuracy: o.accuracy, mission: o.mission,
+        nextLabel: o.nextLabel,
+        learnBg: learn.bg, learnBorder: learn.border, learnColor: learn.color, learnText: learn.text,
+        quizBg: quiz.bg, quizBorder: quiz.border, quizColor: quiz.color, quizText: quiz.text,
+        actBg: act.bg, actBorder: act.border, actColor: act.color, actText: act.text,
+        actLabelColor: o.act < 1 ? '#B36B3A' : '#7E786F',
+        blocked,
+        blockedText: '학습과 퀴즈는 다 채웠습니다. 행동 실천 1회가 남았습니다.'
+      };
+    };
+    return {
+      areas: [
+        build({ name: '벌기', hint: '일하면 돈이 생겨요', stage: practice >= 1 ? '나무' : '새싹', reset: '매달 초기화', progress: 80, accuracy: 78, mission: 89, nextLabel: practice >= 1 ? '다음 단계까지' : '나무가 되기까지', learn: 3, quiz: 5, act: practice }),
+        build({ name: '잘 쓰기', hint: '진짜 필요한 걸까?', stage: '새싹', reset: '매달 초기화', progress: 62, accuracy: 71, mission: 64, nextLabel: '나무가 되기까지', learn: 2, quiz: 5, act: 1 }),
+        build({ name: '모으기', hint: '안 쓰고 두면 쌓여요', stage: '씨앗', reset: '매달 초기화', progress: 25, accuracy: 80, mission: 40, nextLabel: '새싹이 되기까지', learn: 1, quiz: 3, act: 0 }),
+        build({ name: '불리기', hint: '모아두면 저절로 늘어나요', stage: '씨앗', reset: '적금 만기까지 6개월', progress: 10, accuracy: 0, mission: 0, nextLabel: '새싹이 되기까지', learn: 0, quiz: 0, act: 0 })
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

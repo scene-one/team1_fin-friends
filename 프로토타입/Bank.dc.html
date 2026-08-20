@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #B36B3A; text-decoration: none; }
+    a:hover { color: #8E5228; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 390px; min-height: 1210px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="margin: 24px 20px 0 20px; padding: 20px; border-radius: 18px; background: #2E332C; display: flex; flex-direction: column; gap: 5px;">
+    <div style="font-size: 11px; letter-spacing: 0.1em; color: #8B9784; font-weight: 700;">내 돈</div>
+    <div style="display: flex; align-items: baseline; gap: 4px;">
+      <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 34px; font-weight: 600; color: #F6F3ED;">41,200</span>
+      <span style="font-size: 16px; font-weight: 700; color: #D6DDD1;">원</span>
+    </div>
+    <div style="margin-top: 6px; font-size: 11.5px; color: #8B9784;">모으는 중 36,000원 · 쓸 수 있는 돈 5,200원</div>
+  </div>
+
+  <div style="padding: 20px 20px 11px 20px; font-size: 15px; font-weight: 800; letter-spacing: -0.01em;">할 일</div>
+  <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 9px;">
+    <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 15px 16px; display: flex; align-items: center; gap: 13px;">
+      <div style="width: 40px; height: 40px; border-radius: 12px; background: #F7EEE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+          <path d="M4 20h16" stroke="#B36B3A" stroke-width="1.9" stroke-linecap="round"></path>
+          <path d="M9 20V9.5h6V20" stroke="#B36B3A" stroke-width="1.9" stroke-linejoin="round"></path>
+          <path d="M12 9.5V4.5m-2.4 2.4L12 4.5l2.4 2.4" stroke="#B36B3A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1;">
+        <div style="font-size: 14px; font-weight: 800;">방 정리하기</div>
+        <div style="font-size: 11.5px; color: #6B655D;">다 했어요 · 부모님 확인 기다리는 중</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 4px; background: #F4F1EB; border-radius: 999px; padding: 6px 10px; flex-shrink: 0;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#D8D2C8"></path>
+        </svg>
+        <span style="font-size: 10.5px; font-weight: 700; color: #8A837A;">확인 후 +1</span>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 15px 16px; display: flex; align-items: center; gap: 13px;">
+      <div style="width: 40px; height: 40px; border-radius: 12px; background: #F4F6F1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+          <path d="M12 21c0-6 4.5-6.8 4.5-11.4A4.5 4.5 0 0 0 12 5a4.5 4.5 0 0 0-4.5 4.6C7.5 14.2 12 15 12 21z" fill="#CFDCC8" stroke="#4F7A4A" stroke-width="1.6" stroke-linejoin="round"></path>
+          <circle cx="12" cy="9.6" r="1.7" fill="#4F7A4A"></circle>
+        </svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1;">
+        <div style="font-size: 14px; font-weight: 800;">다이소에서 쓸 돈 정하기</div>
+        <div style="font-size: 11.5px; color: #6B655D;">오늘 5,000원까지</div>
+      </div>
+      <div style="font-size: 11px; font-weight: 800; color: #3E6B3A; flex-shrink: 0;">정했어요</div>
+    </div>
+  </div>
+
+  <div style="padding: 22px 20px 11px 20px; display: flex; align-items: baseline; justify-content: space-between;">
+    <span style="font-size: 15px; font-weight: 800; letter-spacing: -0.01em;">모으는 것</span>
+    <span style="font-size: 11px; color: #9C948A;">순서 바꾸기는 한 달에 한 번</span>
+  </div>
+  <div style="margin: 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="display: flex; align-items: center; gap: 13px;">
+      <div style="width: 50px; height: 50px; border-radius: 14px; background: #F4F6F1; border: 1px solid #E3E8DE; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <circle cx="6.4" cy="16.4" r="3.4" stroke="#4F7A4A" stroke-width="1.7"></circle>
+          <circle cx="17.6" cy="16.4" r="3.4" stroke="#4F7A4A" stroke-width="1.7"></circle>
+          <path d="M6.4 16.4 10 8h4l3.6 8.4M10 8h5.4" stroke="#4F7A4A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 3px;">
+        <div style="font-size: 16px; font-weight: 800; letter-spacing: -0.02em;">자전거</div>
+        <div style="font-size: 12px; color: #6B655D;"><b style="font-family: 'Hoefler Text', Palatino, serif; font-size: 14px; color: #2A2724;">36,000</b> / 120,000원</div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="height: 12px; border-radius: 999px; background: #EFEAE1; overflow: hidden;">
+        <div style="height: 100%; width: 30%; background: #4F7A4A; border-radius: 999px;"></div>
+      </div>
+      <div style="display: flex; gap: 7px;">
+        <sc-for list="{{tiers}}" as="t" hint-placeholder-count="3">
+          <div style="flex-grow: 1; background: {{t.bg}}; border: 1px solid {{t.border}}; border-radius: 11px; padding: 10px 5px; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 15px; font-weight: 600; color: {{t.color}};">{{t.pct}}%</span>
+            <span style="font-size: 10px; color: {{t.subColor}};">{{t.amount}}원</span>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="{{t.starFill}}"></path>
+              </svg>
+              <span style="font-size: 10px; font-weight: 700; color: {{t.subColor}};">{{t.starLabel}}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 22px 20px 11px 20px; font-size: 15px; font-weight: 800; letter-spacing: -0.01em;">어디에 두면 좋을까?</div>
+  <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 9px;">
+    <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <span style="font-size: 15px; font-weight: 800;">그냥 두기</span>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; color: #9C948A;">0%</span>
+      </div>
+      <div style="font-size: 12px; color: #6B655D; line-height: 1.5;">언제든 쓸 수 있어요. 대신 <b>늘어나지 않아요.</b></div>
+      <div style="font-size: 12px; color: #9C948A;">1년 뒤 <b style="font-family: 'Hoefler Text', Palatino, serif;">36,000</b>원</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <span style="font-size: 15px; font-weight: 800;">은행 적금</span>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; color: #6B655D;">3%</span>
+      </div>
+      <div style="font-size: 12px; color: #6B655D; line-height: 1.5;">매달 꼭 넣어야 해요. 중간에 빼면 이자가 줄어요.</div>
+      <div style="font-size: 12px; color: #6B655D;">1년 뒤 <b style="font-family: 'Hoefler Text', Palatino, serif;">37,080</b>원</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1.5px solid #4F7A4A; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <span style="font-size: 15px; font-weight: 800; color: #2F5A2C;">부모님 적금</span>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; font-weight: 600; color: #3E6B3A;">20%</span>
+      </div>
+      <div style="font-size: 12px; color: #4E6B4A; line-height: 1.5;">부모님이 이자를 정해요. 대신 <b>부모님과 약속</b>을 지켜야 해요.</div>
+      <div style="font-size: 12px; color: #3E6B3A;">1년 뒤 <b style="font-family: 'Hoefler Text', Palatino, serif;">43,200</b>원</div>
+      <div style="margin-top: 3px; display: flex; align-items: center; gap: 6px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978" stroke="#B36B3A" stroke-width="1.4" stroke-linejoin="round"></path>
+        </svg>
+        <span style="font-size: 11px; font-weight: 700; color: #8E5228;">고르면 +1 · 끝까지 넣으면 +10</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 15px 20px 0 20px; padding: 13px 15px; border-radius: 12px; background: #F4F1EB; display: flex; gap: 9px; align-items: flex-start;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+      <circle cx="12" cy="12" r="8.6" stroke="#A8A199" stroke-width="1.7"></circle>
+      <path d="M12 11v5.4" stroke="#A8A199" stroke-width="1.9" stroke-linecap="round"></path>
+      <circle cx="12" cy="7.9" r="1.05" fill="#A8A199"></circle>
+    </svg>
+    <div style="font-size: 11px; line-height: 1.55; color: #7E786F;">여기서는 <b>비교만</b> 해요. 은행 상품에 실제로 가입하는 건 부모님이 은행에서 직접 해요.</div>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 16px;"></div>
+
+  <div style="margin-top: 16px; border-top: 1px solid #E5DFD5; background: #FFFFFF; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));">
+    <div style="padding: 12px 0 16px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" stroke="#9C948A" stroke-width="1.8" stroke-linejoin="round"></path>
+      </svg>
+      <span style="font-size: 10px; font-weight: 700; color: #9C948A;">홈</span>
+    </div>
+    <div style="padding: 12px 0 16px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4z" stroke="#9C948A" stroke-width="1.8" stroke-linejoin="round"></path>
+        <path d="M20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z" stroke="#9C948A" stroke-width="1.8" stroke-linejoin="round"></path>
+      </svg>
+      <span style="font-size: 10px; font-weight: 700; color: #9C948A;">학습</span>
+    </div>
+    <div style="padding: 12px 0 16px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="6" width="18" height="13" rx="2" fill="#F2E4D6" stroke="#B36B3A" stroke-width="1.8"></rect>
+        <path d="M3 10.5h18" stroke="#B36B3A" stroke-width="1.8"></path>
+        <circle cx="16.5" cy="15" r="1.6" fill="#B36B3A"></circle>
+      </svg>
+      <span style="font-size: 10px; font-weight: 800; color: #B36B3A;">내 통장</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"saved":{"editor":"int","default":36000,"min":0,"max":120000,"step":6000,"unit":"원","section":"모은 돈"},"$preview":{"width":390,"height":1210}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const saved = this.props.saved ?? 36000;
+    const goal = 120000;
+    return {
+      tiers: [30, 70, 100].map((pct) => {
+        const need = Math.round(goal * pct / 100);
+        const done = saved >= need;
+        return {
+          pct,
+          amount: need.toLocaleString('ko-KR'),
+          bg: done ? '#EDF1EA' : '#FAF7F1',
+          border: done ? '#4F7A4A' : '#E5DFD5',
+          color: done ? '#2F5A2C' : '#A8A199',
+          subColor: done ? '#4E6B4A' : '#B5AEA5',
+          starFill: done ? '#E8B978' : '#D8D2C8',
+          starLabel: done ? '받았어요' : '+1'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
