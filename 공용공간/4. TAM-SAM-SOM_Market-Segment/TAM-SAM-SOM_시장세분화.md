@@ -805,4 +805,4 @@ graph TD
 
 ### 원자료 (프로젝트 내부)
 
-- [`../gpt_deep_research_키즈 금융교육·행동 보상 시장.md`](../gpt_deep_research_키즈%20금융교육·행동%20보상%20시장.md) — 심층 리서치 원문
+- [`../gpt_deep_research_키즈 금융교육·행동 보상 시장.md`](../../유림/gpt_deep_research_키즈 금융교육·행동 보상 시장.md) — 심층 리서치 원문
