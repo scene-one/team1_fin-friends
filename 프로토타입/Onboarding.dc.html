@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #B36B3A; text-decoration: none; }
+    a:hover { color: #8E5228; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 390px; min-height: 844px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="padding: 24px 20px 0 20px; display: flex; flex-direction: column; gap: 13px;">
+    <div style="display: inline-flex; align-self: flex-start; align-items: center; gap: 7px; background: #EDF1EA; border: 1px solid #D3DECD; border-radius: 999px; padding: 7px 12px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12.5 10 17.5 19.5 7" stroke="#3E6B3A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span style="font-size: 11px; font-weight: 800; color: #3E6B3A;">부모님이 허락해 주셨어요</span>
+    </div>
+    <div style="display: flex; gap: 5px;">
+      <div style="flex-grow: 1; height: 4px; border-radius: 999px; background: {{s1}};"></div>
+      <div style="flex-grow: 1; height: 4px; border-radius: 999px; background: {{s2}};"></div>
+      <div style="flex-grow: 1; height: 4px; border-radius: 999px; background: {{s3}};"></div>
+      <div style="flex-grow: 1; height: 4px; border-radius: 999px; background: {{s4}};"></div>
+    </div>
+  </div>
+
+  <sc-if value="{{learning}}" hint-placeholder-val="{{true}}">
+    <div style="padding: 20px 20px 0 20px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.32;">돈은 이렇게<br>움직여요</div>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 15px 16px; display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 13px; background: #F7EEE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8.4" fill="#F0D9A8" stroke="#B36B3A" stroke-width="1.8"></circle>
+              <path d="M12 7.6v8.8M9.4 10h4.2a1.9 1.9 0 0 1 0 3.8h-4" stroke="#B36B3A" stroke-width="1.7" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 17px; font-weight: 800; letter-spacing: -0.02em;">벌기</div>
+            <div style="font-size: 13px; color: #6B655D;">일하면 돈이 생겨요</div>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 15px 16px; display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 13px; background: #F7EEE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+              <path d="M3.5 5h2.2l2.5 9.6h9.4l2-6.8H7" stroke="#B36B3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="10" cy="18.6" r="1.6" fill="#B36B3A"></circle>
+              <circle cx="16.6" cy="18.6" r="1.6" fill="#B36B3A"></circle>
+            </svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 17px; font-weight: 800; letter-spacing: -0.02em;">잘 쓰기</div>
+            <div style="font-size: 13px; color: #6B655D;">진짜 필요한 걸까?</div>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 15px 16px; display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 13px; background: #F7EEE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+              <path d="M6.5 8.5h11v9.6a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2z" fill="#F0D9A8" stroke="#B36B3A" stroke-width="1.8" stroke-linejoin="round"></path>
+              <path d="M5.6 5.6h12.8v2.9H5.6z" fill="none" stroke="#B36B3A" stroke-width="1.8"></path>
+              <path d="M12 11.8v4.6M10 14.1h4" stroke="#B36B3A" stroke-width="1.6" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 17px; font-weight: 800; letter-spacing: -0.02em;">모으기</div>
+            <div style="font-size: 13px; color: #6B655D;">안 쓰고 두면 쌓여요</div>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 16px; padding: 15px 16px; display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 13px; background: #EDF1EA; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+              <path d="M12 20.5V10" stroke="#3E6B3A" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M12 13c-2-6-7-6.6-9.4-4.8.9 5.2 5.2 7.6 9.4 4.8z" fill="#8FB07F" stroke="#3E6B3A" stroke-width="1.7" stroke-linejoin="round"></path>
+              <path d="M12 10c2-6 7-6.6 9.4-4.8-.9 5.2-5.2 7.6-9.4 4.8z" fill="#8FB07F" stroke="#3E6B3A" stroke-width="1.7" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 17px; font-weight: 800; letter-spacing: -0.02em;">불리기</div>
+            <div style="font-size: 13px; color: #6B655D;">모아두면 저절로 늘어나요</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 14px 16px; border-radius: 14px; background: #F4F6F1; border: 1px solid #E3E8DE; font-size: 13.5px; line-height: 1.6; color: #3B4A38; text-align: center; font-weight: 700;">돈이 생기고 → 잘 쓰면 → 모이고<br>→ <b style="color: #2F5A2C;">저절로</b> 늘어나요</div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 18px;"></div>
+
+    <div style="padding: 0 20px 30px 20px;">
+      <div onClick="{{answer}}" style="padding: 18px; border-radius: 14px; background: #2A2724; color: #FAF7F1; font-size: 16px; font-weight: 800; text-align: center; cursor: pointer;">문제 풀어보기</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{rewarded}}" hint-placeholder-val="{{false}}">
+    <div style="padding: 22px 20px 0 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 13px;">
+        <div style="font-size: 11px; letter-spacing: 0.08em; color: #9C948A; font-weight: 700;">문제</div>
+        <div style="font-size: 16px; font-weight: 700; line-height: 1.5; letter-spacing: -0.01em;">돈을 안 쓰고 그냥 두면<br>어떻게 될까요?</div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 13px 14px; border-radius: 12px; background: #EDF1EA; border: 1.5px solid #4F7A4A;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
+            <path d="M5 12.5 10 17.5 19.5 7" stroke="#3E6B3A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span style="font-size: 14px; font-weight: 800; color: #2F5A2C;">쌓여요</span>
+        </div>
+        <div style="font-size: 12.5px; line-height: 1.6; color: #6B655D;">맞아요. 그리고 은행에 두면 <b>저절로 조금 더</b> 늘어나요. 그게 <b>불리기</b>예요.</div>
+      </div>
+
+      <div style="padding: 24px 20px; border-radius: 18px; background: #F7EEE6; border: 1px solid #E6D3C0; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978" stroke="#B36B3A" stroke-width="1.3" stroke-linejoin="round"></path>
+        </svg>
+        <div style="font-size: 20px; font-weight: 800; color: #8E5228; letter-spacing: -0.02em;">별 1개를 받았어요</div>
+        <div style="font-size: 12.5px; color: #A98B6E;">첫 번째 별이에요</div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 11px;">
+        <div style="font-size: 14px; font-weight: 800; letter-spacing: -0.01em;">별 1개로 살 수 있어요</div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px;">
+          <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 14px; padding: 13px 6px 11px 6px; display: flex; flex-direction: column; align-items: center; gap: 7px;">
+            <div style="width: 38px; height: 38px; border-radius: 11px; background: #F4F6F1; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 20px; height: 20px; border-radius: 6px; background: #8FB07F;"></div>
+            </div>
+            <div style="font-size: 11px; font-weight: 700;">풀잎 리본</div>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978"></path></svg>
+              <span style="font-size: 10px; font-family: 'Hoefler Text', Palatino, serif; color: #6B655D;">1</span>
+            </div>
+          </div>
+          <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 14px; padding: 13px 6px 11px 6px; display: flex; flex-direction: column; align-items: center; gap: 7px;">
+            <div style="width: 38px; height: 38px; border-radius: 11px; background: #F4F6F1; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 20px; height: 20px; border-radius: 6px; background: #D8B87A;"></div>
+            </div>
+            <div style="font-size: 11px; font-weight: 700;">노란 방울</div>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978"></path></svg>
+              <span style="font-size: 10px; font-family: 'Hoefler Text', Palatino, serif; color: #6B655D;">1</span>
+            </div>
+          </div>
+          <div style="background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 14px; padding: 13px 6px 11px 6px; display: flex; flex-direction: column; align-items: center; gap: 7px;">
+            <div style="width: 38px; height: 38px; border-radius: 11px; background: #F4F6F1; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 20px; height: 20px; border-radius: 6px; background: #B36B3A;"></div>
+            </div>
+            <div style="font-size: 11px; font-weight: 700;">흙색 목띠</div>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978"></path></svg>
+              <span style="font-size: 10px; font-family: 'Hoefler Text', Palatino, serif; color: #6B655D;">1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 18px;"></div>
+
+    <div style="padding: 0 20px 30px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="padding: 18px; border-radius: 14px; background: #2A2724; color: #FAF7F1; font-size: 16px; font-weight: 800; text-align: center; cursor: pointer;">하나 골라볼게요</div>
+      <div onClick="{{back}}" style="font-size: 12px; text-align: center; color: #9C948A; cursor: pointer;">처음부터 다시 보기</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'learn' };
+  }
+  renderVals() {
+    const learning = this.state.step === 'learn';
+    const on = '#B36B3A';
+    const off = '#E5DFD5';
+    return {
+      learning,
+      rewarded: !learning,
+      s1: on, s2: on, s3: learning ? off : on, s4: learning ? off : on,
+      answer: () => this.setState({ step: 'reward' }),
+      back: () => this.setState({ step: 'learn' })
+    };
+  }
+}
+</script>
+</body>
+</html>

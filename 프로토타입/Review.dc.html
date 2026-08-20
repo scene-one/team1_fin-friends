@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #B36B3A; text-decoration: none; }
+    a:hover { color: #8E5228; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 390px; min-height: 844px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="padding: 26px 20px 0 20px;">
+    <div style="font-size: 11px; letter-spacing: 0.1em; color: #9C948A; font-weight: 700;">어제 다이소</div>
+    <div style="margin-top: 8px; font-size: 25px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.3;">계획보다 <span style="color: #B36B3A;">{{diffLabel}}원</span><br>더 썼어요</div>
+  </div>
+
+  <div style="margin: 22px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 7px;">
+          <div style="width: 9px; height: 9px; border-radius: 3px; background: #4F7A4A;"></div>
+          <span style="font-size: 13px; font-weight: 700;">계획한 돈</span>
+        </div>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 19px; font-weight: 600;">{{planLabel}}원</span>
+      </div>
+      <div style="height: 14px; border-radius: 999px; background: #EFEAE1; overflow: hidden;">
+        <div style="height: 100%; width: {{planWidth}}%; background: #4F7A4A; border-radius: 999px;"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 7px;">
+          <div style="width: 9px; height: 9px; border-radius: 3px; background: #B36B3A;"></div>
+          <span style="font-size: 13px; font-weight: 700;">실제 쓴 돈</span>
+        </div>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 19px; font-weight: 600; color: #B36B3A;">{{actualLabel}}원</span>
+      </div>
+      <div style="height: 14px; border-radius: 999px; background: #EFEAE1; overflow: hidden;">
+        <div style="height: 100%; width: {{actualWidth}}%; background: #B36B3A; border-radius: 999px;"></div>
+      </div>
+    </div>
+
+    <div style="border-top: 1px dashed #E5DFD5; padding-top: 15px; display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; justify-content: space-between; font-size: 12px;">
+        <span style="color: #6B655D;">지우개 세트</span>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; color: #2A2724;">3,000원</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px;">
+        <span style="color: #6B655D;">스티커</span>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; color: #2A2724;">2,000원</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px;">
+        <span style="color: #6B655D;">젤리 · 음료</span>
+        <span style="font-family: 'Hoefler Text', Palatino, serif; color: #B36B3A;">3,000원</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 16px 20px 0 20px; background: #F4F6F1; border: 1px solid #E3E8DE; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 13px;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5.5c-3.6-3-9-1.2-9 3.6 0 3.8 4.6 6.4 9 9.9 4.4-3.5 9-6.1 9-9.9 0-4.8-5.4-6.6-9-3.6z" fill="#CFDCC8" stroke="#4F7A4A" stroke-width="1.6" stroke-linejoin="round"></path>
+      </svg>
+      <div style="font-size: 13px; font-weight: 800; color: #3E6B3A;">앱이 정리해준 오늘</div>
+    </div>
+    <div style="display: flex; gap: 11px; align-items: flex-start;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 1px;">
+        <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978" stroke="#B36B3A" stroke-width="1.4" stroke-linejoin="round"></path>
+      </svg>
+      <div style="font-size: 13px; line-height: 1.62; color: #3B4A38;"><b>별을 받은 이유</b> — 계획을 세우고 갔고, 쓰고 나서 확인까지 했어요. 그게 제일 어려운 일이에요.</div>
+    </div>
+    <div style="display: flex; gap: 11px; align-items: flex-start;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 1px;">
+        <circle cx="12" cy="12" r="8.6" fill="none" stroke="#B0A79C" stroke-width="1.6"></circle>
+        <path d="M8.6 12h6.8" stroke="#B0A79C" stroke-width="1.9" stroke-linecap="round"></path>
+      </svg>
+      <div style="font-size: 13px; line-height: 1.62; color: #6B655D;"><b>다음에 해볼 것</b> — 젤리와 음료는 계획에 없었어요. 다음엔 갈 때 <b>딱 하나만</b> 더 살 수 있게 정해두면 어때요?</div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 20px;"></div>
+
+  <div style="padding: 0 20px 30px 20px; display: flex; flex-direction: column; gap: 11px;">
+    <sc-if value="{{pending}}" hint-placeholder-val="{{true}}">
+      <div onClick="{{confirm}}" style="padding: 18px; border-radius: 14px; background: #2A2724; color: #FAF7F1; font-size: 16px; font-weight: 800; text-align: center; letter-spacing: -0.01em; cursor: pointer;">확인했어요</div>
+    </sc-if>
+    <sc-if value="{{confirmed}}" hint-placeholder-val="{{false}}">
+      <div style="padding: 17px; border-radius: 14px; background: #F7EEE6; border: 1px solid #E6D3C0; display: flex; align-items: center; justify-content: center; gap: 9px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978" stroke="#B36B3A" stroke-width="1.4" stroke-linejoin="round"></path>
+        </svg>
+        <span style="font-size: 16px; font-weight: 800; color: #8E5228;">별 1개를 받았어요</span>
+      </div>
+    </sc-if>
+    <div style="font-size: 11px; text-align: center; color: #9C948A; line-height: 1.5;">쓰고 나서 한 번 보기만 하면 별 1개예요.<br>왜 그런지는 앱이 알려줄게요.</div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"plan":{"editor":"int","default":5000,"min":1000,"max":50000,"step":1000,"unit":"원"},"actual":{"editor":"int","default":8000,"min":0,"max":50000,"step":1000,"unit":"원"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { confirmed: false };
+  }
+  renderVals() {
+    const plan = this.props.plan ?? 5000;
+    const actual = this.props.actual ?? 8000;
+    const max = Math.max(plan, actual, 1);
+    return {
+      planLabel: plan.toLocaleString('ko-KR'),
+      actualLabel: actual.toLocaleString('ko-KR'),
+      diffLabel: Math.abs(actual - plan).toLocaleString('ko-KR'),
+      planWidth: Math.round((plan / max) * 100),
+      actualWidth: Math.round((actual / max) * 100),
+      confirmed: this.state.confirmed,
+      pending: !this.state.confirmed,
+      confirm: () => this.setState({ confirmed: true })
+    };
+  }
+}
+</script>
+</body>
+</html>
