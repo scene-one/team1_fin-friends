@@ -19,13 +19,37 @@ body.ov{overflow:auto;background:#1A1D18}
 #wrap{position:fixed;inset:0;display:grid;place-items:center}
 #stage{width:1280px;height:720px;background:var(--bg);color:var(--ink);
   position:relative;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5)}
-.slide{position:absolute;inset:0;padding:62px 76px 64px;display:none;flex-direction:column}
+.slide{position:absolute;inset:0;padding:84px 76px 64px;display:none;flex-direction:column}
+
+/* ---------- 상단 목차 레일 ---------- */
+#rail{position:absolute;top:0;left:0;right:0;height:54px;z-index:12;background:#fff;
+  border-bottom:1px solid var(--line);display:flex;align-items:stretch;padding:0 76px}
+#rail.hide{display:none}
+#rail .ri{display:flex;align-items:center;gap:9px;padding:0 15px;cursor:pointer;
+  position:relative;border-bottom:3px solid transparent;transition:.15s}
+#rail .ri:first-child{padding-left:0}
+#rail .ri .lb{font-size:13.5px;font-weight:700;color:#B7BDB3;letter-spacing:-.01em;white-space:nowrap}
+#rail .ri .dt{display:flex;gap:4px}
+#rail .ri .dt i{width:5px;height:5px;border-radius:50%;background:#E4E6E0;display:block}
+#rail .ri.done .lb{color:#98A093}
+#rail .ri.done .dt i{background:#BFC7BB}
+#rail .ri.cur{border-bottom-color:var(--green)}
+#rail .ri.cur .lb{color:var(--green);font-weight:800}
+#rail .ri.cur .dt i{background:#A9CDB9}
+#rail .ri.cur .dt i.now{background:var(--green);width:7px;height:7px;margin:-1px 0}
+#rail .ri:hover .lb{color:var(--green)}
+#rail .sp{flex:1}
+#rail .cnt{display:flex;align-items:center;font-size:12.5px;font-weight:700;color:#A8AFA4;
+  white-space:nowrap;padding-left:10px}
+#rail .cnt b{color:var(--green);font-size:15px;margin-right:1px}
+#rail .pl{position:absolute;left:0;bottom:-1px;height:2px;background:var(--green);
+  width:0;transition:width .22s ease;z-index:1}
 .slide.on{display:flex}
 
 /* ---------- type ---------- */
 .kicker{font-size:15px;letter-spacing:.08em;color:var(--green);font-weight:700;margin-bottom:14px}
 .kicker span{color:var(--grey);font-weight:600}
-h1{font-size:44px;line-height:1.28;letter-spacing:-.02em;font-weight:800;max-width:1060px}
+h1{font-size:38px;line-height:1.36;letter-spacing:-.02em;font-weight:800;max-width:1100px}
 h1 em{font-style:normal;color:var(--green)}
 h1 b{color:var(--red);font-weight:800}
 .lead{margin-top:16px;font-size:21px;line-height:1.5;color:var(--sub);max-width:960px;font-weight:500}
@@ -37,7 +61,7 @@ h1 b{color:var(--red);font-weight:800}
 /* ---------- cover ---------- */
 .cover{background:linear-gradient(160deg,#12452F 0%,#1F6B4A 62%,#2C7F59 100%);color:#fff;
   padding:0 90px;justify-content:center}
-.cover h1{font-size:56px;max-width:1000px;color:#fff}
+.cover h1{font-size:44px;line-height:1.34;max-width:1060px;color:#fff}
 .cover h1 em{color:#BFE6CF}
 .cover .brand{font-size:19px;letter-spacing:.3em;font-weight:700;color:#BFE6CF;margin-bottom:26px}
 .cover .lead{color:#D6EADD;font-size:22px;max-width:880px}
@@ -216,12 +240,14 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 
 <div id="wrap"><div id="stage">
 
+<div id="rail"></div>
+
 <!-- 1 -->
 <section class="slide cover" data-blk="블록 1 · 표지" data-sec="15"
  data-note="핀프렌즈입니다. 초등 1~3학년 아이가 <em>금융을 배우고, 배운 걸 실제로 해보고, 부모님이 그걸 확인할 수 있는</em> 서비스입니다."
  data-br="먼저 한 장으로 전체를 말씀드리겠습니다.">
   <div class="brand">F I N F R I E N D S</div>
-  <h1>금융 학습에서 <em>실천</em>까지,<br>그리고 <em>부모가 확인</em>합니다</h1>
+  <h1>핀프렌즈는 아이가 <em>금융을 배우고 실천하고</em>,<br><em>부모가 그 변화를 확인</em>하는 서비스입니다</h1>
   <p class="lead">초등 1~3학년 아이의 용돈 — 배우고, 해보고, 달라진 것을 보여주는 서비스</p>
   <div class="meta">기준 서비스 퍼핀 · 개선 실천 기능<br>팀 유림 · 병윤 · 하영 · 혜원</div>
   <div class="tree">🌳</div>
@@ -232,7 +258,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="한 장으로 요약하면 이렇습니다. 부모가 용돈앱을 쓰게 하는 이유는 아이가 <em>돈을 잘 쓰게 되는 것</em>입니다. 아는 걸 늘리려는 게 아니에요.<br>그런데 지금 앱들은 며칠 했고 몇 문제 풀었는지만 보여줍니다. 그래서 저희는 <em>실천 없이는 화면이 안 움직이게</em> 만들고, <em>쓰기 전에 계획을 적게</em> 했습니다.<br>성공은 숫자 하나로 봅니다 — <em>이번 주에 실제로 뭔가 해본 아이가 몇 %인가.</em>"
  data-br="그럼 지금 앱들이 어떻게 하고 있는지부터 보겠습니다.">
   <div class="kicker">한 장 요약 <span>· 육하원칙</span></div>
-  <h1>부모가 원한 건 「아는 것」이 아니라 <em>「실천」</em>이었습니다</h1>
+  <h1>부모가 정말 원했던 것은 아이가 아는 것이 아니라,<br><em>실제로 잘 쓰게 되는 것</em>이었습니다</h1>
   <div class="body">
     <div class="g6">
       <div class="cell"><div class="k">누가</div><div class="v">초등 1~3학년에게 용돈을 주며 금융교육에 관심 있는 부모 <b>30만 곳</b></div></div>
@@ -251,7 +277,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="초등 1~3학년이 98만 명, 용돈을 정기적으로 받는 집이 82만 곳입니다. 그중 <em>이미 돈 교육에 관심이 있고 아이 소비에 걱정도 있는</em> 집이 30만 곳이에요. <em>설명이 가장 짧게 끝나는 집</em>이라 여기부터 만납니다."
  data-br="이 30만 집이 지금 쓰고 있는 앱을 열어보면요.">
   <div class="kicker">시장 <span>· 첫 손님</span></div>
-  <h1>용돈 주는 <em>82만 집</em> 중, <em>30만 집</em>이 첫 손님입니다</h1>
+  <h1>용돈을 주는 <em>82만 집</em> 가운데,<br>이미 고민을 시작한 <em>30만 집</em>이 첫 손님입니다</h1>
   <div class="body">
     <div class="fun">
       <div class="l1">초등 1~3학년 <small>97만 6천 명</small></div>
@@ -268,7 +294,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="퍼핀, 아이부자, 카카오뱅크 미니 — 다 열어봤습니다. 공통점이 하나 있어요. <em>며칠 했고, 몇 문제 풀었고, 얼마 벌었는지</em>를 셉니다.<br>퍼핀은 퀴즈가 7과목인데 <em>그중 4과목이 금융이 아닙니다.</em> 한국사, 시사, 어휘, 과학기술이요. 그리고 틀려도 다시 풀면 보상이 절반 나옵니다.<br><em>공부를 안 해도 숫자는 올라가는 구조</em>예요. 그래서 그 숫자로는 성장을 알 수 없습니다."
  data-br="이게 좋은 빈자리인데, 왜 아직 아무도 안 채웠을까요.">
   <div class="kicker">시장 <span>· 지금 앱들</span></div>
-  <h1>그런데 지금 앱들은 전부 <b>“얼마나 했나”</b>만 셉니다</h1>
+  <h1>그런데 지금 나와 있는 앱들은<br>아이가 <b>얼마나 했는지</b>만 세고 있습니다</h1>
   <p class="lead">“무엇이 달라졌나”를 보여주는 화면은 <strong>국내에 한 곳도 없습니다</strong></p>
   <div class="body">
     <div class="row">
@@ -295,7 +321,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="하나은행이 78만 명, 카카오뱅크가 275만 명, 토스가 320만 장 — <em>전부 무료</em>입니다. 가격으로는 못 싸웁니다.<br>그래서 다들 <em>만들기 쉬운 쪽</em>, 즉 퀴즈와 활동량을 셉니다. 행동이 바뀌었는지 판단하는 건 어렵고, 은행에는 학습 기록이 없어서 구조적으로 어렵습니다. 저희는 그 어려운 쪽을 하려고 합니다."
  data-br="그럼 실제 사용자 한 분의 일요일 밤을 보시겠습니다.">
   <div class="kicker">시장 <span>· 왜 비어 있나</span></div>
-  <h1>“무엇이 달라졌나”는 어렵고, <em>가격 경쟁은 이미 막혀</em> 있습니다</h1>
+  <h1><em>무엇이 달라졌는지</em> 보여주는 일은 어렵고,<br>가격으로 싸울 길은 <em>이미 막혀</em> 있습니다</h1>
   <div class="body">
     <div class="row">
       <div class="card grow"><div class="big">78만명</div><p style="margin-top:6px">하나은행 아이부자<br><span class="tag o" style="margin-top:9px">완전 무료</span></p></div>
@@ -312,7 +338,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="중학교 선생님 정미경 씨, 여덟 살 딸에게 용돈앱을 8개월 쓰게 했습니다.<br>일요일 밤 아이 재우고 앱을 열면 이 화면이 나옵니다. 며칠 했고, 몇 문제 풀었고, 얼마 벌었다. <em>숫자 세 개.</em> 3초 보고 닫습니다.<br>확인은 됩니다. 그런데 <em>‘우리 애가 돈을 잘 쓰게 됐나’는 알 수가 없어요.</em><br><br>⚠️ “확인 기능이 없다”고 하면 <em>틀립니다</em> — 확인 화면은 2024년 10월에 나왔습니다."
  data-br="정미경 씨가 못 본 게 정확히 두 가지입니다.">
   <div class="kicker">고객 <span>· 실제 사용자</span></div>
-  <h1>그래서 정미경 씨는 <em>8개월째 3초 보고</em> 앱을 닫습니다</h1>
+  <h1>그래서 정미경 씨는 8개월 동안<br>같은 화면을 <b>3초만 보고 앱을 닫아</b> 왔습니다</h1>
   <div class="body">
     <div class="row" style="align-items:center">
       <div class="ph">
@@ -337,7 +363,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="문제는 두 개입니다.<br>첫째, <em>아이가 배운 걸 실제로 해보지 않습니다.</em> 퀴즈는 풀지만 그게 생활로 안 넘어가요.<br>둘째, <em>해봤는지를 부모가 확인할 방법이 없습니다.</em> 화면에 그 칸이 아예 없으니까요.<br>이 두 개가 저희가 푸는 문제 전부입니다."
  data-br="이게 정미경 씨 한 분의 사정인지, 숫자로 확인해봤습니다.">
   <div class="kicker">고객 <span>· 문제 정의</span></div>
-  <h1>못 본 건 두 가지 — <em>아이의 실천</em>, 그리고 <em>그 확인</em></h1>
+  <h1>정미경 씨가 못 본 것은 <em>아이의 실천</em>,<br>그리고 <em>그것을 확인할 방법</em>이었습니다</h1>
   <div class="body">
     <div class="row">
       <div class="card r grow" style="padding:30px 32px">
@@ -361,7 +387,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="초등 학부모께 물으면 가르치고 싶은 1위가 <em>저축</em>입니다. 열 명 중 여섯 명이 넘어요. 그런데 아이가 용돈을 실제로 쓰는 걸 보면 저축은 <em>꼴찌</em>, 열 명 중 한 명입니다.<br>왜 벌어질까요. 전 세계 연구를 모으면 돈 교육은 <em>아는 것은 늘리지만 행동은 거의 못 바꿉니다.</em> 차이가 다섯 배 가까이예요. <em>가르치는 것과 행동을 바꾸는 건 다른 문제</em>입니다."
  data-br="그래서 저희가 약속하는 건 두 가지입니다.">
   <div class="kicker">고객 <span>· 숫자로 확인</span></div>
-  <h1>정미경 씨만의 일이 아닙니다 — <em>66% 대 13%</em></h1>
+  <h1>정미경 씨만의 사정이 아닙니다<br>부모 <em>66%</em>가 원하는 것을<br>아이는 <b>13%</b>만 하고 있습니다</h1>
   <div class="body">
     <div class="bars">
       <div class="bar"><div class="lb">부모가 가르치고<br>싶은 것 1위 — 저축</div>
@@ -386,7 +412,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="두 가지를 약속합니다.<br>첫째, <em>아이가 돈에 대해 배우고, 실제로 해보고, 그러면서 자랍니다.</em><br>둘째, <em>부모님께는 얼마나 배웠는지가 아니라 행동이 어떻게 달라졌는지를 보여드립니다.</em><br>순서가 중요합니다. <em>첫 번째가 일어나야 두 번째에 보여줄 게 생깁니다.</em> 아이가 안 하면 부모 화면은 텅 빈 채로 정상 작동해요. 그래서 실천을 먼저 만들었습니다."
  data-br="그 ‘실천’을 어떻게 만들었는지 보여드리겠습니다.">
   <div class="kicker">약속</div>
-  <h1>그래서 <em>두 가지</em>를 약속합니다</h1>
+  <h1>그래서 두 가지를 약속합니다<br>아이는 <em>해보면서 자라고</em>, 부모는 <em>달라진 것을 봅니다</em></h1>
   <div class="body">
     <div class="card g" style="padding:30px 34px">
       <div class="tag">약속 ① · 아이</div>
@@ -406,7 +432,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="부모님이 보는 나무가 한 칸 자라려면 세 가지가 다 필요합니다. 공부를 끝내고, 퀴즈를 맞히고, <em>그리고 실제로 한 번 해봐야</em> 합니다.<br>여기가 핵심이에요. <em>퀴즈를 100개 풀어도 실천이 0이면 나무는 한 칸도 안 자랍니다.</em> 반대로 한 번 해보면 자랍니다.<br>해볼 방법은 다섯 가지를 만들었습니다. 집안일 미션, 쓰기 전 계획 지키기, 모으기 목표 달성, 예적금, 그리고 출석이요.<br>그러니까 <em>나무가 자랐다는 것 자체가 ‘배운 걸 실제로 했다’는 증거</em>가 됩니다."
  data-br="이 다섯 개 중에서 가장 중요한 하나를 자세히 보여드리겠습니다.">
   <div class="kicker">개선안 <span>· 실천 ①</span></div>
-  <h1><b>퀴즈를 100개 풀어도</b> 나무는 <b>안 자랍니다</b></h1>
+  <h1><b>퀴즈를 100개 풀어도 나무는 자라지 않습니다</b><br>실제로 <em>한 번 해봐야</em> 자랍니다</h1>
   <p class="lead">한 번 해봐야 자랍니다 — 그래서 <strong>나무가 자랐다는 것 자체가 증거</strong>가 됩니다</p>
   <div class="body">
     <div class="row" style="align-items:center">
@@ -438,7 +464,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="지금 앱들은 아이가 돈을 쓰면 <em>문자로 알려줍니다.</em> 다 쓴 다음에요. 그때는 늦습니다.<br>저희는 순서를 뒤집었습니다. <em>나가기 전에 아이가 네 칸을 적습니다.</em> 영수증을 미리 쓰는 셈이에요.<br>결제 내역이 들어오면 적어둔 것과 실제를 <em>가게 종류별로 겹쳐서</em> 보여줍니다. 문구점에 5천 원 적었는데 문구 3천, 간식 3천이 찍혔으면 — <em>적지 않았던 가게에서 3천 원이 나갔다는 게 그림으로 보입니다.</em><br>그리고 <em>별은 지킨 날에만</em> 줍니다. 넘긴 날에도 돌아보는 화면은 똑같이 보여주지만 별은 안 줘요. 확인만 해도 별이 나오면 부모 화면이 거짓말을 하게 되니까요."
  data-br="이제 이 기능들이 실제 화면에서 어떻게 이어지는지 보시겠습니다.">
   <div class="kicker">개선안 <span>· 실천 ②</span></div>
-  <h1>그리고 쓰기 전에, <em>영수증을 미리 씁니다</em></h1>
+  <h1>그리고 돈을 쓰기 전에,<br>아이가 직접 <em>영수증을 미리 써 보게</em> 합니다</h1>
   <div class="body">
     <div class="row">
       <div class="plan">
@@ -469,7 +495,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="전체 흐름입니다. 부모 동의로 시작하고, 아이가 배우고, 다섯 가지 중 하나를 <em>실제로 해봅니다.</em> 그러면 별이 쌓여요.<br>그 별이 <em>아이 쪽에서는 옷장으로</em>, <em>부모 쪽에서는 나무로</em> 갑니다. 같은 기록이 두 갈래로 번역되는 거예요.<br>그리고 한 달이 끝나면 그달 전체가 한 장으로 정리됩니다."
  data-br="아이가 보는 화면부터요.">
   <div class="kicker">사용자 화면 <span>· 전체 흐름</span></div>
-  <h1>배우고 → <em>해보고</em> → 별이 쌓이고 → 나무가 자랍니다</h1>
+  <h1>배우고, <em>해보고</em>, 별이 쌓이고,<br>나무가 자라고, 한 달 뒤에 정리됩니다</h1>
   <div class="body">
     <div class="flow">
       <div class="n">🔐 부모 동의<small>먼저 끝나야 아이 화면이 열림</small></div><div class="s">→</div>
@@ -491,7 +517,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="여덟 살에게 나무 네 그루와 진도율을 보여주면 아무것도 안 읽습니다. 그래서 아이 화면은 <em>별과 옷장</em>입니다. <em>‘별 세 개만 더 모으면 새 옷’</em>이 훨씬 잘 통해요. 아이는 재미로 하고, 그 기록이 부모 쪽으로 넘어갑니다."
  data-br="같은 기록이 부모님 화면에서는 이렇게 보입니다.">
   <div class="kicker">사용자 화면 <span>· 아이</span></div>
-  <h1>아이는 나무를 안 봅니다 — <em>별 모아서 옷을 삽니다</em></h1>
+  <h1>아이는 나무를 보지 않습니다<br><em>별을 모아서 캐릭터 옷을 삽니다</em></h1>
   <div class="body">
     <div class="row" style="align-items:center">
       <div class="ph" style="width:262px">
@@ -519,7 +545,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="돈에는 네 가지가 있습니다. 버는 것, 잘 쓰는 것, 모으는 것, 불리는 것. 나무도 네 그루예요.<br>정미경 씨가 열면 <em>‘벌기는 자랐고 모으기는 씨앗이네’</em>가 바로 보입니다. 숫자를 해석할 필요가 없어요.<br>멈춰 있으면 <em>왜 멈췄는지도 적혀 있습니다.</em> 이게 없으면 부모님은 멈춘 걸 <em>아이 탓으로 돌리거나 앱을 안 믿게</em> 됩니다."
  data-br="그리고 한 달이 끝나면 이 화면이 남습니다.">
   <div class="kicker">사용자 화면 <span>· 부모</span></div>
-  <h1>부모는 <em>나무 네 그루</em>로 봅니다 — 어느 칸이 멈췄는지 한눈에</h1>
+  <h1>부모는 <em>나무 네 그루</em>로 봅니다<br>어느 칸이 멈췄는지 한눈에 드러납니다</h1>
   <div class="body">
     <div class="trees">
       <div class="t"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">나무</div></div>
@@ -541,7 +567,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="한 달이 끝나면 이 화면이 나옵니다. 제일 중요한 건 맨 아래 <em>‘지난달과 비교’</em>예요.<br>사려다 멈춘 게 2번에서 5번. 가격 비교가 0번에서 4번. 저축 비율이 12%에서 32%.<br><em>이게 저희가 말하는 ‘행동이 달라졌다’입니다.</em> 이 세 줄이 이 서비스의 결론입니다."
  data-br="그래서 정미경 씨의 8개월은 이렇게 달라집니다.">
   <div class="kicker">사용자 화면 <span>· 한 달 뒤 · 결론</span></div>
-  <h1>한 달 뒤, <em>사려다 멈춘 게 2번 → 5번</em></h1>
+  <h1>한 달 뒤에 남는 것은, <em>사려다 멈춘 횟수가</em><br><em>2번에서 5번으로</em> 늘었다는 사실입니다</h1>
   <p class="lead">“몇 문제 풀었나”가 아니라 <strong>“무엇이 달라졌나”</strong> — 이 세 줄이 이 서비스의 결론입니다</p>
   <div class="body">
     <div class="chg">
@@ -558,7 +584,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="처음에 보여드린 정미경 씨입니다. 왼쪽이 지금이에요. 8개월 동안 숫자 세 개를 3초 보고 닫았습니다.<br>오른쪽이 저희 서비스를 8개월 쓴 뒤입니다. <em>‘잘 쓰기가 씨앗에서 나무가 됐고, 사려다 멈춘 게 두 배가 됐다.’</em> 이걸 보고 아이에게 말을 걸 수 있어요.<br>저희가 만드는 건 <em>부모가 아이에게 할 말이 생기는 화면</em>입니다."
  data-br="그럼 이게 잘 되고 있는지는 무엇으로 볼까요.">
   <div class="kicker">사용자 화면 <span>· 정미경 씨의 8개월</span></div>
-  <h1>같은 8개월, <em>다른 결말</em></h1>
+  <h1>같은 8개월인데,<br>정미경 씨에게 <em>남는 것이 달라집니다</em></h1>
   <div class="body">
     <div class="split">
       <div class="h2">
@@ -580,7 +606,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="숫자를 하나만 보라면 <em>이번 주에 실제로 뭔가 해본 아이가 몇 퍼센트인가</em>입니다. 접속만 한 아이, 퀴즈만 푼 아이는 안 들어갑니다.<br>왜냐면 <em>이 숫자가 떨어지면 나무도 한 달 화면도 다 같이 죽습니다.</em><br>그 위에 생존 조건이 하나 있어요. <em>아이가 계획을 적는 비율이 절반을 넘는가.</em> 안 적으면 저희는 아무것도 못 하니까요."
  data-br="그리고 ‘만들었다’로 끝내지 않으려고 기준을 정해뒀습니다.">
   <div class="kicker">지표 <span>· 볼 숫자</span></div>
-  <h1>성공은 <em>숫자 하나</em>로 봅니다</h1>
+  <h1>성공은 <em>숫자 하나</em>로 봅니다<br>이번 주에 <em>실제로 뭔가 해본 아이</em>의 비율입니다</h1>
   <div class="body">
     <div class="mstack">
       <div class="m surv"><div class="lbl">생존 조건</div>
@@ -599,7 +625,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="기능을 ‘만들었다’로 끝내지 않으려고 넘어야 할 선을 숫자로 정했습니다. 부모님께 나무를 <em>5초만 보여주고 덮은 뒤</em> 뭐가 달라졌는지 말할 수 있어야 합니다. 여덟 분 중 여섯 분이면 통과, 안 되면 화면을 다시 만듭니다.<br>반대로 <em>절대 넘으면 안 되는 선도 세 개</em> 있어요. 별 개수가 틀리는 일, 동의 전에 아이 화면이 열리는 일, 아이 위치를 수집하는 일 — <em>모두 0건</em>입니다."
  data-br="마지막으로, 저희가 못 하는 것과 다음에 할 것입니다.">
   <div class="kicker">지표 <span>· 기준</span></div>
-  <h1>통과 기준은 <em>숫자로</em>, 넘지 말 선은 <b>0으로</b></h1>
+  <h1>됐다고 볼 기준은 <em>숫자로</em> 정하고,<br>절대 넘지 말아야 할 선은 <b>0으로</b> 두었습니다</h1>
   <div class="body">
     <div class="row">
       <div class="card grow"><h3>됐다고 볼 수 있는 기준</h3>
@@ -621,7 +647,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="세 가지를 솔직하게 말씀드립니다.<br>첫째, <em>부모님을 아직 한 분도 인터뷰하지 않았습니다.</em> 오늘 정미경 씨 이야기는 자료를 근거로 구성한 것입니다. 여덟 집을 만나 확인할 계획입니다.<br>둘째, <em>아이가 계획을 안 적으면 그 소비는 그냥 지나갑니다.</em> 원래는 매장에 3분 이상 있으면 알림을 주려 했는데, <em>정작 돈이 새는 자판기는 30초면 끝나서</em> 그 방식으로는 못 잡았습니다. 그래서 위치 기능을 없애고 적는 방식으로 바꿨어요.<br>셋째, <em>게임 안에서 3초에 끝나는 결제는 여전히 못 잡습니다.</em> 카드가 아니라 앱 안에서 일어나니까요."
  data-br="그래서 다음에 무엇을 할지로 마치겠습니다.">
   <div class="kicker">한계</div>
-  <h1>아직 <b>못 하는 것 셋</b>을 먼저 말씀드립니다</h1>
+  <h1>다만 <b>아직 못 하는 것이 셋</b> 있습니다<br>그것부터 말씀드리겠습니다</h1>
   <div class="body">
     <div class="lrow">
       <div class="it"><div class="no">1</div><div class="tx"><b>부모님을 아직 한 분도 인터뷰하지 않았습니다.</b>
@@ -640,7 +666,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="첫 버전은 열세 개, 다음이 네 개입니다. 예적금으로 마지막 칸을 여는 것, 카드 없이 학습부터 시작하는 것, 별을 옷장 밖에서 쓰는 것, 기존 기록을 옮겨오는 것.<br>그 전에 확인할 게 세 개 있습니다. <em>아이가 계획을 정말 적는지, 부모님이 이걸 원하는지, 파트너 수수료 조건이 되는지.</em><br>저희가 아는 것과 모르는 것을 다 문서에 적어놨습니다. 감사합니다."
  data-br="— 발표 끝 · 질의응답">
   <div class="kicker">다음</div>
-  <h1>첫 버전 <em>13개</em>, 다음 <em>4개</em></h1>
+  <h1>첫 버전으로 <em>13개</em>를 만들고,<br>그다음에 <em>4개</em>를 더합니다</h1>
   <div class="body">
     <div class="row">
       <div class="col grow">
@@ -687,6 +713,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>←</kbd><kbd>→</kbd> 이전 / 다음 장 &nbsp;·&nbsp; <kbd>Space</kbd> 다음</p>
   <p><kbd>Home</kbd><kbd>End</kbd> 처음 / 끝</p>
   <p><kbd>O</kbd> 제목 목차 (제목만 이어 읽기)</p>
+  <p style="color:#5E655C;font-size:14px">상단 목차의 <b>구간 이름을 클릭</b>하면 그 구간 첫 장으로 이동합니다.</p>
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
@@ -700,7 +727,8 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   var stage=document.getElementById('stage'), bar=document.getElementById('bar'),
       pg=document.getElementById('pg'), blk=document.getElementById('blk'),
       notes=document.getElementById('notes'), nx=document.getElementById('nx'),
-      help=document.getElementById('help'), tmr=document.getElementById('tmr');
+      help=document.getElementById('help'), tmr=document.getElementById('tmr'),
+      rail=document.getElementById('rail');
   var budget=S.map(function(s){return +s.dataset.sec||25});
   var total=budget.reduce(function(a,b){return a+b},0);
 
@@ -708,9 +736,43 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     stage.style.transform='scale('+s+')';}
   addEventListener('resize',fit); fit();
 
+  /* ---- 상단 목차 레일 ---- */
+  var NAMES={1:'시작',2:'요약',3:'시장',4:'문제',5:'약속',6:'방법',7:'화면',8:'지표',9:'한계'};
+  var groups=[], gof=[];              // groups[g]={no,label,idx:[...]}, gof[slide]=g
+  S.forEach(function(s,x){
+    var no=+((s.dataset.blk.match(/블록\s*(\d+)/)||[])[1]||0);
+    var g=groups.length-1;
+    if(g<0||groups[g].no!==no){groups.push({no:no,label:NAMES[no]||('구간 '+no),idx:[]});g=groups.length-1}
+    groups[g].idx.push(x); gof[x]=g;
+  });
+  groups.forEach(function(gr,g){
+    var el=document.createElement('div'); el.className='ri'; el.dataset.g=g;
+    var dots=gr.idx.map(function(){return '<i></i>'}).join('');
+    el.innerHTML='<span class="lb">'+gr.label+'</span><span class="dt">'+dots+'</span>';
+    el.onclick=function(){show(gr.idx[0])};
+    rail.appendChild(el);
+  });
+  rail.insertAdjacentHTML('beforeend','<div class="sp"></div><div class="cnt"><b id="rc">1</b>/'+n+'</div><div class="pl" id="rp"></div>');
+  var RIS=[].slice.call(rail.querySelectorAll('.ri')), rc=document.getElementById('rc'), rp=document.getElementById('rp');
+
+  function paintRail(){
+    var cg=gof[i];
+    RIS.forEach(function(el,g){
+      el.classList.toggle('cur',g===cg);
+      el.classList.toggle('done',g<cg);
+      [].slice.call(el.querySelectorAll('.dt i')).forEach(function(d,x){
+        d.classList.toggle('now',g===cg&&groups[g].idx[x]===i);
+      });
+    });
+    rc.textContent=i+1;
+    rp.style.width=((i+1)/n*100)+'%';
+    rail.classList.toggle('hide',i===0);      // 표지에서는 감춤
+  }
+
   function show(k){
     i=Math.max(0,Math.min(n-1,k));
     S.forEach(function(s,x){s.classList.toggle('on',x===i)});
+    paintRail();
     bar.style.width=((i+1)/n*100)+'%';
     pg.innerHTML='<b>'+(i+1)+'</b> / '+n;
     blk.textContent=S[i].dataset.blk+' · 목표 '+budget[i]+'초';
