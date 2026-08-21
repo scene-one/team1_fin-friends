@@ -142,6 +142,7 @@ class Component extends DCLogic {
       return { bg: t.bg, border: t.border, color: t.color, text: have + ' / ' + need };
     };
     const build = (o) => {
+      // o.locked — MVP 범위 밖 영역 표시
       const learn = chip(o.learn, 3, false);
       const quiz = chip(o.quiz, 5, false);
       const act = chip(o.act, 1, true);
@@ -156,8 +157,10 @@ class Component extends DCLogic {
         quizBg: quiz.bg, quizBorder: quiz.border, quizColor: quiz.color, quizText: quiz.text,
         actBg: act.bg, actBorder: act.border, actColor: act.color, actText: act.text,
         actLabelColor: o.act < 1 ? '#B36B3A' : '#7E786F',
-        blocked,
-        blockedText: '학습과 퀴즈는 다 채웠습니다. 행동 실천 1회가 남았습니다.'
+        blocked: o.locked ? true : blocked,
+        blockedText: o.locked
+          ? '「불리기」 실천은 1차 출시 범위 밖입니다 (F15 · P-20 확인 선행). 학습·퀴즈만 집계됩니다.'
+          : '학습과 퀴즈는 다 채웠습니다. 행동 실천 1회가 남았습니다.'
       };
     };
     return {
@@ -165,7 +168,7 @@ class Component extends DCLogic {
         build({ name: '벌기', hint: '일하면 돈이 생겨요', stage: practice >= 1 ? '나무' : '새싹', reset: '매달 초기화', progress: 80, accuracy: 78, mission: 89, nextLabel: practice >= 1 ? '다음 단계까지' : '나무가 되기까지', learn: 3, quiz: 5, act: practice }),
         build({ name: '잘 쓰기', hint: '진짜 필요한 걸까?', stage: '새싹', reset: '매달 초기화', progress: 62, accuracy: 71, mission: 64, nextLabel: '나무가 되기까지', learn: 2, quiz: 5, act: 1 }),
         build({ name: '모으기', hint: '안 쓰고 두면 쌓여요', stage: '씨앗', reset: '매달 초기화', progress: 25, accuracy: 80, mission: 40, nextLabel: '새싹이 되기까지', learn: 1, quiz: 3, act: 0 }),
-        build({ name: '불리기', hint: '모아두면 저절로 늘어나요', stage: '씨앗', reset: '적금 만기까지 6개월', progress: 10, accuracy: 0, mission: 0, nextLabel: '새싹이 되기까지', learn: 0, quiz: 0, act: 0 })
+        build({ name: '불리기', hint: '모아두면 저절로 늘어나요', stage: '씨앗', reset: 'MVP 이후 · 학습만 열림', progress: 10, accuracy: 0, mission: 0, nextLabel: '실천 경로가 아직 닫혀 있습니다', learn: 0, quiz: 0, act: 0, locked: true })
       ]
     };
   }
