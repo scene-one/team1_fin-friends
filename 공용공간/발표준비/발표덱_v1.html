@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핀프렌즈 발표덱 v1</title>
+<style>
+:root{
+  --bg:#FAFAF7; --ink:#171A17; --sub:#5E655C; --line:#E2E3DD;
+  --green:#1F6B4A; --green-l:#EAF3EE; --amber:#B8801F; --amber-l:#FBF3E2;
+  --red:#B0402C; --red-l:#FBECE8; --grey:#9AA096;
+  --f:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#22251F;font-family:var(--f);overflow:hidden}
+body.ov{overflow:auto;background:#1A1D18}
+
+/* ---------- stage ---------- */
+#wrap{position:fixed;inset:0;display:grid;place-items:center}
+#stage{width:1280px;height:720px;background:var(--bg);color:var(--ink);
+  position:relative;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.slide{position:absolute;inset:0;padding:62px 76px 64px;display:none;flex-direction:column}
+.slide.on{display:flex}
+
+/* ---------- type ---------- */
+.kicker{font-size:15px;letter-spacing:.08em;color:var(--green);font-weight:700;margin-bottom:14px}
+.kicker span{color:var(--grey);font-weight:600}
+h1{font-size:44px;line-height:1.28;letter-spacing:-.02em;font-weight:800;max-width:1060px}
+h1 em{font-style:normal;color:var(--green)}
+h1 b{color:var(--red);font-weight:800}
+.lead{margin-top:16px;font-size:21px;line-height:1.5;color:var(--sub);max-width:960px;font-weight:500}
+.lead strong{color:var(--ink);font-weight:700}
+.body{margin-top:auto;margin-bottom:auto;padding:26px 0}
+.src{position:absolute;left:76px;right:76px;bottom:26px;font-size:12.5px;color:var(--grey);
+  line-height:1.5;border-top:1px solid var(--line);padding-top:10px}
+
+/* ---------- cover ---------- */
+.cover{background:linear-gradient(160deg,#12452F 0%,#1F6B4A 62%,#2C7F59 100%);color:#fff;
+  padding:0 90px;justify-content:center}
+.cover h1{font-size:56px;max-width:1000px;color:#fff}
+.cover h1 em{color:#BFE6CF}
+.cover .brand{font-size:19px;letter-spacing:.3em;font-weight:700;color:#BFE6CF;margin-bottom:26px}
+.cover .lead{color:#D6EADD;font-size:22px;max-width:880px}
+.cover .meta{position:absolute;left:90px;bottom:56px;font-size:14px;color:#9CCBAF;line-height:1.9}
+.cover .tree{position:absolute;right:78px;bottom:56px;font-size:88px;opacity:.9;letter-spacing:6px}
+
+/* ---------- primitives ---------- */
+.row{display:flex;gap:20px;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:14px}
+.grow{flex:1}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+.card.g{background:var(--green-l);border-color:#CFE3D7}
+.card.a{background:var(--amber-l);border-color:#EEDFBD}
+.card.r{background:var(--red-l);border-color:#F0D6CE}
+.card h3{font-size:17px;font-weight:800;margin-bottom:10px;color:var(--green)}
+.card.r h3{color:var(--red)} .card.a h3{color:var(--amber)}
+.card p{font-size:16.5px;line-height:1.6;color:var(--sub)}
+.card p strong{color:var(--ink)}
+.big{font-size:40px;font-weight:800;letter-spacing:-.02em}
+.big.g{color:var(--green)} .big.r{color:var(--red)} .big.a{color:var(--amber)}
+.tag{display:inline-block;font-size:13.5px;font-weight:700;padding:5px 12px;border-radius:999px;
+  background:var(--green-l);color:var(--green);border:1px solid #CFE3D7}
+.tag.r{background:var(--red-l);color:var(--red);border-color:#F0D6CE}
+.tag.a{background:var(--amber-l);color:var(--amber);border-color:#EEDFBD}
+.tag.o{background:#fff;color:var(--grey);border-color:var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.arrow{display:grid;place-items:center;font-size:26px;color:var(--grey);padding:0 4px}
+
+/* 6-cell grid */
+.g6{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.g6 .cell{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px 20px}
+.g6 .k{font-size:13px;font-weight:800;color:var(--green);letter-spacing:.05em;margin-bottom:7px}
+.g6 .v{font-size:17px;line-height:1.5;font-weight:600}
+.g6 .v b{color:var(--green)}
+
+/* funnel */
+.fun{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.fun div{border-radius:10px;padding:15px 22px;font-size:19px;font-weight:700;color:#fff;
+  display:flex;justify-content:space-between;align-items:center}
+.fun .l1{width:100%;background:#B9C2B6} .fun .l2{width:78%;background:#5C8C74}
+.fun .l3{width:52%;background:var(--green);font-size:22px}
+.fun small{font-weight:600;opacity:.9;font-size:14px}
+
+/* phone mock */
+.ph{width:238px;border:9px solid #2B2F2A;border-radius:26px;background:#fff;padding:16px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.ph .ttl{font-size:12.5px;color:var(--grey);font-weight:700;margin-bottom:12px;text-align:center}
+.ph .num{display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 4px;border-bottom:1px dashed var(--line);font-size:14px;color:var(--sub)}
+.ph .num b{font-size:20px;color:var(--ink)}
+.ph .num.hl b{color:var(--red)}
+.ph .foot{margin-top:14px;font-size:12px;color:var(--grey);text-align:center}
+
+/* bars */
+.bars{display:flex;flex-direction:column;gap:20px}
+.bar{display:flex;align-items:center;gap:16px;font-size:17px}
+.bar .lb{width:190px;font-weight:700;text-align:right;flex:none}
+.bar .tr{flex:1;height:36px;background:#EDEEE9;border-radius:7px;overflow:hidden}
+.bar .fl{height:100%;border-radius:7px;display:flex;align-items:center;justify-content:flex-end;
+  padding-right:12px;color:#fff;font-weight:800;font-size:16px}
+.bar .fl.g{background:var(--green)} .bar .fl.r{background:#C2705C}
+.bar.sm .tr{height:22px} .bar.sm .lb{font-size:15px;font-weight:600}
+.bar.sm .fl{font-size:13px}
+
+/* tree row */
+.trees{display:flex;gap:14px}
+.trees .t{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 12px;text-align:center}
+.trees .t .ic{font-size:44px;line-height:1.1}
+.trees .t .nm{font-size:16px;font-weight:800;margin-top:8px}
+.trees .t .st{font-size:13px;color:var(--grey);margin-top:4px}
+.trees .t.stall{background:var(--red-l);border-color:#F0D6CE}
+.trees .t.stall .st{color:var(--red);font-weight:700}
+
+/* flow */
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.flow .n{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 10px;
+  text-align:center;font-size:15px;font-weight:700;line-height:1.4}
+.flow .n small{display:block;font-weight:600;color:var(--grey);font-size:12.5px;margin-top:5px}
+.flow .n.k{background:var(--green);color:#fff;border-color:var(--green)}
+.flow .n.k small{color:#C8E4D5}
+.flow .s{color:var(--grey);font-size:19px;flex:none}
+
+/* plan card */
+.plan{width:300px;background:#fff;border:2px solid var(--green);border-radius:14px;padding:18px 20px}
+.plan .h{font-size:14px;font-weight:800;color:var(--green);margin-bottom:12px}
+.plan .f{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:15.5px}
+.plan .f span{color:var(--grey);font-weight:600} .plan .f b{font-weight:700}
+.cmp{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.cmp .l{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:16px;
+  border-bottom:1px dashed var(--line)}
+.cmp .l:last-child{border:0}
+.cmp .ok{color:var(--green);font-weight:700} .cmp .no{color:var(--red);font-weight:700}
+.fork{display:flex;gap:14px;margin-top:14px}
+.fork div{flex:1;border-radius:11px;padding:13px 16px;font-size:15.5px;font-weight:700}
+.fork .y{background:var(--green-l);color:var(--green);border:1px solid #CFE3D7}
+.fork .n2{background:#F2F3EF;color:var(--sub);border:1px solid var(--line)}
+
+/* compare rows */
+.chg{display:flex;flex-direction:column;gap:12px}
+.chg .r2{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:15px 20px;font-size:19px}
+.chg .r2 .nm{flex:1;font-weight:700}
+.chg .r2 .fr{color:var(--grey);font-weight:700}
+.chg .r2 .to{color:var(--green);font-weight:800;font-size:24px}
+
+/* metric stack */
+.mstack{display:flex;flex-direction:column;gap:12px}
+.mstack .m{border-radius:13px;padding:18px 22px;display:flex;align-items:center;gap:18px}
+.mstack .m .lbl{font-size:13.5px;font-weight:800;letter-spacing:.04em;width:118px;flex:none}
+.mstack .m .txt{font-size:18px;font-weight:700;line-height:1.45}
+.mstack .m .txt small{display:block;font-size:14px;font-weight:600;color:var(--sub);margin-top:4px}
+.mstack .surv{background:var(--amber-l);border:1px solid #EEDFBD} .mstack .surv .lbl{color:var(--amber)}
+.mstack .star{background:var(--green);color:#fff} .mstack .star .lbl{color:#BFE6CF}
+.mstack .star .txt small{color:#CFE7DA}
+.mstack .sub2{background:#fff;border:1px solid var(--line)} .mstack .sub2 .lbl{color:var(--grey)}
+
+/* split before/after */
+.split{display:flex;gap:0;align-items:stretch;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.split .h2{flex:1;padding:24px 26px;background:#F2F3EF}
+.split .h2+.h2{background:var(--green-l);border-left:1px solid var(--line)}
+.split .h2 .t2{font-size:14px;font-weight:800;letter-spacing:.04em;color:var(--grey);margin-bottom:14px}
+.split .h2+.h2 .t2{color:var(--green)}
+.split .h2 p{font-size:17px;line-height:1.65;color:var(--sub)}
+.split .h2 p strong{color:var(--ink)}
+
+/* list rows */
+.lrow{display:flex;flex-direction:column;gap:12px}
+.lrow .it{display:flex;gap:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+.lrow .it .no{width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;
+  font-size:14px;font-weight:800;display:grid;place-items:center;flex:none;margin-top:2px}
+.lrow .it .tx{font-size:17px;line-height:1.55}
+.lrow .it .tx b{font-weight:800}
+.lrow .it .tx small{display:block;color:var(--grey);font-size:14px;margin-top:4px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:3px;background:var(--green);width:0;z-index:40;transition:width .2s}
+#hud{position:fixed;right:16px;bottom:14px;z-index:40;display:flex;gap:8px;align-items:center;
+  font:600 12.5px var(--f);color:#8E958A}
+#hud b{color:#DCE3D7;font-weight:800}
+#hud .k{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:6px;
+  padding:3px 8px;color:#C3CBBD}
+#tmr{position:fixed;left:16px;bottom:14px;z-index:40;font:700 13px var(--f);color:#8E958A}
+#tmr.run{color:#8FD3AC} #tmr.over{color:#E58C74}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;z-index:45;
+  background:rgba(16,18,15,.97);color:#E4E8E0;padding:20px 26px 24px;display:none;
+  border-top:2px solid var(--green);font-size:16px;line-height:1.7}
+#notes.on{display:block}
+#notes .nh{font:800 12.5px var(--f);letter-spacing:.1em;color:#8FD3AC;margin-bottom:10px}
+#notes em{color:#fff;font-style:normal}
+#notes .br{margin-top:12px;padding-top:10px;border-top:1px dashed #394134;color:#A9B3A3;font-size:15px}
+#help{position:fixed;inset:0;background:rgba(10,12,9,.9);z-index:60;display:none;place-items:center}
+#help.on{display:grid}
+#help .box{background:#fff;border-radius:16px;padding:34px 40px;max-width:520px;font-size:16px;line-height:1.9}
+#help h4{font-size:20px;font-weight:800;margin-bottom:14px}
+#help kbd{background:#F1F2EE;border:1px solid var(--line);border-radius:5px;padding:2px 7px;
+  font:700 13px var(--f);margin-right:6px}
+/* overview */
+#ov{display:none;padding:44px 40px 60px}
+body.ov #wrap{display:none} body.ov #ov{display:block}
+#ov h2{color:#E8EDE4;font-size:22px;font-weight:800;margin-bottom:6px}
+#ov .sn{color:#8E958A;font-size:14px;margin-bottom:26px}
+#ov .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1560px;margin:0 auto}
+#ov .c{background:#F7F8F4;border-radius:12px;padding:16px 18px;cursor:pointer;border:2px solid transparent}
+#ov .c:hover{border-color:var(--green)}
+#ov .c .n{font:800 12px var(--f);color:var(--green);letter-spacing:.06em;margin-bottom:8px}
+#ov .c .t{font-size:15.5px;font-weight:700;line-height:1.45;color:var(--ink)}
+#ov .c .s{margin-top:9px;font-size:12px;color:var(--grey);font-weight:600}
+#ov .c.blk{background:#2E332B;border-color:#3C4239}
+#ov .c.blk .t{color:#CFD6C9}
+@media print{body{background:#fff}#hud,#bar,#tmr,#notes,#help{display:none!important}
+  #stage{box-shadow:none;transform:none!important}.slide{display:flex!important;page-break-after:always}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<div id="wrap"><div id="stage">
+
+<!-- 1 -->
+<section class="slide cover" data-blk="블록 1 · 표지" data-sec="15"
+ data-note="핀프렌즈입니다. 초등 1~3학년 아이가 <em>금융을 배우고, 배운 걸 실제로 해보고, 부모님이 그걸 확인할 수 있는</em> 서비스입니다."
+ data-br="먼저 한 장으로 전체를 말씀드리겠습니다.">
+  <div class="brand">F I N F R I E N D S</div>
+  <h1>금융 학습에서 <em>실천</em>까지,<br>그리고 <em>부모가 확인</em>합니다</h1>
+  <p class="lead">초등 1~3학년 아이의 용돈 — 배우고, 해보고, 달라진 것을 보여주는 서비스</p>
+  <div class="meta">기준 서비스 퍼핀 · 개선 실천 기능<br>팀 유림 · 병윤 · 하영 · 혜원</div>
+  <div class="tree">🌳</div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-blk="블록 2 · 한 장 요약" data-sec="40"
+ data-note="한 장으로 요약하면 이렇습니다. 부모가 용돈앱을 쓰게 하는 이유는 아이가 <em>돈을 잘 쓰게 되는 것</em>입니다. 아는 걸 늘리려는 게 아니에요.<br>그런데 지금 앱들은 며칠 했고 몇 문제 풀었는지만 보여줍니다. 그래서 저희는 <em>실천 없이는 화면이 안 움직이게</em> 만들고, <em>쓰기 전에 계획을 적게</em> 했습니다.<br>성공은 숫자 하나로 봅니다 — <em>이번 주에 실제로 뭔가 해본 아이가 몇 %인가.</em>"
+ data-br="그럼 지금 앱들이 어떻게 하고 있는지부터 보겠습니다.">
+  <div class="kicker">한 장 요약 <span>· 육하원칙</span></div>
+  <h1>부모가 원한 건 「아는 것」이 아니라 <em>「실천」</em>이었습니다</h1>
+  <div class="body">
+    <div class="g6">
+      <div class="cell"><div class="k">누가</div><div class="v">초등 1~3학년에게 용돈을 주며 금융교육에 관심 있는 부모 <b>30만 곳</b></div></div>
+      <div class="cell"><div class="k">언제</div><div class="v">용돈을 처음 주는 나이 <b>평균 여덟 살 반</b> — 우리 대상 나이와 겹침</div></div>
+      <div class="cell"><div class="k">어디서</div><div class="v">이미 깔린 <b>충전식 카드</b> 위에 <br>(열 집 중 여섯 집)</div></div>
+      <div class="cell"><div class="k">무엇을</div><div class="v">“우리 애가 배운 걸 <b>실제로 했다</b>”는 증거</div></div>
+      <div class="cell"><div class="k">왜</div><div class="v">지금 앱은 <b>며칠 했고 몇 문제 풀었는지</b>만 보여주기 때문</div></div>
+      <div class="cell"><div class="k">어떻게</div><div class="v"><b>실천 없이는 안 자라게</b> 만들고, <b>쓰기 전에 적게</b> 해서</div></div>
+    </div>
+  </div>
+  <div class="src">용돈 시작 평균 만 8.4세 · 충전식 카드 64.2% · 1차 타깃 29.3만 곳</div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-blk="블록 3 · 시장" data-sec="20"
+ data-note="초등 1~3학년이 98만 명, 용돈을 정기적으로 받는 집이 82만 곳입니다. 그중 <em>이미 돈 교육에 관심이 있고 아이 소비에 걱정도 있는</em> 집이 30만 곳이에요. <em>설명이 가장 짧게 끝나는 집</em>이라 여기부터 만납니다."
+ data-br="이 30만 집이 지금 쓰고 있는 앱을 열어보면요.">
+  <div class="kicker">시장 <span>· 첫 손님</span></div>
+  <h1>용돈 주는 <em>82만 집</em> 중, <em>30만 집</em>이 첫 손님입니다</h1>
+  <div class="body">
+    <div class="fun">
+      <div class="l1">초등 1~3학년 <small>97만 6천 명</small></div>
+      <div class="l2">용돈을 정기적으로 받는 집 <small>81만 8천 곳</small></div>
+      <div class="l3">이미 가르치려 하고, 아이 소비에 걱정도 있는 집 <small>29만 3천 곳 · 1차 타깃</small></div>
+    </div>
+    <p class="lead" style="margin-top:22px">문제를 <strong>이미 알고 있는 집</strong>이라, 설명이 가장 짧게 끝납니다.</p>
+  </div>
+  <div class="src">초1~3 975,931명 · 용돈 지급률 83.8% → 817,830 · 1차 타깃 293,149명(35.8%) · 모수는 연 5~12% 감소</div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-blk="블록 3 · 시장" data-sec="30"
+ data-note="퍼핀, 아이부자, 카카오뱅크 미니 — 다 열어봤습니다. 공통점이 하나 있어요. <em>며칠 했고, 몇 문제 풀었고, 얼마 벌었는지</em>를 셉니다.<br>퍼핀은 퀴즈가 7과목인데 <em>그중 4과목이 금융이 아닙니다.</em> 한국사, 시사, 어휘, 과학기술이요. 그리고 틀려도 다시 풀면 보상이 절반 나옵니다.<br><em>공부를 안 해도 숫자는 올라가는 구조</em>예요. 그래서 그 숫자로는 성장을 알 수 없습니다."
+ data-br="이게 좋은 빈자리인데, 왜 아직 아무도 안 채웠을까요.">
+  <div class="kicker">시장 <span>· 지금 앱들</span></div>
+  <h1>그런데 지금 앱들은 전부 <b>“얼마나 했나”</b>만 셉니다</h1>
+  <p class="lead">“무엇이 달라졌나”를 보여주는 화면은 <strong>국내에 한 곳도 없습니다</strong></p>
+  <div class="body">
+    <div class="row">
+      <div class="ph">
+        <div class="ttl">부모 화면 — 지금</div>
+        <div class="num hl">학습한 날 <b>116일</b></div>
+        <div class="num hl">푼 문제 <b>75개</b></div>
+        <div class="num hl">번 돈 <b>6,650원</b></div>
+        <div class="foot">이 세 개가 전부입니다</div>
+      </div>
+      <div class="col grow">
+        <div class="card r"><h3>퀴즈 7과목 중 4과목이 금융이 아닙니다</h3>
+          <p>한국사 · 시사 · 어휘 · 과학기술 — <strong>돈 이야기가 아닌 문제로 숫자가 올라갑니다</strong></p></div>
+        <div class="card r"><h3>틀려도 다시 풀면 보상이 절반 나옵니다</h3>
+          <p><strong>공부를 안 해도 숫자는 올라가는 구조</strong>라, 그 숫자로는 성장을 알 수 없습니다</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="src">팀 직접 캡처·약관 확인 — 부모 화면 = 누적일·문제수·보상액 3개 · 7과목 중 4개 비금융 · 오답 재시도 시 보상 절반</div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-blk="블록 3 · 시장" data-sec="20"
+ data-note="하나은행이 78만 명, 카카오뱅크가 275만 명, 토스가 320만 장 — <em>전부 무료</em>입니다. 가격으로는 못 싸웁니다.<br>그래서 다들 <em>만들기 쉬운 쪽</em>, 즉 퀴즈와 활동량을 셉니다. 행동이 바뀌었는지 판단하는 건 어렵고, 은행에는 학습 기록이 없어서 구조적으로 어렵습니다. 저희는 그 어려운 쪽을 하려고 합니다."
+ data-br="그럼 실제 사용자 한 분의 일요일 밤을 보시겠습니다.">
+  <div class="kicker">시장 <span>· 왜 비어 있나</span></div>
+  <h1>“무엇이 달라졌나”는 어렵고, <em>가격 경쟁은 이미 막혀</em> 있습니다</h1>
+  <div class="body">
+    <div class="row">
+      <div class="card grow"><div class="big">78만명</div><p style="margin-top:6px">하나은행 아이부자<br><span class="tag o" style="margin-top:9px">완전 무료</span></p></div>
+      <div class="card grow"><div class="big">275만명</div><p style="margin-top:6px">카카오뱅크 mini<br><span class="tag o" style="margin-top:9px">완전 무료</span></p></div>
+      <div class="card grow"><div class="big">320만장</div><p style="margin-top:6px">토스 유스카드<br><span class="tag o" style="margin-top:9px">완전 무료</span></p></div>
+      <div class="card g grow"><h3>남은 자리</h3><p><strong>배운 게 행동으로 이어졌는지 보여주기.</strong> 은행에는 결제 기록은 있어도 <strong>학습 기록이 없습니다</strong></p></div>
+    </div>
+  </div>
+  <div class="src">5개 힘 중 4개 불리 — 가격 경쟁 봉쇄 · 유일하게 낮은 장벽은 기술 차별화 · 우리가 직접 잘해야 하는 활동은 9개 중 2개</div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-blk="블록 4 · 고객과 문제" data-sec="30"
+ data-note="중학교 선생님 정미경 씨, 여덟 살 딸에게 용돈앱을 8개월 쓰게 했습니다.<br>일요일 밤 아이 재우고 앱을 열면 이 화면이 나옵니다. 며칠 했고, 몇 문제 풀었고, 얼마 벌었다. <em>숫자 세 개.</em> 3초 보고 닫습니다.<br>확인은 됩니다. 그런데 <em>‘우리 애가 돈을 잘 쓰게 됐나’는 알 수가 없어요.</em><br><br>⚠️ “확인 기능이 없다”고 하면 <em>틀립니다</em> — 확인 화면은 2024년 10월에 나왔습니다."
+ data-br="정미경 씨가 못 본 게 정확히 두 가지입니다.">
+  <div class="kicker">고객 <span>· 실제 사용자</span></div>
+  <h1>그래서 정미경 씨는 <em>8개월째 3초 보고</em> 앱을 닫습니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center">
+      <div class="ph">
+        <div class="ttl">일요일 21:00 · 학습 현황</div>
+        <div class="num">학습한 날 <b>116일</b></div>
+        <div class="num">푼 문제 <b>75개</b></div>
+        <div class="num">번 돈 <b>6,650원</b></div>
+        <div class="foot">→ 3초 뒤 앱을 닫음</div>
+      </div>
+      <div class="col grow" style="gap:16px">
+        <div class="card"><p style="font-size:20px;line-height:1.6">중학교 선생님 <strong>정미경</strong> 씨 · 여덟 살 딸<br>주 8,000원 충전 · <strong>다른 용돈앱 8개월 사용</strong></p></div>
+        <div class="card r"><h3>확인은 됩니다</h3>
+          <p style="font-size:19px">그런데 <strong>“우리 애가 돈을 잘 쓰게 됐나”</strong>는<br>이 화면에서 알 수가 없습니다</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="src">실사용자 기반 대표 사례 · 팀 직접 캡처 — 확인 화면은 2024-10 출시됨(“확인은 되는데 성장인지 모른다”로 말할 것)</div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-blk="블록 4 · 고객과 문제" data-sec="25"
+ data-note="문제는 두 개입니다.<br>첫째, <em>아이가 배운 걸 실제로 해보지 않습니다.</em> 퀴즈는 풀지만 그게 생활로 안 넘어가요.<br>둘째, <em>해봤는지를 부모가 확인할 방법이 없습니다.</em> 화면에 그 칸이 아예 없으니까요.<br>이 두 개가 저희가 푸는 문제 전부입니다."
+ data-br="이게 정미경 씨 한 분의 사정인지, 숫자로 확인해봤습니다.">
+  <div class="kicker">고객 <span>· 문제 정의</span></div>
+  <h1>못 본 건 두 가지 — <em>아이의 실천</em>, 그리고 <em>그 확인</em></h1>
+  <div class="body">
+    <div class="row">
+      <div class="card r grow" style="padding:30px 32px">
+        <div class="tag r">문제 ①</div>
+        <h3 style="font-size:26px;margin-top:14px">아이가 배운 걸 실제로 해보지 않습니다</h3>
+        <p style="font-size:18px;margin-top:10px">퀴즈는 풀지만 <strong>생활로 넘어가지 않습니다</strong></p>
+      </div>
+      <div class="card r grow" style="padding:30px 32px">
+        <div class="tag r">문제 ②</div>
+        <h3 style="font-size:26px;margin-top:14px">해봤는지를 부모가 확인할 수 없습니다</h3>
+        <p style="font-size:18px;margin-top:10px">화면에 <strong>그 칸이 아예 없습니다</strong></p>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:24px;text-align:center">이 두 개가 저희가 푸는 문제 <strong>전부</strong>입니다.</p>
+  </div>
+  <div class="src">가입~한 달 뒤 11단계에서 확인한 불편한 점 33건 → 두 지점(실천 선택 · 한 달 뒤)에 집중</div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-blk="블록 4 · 고객과 문제" data-sec="25"
+ data-note="초등 학부모께 물으면 가르치고 싶은 1위가 <em>저축</em>입니다. 열 명 중 여섯 명이 넘어요. 그런데 아이가 용돈을 실제로 쓰는 걸 보면 저축은 <em>꼴찌</em>, 열 명 중 한 명입니다.<br>왜 벌어질까요. 전 세계 연구를 모으면 돈 교육은 <em>아는 것은 늘리지만 행동은 거의 못 바꿉니다.</em> 차이가 다섯 배 가까이예요. <em>가르치는 것과 행동을 바꾸는 건 다른 문제</em>입니다."
+ data-br="그래서 저희가 약속하는 건 두 가지입니다.">
+  <div class="kicker">고객 <span>· 숫자로 확인</span></div>
+  <h1>정미경 씨만의 일이 아닙니다 — <em>66% 대 13%</em></h1>
+  <div class="body">
+    <div class="bars">
+      <div class="bar"><div class="lb">부모가 가르치고<br>싶은 것 1위 — 저축</div>
+        <div class="tr"><div class="fl g" style="width:66%">65.8%</div></div></div>
+      <div class="bar"><div class="lb">아이가 용돈을 실제로<br>쓰는 곳 — 저축은 꼴찌</div>
+        <div class="tr"><div class="fl r" style="width:13%">12.8%</div></div></div>
+    </div>
+    <div class="card a" style="margin-top:26px">
+      <h3>왜 이렇게 벌어질까 — 연구가 말하는 것</h3>
+      <div class="bars" style="margin-top:12px">
+        <div class="bar sm"><div class="lb">아는 것</div><div class="tr"><div class="fl g" style="width:70%">확실히 늘어남</div></div></div>
+        <div class="bar sm"><div class="lb">하는 것</div><div class="tr"><div class="fl r" style="width:15%">거의 안 바뀜</div></div></div>
+      </div>
+      <p style="margin-top:12px"><strong>가르치는 것과 행동을 바꾸는 것은 다른 문제</strong>입니다.</p>
+    </div>
+  </div>
+  <div class="src">초등 학부모 586명 — 저축 희망 65.8%(1위) ↔ 실제 저축 12.8%(최하위) · 국제 메타분석 37개 실험 — 지식 +0.33 SD vs 행동 +0.07 SD</div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-blk="블록 5 · 약속" data-sec="25"
+ data-note="두 가지를 약속합니다.<br>첫째, <em>아이가 돈에 대해 배우고, 실제로 해보고, 그러면서 자랍니다.</em><br>둘째, <em>부모님께는 얼마나 배웠는지가 아니라 행동이 어떻게 달라졌는지를 보여드립니다.</em><br>순서가 중요합니다. <em>첫 번째가 일어나야 두 번째에 보여줄 게 생깁니다.</em> 아이가 안 하면 부모 화면은 텅 빈 채로 정상 작동해요. 그래서 실천을 먼저 만들었습니다."
+ data-br="그 ‘실천’을 어떻게 만들었는지 보여드리겠습니다.">
+  <div class="kicker">약속</div>
+  <h1>그래서 <em>두 가지</em>를 약속합니다</h1>
+  <div class="body">
+    <div class="card g" style="padding:30px 34px">
+      <div class="tag">약속 ① · 아이</div>
+      <h3 style="font-size:30px;margin-top:12px">아이가 배우고, 해보고, 그러면서 자랍니다</h3>
+    </div>
+    <div style="text-align:center;font-size:26px;color:var(--grey);padding:10px 0">↓ &nbsp;<span style="font-size:16px;font-weight:700">①이 일어나야 ②에 보여줄 게 생깁니다</span></div>
+    <div class="card g" style="padding:30px 34px">
+      <div class="tag">약속 ② · 부모</div>
+      <h3 style="font-size:30px;margin-top:12px">얼마나 배웠는지가 아니라, 무엇이 달라졌는지를 봅니다</h3>
+    </div>
+  </div>
+  <div class="src">두 약속의 위계 — 아이 실천이 부모 화면의 전제. 아이가 멈추면 부모 화면은 빈 상태로 「정상 작동」함</div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-blk="블록 6 · 실천 기능" data-sec="35"
+ data-note="부모님이 보는 나무가 한 칸 자라려면 세 가지가 다 필요합니다. 공부를 끝내고, 퀴즈를 맞히고, <em>그리고 실제로 한 번 해봐야</em> 합니다.<br>여기가 핵심이에요. <em>퀴즈를 100개 풀어도 실천이 0이면 나무는 한 칸도 안 자랍니다.</em> 반대로 한 번 해보면 자랍니다.<br>해볼 방법은 다섯 가지를 만들었습니다. 집안일 미션, 쓰기 전 계획 지키기, 모으기 목표 달성, 예적금, 그리고 출석이요.<br>그러니까 <em>나무가 자랐다는 것 자체가 ‘배운 걸 실제로 했다’는 증거</em>가 됩니다."
+ data-br="이 다섯 개 중에서 가장 중요한 하나를 자세히 보여드리겠습니다.">
+  <div class="kicker">개선안 <span>· 실천 ①</span></div>
+  <h1><b>퀴즈를 100개 풀어도</b> 나무는 <b>안 자랍니다</b></h1>
+  <p class="lead">한 번 해봐야 자랍니다 — 그래서 <strong>나무가 자랐다는 것 자체가 증거</strong>가 됩니다</p>
+  <div class="body">
+    <div class="row" style="align-items:center">
+      <div class="card r grow" style="text-align:center;padding:26px">
+        <div style="font-size:17px;font-weight:700;color:var(--red)">퀴즈 100개 · 실천 0번</div>
+        <div style="font-size:62px;margin:14px 0">🌱</div>
+        <div style="font-size:18px;font-weight:800">그대로 — 한 칸도 안 자람</div>
+      </div>
+      <div class="arrow">vs</div>
+      <div class="card g grow" style="text-align:center;padding:26px">
+        <div style="font-size:17px;font-weight:700;color:var(--green)">학습 + 퀴즈 + <strong>실천 1번</strong></div>
+        <div style="font-size:62px;margin:14px 0">🌿</div>
+        <div style="font-size:18px;font-weight:800">다음 단계로 자람</div>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div style="font-size:15px;font-weight:800;color:var(--sub);margin-bottom:10px">해볼 방법 다섯 가지</div>
+      <div class="chips">
+        <span class="tag">🧹 집안일 미션</span><span class="tag">📝 쓰기 전 계획 지키기</span>
+        <span class="tag">🎯 모으기 목표 달성</span><span class="tag">💰 예적금</span><span class="tag">📅 출석</span>
+      </div>
+    </div>
+  </div>
+  <div class="src">성장 조건 = 학습 완주 + 퀴즈 정답 + <b>행동 실천 횟수</b> (예: 학습 3회 + 정답 5개 + 실천 1회) · 실천 5경로 vs 학습 2경로</div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-blk="블록 6 · 실천 기능" data-sec="35"
+ data-note="지금 앱들은 아이가 돈을 쓰면 <em>문자로 알려줍니다.</em> 다 쓴 다음에요. 그때는 늦습니다.<br>저희는 순서를 뒤집었습니다. <em>나가기 전에 아이가 네 칸을 적습니다.</em> 영수증을 미리 쓰는 셈이에요.<br>결제 내역이 들어오면 적어둔 것과 실제를 <em>가게 종류별로 겹쳐서</em> 보여줍니다. 문구점에 5천 원 적었는데 문구 3천, 간식 3천이 찍혔으면 — <em>적지 않았던 가게에서 3천 원이 나갔다는 게 그림으로 보입니다.</em><br>그리고 <em>별은 지킨 날에만</em> 줍니다. 넘긴 날에도 돌아보는 화면은 똑같이 보여주지만 별은 안 줘요. 확인만 해도 별이 나오면 부모 화면이 거짓말을 하게 되니까요."
+ data-br="이제 이 기능들이 실제 화면에서 어떻게 이어지는지 보시겠습니다.">
+  <div class="kicker">개선안 <span>· 실천 ②</span></div>
+  <h1>그리고 쓰기 전에, <em>영수증을 미리 씁니다</em></h1>
+  <div class="body">
+    <div class="row">
+      <div class="plan">
+        <div class="h">나가기 전에 아이가 적는 카드</div>
+        <div class="f"><span>어디서</span><b>다이소 성수점</b></div>
+        <div class="f"><span>무슨 가게</span><b>🖊 문구</b></div>
+        <div class="f"><span>얼마까지</span><b>5,000원</b></div>
+        <div class="f" style="border:0"><span>무엇을</span><b>지우개·스티커</b></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="cmp">
+        <div class="h" style="font-size:14px;font-weight:800;color:var(--green);margin-bottom:10px">결제 뒤 — 가게 종류별로 겹쳐 보기</div>
+        <div class="l"><span>🖊 문구 &nbsp;<b>3,000원</b></span><span class="ok">✔ 적은 대로</span></div>
+        <div class="l"><span>🍬 간식·음료 &nbsp;<b>3,000원</b></span><span class="no">⚠ 적지 않았던 가게</span></div>
+        <div class="l"><span style="font-weight:800">합계 8,000원</span><span class="no">3,000원 초과</span></div>
+        <div class="fork">
+          <div class="y">계획을 지켰다 → ⭐ 1개</div>
+          <div class="n2">넘겼다 → 회고만 (별 없음 · 뺏지도 않음)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="src">4단계 루프 — 계획 카드 → 소비 → 업종별 대조 → 두 갈래 · 카드 승인 데이터의 업종 코드로 자동 대조 · <b>위치정보 미사용</b></div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-blk="블록 7 · 사용자 화면" data-sec="30"
+ data-note="전체 흐름입니다. 부모 동의로 시작하고, 아이가 배우고, 다섯 가지 중 하나를 <em>실제로 해봅니다.</em> 그러면 별이 쌓여요.<br>그 별이 <em>아이 쪽에서는 옷장으로</em>, <em>부모 쪽에서는 나무로</em> 갑니다. 같은 기록이 두 갈래로 번역되는 거예요.<br>그리고 한 달이 끝나면 그달 전체가 한 장으로 정리됩니다."
+ data-br="아이가 보는 화면부터요.">
+  <div class="kicker">사용자 화면 <span>· 전체 흐름</span></div>
+  <h1>배우고 → <em>해보고</em> → 별이 쌓이고 → 나무가 자랍니다</h1>
+  <div class="body">
+    <div class="flow">
+      <div class="n">🔐 부모 동의<small>먼저 끝나야 아이 화면이 열림</small></div><div class="s">→</div>
+      <div class="n">📚 아이가 배움<small>벌기·잘쓰기·모으기·불리기</small></div><div class="s">→</div>
+      <div class="n k">🏃 실제로 해봄<small>다섯 가지 중 하나</small></div><div class="s">→</div>
+      <div class="n">⭐ 별이 쌓임<small>초기화 없음</small></div>
+    </div>
+    <div class="row" style="margin-top:22px">
+      <div class="card grow"><h3>🧒 아이 쪽 번역</h3><p><strong>👕 옷장 해금</strong> — “별 세 개만 더 모으면 새 옷”</p></div>
+      <div class="card g grow"><h3>👤 부모 쪽 번역</h3><p><strong>🌳 나무 네 그루</strong> → 한 달 뒤 <strong>🌲 월간 정리</strong></p></div>
+    </div>
+    <p class="lead" style="margin-top:16px;text-align:center"><strong>같은 기록</strong>을 두 갈래로 번역합니다.</p>
+  </div>
+  <div class="src">3층 구조 — 별(즉각·초기화 없음) / 나무(주기별) / 월간 정리(누적)</div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-blk="블록 7 · 사용자 화면" data-sec="20"
+ data-note="여덟 살에게 나무 네 그루와 진도율을 보여주면 아무것도 안 읽습니다. 그래서 아이 화면은 <em>별과 옷장</em>입니다. <em>‘별 세 개만 더 모으면 새 옷’</em>이 훨씬 잘 통해요. 아이는 재미로 하고, 그 기록이 부모 쪽으로 넘어갑니다."
+ data-br="같은 기록이 부모님 화면에서는 이렇게 보입니다.">
+  <div class="kicker">사용자 화면 <span>· 아이</span></div>
+  <h1>아이는 나무를 안 봅니다 — <em>별 모아서 옷을 삽니다</em></h1>
+  <div class="body">
+    <div class="row" style="align-items:center">
+      <div class="ph" style="width:262px">
+        <div class="ttl">아이 화면</div>
+        <div style="text-align:center;font-size:72px;padding:10px 0">🐾</div>
+        <div class="num"><span>내 별</span><b>⭐ 7개</b></div>
+        <div class="num" style="border:0"><span>다음 아이템</span><b>⭐ 10개</b></div>
+        <div class="foot" style="color:var(--amber);font-weight:800">별 3개만 더 모으면 새 옷!</div>
+      </div>
+      <div class="col grow" style="gap:16px">
+        <div class="card r"><h3>여덟 살에게 이건 안 통합니다</h3>
+          <p>나무 네 그루 + 진도율 + 정답률 → <strong>아무것도 안 읽습니다</strong></p></div>
+        <div class="card a"><h3>대신 이건 통합니다</h3>
+          <p style="font-size:20px"><strong>“별 세 개만 더 모으면 새 옷”</strong></p></div>
+        <div class="card g"><h3>그래도 기록은 하나입니다</h3>
+          <p>아이는 재미로 하고, <strong>그 기록이 부모 화면으로 넘어갑니다</strong></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="src">7세에게 나무·진도율·정답률은 정보 과부하 → 아이 동기 장치는 옷장, 성장 증거는 부모 화면 전용</div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-blk="블록 7 · 사용자 화면" data-sec="25"
+ data-note="돈에는 네 가지가 있습니다. 버는 것, 잘 쓰는 것, 모으는 것, 불리는 것. 나무도 네 그루예요.<br>정미경 씨가 열면 <em>‘벌기는 자랐고 모으기는 씨앗이네’</em>가 바로 보입니다. 숫자를 해석할 필요가 없어요.<br>멈춰 있으면 <em>왜 멈췄는지도 적혀 있습니다.</em> 이게 없으면 부모님은 멈춘 걸 <em>아이 탓으로 돌리거나 앱을 안 믿게</em> 됩니다."
+ data-br="그리고 한 달이 끝나면 이 화면이 남습니다.">
+  <div class="kicker">사용자 화면 <span>· 부모</span></div>
+  <h1>부모는 <em>나무 네 그루</em>로 봅니다 — 어느 칸이 멈췄는지 한눈에</h1>
+  <div class="body">
+    <div class="trees">
+      <div class="t"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">나무</div></div>
+      <div class="t"><div class="ic">🌿</div><div class="nm">잘 쓰기</div><div class="st">새싹</div></div>
+      <div class="t stall"><div class="ic">🌱</div><div class="nm">모으기</div><div class="st">실천 1번 남았어요</div></div>
+      <div class="t"><div class="ic">🌱</div><div class="nm">불리기</div><div class="st">곧 열려요</div></div>
+    </div>
+    <div class="row" style="margin-top:22px">
+      <div class="card grow"><p style="font-size:19px">숫자를 해석할 필요가 없습니다 —<br><strong>“벌기는 자랐고 모으기는 씨앗이네”</strong>가 바로 보입니다</p></div>
+      <div class="card r grow"><h3>멈춘 이유를 화면에 씁니다</h3>
+        <p>안 쓰면 부모는 멈춘 걸 <strong>아이 탓으로 돌리거나 앱을 안 믿게</strong> 됩니다</p></div>
+    </div>
+  </div>
+  <div class="src">학습 4주제와 나무 4칸이 같은 이름 · 정체 원인 표시 · 부모 화면 전용 · 첫 버전에서 「불리기」는 학습만 열림</div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-blk="블록 7 · 사용자 화면" data-sec="30"
+ data-note="한 달이 끝나면 이 화면이 나옵니다. 제일 중요한 건 맨 아래 <em>‘지난달과 비교’</em>예요.<br>사려다 멈춘 게 2번에서 5번. 가격 비교가 0번에서 4번. 저축 비율이 12%에서 32%.<br><em>이게 저희가 말하는 ‘행동이 달라졌다’입니다.</em> 이 세 줄이 이 서비스의 결론입니다."
+ data-br="그래서 정미경 씨의 8개월은 이렇게 달라집니다.">
+  <div class="kicker">사용자 화면 <span>· 한 달 뒤 · 결론</span></div>
+  <h1>한 달 뒤, <em>사려다 멈춘 게 2번 → 5번</em></h1>
+  <p class="lead">“몇 문제 풀었나”가 아니라 <strong>“무엇이 달라졌나”</strong> — 이 세 줄이 이 서비스의 결론입니다</p>
+  <div class="body">
+    <div class="chg">
+      <div class="r2"><span class="nm">사려다 멈춘 횟수</span><span class="fr">2번</span><span style="color:var(--grey)">→</span><span class="to">5번</span></div>
+      <div class="r2"><span class="nm">가격을 비교해본 횟수</span><span class="fr">0번</span><span style="color:var(--grey)">→</span><span class="to">4번</span></div>
+      <div class="r2"><span class="nm">저축 비율</span><span class="fr">12%</span><span style="color:var(--grey)">→</span><span class="to">32%</span></div>
+    </div>
+  </div>
+  <div class="src">월간 정리 = 4칸 최종 단계 · 학습 · 실천 · 소비 · <b>전월 대비 변화</b> · 총 획득 별 — 수치는 예시</div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-blk="블록 7 · 사용자 화면" data-sec="30"
+ data-note="처음에 보여드린 정미경 씨입니다. 왼쪽이 지금이에요. 8개월 동안 숫자 세 개를 3초 보고 닫았습니다.<br>오른쪽이 저희 서비스를 8개월 쓴 뒤입니다. <em>‘잘 쓰기가 씨앗에서 나무가 됐고, 사려다 멈춘 게 두 배가 됐다.’</em> 이걸 보고 아이에게 말을 걸 수 있어요.<br>저희가 만드는 건 <em>부모가 아이에게 할 말이 생기는 화면</em>입니다."
+ data-br="그럼 이게 잘 되고 있는지는 무엇으로 볼까요.">
+  <div class="kicker">사용자 화면 <span>· 정미경 씨의 8개월</span></div>
+  <h1>같은 8개월, <em>다른 결말</em></h1>
+  <div class="body">
+    <div class="split">
+      <div class="h2">
+        <div class="t2">지금 — 다른 앱 8개월</div>
+        <p><strong>116일 · 75문제 · 6,650원</strong><br><br>3초 보고 앱을 닫습니다.<br>아이에게 할 말이 생기지 않습니다.</p>
+      </div>
+      <div class="h2">
+        <div class="t2">핀프렌즈 8개월 뒤</div>
+        <p><strong>“잘 쓰기가 씨앗에서 나무가 됐고,<br>사려다 멈춘 게 두 배가 됐네”</strong><br><br>이걸 보고 아이에게 말을 겁니다.</p>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:24px;text-align:center">저희가 만드는 건 <strong>부모가 아이에게 할 말이 생기는 화면</strong>입니다.</p>
+  </div>
+  <div class="src">부모 목표 — 확인 시간 15분 → 3분 · 아이와 돈 이야기 월 0회 → 2회 (전부 목표치, 아직 재보지 않음)</div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-blk="블록 8 · 지표" data-sec="30"
+ data-note="숫자를 하나만 보라면 <em>이번 주에 실제로 뭔가 해본 아이가 몇 퍼센트인가</em>입니다. 접속만 한 아이, 퀴즈만 푼 아이는 안 들어갑니다.<br>왜냐면 <em>이 숫자가 떨어지면 나무도 한 달 화면도 다 같이 죽습니다.</em><br>그 위에 생존 조건이 하나 있어요. <em>아이가 계획을 적는 비율이 절반을 넘는가.</em> 안 적으면 저희는 아무것도 못 하니까요."
+ data-br="그리고 ‘만들었다’로 끝내지 않으려고 기준을 정해뒀습니다.">
+  <div class="kicker">지표 <span>· 볼 숫자</span></div>
+  <h1>성공은 <em>숫자 하나</em>로 봅니다</h1>
+  <div class="body">
+    <div class="mstack">
+      <div class="m surv"><div class="lbl">생존 조건</div>
+        <div class="txt">아이가 계획을 적는 비율 <strong>50% 이상</strong><small>안 적으면 아무것도 안 걸립니다 — 이게 먼저 넘어야 하는 선</small></div></div>
+      <div class="m star"><div class="lbl">가장 중요한<br>숫자 하나</div>
+        <div class="txt">이번 주에 <strong>실제로 뭔가 해본 아이</strong>가 몇 %인가<small>접속만 · 퀴즈만으로는 들어가지 않습니다 — 미션 · 계획 지킴 · 목표 달성만</small></div></div>
+      <div class="m sub2"><div class="lbl">보조</div>
+        <div class="txt" style="font-size:16.5px;font-weight:600">나무 5초 보고 변화 한 문장 말하기 <b>8명 중 6명</b> · 부모 확인 시간 <b>15분 → 3분</b> · 가입 7일 내 첫 실천 <b>60%</b> · 아이가 멈춘 걸 부모가 아는 데 <b>3일 이내</b></div></div>
+    </div>
+  </div>
+  <div class="src">주간 실천 인정 아동 비율(분자 3종 / 분모 활성 아동) · 계획 카드 작성률 ≥50% · 보조 지표는 전부 목표치이며 아직 측정되지 않음</div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-blk="블록 8 · 지표" data-sec="25"
+ data-note="기능을 ‘만들었다’로 끝내지 않으려고 넘어야 할 선을 숫자로 정했습니다. 부모님께 나무를 <em>5초만 보여주고 덮은 뒤</em> 뭐가 달라졌는지 말할 수 있어야 합니다. 여덟 분 중 여섯 분이면 통과, 안 되면 화면을 다시 만듭니다.<br>반대로 <em>절대 넘으면 안 되는 선도 세 개</em> 있어요. 별 개수가 틀리는 일, 동의 전에 아이 화면이 열리는 일, 아이 위치를 수집하는 일 — <em>모두 0건</em>입니다."
+ data-br="마지막으로, 저희가 못 하는 것과 다음에 할 것입니다.">
+  <div class="kicker">지표 <span>· 기준</span></div>
+  <h1>통과 기준은 <em>숫자로</em>, 넘지 말 선은 <b>0으로</b></h1>
+  <div class="body">
+    <div class="row">
+      <div class="card grow"><h3>됐다고 볼 수 있는 기준</h3>
+        <p style="margin-top:10px">나무를 <strong>5초만</strong> 보여주고 덮은 뒤 변화를 한 문장으로 — <strong>8명 중 6명</strong></p>
+        <p style="margin-top:10px">가입 7일 내 첫 실천 <strong>60%</strong></p>
+        <p style="margin-top:10px;color:var(--red)"><strong>40% 미달이면 화면을 다시 만듭니다</strong></p></div>
+      <div class="card r grow"><h3>🔴 절대 넘지 말 선</h3>
+        <p style="margin-top:10px">별 개수가 틀리는 일 — <strong>0건</strong></p>
+        <p style="margin-top:10px">부모 동의 전에 아이 화면이 열리는 일 — <strong>0건</strong></p>
+        <p style="margin-top:10px">아이 위치를 수집하는 일 — <strong>0건</strong></p></div>
+    </div>
+    <p class="lead" style="margin-top:22px">규칙을 <strong>기능보다 먼저</strong> 정했습니다. 돈이 오가는 부분은 <strong>허가받은 파트너 것을 빌려 씁니다.</strong></p>
+  </div>
+  <div class="src">수용 기준 43개(정상 26 + 예외 17) · 판정 3구간(통과/보류/실패) · 별 원장 정합성 0% · 규제 상수 9조항 · 무료 — 결제 수수료 + 제휴 2중 구조</div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-blk="블록 9 · 한계" data-sec="30"
+ data-note="세 가지를 솔직하게 말씀드립니다.<br>첫째, <em>부모님을 아직 한 분도 인터뷰하지 않았습니다.</em> 오늘 정미경 씨 이야기는 자료를 근거로 구성한 것입니다. 여덟 집을 만나 확인할 계획입니다.<br>둘째, <em>아이가 계획을 안 적으면 그 소비는 그냥 지나갑니다.</em> 원래는 매장에 3분 이상 있으면 알림을 주려 했는데, <em>정작 돈이 새는 자판기는 30초면 끝나서</em> 그 방식으로는 못 잡았습니다. 그래서 위치 기능을 없애고 적는 방식으로 바꿨어요.<br>셋째, <em>게임 안에서 3초에 끝나는 결제는 여전히 못 잡습니다.</em> 카드가 아니라 앱 안에서 일어나니까요."
+ data-br="그래서 다음에 무엇을 할지로 마치겠습니다.">
+  <div class="kicker">한계</div>
+  <h1>아직 <b>못 하는 것 셋</b>을 먼저 말씀드립니다</h1>
+  <div class="body">
+    <div class="lrow">
+      <div class="it"><div class="no">1</div><div class="tx"><b>부모님을 아직 한 분도 인터뷰하지 않았습니다.</b>
+        <small>오늘 정미경 씨 이야기는 통계와 자료를 근거로 구성한 것 → 여덟 집을 만나 확인</small></div></div>
+      <div class="it"><div class="no">2</div><div class="tx"><b>아이가 계획을 안 적으면 그 소비는 그냥 지나갑니다.</b>
+        <small>원래는 매장 3분 체류 알림을 검토 → 정작 돈이 새는 자판기는 30초면 끝나 못 잡음 → 위치 기능을 없애고 적는 방식으로 바꿈</small></div></div>
+      <div class="it"><div class="no">3</div><div class="tx"><b>게임 안에서 3초에 끝나는 결제는 여전히 못 잡습니다.</b>
+        <small>카드가 아니라 앱 안에서 일어나기 때문 — 대응 기능 0개로 확정하고 문서에 기록</small></div></div>
+    </div>
+  </div>
+  <div class="src">인터뷰 0건 · 계획 카드 작성률 미측정 · 온라인 즉시 결제 대응 기능 0개 · 위치 알림 삭제(2026-08-21)</div>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-blk="블록 9 · 다음" data-sec="25"
+ data-note="첫 버전은 열세 개, 다음이 네 개입니다. 예적금으로 마지막 칸을 여는 것, 카드 없이 학습부터 시작하는 것, 별을 옷장 밖에서 쓰는 것, 기존 기록을 옮겨오는 것.<br>그 전에 확인할 게 세 개 있습니다. <em>아이가 계획을 정말 적는지, 부모님이 이걸 원하는지, 파트너 수수료 조건이 되는지.</em><br>저희가 아는 것과 모르는 것을 다 문서에 적어놨습니다. 감사합니다."
+ data-br="— 발표 끝 · 질의응답">
+  <div class="kicker">다음</div>
+  <h1>첫 버전 <em>13개</em>, 다음 <em>4개</em></h1>
+  <div class="body">
+    <div class="row">
+      <div class="col grow">
+        <div style="font-size:15px;font-weight:800;color:var(--green);margin-bottom:4px">첫 버전 13개 — 이 다섯이 없으면 서비스가 성립하지 않습니다</div>
+        <div class="chips">
+          <span class="tag">🌳 성장 나무</span><span class="tag">🧹 미션</span><span class="tag">📚 학습 4주제</span>
+          <span class="tag">⭐ 별</span><span class="tag">👕 옷장</span>
+          <span class="tag o">🐣 아이 가입</span><span class="tag o">🔐 부모 가입·동의</span><span class="tag o">📝 계획·회고</span>
+          <span class="tag o">🌲 월간 정리</span><span class="tag o">⏱ 늦은 승인 소급</span><span class="tag o">🔔 3일 미접속 알림</span>
+          <span class="tag o">🎯 위시리스트</span><span class="tag o">📊 소비 내역</span>
+        </div>
+      </div>
+      <div class="col" style="width:340px">
+        <div style="font-size:15px;font-weight:800;color:var(--grey);margin-bottom:4px">다음 4개</div>
+        <div class="chips">
+          <span class="tag a">💰 예적금으로 「불리기」 열기</span><span class="tag a">🪪 카드 없이 학습부터</span>
+          <span class="tag a">🛍 별을 옷장 밖에서</span><span class="tag a">📤 기존 기록 이전</span>
+        </div>
+      </div>
+    </div>
+    <div class="card g" style="margin-top:22px">
+      <h3>그 전에 먼저 확인할 것 셋</h3>
+      <p style="font-size:18px;margin-top:8px"><strong>① 아이가 계획을 정말 적는가 &nbsp;· &nbsp;② 부모님이 이걸 원하는가 &nbsp;· &nbsp;③ 파트너 수수료 조건이 되는가</strong></p>
+    </div>
+  </div>
+  <div class="src">기능 17개 = 첫 버전 13 + 다음 4 (위치 알림·2차 트리거는 삭제) · 검증과제 — 계획 카드 작성률 · 인터뷰 8집 · 제휴 조건 · 남은 법령 1건</div>
+</section>
+
+</div></div>
+
+<div id="ov">
+  <h2>제목만 이어 읽기 — 20장</h2>
+  <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
+  <div class="grid" id="ovg"></div>
+</div>
+
+<div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
+<div id="tmr">⏱ —</div>
+<div id="hud"><span id="pg"><b>1</b> / 20</span><span id="blk"></span>
+  <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
+
+<div id="help"><div class="box">
+  <h4>키 안내</h4>
+  <p><kbd>←</kbd><kbd>→</kbd> 이전 / 다음 장 &nbsp;·&nbsp; <kbd>Space</kbd> 다음</p>
+  <p><kbd>Home</kbd><kbd>End</kbd> 처음 / 끝</p>
+  <p><kbd>O</kbd> 제목 목차 (제목만 이어 읽기)</p>
+  <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
+  <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
+  <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 20장 · 목표 9분 05초 · 장당 10~40초</p>
+  <p style="color:#6B7268;font-size:14px">타이머는 목표 시간을 넘기면 빨갛게 바뀝니다.</p>
+</div></div>
+
+<script>
+(function(){
+  var S=[].slice.call(document.querySelectorAll('.slide')), n=S.length, i=0;
+  var stage=document.getElementById('stage'), bar=document.getElementById('bar'),
+      pg=document.getElementById('pg'), blk=document.getElementById('blk'),
+      notes=document.getElementById('notes'), nx=document.getElementById('nx'),
+      help=document.getElementById('help'), tmr=document.getElementById('tmr');
+  var budget=S.map(function(s){return +s.dataset.sec||25});
+  var total=budget.reduce(function(a,b){return a+b},0);
+
+  function fit(){var s=Math.min(innerWidth/1280,innerHeight/720)*0.965;
+    stage.style.transform='scale('+s+')';}
+  addEventListener('resize',fit); fit();
+
+  function show(k){
+    i=Math.max(0,Math.min(n-1,k));
+    S.forEach(function(s,x){s.classList.toggle('on',x===i)});
+    bar.style.width=((i+1)/n*100)+'%';
+    pg.innerHTML='<b>'+(i+1)+'</b> / '+n;
+    blk.textContent=S[i].dataset.blk+' · 목표 '+budget[i]+'초';
+    nx.innerHTML=(S[i].dataset.note||'')+
+      (S[i].dataset.br?'<div class="br">▶ 다음 장으로 — '+S[i].dataset.br+'</div>':'');
+    location.hash='p'+(i+1);
+  }
+  // overview
+  var g=document.getElementById('ovg');
+  S.forEach(function(s,x){
+    var t=s.querySelector('h1');
+    var c=document.createElement('div');
+    c.className='c'+(x===0?' blk':'');
+    c.innerHTML='<div class="n">'+(x+1)+' · '+s.dataset.blk.replace(/블록 \d+ · /,'')+'</div>'+
+      '<div class="t">'+(t?t.innerHTML.replace(/<br>/g,' '):'')+'</div>'+
+      '<div class="s">'+s.dataset.sec+'초</div>';
+    c.onclick=function(){document.body.classList.remove('ov');show(x)};
+    g.appendChild(c);
+  });
+
+  // timer
+  var t0=null,acc=0,iv=null;
+  function fmt(x){var m=Math.floor(x/60),s=x%60;return m+':'+(s<10?'0':'')+s}
+  function tick(){
+    var e=acc+(t0?Math.floor((Date.now()-t0)/1000):0);
+    var upto=budget.slice(0,i+1).reduce(function(a,b){return a+b},0);
+    tmr.textContent='⏱ '+fmt(e)+' / '+fmt(total)+'  (이 장까지 목표 '+fmt(upto)+')';
+    tmr.className=t0?(e>upto+20?'over run':'run'):(e>0?'':'');
+  }
+  function toggleT(){
+    if(t0){acc+=Math.floor((Date.now()-t0)/1000);t0=null;clearInterval(iv);iv=null}
+    else{t0=Date.now();iv=setInterval(tick,500)}
+    tick();
+  }
+  tick();
+
+  addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='Escape'){if(help.classList.contains('on'))help.classList.remove('on');
+      else document.body.classList.remove('ov'); return}
+    if(document.body.classList.contains('ov')&&k!=='o'&&k!=='O')return;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();show(i+1)}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();show(i-1)}
+    else if(k==='Home'){show(0)} else if(k==='End'){show(n-1)}
+    else if(k==='n'||k==='N'){notes.classList.toggle('on')}
+    else if(k==='o'||k==='O'){document.body.classList.toggle('ov')}
+    else if(k==='t'||k==='T'){toggleT()}
+    else if(k==='r'||k==='R'){acc=0;t0=null;clearInterval(iv);iv=null;tick()}
+    else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+    else if(k==='p'||k==='P'){print()}
+    else if(k==='?'||k==='/'){help.classList.toggle('on')}
+  });
+  stage.addEventListener('click',function(e){show(i+(e.clientX<innerWidth*0.28?-1:1))});
+
+  var h=+((location.hash||'').replace('#p',''));
+  show(h?h-1:0);
+})();
+</script>
+</body>
+</html>
