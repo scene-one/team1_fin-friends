@@ -44,7 +44,7 @@
 | 문서 | 링크 | 담당 |
 |---|---|---|
 | 📁 **구글 드라이브** (팀 공용 폴더) | [열기](https://drive.google.com/drive/folders/17Bop2XOaj-pvi7Pc1uxBUNTOPw5cli9i) | 전원 |
-| 📊 **발표자료** (구글 슬라이드, 24~32장) | `링크 넣기` | 전원 |
+| 📊 **발표자료** (구글 슬라이드, 24~32장) | [열기](https://hayoungv.github.io/sesac-fin-friends/%EA%B3%B5%EC%9A%A9%EA%B3%B5%EA%B0%84/%EB%B0%9C%ED%91%9C%EC%A4%80%EB%B9%84/%EB%B0%9C%ED%91%9C%EB%8D%B1_v2.html#p1) | 전원 |
 | 📝 **결정 기록 + AI 사용 기록** | [열기](https://docs.google.com/spreadsheets/d/1ckYDBvLUMplhCwWuxUgWPDEd4vd8uOKws6Pw-cd7zRs/edit?gid=0#gid=0) | 전원 |
 | 🗒️ **노션** (1팀 페이지) | [열기](https://app.notion.com/p/2-1-3bced52295f380948c38d669e382ddba#3bced52295f380389b2cc1a6be3b1a14) | 전원 |
 
