@@ -4,3 +4,7 @@
 .idea/
 .vscode/
 .claude/settings.local.json
+
+# LLM Wiki 설계 원문·번역본 — 로컬 참조용, 저장소에 올리지 않음
+llm-wiki.md
+llm-wiki.ko.md
