@@ -4,7 +4,7 @@
 > - **생성 모델**: Gemini 3.6 Flash
 > - **Effort Level**: High (1.00)
 > - **작성일자**: 2026-08-21 (재선별 JTBD 결과보고서 반영 개정판)
-> - **저장 경로**: `공용공간/8. 가치제안서/최종_가치제안서/Value_proposition_Gemini_3.6_Flash_High.md`
+> - **저장 경로**: `공용공간/8. 가치제안서/재선별이후_가치제안서/Value_proposition_Gemini_3.6_Flash_High.md`
 > - **주요 참조 문서**:
 >   - [`7. JTBD/재선별_JTBD_인터뷰_결과보고서.md`](../../7. JTBD/재선별_JTBD_인터뷰_결과보고서.md) (**주요 근거**: H1 정미경 · H2 배성우 재선별 JTBD 카드 및 Outcome 표)
 >   - [`6. 시장기회 분석 AOS_DOS/페인포인트_재선별.md`](../../6. 시장기회 분석 AOS_DOS/페인포인트_재선별.md) (선별 C1·C2·C5 및 G1~G3 3관문 재선별 분석)
@@ -315,4 +315,4 @@ JTBD 및 재선별 결과를 통합하여 핀프렌즈가 제공하는 두 가�
 
 ---
 
-> **비고**: 본 문서는 **Gemini 3.6 Flash (Effort Level: High)**로 `@공용공간/7. JTBD/재선별_JTBD_인터뷰_결과보고서.md` 및 `페인포인트_재선별.md` 분석 결과를 바탕으로 전면 재작성되어 `공용공간/8. 가치제안서/최종_가치제안서/Value_proposition_Gemini_3.6_Flash_High.md`에 저장되었습니다.
+> **비고**: 본 문서는 **Gemini 3.6 Flash (Effort Level: High)**로 `@공용공간/7. JTBD/재선별_JTBD_인터뷰_결과보고서.md` 및 `페인포인트_재선별.md` 분석 결과를 바탕으로 전면 재작성되어 `공용공간/8. 가치제안서/재선별이후_가치제안서/Value_proposition_Gemini_3.6_Flash_High.md`에 저장되었습니다.
