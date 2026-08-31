@@ -2,7 +2,7 @@
 title: PRD v0.1 품질 리뷰
 type: source/internal
 updated: 2026-08-31
-raw_path: raw/prd/PRD_핀프렌즈_v0_1_품질리뷰.md
+raw_path: raw/60-internal/prd/PRD_핀프렌즈_v0_1_품질리뷰.md
 원본_최종수정: 2026-08-21
 분량: 446줄
 tags: [PRD, 품질리뷰, 측정가능성]
@@ -10,7 +10,7 @@ tags: [PRD, 품질리뷰, 측정가능성]
 
 # PRD v0.1 품질 리뷰 — 원본 요약
 
-> **원본** `raw/prd/PRD_핀프렌즈_v0_1_품질리뷰.md` · 446줄
+> **원본** `raw/60-internal/prd/PRD_핀프렌즈_v0_1_품질리뷰.md` · 446줄
 > **대상** [[PRD_핀프렌즈_v0_1]] → **적용 결과** [[PRD_핀프렌즈_v0_2]]
 
 ## 이 리뷰의 관점 — 좁게 잡은 것이 핵심이다

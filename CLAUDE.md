@@ -112,7 +112,7 @@ tags: [경쟁서비스, 국내]
 `sources/` 페이지는 프론트매터에 원본 경로를 추가한다:
 
 ```yaml
-raw_path: raw/prd/PRD_핀프렌즈_v0_2.md
+raw_path: raw/60-internal/prd/PRD_핀프렌즈_v0_2.md
 ```
 
 ## 증거 등급 표기
