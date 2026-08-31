@@ -137,3 +137,35 @@ raw_path: raw/60-internal/prd/PRD_핀프렌즈_v0_2.md
 - `공용공간/` 은 팀 공유 폴더다. **남의 글을 덮어쓰지 않는다** — 이어 쓰고 이름을 남긴다.
 - 중복 파일을 만들지 않는다. `raw/` 의 원본 스냅샷은 중복이 아니라 **의도된 불변 사본**이다.
 - `llm-wiki.md` · `llm-wiki.ko.md` 는 `.gitignore` 대상이다. 커밋하지 않는다.
+
+## 위키 배포 — GitHub Pages + Quartz v5
+
+`wiki/` 는 [Quartz v5](https://github.com/jackyzha0/quartz)로 빌드돼 GitHub Pages에 배포된다.
+사이트: **https://scene-one.github.io/team1_fin-friends/**
+
+| 파일 | 역할 |
+|---|---|
+| `quartz.config.yaml` | 사이트 설정 — 테마·플러그인·레이아웃 |
+| `.github/workflows/deploy-wiki.yml` | CI/CD — `main`의 `wiki/**` 변경 시 자동 배포 |
+
+**저장소에 중복을 만들지 않는다** — Quartz 프레임워크 소스도, `content/` 사본도 커밋하지 않는다.
+CI가 빌드 시점에 Quartz를 **고정 커밋**으로 내려받고 `wiki/` 를 `content/` 로 복사한다.
+`public/` · `content/` · `node_modules/` 는 `.gitignore` 대상이다.
+
+### 위키를 고칠 때 지킬 것
+
+- **프론트매터에 `title` 과 `updated` 를 반드시 넣는다** — Quartz가 제목과 날짜로 쓴다
+- 위키링크 `[[문서명]]` 는 basename으로 해석된다. **파일을 옮겨도 링크는 안 깨지지만, 이름을 바꾸면 깨진다**
+- 새 최상위 폴더를 만들면 Quartz 탐색기에 그대로 노출된다 — `wiki/README.md` 의 계층 정의를 먼저 갱신할 것
+- 커밋 전 `깨진 링크 0 · 고립 페이지 0` 을 확인한다 (lint 절차)
+
+### Quartz 버전 올리기
+
+`.github/workflows/deploy-wiki.yml` 의 `QUARTZ_REF` 만 바꾼다:
+
+```
+gh api repos/jackyzha0/quartz/commits/v5 --jq .sha
+```
+
+설정 스키마가 바뀔 수 있으므로 올린 뒤 로컬 빌드로 확인한다 —
+Quartz를 임시 폴더에 클론 → `wiki/` 를 `content/` 로 복사 → `quartz.config.yaml` 복사 → `npx quartz build -d content`.

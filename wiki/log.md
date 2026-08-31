@@ -244,3 +244,37 @@ tags: [로그, 이력]
 **④ 구조** — 깨진 링크 **0** · 고립 페이지 **0** · 본문 29장 · 위키링크 **366개**.
 `log.md`에 프론트매터가 없어 추가(Quartz 빌드 시 제목 인식용).
 `index.md`에 **출처 무결성** 행과 미수집 항목 2건(#13·#14)을 반영했다.
+
+## [2026-08-31] setup | Quartz v5 + GitHub Pages 배포 구성
+
+**배포 대상** — https://scene-one.github.io/team1_fin-friends/
+
+| 커밋한 파일 | 역할 |
+|---|---|
+| `quartz.config.yaml` | 사이트 설정 (281줄) |
+| `.github/workflows/deploy-wiki.yml` | CI/CD (136줄) |
+
+**설계 — 저장소에 중복을 만들지 않는다**
+
+- Quartz 프레임워크를 벤더링하지 않고 **고정 커밋**(`075afd3f…`)으로 빌드 시점에 내려받는다
+- `wiki/` 를 `content/` 로 **복제해 커밋하지 않는다** — CI가 빌드 시점에만 복사한다
+- `public/` · `content/` · `node_modules/` 는 `.gitignore` 대상
+
+**확인한 것 — 로컬 실제 빌드로 검증했다** (문서로 추정하지 않았다)
+
+| 항목 | 결과 |
+|---|---|
+| Quartz 최신 판 | 🔴 **v4가 아니라 v5**였다. 설정이 `.ts` → **`quartz.config.yaml`** 로 바뀌었고 Node ≥22를 요구한다 |
+| 빌드 | ✅ 32개 마크다운 → **290개 파일 / 20초** |
+| 위키링크 `[[ ]]` | ✅ **깨진 링크 0** — obsidian-flavored-markdown 플러그인이 basename으로 해석 |
+| 한글 경로 | ✅ `concepts/product/3층-구조.html` 등 정상 |
+| mermaid | ✅ [[index]]의 구조도 렌더 |
+| 내부 링크 | ✅ **상대경로**(`../../`)라 프로젝트 서브패스에서 자동 동작 |
+| 🔴 푸터 링크 | 절대경로가 도메인 루트를 가리켜 **`/team1_fin-friends/` 접두어를 붙여 수정** |
+| sitemap · RSS · 검색 색인 | ✅ 생성 |
+
+**기존 Pages 보존** — 이 저장소는 원래 legacy Pages(`main` 루트)로 발표덱·프로토타입 HTML을 서빙하고 있었다.
+빌드 산출물에 그 파일들을 **원래 경로 그대로 얹어** URL을 유지한다(HTML 122 → 137개).
+
+🔴 **남은 수동 작업 1건** — `Settings → Pages → Source` 를 **"GitHub Actions"** 로 바꿔야 배포가 시작된다.
+현재는 `Deploy from a branch` 라서 워크플로의 deploy 단계가 실패한다.
