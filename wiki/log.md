@@ -278,3 +278,24 @@ tags: [로그, 이력]
 
 🔴 **남은 수동 작업 1건** — `Settings → Pages → Source` 를 **"GitHub Actions"** 로 바꿔야 배포가 시작된다.
 현재는 `Deploy from a branch` 라서 워크플로의 deploy 단계가 실패한다.
+
+## [2026-08-31] setup | Pages 전환 완료 · 사이트 라이브
+
+`Settings → Pages → Source` 가 **GitHub Actions** 로 전환됐다(저장소 관리자 작업).
+`build_type: legacy → workflow`. 이제 브랜치 빌드와 경합하지 않는다.
+
+**라이브 검증 — 전 항목 200**
+
+| 대상 | 결과 |
+|---|---|
+| 위키 페이지 10종 (개념·개체·인물·원본·종합·로그·태그) | ✅ 200 |
+| 폴더 인덱스 (`/concepts` · `/sources`) | ✅ 301 → 200 (정상) |
+| 보존한 기존 자산 8종 (발표덱 v1·v2 · 프로토타입 · WBS · TAM · 네컷만화 · canvas.json) | ✅ 200 — **기존 URL 하나도 안 깨졌다** |
+| sitemap.xml · index.xml(RSS) · 404.html | ✅ 200 |
+
+⚠️ **검증 중 내 실수 하나** — Git Bash가 `/` 로 시작하는 인자를 Windows 경로로 바꿔버려
+(`C:/Program Files/Git/`) 전 URL이 404로 보였다. `MSYS_NO_PATHCONV=1` 로 해결.
+**사이트 문제가 아니라 검사 스크립트 문제였다.**
+
+**README 갱신** — 첫 화면 「한 문장」 바로 아래에 위키 배너를 넣고,
+「결과물 바로 보기」 표 맨 위에도 행을 추가했다. 배너의 진입 문서 5개 링크는 전부 200 확인.
