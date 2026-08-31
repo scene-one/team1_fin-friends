@@ -6,13 +6,13 @@
 > - **작성일자**: 2026-08-20
 > - **파일명**: `Value_proposition_Gemini_3.6_Flash_High.md`
 > - **참조 문서**:
->   - [`JTBD_인터뷰_결과보고서_H1_H6.md`](../7. JTBD/JTBD_인터뷰_결과보고서_H1_H6.md) (선별 페르소나별 Pain Point & JTBD)
+>   - [`JTBD_인터뷰_결과보고서_H1_H6.md`](<../../7. JTBD/JTBD_인터뷰_결과보고서_H1_H6.md>) (선별 페르소나별 Pain Point & JTBD)
 >   - [`가치목표_제안.md`](%EA%B0%80%EC%B9%98%EB%AA%A9%ED%91%9C_%EC%A0%9C%EC%95%88.md) (가치 선언 ①·② 및 근거 체인)
->   - [`고객여정지도_최종.md`](../5. 페르소나스펙트럼_고객여정지도/고객여정지도_최종.md) (11단계 여정 및 Touchpoints)
->   - [`기능정의_v13.md`](../0. 확정 기능 정의/기능정의_v13.md) (솔루션 스펙 및 3층 구조)
->   - [`기회점수_AOS_DOS_분석.md`](../6. 시장기회 분석 AOS_DOS/기회점수_AOS_DOS_분석.md) (AOS/DOS 기회점수 및 시장 가중치)
->   - [`Five-Forces_사업기획서.md`](../1. Porter's Five Forces 모델/Five-Forces_사업기획서.md) & [`가치사슬_분석.md`](../2. 기업 내부 활동의 가치사슬 분석/가치사슬_분석.md) & [`KSF_분석.md`](../3. 핵심 성공 요인/KSF_분석.md)
->   - [`TAM-SAM-SOM_시장세분화.md`](../4. TAM-SAM-SOM_Market-Segment/TAM-SAM-SOM_시장세분화.md)
+>   - [`고객여정지도_최종.md`](<../../5. 페르소나스펙트럼_고객여정지도/고객여정지도_최종.md>) (11단계 여정 및 Touchpoints)
+>   - [`기능정의_v13.md`](<../../0. 확정 기능 정의/기능정의_v13.md>) (솔루션 스펙 및 3층 구조)
+>   - [`기회점수_AOS_DOS_분석.md`](<../../6. 시장기회 분석 AOS_DOS/기회점수_AOS_DOS_분석.md>) (AOS/DOS 기회점수 및 시장 가중치)
+>   - [`Five-Forces_사업기획서.md`](<../../1. Porter's Five Forces 모델/Five-Forces_사업기획서.md>) & [`가치사슬_분석.md`](<../../2. 기업 내부 활동의 가치사슬 분석/가치사슬_분석.md>) & [`KSF_분석.md`](<../../3. 핵심 성공 요인/KSF_분석.md>)
+>   - [`TAM-SAM-SOM_시장세분화.md`](<../../4. TAM-SAM-SOM_Market-Segment/TAM-SAM-SOM_시장세분화.md>)
 
 ---
 
@@ -84,7 +84,7 @@ JTBD 및 기회점수(AOS/DOS) 분석 결과를 바탕으로, 고객이 달성�
 
 ### 3-1. 정량적 Desired Outcome 목록 표
 
-> 점수 출처: [`기회점수_AOS_DOS_분석.md`](../6. 시장기회 분석 AOS_DOS/기회점수_AOS_DOS_분석.md) (ID: C1~C12, A1~A6)
+> 점수 출처: [`기회점수_AOS_DOS_분석.md`](<../../6. 시장기회 분석 AOS_DOS/기회점수_AOS_DOS_분석.md>) (ID: C1~C12, A1~A6)
 
 | ID | Desired Outcome (고객이 원하는 결과) | 대상 | Imp | Sat | AOS | DOS(SAM) | **DOS(SOM)** | **측정 가능한 정량 목표 지표** |
 | :-: | --- | :-: | :-: | :-: | :-: | :-: | :-: | --- |
