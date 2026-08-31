@@ -9,8 +9,9 @@
 #   발표덱·프로토타입·대시보드 HTML을 빌드 산출물에 그대로 얹어 기존 URL을 유지한다.
 #
 # ⚠️ 최초 1회 수동 설정 필요
-#   Settings → Pages → Source 를 "GitHub Actions" 로 변경해야 배포가 시작된다.
-#   (현재는 "Deploy from a branch" 상태라 이 워크플로의 deploy 단계가 실패한다)
+#   Settings → Pages → Source 를 "GitHub Actions" 로 변경해야 한다.
+#   (현재는 "Deploy from a branch" 상태다. 이 워크플로는 성공하지만 브랜치 빌드가
+#    같은 사이트를 덮어써 결과가 요동친다 — 저장소 관리자 권한이 필요한 작업이다)
 
 name: Deploy Wiki
 
@@ -47,21 +48,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 저장소 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # created-modified-date 플러그인이 git 이력을 읽을 수 있도록 전체 이력을 받는다
           fetch-depth: 0
           path: repo
 
       - name: Quartz 체크아웃 (고정 커밋)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: jackyzha0/quartz
           ref: ${{ env.QUARTZ_REF }}
           path: quartz
 
       - name: Node 설정
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -116,10 +117,10 @@ jobs:
           echo "총 용량: $(du -sh quartz/public | cut -f1)"
 
       - name: Pages 설정 로드
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: 아티팩트 업로드
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: quartz/public
 
@@ -133,4 +134,4 @@ jobs:
     steps:
       - name: GitHub Pages 배포
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
