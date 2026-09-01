@@ -1,0 +1,338 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #4F7A4A; text-decoration: none; }
+    a:hover { color: #3E6B3A; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 100%; max-width: 390px; margin: 0 auto; min-height: 950px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="padding: 26px 20px 0 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-size: 11px; letter-spacing: 0.12em; color: #9C948A; font-weight: 700;">부모 화면 · 가입</div>
+    <div style="display: flex; gap: 5px;">
+      <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px;">
+          <div style="height: 4px; border-radius: 999px; background: {{s.bar}};"></div>
+          <span style="font-size: 9.5px; color: {{s.color}}; font-weight: {{s.weight}}; letter-spacing: -0.02em;">{{s.name}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ── STEP 1 · 동의 ───────────────────────────────── -->
+  <div style="display: {{d1}}; flex-direction: column;">
+
+    <div style="padding: 22px 20px 0 20px;">
+      <div style="font-family: 'AppleMyungjo', 'Nanum Myeongjo', 'Batang', serif; font-size: 25px; letter-spacing: -0.015em; line-height: 1.35;">자녀 정보 사용에<br>동의해 주세요</div>
+      <div style="margin-top: 11px; font-size: 13px; color: #6B655D; line-height: 1.6;">만 14세 미만 자녀는 <b>법정대리인 동의</b>가 있어야 가입할 수 있습니다.<br>동의가 끝나기 전까지 <b>아이 화면은 열리지 않습니다.</b></div>
+    </div>
+
+    <div style="margin: 20px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 6px 18px; display: flex; flex-direction: column;">
+      <sc-for list="{{items}}" as="i" hint-placeholder-count="4">
+        <div onClick="{{i.toggle}}" style="cursor: pointer; padding: 16px 0; border-bottom: {{i.rule}}; display: flex; gap: 13px; align-items: flex-start;">
+          <div style="width: 22px; height: 22px; border-radius: 7px; background: {{i.boxBg}}; border: {{i.boxBorder}}; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12.5 10 17.5 19.5 7" stroke="{{i.check}}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1;">
+            <div style="display: flex; align-items: center; gap: 7px;">
+              <span style="font-size: 10.5px; font-weight: 800; color: {{i.tagColor}}; background: {{i.tagBg}}; border-radius: 5px; padding: 3px 6px;">{{i.tag}}</span>
+              <span style="font-size: 14px; font-weight: 700; letter-spacing: -0.015em;">{{i.name}}</span>
+            </div>
+            <div style="font-size: 11.5px; color: #8A837A; line-height: 1.5;">{{i.desc}}</div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 5px;">
+            <path d="M9 5.5 16 12l-7 6.5" stroke="#C4BCB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin: 14px 20px 0 20px; background: #F4F6F1; border: 1px solid #E3E8DE; border-radius: 16px; padding: 17px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="8.6" fill="#CFDCC8" stroke="#4F7A4A" stroke-width="1.6"></circle>
+          <path d="M12 10.6v6" stroke="#3E6B3A" stroke-width="1.9" stroke-linecap="round"></path>
+          <circle cx="12" cy="7.6" r="1.05" fill="#3E6B3A"></circle>
+        </svg>
+        <div style="font-size: 13px; font-weight: 800; color: #3E6B3A;">아이에게는 이렇게 보여줍니다</div>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #DDE5D8; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-size: 13.5px; font-weight: 800; letter-spacing: -0.02em;">"네 이름이랑 쓴 돈을 앱이 기억해요"</div>
+        <div style="font-size: 12px; color: #6B655D; line-height: 1.6;">부모님이 허락해 주셔야 시작할 수 있어요. 언제든 그만두면 <b>기억한 건 다 지워져요.</b></div>
+      </div>
+      <div style="font-size: 11px; color: #4E6B4A; line-height: 1.55;">아동에게는 <b>이해하기 쉬운 언어로 따로 고지</b>해야 합니다 — 개인정보 보호법 제22조의2 제3항.</div>
+    </div>
+
+    <div style="margin: 13px 20px 0 20px; padding: 14px 16px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E5DFD5; display: flex; flex-direction: column; gap: 9px;">
+      <div style="font-size: 12px; font-weight: 800; color: #7E786F;">동의하신 분이 맞는지 확인합니다</div>
+      <div style="display: flex; gap: 8px;">
+        <div style="flex-grow: 1; padding: 11px 8px; border-radius: 10px; background: #F7EEE6; border: 1.5px solid #B36B3A; text-align: center; font-size: 12px; font-weight: 800; color: #8E5228;">휴대전화 인증</div>
+        <div style="flex-grow: 1; padding: 11px 8px; border-radius: 10px; background: #FAF7F1; border: 1px solid #E5DFD5; text-align: center; font-size: 12px; font-weight: 700; color: #9C948A;">신용카드</div>
+        <div style="flex-grow: 1; padding: 11px 8px; border-radius: 10px; background: #FAF7F1; border: 1px solid #E5DFD5; text-align: center; font-size: 12px; font-weight: 700; color: #9C948A;">공동인증서</div>
+      </div>
+      <div style="font-size: 10.5px; color: #9C948A; line-height: 1.5;">동의를 받는 것과 <b>동의한 사람이 법정대리인인지 확인하는 것</b>은 별개 의무입니다 (제22조의2 제1항).</div>
+    </div>
+
+    <!-- AC-001-1 · 동의 미완 상태에서 초대 링크 발급을 시도하면 거부 -->
+    <div onClick="{{tryInviteEarly}}" style="margin: 13px 20px 0 20px; padding: 13px; border-radius: 12px; border: 1.5px dashed #D6CEC2; background: #FFFFFF; text-align: center; font-size: 12.5px; font-weight: 700; color: #9C948A; cursor: pointer;">자녀 초대 링크 먼저 만들기</div>
+    <div style="display: {{dBlocked}}; margin: 9px 20px 0 20px; padding: 13px 15px; border-radius: 12px; background: #F9E9E4; border: 1px solid #E4BCAE; flex-direction: column; gap: 5px;">
+      <div style="font-size: 12.5px; font-weight: 800; color: #A2452C;">아직 링크를 만들 수 없어요 · 403</div>
+      <div style="font-size: 11.5px; color: #8E5A48; line-height: 1.55;">필수 동의가 끝나야 초대 링크가 <b>발급</b>됩니다. 화면에서 막는 게 아니라 <b>자격이 만들어지지 않습니다.</b></div>
+      <div style="font-size: 10.5px; color: #B08574; font-family: ui-monospace, monospace;">consent_gate_blocked +1 · NFR-002</div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 16px;"></div>
+
+    <div style="padding: 16px 20px 30px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <div onClick="{{goChild}}" style="padding: 18px; border-radius: 14px; background: {{ctaBg}}; color: {{ctaColor}}; font-size: 16px; font-weight: 800; text-align: center; letter-spacing: -0.01em; cursor: pointer;">{{ctaText}}</div>
+      <div style="display: flex; gap: 8px; align-items: flex-start; padding: 0 4px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+          <rect x="4.5" y="10.5" width="15" height="9.5" rx="2" stroke="#A8A199" stroke-width="1.7"></rect>
+          <path d="M8.2 10.5V8a3.8 3.8 0 0 1 7.6 0v2.5" stroke="#A8A199" stroke-width="1.7" stroke-linecap="round"></path>
+        </svg>
+        <div style="font-size: 10.5px; line-height: 1.55; color: #9C948A;">얼굴 사진과 위치는 <b>어떤 경우에도 받지 않습니다.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 2 · 자녀 등록 ──────────────────────────── -->
+  <div style="display: {{d2}}; flex-direction: column;">
+
+    <div style="padding: 22px 20px 0 20px;">
+      <div style="font-family: 'AppleMyungjo', 'Nanum Myeongjo', 'Batang', serif; font-size: 25px; letter-spacing: -0.015em; line-height: 1.35;">자녀를 등록해 주세요</div>
+      <div style="margin-top: 11px; font-size: 13px; color: #6B655D; line-height: 1.6;">학년만 고르시면 <b>학습 난이도는 저희가 맞춥니다.</b> 나중에 언제든 바꿀 수 있어요.</div>
+    </div>
+
+    <div style="margin: 20px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-size: 11.5px; font-weight: 800; color: #7E786F;">아이가 부를 이름</div>
+        <div style="padding: 13px 14px; border-radius: 11px; background: #FAF7F1; border: 1px solid #E5DFD5; font-size: 14px; font-weight: 700;">{{childName}}</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 11.5px; font-weight: 800; color: #7E786F;">학년</div>
+        <div style="display: flex; gap: 8px;">
+          <sc-for list="{{grades}}" as="g" hint-placeholder-count="3">
+            <div onClick="{{g.pick}}" style="flex-grow: 1; padding: 13px 8px; border-radius: 11px; background: {{g.bg}}; border: {{g.border}}; text-align: center; font-size: 13.5px; font-weight: {{g.weight}}; color: {{g.color}}; cursor: pointer;">{{g.label}}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- AC-001-2 · 학년 → 난이도 자동 매핑 -->
+    <div style="margin: 14px 20px 0 20px; background: #F4F6F1; border: 1px solid #E3E8DE; border-radius: 16px; padding: 17px; display: flex; flex-direction: column; gap: 11px;">
+      <div style="font-size: 12px; font-weight: 800; color: #3E6B3A;">학습 난이도를 이렇게 맞췄어요</div>
+      <div style="background: #FFFFFF; border: 1px solid #DDE5D8; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 13px;">
+        <div style="width: 44px; height: 44px; border-radius: 13px; background: #4F7A4A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 800; flex-shrink: 0;">{{levelNo}}</div>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 14px; font-weight: 800; letter-spacing: -0.02em;">{{levelName}}</div>
+          <div style="font-size: 11.5px; color: #6B655D;">{{levelDesc}}</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 6px; align-items: center;">
+        <sc-for list="{{slider}}" as="v" hint-placeholder-count="5">
+          <div onClick="{{v.pick}}" style="flex-grow: 1; height: 30px; border-radius: 8px; background: {{v.bg}}; border: {{v.border}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: {{v.weight}}; color: {{v.color}}; cursor: pointer;">{{v.n}}</div>
+        </sc-for>
+      </div>
+      <div style="font-size: 10.5px; color: #4E6B4A; line-height: 1.55;">학년은 근사치라 <b>직접 조정</b>할 수 있습니다. {{levelNotice}}</div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 16px;"></div>
+
+    <div style="padding: 16px 20px 30px 20px; display: flex; flex-direction: column; gap: 9px;">
+      <div onClick="{{goInvite}}" style="padding: 18px; border-radius: 14px; background: #2A2724; color: #FAF7F1; font-size: 16px; font-weight: 800; text-align: center; cursor: pointer;">등록하고 초대 링크 만들기</div>
+      <div onClick="{{goConsent}}" style="padding: 12px; text-align: center; font-size: 12.5px; font-weight: 700; color: #9C948A; cursor: pointer;">← 동의 화면으로</div>
+    </div>
+  </div>
+
+  <!-- ── STEP 3 · 초대 링크 ──────────────────────────── -->
+  <div style="display: {{d3}}; flex-direction: column;">
+
+    <div style="padding: 22px 20px 0 20px;">
+      <div style="font-family: 'AppleMyungjo', 'Nanum Myeongjo', 'Batang', serif; font-size: 25px; letter-spacing: -0.015em; line-height: 1.35;">{{inviteTitle}}</div>
+      <div style="margin-top: 11px; font-size: 13px; color: #6B655D; line-height: 1.6;">{{inviteLead}}</div>
+    </div>
+
+    <div style="margin: 20px 20px 0 20px; background: {{cardBg}}; border: 1px solid {{cardBorder}}; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 13px; min-height: 168px; justify-content: center;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 9px; height: 9px; border-radius: 999px; background: {{dotColor}};"></div>
+        <div style="font-size: 12.5px; font-weight: 800; color: {{stateColor}};">{{stateLabel}}</div>
+      </div>
+      <div style="font-size: 13px; color: #6B655D; line-height: 1.6;">{{stateBody}}</div>
+      <div style="display: {{dLinkBox}}; padding: 13px 14px; border-radius: 11px; background: #FFFFFF; border: 1px dashed #D6CEC2; font-size: 12px; font-family: ui-monospace, monospace; color: #7E786F; word-break: break-all;">{{linkText}}</div>
+      <div style="display: {{dTtl}}; font-size: 11px; color: #9C948A; font-family: ui-monospace, monospace;">{{ttlText}}</div>
+    </div>
+
+    <div style="margin: 14px 20px 0 20px; padding: 15px 16px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E5DFD5; display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 11.5px; font-weight: 800; color: #7E786F;">링크는 자격증명입니다</div>
+      <div style="font-size: 11.5px; color: #8A837A; line-height: 1.6;"><b>1회용</b> · <b>24시간 만료</b> · 동의가 끝난 뒤에만 발급 · 연결되면 부모 앱에 알림 · 언제든 해제 가능</div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 16px;"></div>
+
+    <div style="padding: 16px 20px 30px 20px; display: flex; flex-direction: column; gap: 9px;">
+      <div onClick="{{primaryAction}}" style="padding: 18px; border-radius: 14px; background: {{primaryBg}}; color: {{primaryColor}}; font-size: 16px; font-weight: 800; text-align: center; cursor: pointer;">{{primaryText}}</div>
+      <div style="display: {{dDemo}}; gap: 7px;">
+        <div onClick="{{demoRedeem}}" style="flex-grow: 1; padding: 11px; border-radius: 10px; background: #FAF7F1; border: 1px solid #E5DFD5; text-align: center; font-size: 11.5px; font-weight: 700; color: #7E786F; cursor: pointer;">아이가 링크를 열었다면</div>
+        <div onClick="{{demoExpire}}" style="flex-grow: 1; padding: 11px; border-radius: 10px; background: #FAF7F1; border: 1px solid #E5DFD5; text-align: center; font-size: 11.5px; font-weight: 700; color: #7E786F; cursor: pointer;">24시간이 지났다면</div>
+      </div>
+      <div onClick="{{goChild}}" style="padding: 10px; text-align: center; font-size: 12.5px; font-weight: 700; color: #9C948A; cursor: pointer;">← 자녀 등록으로</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":950}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 'consent',
+      on: { child: true, guardian: true, marketing: false, thirdparty: false },
+      blocked: false,
+      grade: 2,
+      level: null,
+      link: 'none'
+    };
+  }
+  renderVals() {
+    const st = this.state;
+    const on = st.on;
+
+    const defs = [
+      { id: 'child', tag: '필수', name: '자녀 개인정보 수집·이용', desc: '이름 · 생년월일 · 소비 기록 — 서비스 제공 목적' },
+      { id: 'guardian', tag: '필수', name: '법정대리인 동의 및 확인', desc: '만 14세 미만 가입에 필요합니다' },
+      { id: 'thirdparty', tag: '선택', name: '제휴 금융사 정보 제공', desc: '카드 발급·결제 처리에 필요한 최소 항목' },
+      { id: 'marketing', tag: '선택', name: '광고성 정보 받기', desc: '2년마다 다시 여쭤봅니다 · 안 해도 서비스는 그대로' }
+    ];
+    const items = defs.map((d, idx) => {
+      const checked = !!on[d.id];
+      const req = d.tag === '필수';
+      return {
+        ...d,
+        rule: idx === defs.length - 1 ? 'none' : '1px solid #F0EBE3',
+        boxBg: checked ? (req ? '#4F7A4A' : '#B36B3A') : '#FFFFFF',
+        boxBorder: checked ? 'none' : '1.5px solid #DDD6CB',
+        check: '#FFFFFF',
+        tagColor: req ? '#8E5228' : '#7E786F',
+        tagBg: req ? '#F7EEE6' : '#F0EBE3',
+        toggle: () => this.setState({ on: { ...on, [d.id]: !checked }, blocked: false })
+      };
+    });
+
+    const ready = on.child && on.guardian;
+    const stepIdx = st.step === 'consent' ? 2 : st.step === 'child' ? 4 : 4;
+    const names = ['본인인증', '계좌 연결', '동의', '카드 신청', '자녀 초대'];
+
+    // 학년 → 난이도 자동 매핑 (학습 난이도 5단계 정의표)
+    const map = { 1: 2, 2: 3, 3: 4 };
+    const levelNo = st.level || map[st.grade];
+    const levelNames = { 1: '아주 쉬움', 2: '쉬움', 3: '보통', 4: '어려움', 5: '아주 어려움' };
+    const levelDescs = {
+      1: '금액 1,000원 이하 · 계산 없이 비교만',
+      2: '금액 1,000원 이하 · 한 자리 덧셈·뺄셈',
+      3: '금액 10,000원 이하 · 곱셈구구까지',
+      4: '금액 50,000원 이하 · 나눗셈까지',
+      5: '금액 100,000원 이하 · 단위당 가격까지'
+    };
+    const grades = [1, 2, 3].map((g) => ({
+      label: '초' + g,
+      pick: () => this.setState({ grade: g, level: null }),
+      bg: st.grade === g ? '#2A2724' : '#FAF7F1',
+      border: st.grade === g ? 'none' : '1px solid #E5DFD5',
+      color: st.grade === g ? '#FAF7F1' : '#9C948A',
+      weight: st.grade === g ? '800' : '700'
+    }));
+    const slider = [1, 2, 3, 4, 5].map((n) => ({
+      n,
+      pick: () => this.setState({ level: n }),
+      bg: n === levelNo ? '#4F7A4A' : '#FFFFFF',
+      border: n === levelNo ? 'none' : '1px solid #DDE5D8',
+      color: n === levelNo ? '#FFFFFF' : '#9C948A',
+      weight: n === levelNo ? '800' : '600'
+    }));
+
+    // 링크 상태 — none(비어있음) / issuing(대기) / active / redeemed / expired
+    const L = st.link;
+    const linkCopy = {
+      none:     { label: '아직 만든 링크가 없어요', body: '아래 버튼을 누르면 아이에게 보낼 1회용 링크가 만들어집니다.', dot: '#C4BCB1', color: '#9C948A', bg: '#FFFFFF', border: '#E5DFD5' },
+      issuing:  { label: '링크를 만드는 중이에요', body: '잠시만 기다려 주세요. 만들어지면 문자·카톡으로 보낼 수 있습니다.', dot: '#B36B3A', color: '#8E5228', bg: '#FFFFFF', border: '#E5DFD5' },
+      active:   { label: '링크가 만들어졌어요', body: '아이에게 보내 주세요. 아이가 열면 설치와 연결이 한 번에 끝납니다.', dot: '#4F7A4A', color: '#3E6B3A', bg: '#F4F6F1', border: '#E3E8DE' },
+      redeemed: { label: '연결됐어요', body: '아이 앱이 연결되어 이 링크는 소진됐습니다. 같은 링크로는 다시 연결할 수 없습니다.', dot: '#4F7A4A', color: '#3E6B3A', bg: '#F4F6F1', border: '#E3E8DE' },
+      expired:  { label: '링크가 만료됐어요', body: '만든 지 24시간이 지났습니다. 아이 화면에는 "부모님께 다시 요청해요"가 표시됩니다.', dot: '#B4523A', color: '#A2452C', bg: '#F9E9E4', border: '#E4BCAE' }
+    }[L];
+
+    const primary = {
+      none:     { text: '초대 링크 만들기', bg: '#2A2724', color: '#FAF7F1', act: () => this.setState({ link: 'issuing' }) },
+      issuing:  { text: '만드는 중…', bg: '#E5DFD5', color: '#A8A199', act: () => this.setState({ link: 'active' }) },
+      active:   { text: '문자·카톡으로 보내기', bg: '#2A2724', color: '#FAF7F1', act: () => this.setState({ link: 'active' }) },
+      redeemed: { text: '연결 완료 · 홈으로', bg: '#4F7A4A', color: '#FFFFFF', act: () => this.setState({ link: 'redeemed' }) },
+      expired:  { text: '새 링크 다시 만들기', bg: '#2A2724', color: '#FAF7F1', act: () => this.setState({ link: 'issuing' }) }
+    }[L];
+
+    return {
+      items,
+      steps: names.map((name, i) => ({
+        name,
+        bar: i <= stepIdx ? '#B36B3A' : '#E5DFD5',
+        color: i === stepIdx ? '#8E5228' : i < stepIdx ? '#B0A79C' : '#C4BCB1',
+        weight: i === stepIdx ? '800' : '600'
+      })),
+
+      d1: st.step === 'consent' ? 'flex' : 'none',
+      d2: st.step === 'child' ? 'flex' : 'none',
+      d3: st.step === 'invite' ? 'flex' : 'none',
+
+      ctaBg: ready ? '#2A2724' : '#E5DFD5',
+      ctaColor: ready ? '#FAF7F1' : '#A8A199',
+      ctaText: ready ? '동의하고 계속하기' : '필수 항목에 동의해 주세요',
+      goChild: () => { if (ready) this.setState({ step: 'child', blocked: false }); },
+      goConsent: () => this.setState({ step: 'consent' }),
+      goInvite: () => this.setState({ step: 'invite' }),
+
+      tryInviteEarly: () => this.setState({ blocked: !ready }),
+      dBlocked: st.blocked && !ready ? 'flex' : 'none',
+
+      childName: '서연',
+      grades,
+      slider,
+      levelNo,
+      levelName: levelNo + '단계 · ' + levelNames[levelNo],
+      levelDesc: levelDescs[levelNo],
+      levelNotice: levelNo === 3 ? '지금 바로 시작할 수 있습니다.' : '이 단계는 콘텐츠 준비 중이라 3단계로 먼저 시작합니다.',
+
+      inviteTitle: L === 'redeemed' ? '아이와 연결됐어요' : '아이를 초대해 주세요',
+      inviteLead: L === 'redeemed' ? '이제 아이 앱에서 학습과 실천을 시작할 수 있습니다.' : '링크 하나로 아이 앱 설치와 연결이 함께 끝납니다.',
+      stateLabel: linkCopy.label,
+      stateBody: linkCopy.body,
+      stateColor: linkCopy.color,
+      dotColor: linkCopy.dot,
+      cardBg: linkCopy.bg,
+      cardBorder: linkCopy.border,
+      dLinkBox: L === 'active' ? 'block' : 'none',
+      linkText: 'finfriends.app/i/8f2c1a9e',
+      dTtl: L === 'active' ? 'block' : 'none',
+      ttlText: '남은 시간 23:41:07 · 1회용',
+      primaryText: primary.text,
+      primaryBg: primary.bg,
+      primaryColor: primary.color,
+      primaryAction: primary.act,
+      dDemo: L === 'active' ? 'flex' : 'none',
+      demoRedeem: () => this.setState({ link: 'redeemed' }),
+      demoExpire: () => this.setState({ link: 'expired' })
+    };
+  }
+}
+</script>
+</body>
+</html>
