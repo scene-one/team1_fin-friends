@@ -1,0 +1,281 @@
+# 핀프렌즈 위키 — Quartz v5 설정
+#
+# 이 파일 하나만 커밋한다. Quartz 프레임워크 소스는 저장소에 넣지 않고
+# CI가 빌드 시점에 jackyzha0/quartz 를 고정 커밋으로 내려받는다.
+# 콘텐츠도 복제하지 않는다 — wiki/ 가 정본이고 CI가 content/ 로 복사한다.
+# 자세한 배포 구조는 .github/workflows/deploy-wiki.yml 참고.
+#
+# yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
+
+configuration:
+  pageTitle: 핀프렌즈 위키
+  pageTitleSuffix: ""
+  enableSPA: true
+  enablePopovers: true
+  analytics:
+    provider: null
+  locale: ko-KR
+  baseUrl: scene-one.github.io/team1_fin-friends
+  ignorePatterns:
+    - private
+    - templates
+    - .obsidian
+  theme:
+    fontOrigin: googleFonts
+    cdnCaching: true
+    typography:
+      header: Gothic A1
+      body: Noto Sans KR
+      code: IBM Plex Mono
+    colors:
+      # 발표덱 v2 의 숲 팔레트에서 가져왔다
+      lightMode:
+        light: "#FAFBF8"
+        lightgray: "#E3E8DE"
+        gray: "#9CA894"
+        darkgray: "#3B4A38"
+        dark: "#2E3B27"
+        secondary: "#4A5D3F"
+        tertiary: "#7A9B6E"
+        highlight: rgba(122, 155, 110, 0.14)
+        textHighlight: "#D4A03C55"
+      darkMode:
+        light: "#1A1C19"
+        lightgray: "#333A30"
+        gray: "#6B7565"
+        darkgray: "#D3DACE"
+        dark: "#EBEFE9"
+        secondary: "#9CBF8E"
+        tertiary: "#7A9B6E"
+        highlight: rgba(122, 155, 110, 0.16)
+        textHighlight: "#D4A03C55"
+
+plugins:
+  # ── 마크다운 처리 ──────────────────────────────────────
+  - source: "@quartz-community/created-modified-date"
+    enabled: true
+    options:
+      defaultDateType: modified
+      # git 은 CI가 wiki/ 를 복사하므로 이력이 끊긴다.
+      # 우리 문서는 전부 프론트매터에 updated 를 갖고 있어 그것이 우선한다.
+      priority:
+        - frontmatter
+        - git
+        - filesystem
+    order: 10
+
+  - source: "@quartz-community/syntax-highlighting"
+    enabled: true
+    options:
+      theme:
+        light: github-light
+        dark: github-dark
+      keepBackground: false
+    order: 20
+
+  # [[문서명]] 위키링크 — 이 위키의 핵심이라 반드시 켠다
+  - source: "@quartz-community/obsidian-flavored-markdown"
+    enabled: true
+    options:
+      enableInHtmlEmbed: false
+      enableCheckbox: true
+    order: 30
+
+  - source: "@quartz-community/github-flavored-markdown"
+    enabled: true
+    order: 40
+
+  - source: "@quartz-community/table-of-contents"
+    enabled: true
+    order: 50
+    layout:
+      position: right
+      priority: 30
+
+  - source: "@quartz-community/crawl-links"
+    enabled: true
+    options:
+      markdownLinkResolution: shortest
+    order: 60
+
+  - source: "@quartz-community/description"
+    enabled: true
+    order: 70
+
+  - source: "@quartz-community/latex"
+    enabled: false
+    order: 80
+
+  - source: "@quartz-community/quartz-fonts"
+    enabled: true
+
+  - source: "@quartz-community/remove-draft"
+    enabled: true
+
+  - source: "@quartz-community/alias-redirects"
+    enabled: true
+
+  - source: "@quartz-community/content-index"
+    enabled: true
+    options:
+      enableSiteMap: true
+      enableRSS: true
+
+  - source: "@quartz-community/favicon"
+    enabled: true
+
+  - source: "@quartz-community/og-image"
+    enabled: true
+
+  - source: "@quartz-community/cname"
+    enabled: true
+
+  # mermaid 다이어그램(index.md 구조도)이 있는 캔버스/콘텐츠 페이지
+  - source: "@quartz-community/canvas-page"
+    enabled: true
+  - source: "@quartz-community/content-page"
+    enabled: true
+  - source: "@quartz-community/folder-page"
+    enabled: true
+  - source: "@quartz-community/tag-page"
+    enabled: true
+
+  # ── 레이아웃 ──────────────────────────────────────────
+  # concepts / entities / sources / synthesizes 계층을 그대로 보여준다
+  - source: "@quartz-community/explorer"
+    enabled: true
+    layout:
+      position: left
+      priority: 50
+
+  # 백링크 366개를 시각화 — 이 위키를 만든 이유
+  - source: "@quartz-community/graph"
+    enabled: true
+    layout:
+      position: right
+      priority: 10
+
+  - source: "@quartz-community/search"
+    enabled: true
+    layout:
+      position: left
+      priority: 20
+      group: toolbar
+      groupOptions:
+        grow: true
+
+  - source: "@quartz-community/backlinks"
+    enabled: true
+    layout:
+      position: right
+      priority: 50
+
+  - source: "@quartz-community/article-title"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 10
+
+  - source: "@quartz-community/content-meta"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 20
+
+  - source: "@quartz-community/page-title"
+    enabled: true
+    layout:
+      position: left
+      priority: 10
+
+  - source: "@quartz-community/darkmode"
+    enabled: true
+    layout:
+      position: left
+      priority: 30
+      group: toolbar
+
+  - source: "@quartz-community/reader-mode"
+    enabled: true
+    layout:
+      position: left
+      priority: 35
+      group: toolbar
+
+  - source: "@quartz-community/breadcrumbs"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 5
+      condition: not-index
+
+  # 프론트매터의 등급·출처 정보를 페이지 상단에 노출
+  - source: "@quartz-community/note-properties"
+    enabled: true
+    options:
+      includeAll: false
+      includedProperties:
+        - description
+        - type
+        - updated
+        - sources
+        - raw_path
+        - tags
+      excludedProperties: []
+      hidePropertiesView: false
+      delimiters: ---
+      language: yaml
+    order: 5
+    layout:
+      position: beforeBody
+      priority: 15
+      display: all
+
+  - source: "@quartz-community/footer"
+    enabled: true
+    options:
+      links:
+        GitHub 저장소: https://github.com/scene-one/team1_fin-friends
+        발표덱 v2: /team1_fin-friends/공용공간/발표준비/발표덱_v2.html
+        프로토타입: /team1_fin-friends/프로토타입/Main.dc.html
+    layout:
+      position: footer
+      priority: 50
+
+  - source: "@quartz-community/spacer"
+    enabled: true
+    options: {}
+    order: 25
+    layout:
+      position: left
+      priority: 25
+      display: mobile-only
+
+  - source: "@quartz-community/unlisted-pages"
+    enabled: true
+    options: {}
+    order: 45
+
+layout:
+  groups:
+    toolbar:
+      priority: 35
+      direction: row
+      gap: 0.5rem
+  byPageType:
+    "404":
+      positions:
+        beforeBody: []
+        left: []
+        right: []
+    content: {}
+    folder:
+      exclude:
+        - reader-mode
+      positions:
+        right: []
+    tag:
+      exclude:
+        - reader-mode
+      positions:
+        right: []

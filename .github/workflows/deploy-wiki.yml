@@ -1,0 +1,137 @@
+# 핀프렌즈 위키 → GitHub Pages (Quartz v5)
+#
+# 설계 원칙 — 저장소에 중복을 만들지 않는다.
+#   · Quartz 프레임워크 소스를 벤더링하지 않는다. 빌드 시점에 고정 커밋으로 내려받는다.
+#   · wiki/ 를 content/ 로 복제해 커밋하지 않는다. CI가 빌드 시점에만 복사한다.
+#   · 저장소에 커밋되는 것은 quartz.config.yaml 과 이 워크플로 둘뿐이다.
+#
+# 기존 Pages 보존 — 이 저장소는 원래 legacy Pages(main 루트)로 정적 HTML을 서빙하고 있었다.
+#   발표덱·프로토타입·대시보드 HTML을 빌드 산출물에 그대로 얹어 기존 URL을 유지한다.
+#
+# ⚠️ 최초 1회 수동 설정 필요
+#   Settings → Pages → Source 를 "GitHub Actions" 로 변경해야 한다.
+#   (현재는 "Deploy from a branch" 상태다. 이 워크플로는 성공하지만 브랜치 빌드가
+#    같은 사이트를 덮어써 결과가 요동친다 — 저장소 관리자 권한이 필요한 작업이다)
+
+name: Deploy Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wiki/**"
+      - "quartz.config.yaml"
+      - ".github/workflows/deploy-wiki.yml"
+      # 기존 Pages가 서빙하던 정적 산출물이 바뀌어도 다시 배포한다
+      - "**/*.html"
+      - "프로토타입/canvas.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포는 한 번에 하나만. 진행 중인 배포를 취소하지 않는다.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  # jackyzha0/quartz v5 고정 커밋 (2026-08-12)
+  # 올리려면 이 값만 바꾼다: gh api repos/jackyzha0/quartz/commits/v5 --jq .sha
+  QUARTZ_REF: 075afd3f712da0088a07f5284a7b3aba37dd61b6
+
+jobs:
+  build:
+    name: Quartz 빌드
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v7
+        with:
+          # created-modified-date 플러그인이 git 이력을 읽을 수 있도록 전체 이력을 받는다
+          fetch-depth: 0
+          path: repo
+
+      - name: Quartz 체크아웃 (고정 커밋)
+        uses: actions/checkout@v7
+        with:
+          repository: jackyzha0/quartz
+          ref: ${{ env.QUARTZ_REF }}
+          path: quartz
+
+      - name: Node 설정
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: quartz/package-lock.json
+
+      - name: 위키 → content 배치 · 설정 적용
+        run: |
+          set -euo pipefail
+          # Quartz 기본 콘텐츠를 우리 위키로 교체
+          rm -rf quartz/content
+          cp -r repo/wiki quartz/content
+          # 우리 설정을 기본 설정보다 우선하게 둔다 (config-loader가 quartz.config.yaml 을 먼저 찾는다)
+          cp repo/quartz.config.yaml quartz/quartz.config.yaml
+          echo "── content 배치 결과 ──"
+          find quartz/content -name '*.md' | wc -l | xargs echo "마크다운 파일:"
+
+      - name: 의존성 설치
+        working-directory: quartz
+        run: npm ci || npm install
+
+      - name: Quartz 플러그인 설치
+        working-directory: quartz
+        run: npx quartz plugin install
+
+      - name: 빌드
+        working-directory: quartz
+        run: npx quartz build -d content -v
+
+      - name: 기존 정적 산출물 얹기 (URL 보존)
+        run: |
+          set -euo pipefail
+          copy_if_exists() {
+            local src="$1"
+            [ -e "repo/$src" ] || { echo "  건너뜀(없음): $src"; return 0; }
+            mkdir -p "quartz/public/$(dirname "$src")"
+            cp -r "repo/$src" "quartz/public/$src"
+            echo "  얹음: $src"
+          }
+          echo "── 기존 Pages URL 보존 ──"
+          copy_if_exists "WBS_대시보드.html"
+          copy_if_exists "공용공간/발표준비/발표덱_v1.html"
+          copy_if_exists "공용공간/발표준비/발표덱_v2.html"
+          copy_if_exists "공용공간/4. TAM-SAM-SOM_Market-Segment/TAM-SAM-SOM_시장세분화.html"
+          copy_if_exists "수빈/샘플_네컷만화_퀴즈.html"
+          copy_if_exists "프로토타입"
+
+      - name: 빌드 산출물 점검
+        run: |
+          set -euo pipefail
+          test -f quartz/public/index.html || { echo "::error::index.html 이 생성되지 않았다"; exit 1; }
+          echo "생성된 HTML: $(find quartz/public -name '*.html' | wc -l)개"
+          echo "총 용량: $(du -sh quartz/public | cut -f1)"
+
+      - name: Pages 설정 로드
+        uses: actions/configure-pages@v6
+
+      - name: 아티팩트 업로드
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: quartz/public
+
+  deploy:
+    name: Pages 배포
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: GitHub Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v5

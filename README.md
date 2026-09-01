@@ -1,7 +1,11 @@
-# 핀프렌즈 (FinFriends) — 서비스 역기획 프로젝트
+# 핀프렌즈 (FinFriends) — 서비스 개선 기획 / 역기획 / AI 네이티브 기획 프로젝트
 
-새싹프렌즈 1팀 · SeSAC AI Native PM Project 02
-**기간** 2026-08-14 ~ 08-21 (8일) · **상태** ✅ 제출 완료
+새싹프렌즈 1팀 · SeSAC AI Native PM Project
+
+**기간** 
+1차 2026-08-03 ~ 2026-08-04 (2일) · **상태** ✅ 제출 완료
+2차 2026-08-14 ~ 2026-08-21 (4일) · **상태** ✅ 제출 완료
+3차 2026-08-31 ~ 2026-09-03 (4일) · **상태** 
 
 > 아이 금융앱 **퍼핀**을 시장·기업·고객 관점으로 다시 뜯어보고,
 > 다른 업계에서 문제 해결 **원리**를 가져와,
@@ -13,10 +17,26 @@
 
 ---
 
+### 🌳 [**핀프렌즈 위키 — scene-one.github.io/team1_fin-friends**](https://scene-one.github.io/team1_fin-friends/)
+
+프로젝트의 모든 판단과 근거를 **서로 연결된 29장의 문서**로 정리한 지식베이스입니다.
+좌측 탐색기로 계층을 훑고, 우측 그래프로 문서 간 연결을 보고, 검색으로 바로 찾습니다.
+
+| 들어가기 좋은 문서 | |
+|---|---|
+| [핀프렌즈](https://scene-one.github.io/team1_fin-friends/entities/services/%ED%95%80%ED%94%84%EB%A0%8C%EC%A6%88) | 서비스 전체상 · 기능 · 리스크 |
+| [두 가치 선언](https://scene-one.github.io/team1_fin-friends/concepts/product/%EB%91%90-%EA%B0%80%EC%B9%98-%EC%84%A0%EC%96%B8) | 제품 정의의 최상위 문장과 위계 |
+| [소비 계획 카드](https://scene-one.github.io/team1_fin-friends/concepts/product/%EC%86%8C%EB%B9%84-%EA%B3%84%ED%9A%8D-%EC%B9%B4%EB%93%9C) | 가장 최근의 큰 결정 (F14·F19 삭제) |
+| [「불리기」의 내재동기적 차별점](https://scene-one.github.io/team1_fin-friends/synthesizes/2026-%EC%98%88%EC%A0%81%EA%B8%88-%EA%B8%B0%ED%9A%8D-%EC%A2%85%ED%95%A9) | 시중 예적금 6종과 비교한 종합 |
+| [인용 금지 목록](https://scene-one.github.io/team1_fin-friends/concepts/business-strategy/%EC%9D%B8%EC%9A%A9-%EA%B8%88%EC%A7%80-%EB%AA%A9%EB%A1%9D) | 🔴 대외 자료 쓰기 전 필독 |
+
+---
+
 ## 🎬 결과물 바로 보기
 
 | | 무엇 | 열기 |
 |:-:|---|---|
+| 🌳 | **핀프렌즈 위키** — 근거·개념·개체 29장이 서로 연결된 지식베이스 | [사이트 열기](https://scene-one.github.io/team1_fin-friends/) |
 | 📊 | **발표덱 v2** — 17장 · 10분 (←→ 방향키로 넘김) | [브라우저에서 보기](https://hayoungv.github.io/sesac-fin-friends/%EA%B3%B5%EC%9A%A9%EA%B3%B5%EA%B0%84/%EB%B0%9C%ED%91%9C%EC%A4%80%EB%B9%84/%EB%B0%9C%ED%91%9C%EB%8D%B1_v2.html#p1) |
 | 📝 | **PRD v0.2** — 기능 F1~F15 · KPI · 인수조건 · 실험 설계 | [읽기](공용공간/9.%20PRD/PRD_핀프렌즈_v0_2.md) |
 | 🧩 | **기능 정의 v13** — 팀 확정 사양 (별⭐ · 성장 나무 · 월간 숲) | [읽기](공용공간/0.%20확정%20기능%20정의/기능정의_v13.md) |

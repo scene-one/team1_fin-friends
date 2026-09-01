@@ -1,0 +1,850 @@
+<title>지호의 200원</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#EFEAE1;
+  --card:#FAF7F1;
+  --card-2:#F4EEE3;
+  --ink:#2A2724;
+  --ink-soft:#736A61;
+  --ink-faint:#9C948A;
+  --rule:#DDD3C3;
+  --rule-strong:#C8BDA9;
+  --good:#4F7A4A;
+  --good-bg:#E7EFE3;
+  --miss:#A24F39;
+  --miss-bg:#F5E6E0;
+  --t-earn:#B87D18;
+  --t-spend:#356F80;
+  --t-save:#B25873;
+  --t-grow:#4F7A4A;
+  --shadow:0 1px 0 rgba(42,39,36,.05), 0 14px 30px -22px rgba(42,39,36,.7);
+
+  /* 만화 그림판 — 인쇄물이므로 양쪽 테마에서 고정 */
+  --art-earn:#FDF5E3;
+  --art-spend:#EAF3F6;
+  --art-save:#FBEEF1;
+  --art-grow:#EEF5E9;
+  --art-edge:rgba(42,39,36,.10);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1A1815;
+    --card:#232019;
+    --card-2:#2B2720;
+    --ink:#F0EADF;
+    --ink-soft:#A99E8E;
+    --ink-faint:#877D6F;
+    --rule:#39342B;
+    --rule-strong:#4B443A;
+    --good:#93C288;
+    --good-bg:#28331F;
+    --miss:#DE9578;
+    --miss-bg:#3A2A22;
+    --t-earn:#E3B255;
+    --t-spend:#83B8C9;
+    --t-save:#E293A8;
+    --t-grow:#93C288;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 14px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1A1815;
+  --card:#232019;
+  --card-2:#2B2720;
+  --ink:#F0EADF;
+  --ink-soft:#A99E8E;
+  --ink-faint:#877D6F;
+  --rule:#39342B;
+  --rule-strong:#4B443A;
+  --good:#93C288;
+  --good-bg:#28331F;
+  --miss:#DE9578;
+  --miss-bg:#3A2A22;
+  --t-earn:#E3B255;
+  --t-spend:#83B8C9;
+  --t-save:#E293A8;
+  --t-grow:#93C288;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 14px 30px -22px #000;
+}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(24px,5vw,64px) clamp(18px,4vw,40px) 96px;}
+
+/* ---------- 공통 활자 ---------- */
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);
+}
+h1{
+  font-family:"Gaegu","Apple SD Gothic Neo",cursive;
+  font-weight:700;
+  font-size:clamp(2.6rem,7vw,4.2rem);
+  line-height:1.05;margin:.18em 0 .1em;text-wrap:balance;
+  letter-spacing:-.01em;
+}
+h2{
+  font-size:clamp(1.2rem,2.4vw,1.45rem);
+  font-weight:400;margin:0;letter-spacing:-.01em;
+}
+.lede{max-width:62ch;color:var(--ink-soft);margin:.4em 0 0;}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+
+/* ---------- 헤더 ---------- */
+header{border-bottom:2px solid var(--ink);padding-bottom:26px;}
+.spec-row{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;
+}
+.spec{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.74rem;letter-spacing:.02em;
+  border:1px solid var(--rule-strong);
+  border-radius:2px;
+  padding:5px 9px;
+  color:var(--ink-soft);
+  background:var(--card);
+  white-space:nowrap;
+}
+.spec b{color:var(--ink);font-weight:500;}
+.spec.lv{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.spec.lv b{color:var(--paper);}
+
+/* ---------- 섹션 ---------- */
+section{margin-top:clamp(48px,7vw,84px);}
+.sec-head{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding-bottom:10px;border-bottom:1px solid var(--rule);margin-bottom:26px;
+}
+.sec-head .n{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.78rem;color:var(--ink-faint);letter-spacing:.1em;
+}
+.sec-note{color:var(--ink-soft);font-size:.9rem;margin-left:auto;}
+
+/* ---------- 네컷 ---------- */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.cut{
+  background:var(--card);
+  border:1px solid var(--rule);
+  border-radius:4px;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.cut-top{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;border-bottom:1px solid var(--rule);
+}
+.cut-n{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.8rem;font-weight:500;
+  width:22px;height:22px;flex:none;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--ink);color:var(--paper);
+}
+.tag{
+  font-size:.8rem;font-weight:400;letter-spacing:.02em;
+  padding:1px 9px;border-radius:999px;
+  border:1px solid currentColor;
+}
+.t-earn{color:var(--t-earn);} .t-spend{color:var(--t-spend);}
+.t-save{color:var(--t-save);} .t-grow{color:var(--t-grow);}
+.cut-time{
+  margin-left:auto;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.68rem;color:var(--ink-faint);letter-spacing:.06em;
+}
+.art{
+  display:block;width:100%;height:auto;
+  box-shadow:inset 0 0 0 1px var(--art-edge);
+}
+.caption{
+  font-family:"Gaegu","Apple SD Gothic Neo",cursive;
+  font-size:1.42rem;line-height:1.55;
+  padding:16px 18px 6px;
+  color:var(--ink);
+}
+.caption p{margin:0;}
+.caption .src{
+  border-bottom:2.5px solid var(--t-grow);
+  padding-bottom:1px;
+}
+.cut-foot{
+  margin-top:auto;
+  padding:10px 18px 14px;
+  font-size:.78rem;line-height:1.6;color:var(--ink-soft);
+  border-top:1px dashed var(--rule);
+}
+.cut-foot .k{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);display:block;
+}
+
+/* ---------- 퀴즈 ---------- */
+.starbar{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--card-2);border:1px solid var(--rule);border-radius:4px;
+  padding:12px 16px;margin-bottom:26px;
+}
+.starbar .label{font-size:.86rem;color:var(--ink-soft);}
+.stars{display:flex;gap:5px;}
+.stars i{
+  width:19px;height:19px;display:block;
+  background:var(--rule-strong);
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  transition:background .2s ease, transform .2s ease;
+}
+.stars i.on{background:var(--t-earn);transform:scale(1.12);}
+.starbar .count{
+  margin-left:auto;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.84rem;color:var(--ink-soft);
+}
+.reset{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;
+  background:none;border:1px solid var(--rule-strong);color:var(--ink-soft);
+  border-radius:2px;padding:5px 10px;cursor:pointer;
+}
+.reset:hover{border-color:var(--ink);color:var(--ink);}
+.reset:focus-visible{outline:2px solid var(--t-spend);outline-offset:2px;}
+
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+.q{
+  background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  box-shadow:var(--shadow);padding:18px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.q-head{display:flex;align-items:center;gap:10px;}
+.q-num{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem;color:var(--ink-faint);letter-spacing:.08em;margin-left:auto;
+}
+.ask{
+  font-family:"Gaegu","Apple SD Gothic Neo",cursive;
+  font-size:1.62rem;line-height:1.35;margin:0;color:var(--ink);
+}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.opt{
+  font:inherit;text-align:center;cursor:pointer;
+  background:var(--card-2);
+  border:2px solid var(--rule-strong);border-radius:6px;
+  padding:0 0 9px;overflow:hidden;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.opt svg{display:block;width:100%;height:auto;}
+.opt .lab{
+  display:block;
+  font-family:"Gaegu","Apple SD Gothic Neo",cursive;
+  font-size:1.24rem;padding-top:7px;color:var(--ink);
+}
+.opt:hover:not(:disabled){border-color:var(--ink);transform:translateY(-2px);}
+.opt:focus-visible{outline:3px solid var(--t-spend);outline-offset:2px;}
+.opt:disabled{cursor:default;}
+.opt.correct{border-color:var(--good);background:var(--good-bg);}
+.opt.wrong{border-color:var(--miss);background:var(--miss-bg);}
+.opt.dim{opacity:.42;}
+
+.fb{display:none;border-radius:4px;padding:12px 14px;font-size:.92rem;line-height:1.65;}
+.fb.show{display:block;}
+.fb.ok{background:var(--good-bg);border-left:3px solid var(--good);color:var(--ink);}
+.fb.no{background:var(--miss-bg);border-left:3px solid var(--miss);color:var(--ink);}
+.fb .hd{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  display:block;margin-bottom:5px;
+}
+.fb.ok .hd{color:var(--good);}
+.fb.no .hd{color:var(--miss);}
+.fb .again{
+  font-family:"Gaegu","Apple SD Gothic Neo",cursive;
+  font-size:1.3rem;line-height:1.5;
+  display:block;margin:7px 0 6px;
+}
+.fb .rule{font-size:.78rem;color:var(--ink-soft);display:block;margin-top:7px;}
+
+/* ---------- 표 ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card);}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top;}
+thead th{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:400;background:var(--card-2);
+}
+tbody tr:last-child td{border-bottom:none;}
+td.ok{color:var(--good);}
+td .m{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+
+/* ---------- 메모 ---------- */
+.memo{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+.memo article{
+  background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:16px 18px;
+}
+.memo h3{
+  font-size:1rem;margin:0 0 8px;font-weight:400;
+  padding-bottom:7px;border-bottom:1px solid var(--rule);
+}
+.memo p{margin:0;font-size:.88rem;color:var(--ink-soft);line-height:1.7;}
+.memo p + p{margin-top:9px;}
+.memo b{color:var(--ink);font-weight:400;border-bottom:1.5px solid var(--t-earn);}
+
+footer{
+  margin-top:72px;padding-top:22px;border-top:1px solid var(--rule);
+  font-size:.82rem;color:var(--ink-faint);line-height:1.8;
+}
+footer a{color:var(--ink-soft);}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+@media (max-width:520px){
+  .opts{grid-template-columns:1fr;}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">핀프렌즈 · 학습 콘텐츠 제작 샘플 · 4칸 하루치</div>
+  <h1>지호의 200원</h1>
+  <p class="lede">난이도 <b>1단계 「아주 쉬움」</b>(초1-1 · 한글 미숙 기준)의 실물 샘플입니다. 네컷만화 한 편이 <b>벌기 · 잘 쓰기 · 모으기 · 불리기</b> 네 칸을 모두 지나가고, 그 만화에서 오늘의 퀴즈 4문항이 나옵니다. 퀴즈는 실제로 눌러 볼 수 있습니다.</p>
+  <div class="spec-row">
+    <span class="spec lv"><b>LV.1</b> 아주 쉬움</span>
+    <span class="spec">예시 금액 <b>≤ 1,000원</b> · 100원 단위</span>
+    <span class="spec">연산 <b>비교만</b></span>
+    <span class="spec">1문장 <b>≤ 12자</b></span>
+    <span class="spec">선택지 <b>그림 2지선다</b></span>
+    <span class="spec">시간 지평 <b>오늘</b></span>
+    <span class="spec">음성 <b>필수</b></span>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head">
+    <span class="n">01</span>
+    <h2>오늘의 이야기 — 네컷만화</h2>
+    <span class="sec-note">밑줄 친 문장이 퀴즈의 <b>정답 근거</b>입니다</span>
+  </div>
+
+  <div class="strip">
+
+    <!-- ① 벌기 -->
+    <article class="cut">
+      <div class="cut-top">
+        <span class="cut-n">1</span>
+        <span class="tag t-earn">💰 벌기</span>
+        <span class="cut-time">아침</span>
+      </div>
+      <svg class="art" viewBox="0 0 220 140" role="img" aria-label="지호가 신발을 나란히 정리해 두었고, 엄마가 200원짜리 동전을 건네고 있다." style="background:var(--art-earn)">
+        <rect x="0" y="110" width="220" height="30" fill="#EFDFBC"/>
+        <rect x="0" y="108" width="220" height="3" fill="#DCC79A"/>
+        <!-- 신발 두 켤레 -->
+        <g fill="#5B7FA6">
+          <path d="M12 106 q-2 -11 7 -11 h5 q1 4 8 5 l7 2 q5 1 5 4 z"/>
+          <path d="M40 106 q-2 -11 7 -11 h5 q1 4 8 5 l7 2 q5 1 5 4 z"/>
+        </g>
+        <g fill="#C46B4E">
+          <path d="M70 106 q-2 -9 6 -9 h4 q1 3 7 4 l6 2 q4 1 4 3 z"/>
+          <path d="M94 106 q-2 -9 6 -9 h4 q1 3 7 4 l6 2 q4 1 4 3 z"/>
+        </g>
+        <!-- 지호 -->
+        <g transform="translate(72,44)">
+          <line x1="-5" y1="46" x2="-5" y2="62" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <line x1="6" y1="46" x2="6" y2="62" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <rect x="-12" y="25" width="24" height="26" rx="10" fill="#E8734F"/>
+          <line x1="11" y1="31" x2="24" y2="26" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+          <line x1="-11" y1="31" x2="-19" y2="40" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="0" cy="11" r="14" fill="#F2CBA9"/>
+          <path d="M-14 11 A14 14 0 0 1 14 11 Z" fill="#3A2E26"/>
+          <circle cx="-5" cy="14" r="1.9" fill="#2A2724"/>
+          <circle cx="5" cy="14" r="1.9" fill="#2A2724"/>
+          <path d="M-4 19 Q0 22.5 4 19" stroke="#2A2724" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- 동전 -->
+        <g transform="translate(122,66)">
+          <circle r="17" fill="#E5B84B" stroke="#BC8F2C" stroke-width="2.5"/>
+          <circle r="12" fill="none" stroke="#BC8F2C" stroke-width="1"/>
+          <text y="5" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" font-weight="500" fill="#7A5A12">200</text>
+          <path d="M20 -18 l3 5 l5 2 l-5 2 l-3 5 l-3 -5 l-5 -2 l5 -2 z" fill="#F0CE7C"/>
+        </g>
+        <!-- 엄마 -->
+        <g transform="translate(178,26)">
+          <line x1="-6" y1="56" x2="-6" y2="76" stroke="#5C4E6E" stroke-width="8" stroke-linecap="round"/>
+          <line x1="7" y1="56" x2="7" y2="76" stroke="#5C4E6E" stroke-width="8" stroke-linecap="round"/>
+          <rect x="-15" y="30" width="30" height="32" rx="12" fill="#7E6A98"/>
+          <line x1="-14" y1="37" x2="-33" y2="42" stroke="#F2CBA9" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="0" cy="13" r="16" fill="#F2CBA9"/>
+          <path d="M-16 13 A16 16 0 0 1 16 13 Z" fill="#4A362B"/>
+          <path d="M13 12 q10 6 6 22 q-8 -6 -8 -18 z" fill="#4A362B"/>
+          <circle cx="-6" cy="16" r="2" fill="#2A2724"/>
+          <circle cx="6" cy="16" r="2" fill="#2A2724"/>
+          <path d="M-4 21 Q0 25 4 21" stroke="#2A2724" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="caption">
+        <p>지호가 신발을 정리했어요.</p>
+        <p><span class="src">엄마가 200원을 줬어요.</span></p>
+      </div>
+      <div class="cut-foot">
+        <span class="k">정답 근거 · Q1</span>
+        「엄마가 <b>200원</b>을 줬어요」 — 일을 한 쪽에만 돈이 생겼다는 사실이 지문에 그대로 있습니다.
+      </div>
+    </article>
+
+    <!-- ② 잘 쓰기 -->
+    <article class="cut">
+      <div class="cut-top">
+        <span class="cut-n">2</span>
+        <span class="tag t-spend">🛒 잘 쓰기</span>
+        <span class="cut-time">점심때</span>
+      </div>
+      <svg class="art" viewBox="0 0 220 140" role="img" aria-label="문구점 선반에 100원짜리 지우개와 100원짜리 젤리가 놓여 있고, 지호가 무엇을 살지 고민한다." style="background:var(--art-spend)">
+        <rect x="6" y="78" width="208" height="7" rx="2" fill="#C9A87F"/>
+        <rect x="6" y="85" width="208" height="4" rx="1" fill="#AE8C63"/>
+        <!-- 지우개 -->
+        <g transform="translate(30,52)">
+          <rect x="0" y="0" width="46" height="25" rx="4" fill="#F7F3E9" stroke="#B4A991" stroke-width="2"/>
+          <path d="M2 17 h42 a4 4 0 0 1 -4 6 h-34 a4 4 0 0 1 -4 -6 z" fill="#6E9BC4"/>
+          <text x="23" y="44" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#356F80">100원</text>
+        </g>
+        <!-- 젤리 -->
+        <g transform="translate(108,48)">
+          <path d="M4 6 l6 -6 l6 6 l6 -6 l6 6 l6 -6 l6 6 v23 a4 4 0 0 1 -4 4 h-28 a4 4 0 0 1 -4 -4 z" fill="#E58AA6"/>
+          <circle cx="14" cy="18" r="4" fill="#FBD9E2"/>
+          <circle cx="26" cy="22" r="4" fill="#FBD9E2"/>
+          <circle cx="21" cy="11" r="3" fill="#FBD9E2"/>
+          <text x="21" y="48" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#356F80">100원</text>
+        </g>
+        <!-- 지호 -->
+        <g transform="translate(186,56)">
+          <line x1="-5" y1="42" x2="-5" y2="58" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <line x1="6" y1="42" x2="6" y2="58" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <rect x="-12" y="22" width="24" height="25" rx="10" fill="#E8734F"/>
+          <line x1="-11" y1="28" x2="-19" y2="20" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="0" cy="8" r="14" fill="#F2CBA9"/>
+          <path d="M-14 8 A14 14 0 0 1 14 8 Z" fill="#3A2E26"/>
+          <circle cx="-5" cy="11" r="1.9" fill="#2A2724"/>
+          <circle cx="5" cy="11" r="1.9" fill="#2A2724"/>
+          <path d="M-3.5 17 h7" stroke="#2A2724" stroke-width="1.7" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(168,16)">
+          <ellipse cx="0" cy="0" rx="17" ry="14" fill="#FFFFFF" stroke="#9FBFCC" stroke-width="2"/>
+          <path d="M8 10 l7 9 l-2 -11 z" fill="#FFFFFF" stroke="#9FBFCC" stroke-width="2"/>
+          <text y="6" text-anchor="middle" font-family="Gaegu,cursive" font-size="20" font-weight="700" fill="#356F80">?</text>
+        </g>
+      </svg>
+      <div class="caption">
+        <p>지우개를 다 썼어요.</p>
+        <p><span class="src">지우개가 없으면 안 돼요.</span></p>
+      </div>
+      <div class="cut-foot">
+        <span class="k">정답 근거 · Q2</span>
+        값이 <b>둘 다 100원</b>이라, 가격이 아니라 「없으면 안 되는가」로만 판단하게 됩니다. 1단계에서 뺄셈을 쓰지 않으려는 장치입니다.
+      </div>
+    </article>
+
+    <!-- ③ 모으기 -->
+    <article class="cut">
+      <div class="cut-top">
+        <span class="cut-n">3</span>
+        <span class="tag t-save">🐷 모으기</span>
+        <span class="cut-time">저녁</span>
+      </div>
+      <svg class="art" viewBox="0 0 220 140" role="img" aria-label="지호가 남은 100원을 유리 저금통에 넣자 안에 있던 동전이 두 개에서 세 개가 된다." style="background:var(--art-save)">
+        <rect x="0" y="116" width="220" height="24" fill="#F2DDE3"/>
+        <rect x="0" y="114" width="220" height="3" fill="#E0C2CB"/>
+        <!-- 지호 -->
+        <g transform="translate(48,50)">
+          <line x1="-5" y1="44" x2="-5" y2="62" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <line x1="6" y1="44" x2="6" y2="62" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <rect x="-12" y="24" width="24" height="26" rx="10" fill="#E8734F"/>
+          <line x1="11" y1="29" x2="30" y2="14" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+          <line x1="-11" y1="30" x2="-19" y2="40" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="0" cy="10" r="14" fill="#F2CBA9"/>
+          <path d="M-14 10 A14 14 0 0 1 14 10 Z" fill="#3A2E26"/>
+          <circle cx="-5" cy="13" r="1.9" fill="#2A2724"/>
+          <circle cx="5" cy="13" r="1.9" fill="#2A2724"/>
+          <path d="M-4 18 Q0 21.5 4 18" stroke="#2A2724" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- 떨어지는 동전 -->
+        <g transform="translate(88,50)">
+          <circle r="11" fill="#E5B84B" stroke="#BC8F2C" stroke-width="2"/>
+          <text y="4" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#7A5A12">100</text>
+        </g>
+        <path d="M100 54 q18 4 24 16" stroke="#C48DA0" stroke-width="2" fill="none" stroke-dasharray="4 4" stroke-linecap="round"/>
+        <!-- 유리 저금통 -->
+        <g transform="translate(128,44)">
+          <rect x="6" y="-4" width="52" height="10" rx="3" fill="#B29AA3"/>
+          <path d="M2 6 h60 v52 a10 10 0 0 1 -10 10 h-40 a10 10 0 0 1 -10 -10 z" fill="#FFFFFF" opacity=".72" stroke="#B6A0AA" stroke-width="2.5"/>
+          <g>
+            <circle cx="22" cy="54" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+            <circle cx="42" cy="54" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+            <circle cx="32" cy="38" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+          </g>
+          <path d="M10 14 q0 -4 4 -4" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="caption">
+        <p>100원이 남았어요.</p>
+        <p><span class="src">넣으니 세 개가 됐어요.</span></p>
+      </div>
+      <div class="cut-foot">
+        <span class="k">정답 근거 · Q3</span>
+        저금통을 <b>속이 보이는 유리병</b>으로 그렸습니다. 불투명한 돼지 저금통이면 「쌓인다」를 눈으로 셀 수 없어 1단계에서 성립하지 않습니다.
+      </div>
+    </article>
+
+    <!-- ④ 불리기 -->
+    <article class="cut">
+      <div class="cut-top">
+        <span class="cut-n">4</span>
+        <span class="tag t-grow">🌱 불리기</span>
+        <span class="cut-time">자기 전</span>
+      </div>
+      <svg class="art" viewBox="0 0 220 140" role="img" aria-label="오늘 상자에는 스티커가 한 장, 내일 상자에는 두 장 들어 있고 지호가 내일 쪽을 가리킨다." style="background:var(--art-grow)">
+        <!-- 오늘 -->
+        <g transform="translate(14,18)">
+          <rect x="0" y="0" width="76" height="62" rx="7" fill="#FFFFFF" opacity=".78" stroke="#B7CBAB" stroke-width="2.5"/>
+          <text x="38" y="17" text-anchor="middle" font-family="Gaegu,cursive" font-size="17" font-weight="700" fill="#6E7F64">오늘</text>
+          <g transform="translate(38,40)">
+            <circle r="14" fill="#F2A0B5"/>
+            <path d="M0 -8 l2.6 5.3 l5.9 .9 l-4.3 4.1 l1 5.8 l-5.2 -2.7 l-5.2 2.7 l1 -5.8 l-4.3 -4.1 l5.9 -.9 z" fill="#FFFFFF"/>
+          </g>
+        </g>
+        <!-- 내일 -->
+        <g transform="translate(112,18)">
+          <rect x="0" y="0" width="94" height="62" rx="7" fill="#FFFFFF" opacity=".92" stroke="#5A8A4C" stroke-width="3"/>
+          <text x="47" y="17" text-anchor="middle" font-family="Gaegu,cursive" font-size="17" font-weight="700" fill="#4F7A4A">내일</text>
+          <g transform="translate(30,40)">
+            <circle r="14" fill="#F2A0B5"/>
+            <path d="M0 -8 l2.6 5.3 l5.9 .9 l-4.3 4.1 l1 5.8 l-5.2 -2.7 l-5.2 2.7 l1 -5.8 l-4.3 -4.1 l5.9 -.9 z" fill="#FFFFFF"/>
+          </g>
+          <g transform="translate(64,40)">
+            <circle r="14" fill="#F2A0B5"/>
+            <path d="M0 -8 l2.6 5.3 l5.9 .9 l-4.3 4.1 l1 5.8 l-5.2 -2.7 l-5.2 2.7 l1 -5.8 l-4.3 -4.1 l5.9 -.9 z" fill="#FFFFFF"/>
+          </g>
+        </g>
+        <!-- 화살표 -->
+        <path d="M94 49 h12" stroke="#8FA383" stroke-width="3" stroke-linecap="round"/>
+        <path d="M104 44 l7 5 l-7 5 z" fill="#8FA383"/>
+        <!-- 지호 -->
+        <g transform="translate(96,86)">
+          <line x1="-5" y1="34" x2="-5" y2="50" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <line x1="6" y1="34" x2="6" y2="50" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+          <rect x="-12" y="15" width="24" height="24" rx="10" fill="#E8734F"/>
+          <line x1="11" y1="20" x2="30" y2="12" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="0" cy="2" r="13" fill="#F2CBA9"/>
+          <path d="M-13 2 A13 13 0 0 1 13 2 Z" fill="#3A2E26"/>
+          <circle cx="-4.5" cy="5" r="1.8" fill="#2A2724"/>
+          <circle cx="4.5" cy="5" r="1.8" fill="#2A2724"/>
+          <path d="M-4 10 Q0 13.5 4 10" stroke="#2A2724" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="caption">
+        <p>오늘 받으면 한 장이에요.</p>
+        <p><span class="src">내일 받으면 두 장이에요.</span></p>
+      </div>
+      <div class="cut-foot">
+        <span class="k">정답 근거 · Q4</span>
+        1단계는 <b>이자를 가르치지 않습니다.</b> 「기다리면 더 좋아진다」(지연만족)만 다루고, 시간 지평도 <b>「내일」</b>까지입니다 — 달력은 초2-2에 처음 배웁니다.
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="n">02</span>
+    <h2>오늘의 퀴즈 — 4문항</h2>
+    <span class="sec-note">눌러 보세요. 오답 처리 규칙까지 그대로 재현했습니다</span>
+  </div>
+
+  <div class="starbar">
+    <span class="label">오늘 모은 별</span>
+    <div class="stars" id="stars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <span class="count" id="count">0 / 4</span>
+    <button class="reset" id="reset" type="button">샘플 초기화</button>
+  </div>
+
+  <div class="qgrid">
+
+    <!-- Q1 -->
+    <article class="q" data-answer="b">
+      <div class="q-head"><span class="tag t-earn">💰 벌기</span><span class="q-num">Q1 · 하루 1문항</span></div>
+      <p class="ask">돈이 생긴 사람은 누구일까?</p>
+      <div class="opts">
+        <button class="opt" data-k="a" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="소파에 앉아 있는 지호" style="background:var(--art-earn)">
+            <rect x="18" y="58" width="104" height="34" rx="9" fill="#9AB0C4"/>
+            <rect x="12" y="46" width="16" height="42" rx="7" fill="#7E97AD"/>
+            <rect x="112" y="46" width="16" height="42" rx="7" fill="#7E97AD"/>
+            <g transform="translate(70,30)">
+              <rect x="-12" y="14" width="24" height="26" rx="10" fill="#E8734F"/>
+              <circle cx="0" cy="0" r="13" fill="#F2CBA9"/>
+              <path d="M-13 0 A13 13 0 0 1 13 0 Z" fill="#3A2E26"/>
+              <circle cx="-4.5" cy="3" r="1.8" fill="#2A2724"/>
+              <circle cx="4.5" cy="3" r="1.8" fill="#2A2724"/>
+              <path d="M-3.5 9 h7" stroke="#2A2724" stroke-width="1.7" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <span class="lab">그냥 앉아 있었어요</span>
+        </button>
+        <button class="opt" data-k="b" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="신발을 정리하는 지호" style="background:var(--art-earn)">
+            <rect x="0" y="82" width="140" height="22" fill="#EFDFBC"/>
+            <g fill="#5B7FA6">
+              <path d="M14 80 q-2 -10 6 -10 h5 q1 3 7 4 l6 2 q4 1 4 4 z"/>
+              <path d="M40 80 q-2 -10 6 -10 h5 q1 3 7 4 l6 2 q4 1 4 4 z"/>
+            </g>
+            <g transform="translate(96,30)">
+              <line x1="-5" y1="38" x2="-5" y2="52" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+              <line x1="6" y1="38" x2="6" y2="52" stroke="#3C6E8F" stroke-width="7" stroke-linecap="round"/>
+              <rect x="-12" y="18" width="24" height="24" rx="10" fill="#E8734F"/>
+              <line x1="-11" y1="24" x2="-28" y2="38" stroke="#F2CBA9" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="0" cy="4" r="13" fill="#F2CBA9"/>
+              <path d="M-13 4 A13 13 0 0 1 13 4 Z" fill="#3A2E26"/>
+              <circle cx="-4.5" cy="7" r="1.8" fill="#2A2724"/>
+              <circle cx="4.5" cy="7" r="1.8" fill="#2A2724"/>
+              <path d="M-4 12 Q0 15.5 4 12" stroke="#2A2724" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <span class="lab">신발을 정리했어요</span>
+        </button>
+      </div>
+      <div class="fb" data-src="엄마가 200원을 줬어요."></div>
+    </article>
+
+    <!-- Q2 -->
+    <article class="q" data-answer="a">
+      <div class="q-head"><span class="tag t-spend">🛒 잘 쓰기</span><span class="q-num">Q2 · 하루 1문항</span></div>
+      <p class="ask">먼저 사야 하는 건 뭘까?</p>
+      <div class="opts">
+        <button class="opt" data-k="a" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="100원짜리 지우개" style="background:var(--art-spend)">
+            <g transform="translate(42,34)">
+              <rect x="0" y="0" width="56" height="30" rx="5" fill="#F7F3E9" stroke="#B4A991" stroke-width="2.5"/>
+              <path d="M2 20 h52 a5 5 0 0 1 -5 8 h-42 a5 5 0 0 1 -5 -8 z" fill="#6E9BC4"/>
+            </g>
+            <text x="70" y="88" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#356F80">100원</text>
+          </svg>
+          <span class="lab">지우개</span>
+        </button>
+        <button class="opt" data-k="b" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="100원짜리 젤리" style="background:var(--art-spend)">
+            <g transform="translate(48,28)">
+              <path d="M4 8 l6 -8 l6 8 l6 -8 l6 8 l6 -8 l6 8 v30 a5 5 0 0 1 -5 5 h-32 a5 5 0 0 1 -5 -5 z" fill="#E58AA6"/>
+              <circle cx="15" cy="24" r="5" fill="#FBD9E2"/>
+              <circle cx="30" cy="29" r="5" fill="#FBD9E2"/>
+              <circle cx="24" cy="15" r="4" fill="#FBD9E2"/>
+            </g>
+            <text x="70" y="88" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#356F80">100원</text>
+          </svg>
+          <span class="lab">젤리</span>
+        </button>
+      </div>
+      <div class="fb" data-src="지우개가 없으면 안 돼요."></div>
+    </article>
+
+    <!-- Q3 -->
+    <article class="q" data-answer="b">
+      <div class="q-head"><span class="tag t-save">🐷 모으기</span><span class="q-num">Q3 · 하루 1문항</span></div>
+      <p class="ask">지호의 저금통은 어느 쪽일까?</p>
+      <div class="opts">
+        <button class="opt" data-k="a" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="동전이 두 개 들어 있는 저금통" style="background:var(--art-save)">
+            <g transform="translate(40,16)">
+              <rect x="4" y="-4" width="52" height="10" rx="3" fill="#B29AA3"/>
+              <path d="M0 6 h60 v56 a10 10 0 0 1 -10 10 h-40 a10 10 0 0 1 -10 -10 z" fill="#FFFFFF" opacity=".8" stroke="#B6A0AA" stroke-width="2.5"/>
+              <circle cx="20" cy="56" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+              <circle cx="40" cy="56" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+            </g>
+          </svg>
+          <span class="lab">두 개</span>
+        </button>
+        <button class="opt" data-k="b" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="동전이 세 개 들어 있는 저금통" style="background:var(--art-save)">
+            <g transform="translate(40,16)">
+              <rect x="4" y="-4" width="52" height="10" rx="3" fill="#B29AA3"/>
+              <path d="M0 6 h60 v56 a10 10 0 0 1 -10 10 h-40 a10 10 0 0 1 -10 -10 z" fill="#FFFFFF" opacity=".8" stroke="#B6A0AA" stroke-width="2.5"/>
+              <circle cx="20" cy="56" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+              <circle cx="40" cy="56" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+              <circle cx="30" cy="40" r="9" fill="#E5B84B" stroke="#BC8F2C" stroke-width="1.8"/>
+            </g>
+          </svg>
+          <span class="lab">세 개</span>
+        </button>
+      </div>
+      <div class="fb" data-src="넣으니 세 개가 됐어요."></div>
+    </article>
+
+    <!-- Q4 -->
+    <article class="q" data-answer="b">
+      <div class="q-head"><span class="tag t-grow">🌱 불리기</span><span class="q-num">Q4 · 하루 1문항</span></div>
+      <p class="ask">스티커를 더 많이 받는 쪽은?</p>
+      <div class="opts">
+        <button class="opt" data-k="a" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="오늘 받는 스티커 한 장" style="background:var(--art-grow)">
+            <text x="70" y="28" text-anchor="middle" font-family="Gaegu,cursive" font-size="20" font-weight="700" fill="#6E7F64">오늘</text>
+            <g transform="translate(70,62)">
+              <circle r="20" fill="#F2A0B5"/>
+              <path d="M0 -11 l3.6 7.3 l8.1 1.2 l-5.9 5.7 l1.4 8 l-7.2 -3.8 l-7.2 3.8 l1.4 -8 l-5.9 -5.7 l8.1 -1.2 z" fill="#FFFFFF"/>
+            </g>
+          </svg>
+          <span class="lab">한 장</span>
+        </button>
+        <button class="opt" data-k="b" type="button">
+          <svg viewBox="0 0 140 104" role="img" aria-label="내일 받는 스티커 두 장" style="background:var(--art-grow)">
+            <text x="70" y="28" text-anchor="middle" font-family="Gaegu,cursive" font-size="20" font-weight="700" fill="#4F7A4A">내일</text>
+            <g transform="translate(46,62)">
+              <circle r="20" fill="#F2A0B5"/>
+              <path d="M0 -11 l3.6 7.3 l8.1 1.2 l-5.9 5.7 l1.4 8 l-7.2 -3.8 l-7.2 3.8 l1.4 -8 l-5.9 -5.7 l8.1 -1.2 z" fill="#FFFFFF"/>
+            </g>
+            <g transform="translate(94,62)">
+              <circle r="20" fill="#F2A0B5"/>
+              <path d="M0 -11 l3.6 7.3 l8.1 1.2 l-5.9 5.7 l1.4 8 l-7.2 -3.8 l-7.2 3.8 l1.4 -8 l-5.9 -5.7 l8.1 -1.2 z" fill="#FFFFFF"/>
+            </g>
+          </svg>
+          <span class="lab">두 장</span>
+        </button>
+      </div>
+      <div class="fb" data-src="내일 받으면 두 장이에요."></div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="n">03</span>
+    <h2>사양 대조 — 이 샘플이 1단계 규격을 지켰는가</h2>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>축</th><th>1단계 규격</th><th>이 샘플</th><th>판정</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>① 예시 금액</td><td class="m">≤ 1,000원 · 100원 단위</td><td>등장 금액 <span class="m">100원 · 200원</span> 둘뿐</td><td class="ok">지킴</td></tr>
+        <tr><td>① 연산</td><td>비교만 (많다 / 적다)</td><td>4문항 전부 <b>비교</b>. 덧셈·뺄셈 없음</td><td class="ok">지킴</td></tr>
+        <tr><td>② 지문</td><td class="m">1문장 ≤ 12자 · 4컷 만화</td><td>8문장 최대 <span class="m">11음절</span> · 컷당 2문장</td><td class="ok">지킴</td></tr>
+        <tr><td>② 선택지</td><td>그림 2지선다</td><td>4문항 전부 그림 2지선다</td><td class="ok">지킴</td></tr>
+        <tr><td>③ 시간 지평</td><td>오늘</td><td>아침→자기 전. 불리기만 <b>「내일」</b>까지</td><td class="ok">지킴</td></tr>
+        <tr><td>4칸 배분</td><td>분야별 하루 1개 · 총 4개</td><td>벌기·잘 쓰기·모으기·불리기 각 1문항</td><td class="ok">지킴</td></tr>
+        <tr><td>이야기 공유</td><td>하루 4문제가 한 상황을 공유</td><td>네컷만화 1편에서 4문항 전부 파생</td><td class="ok">지킴</td></tr>
+        <tr><td>정답 근거</td><td>지문 안에 정답 문장이 명시</td><td>컷마다 밑줄 문장 1개 = 해당 문항의 근거</td><td class="ok">지킴</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="n">04</span>
+    <h2>제작 메모</h2>
+  </div>
+  <div class="memo">
+    <article>
+      <h3>이 지문은 2단계에도 그대로 씁니다</h3>
+      <p>「지문 3종 × 숫자 변형 5종」 구조에 따라, 이 네컷은 <b>저(1·2단계) 지문</b>입니다. 2단계로 올릴 때 <b>그림과 이야기는 그대로 두고</b> 숫자와 문항만 바꿉니다.</p>
+      <p>예 — Q1이 <b>「200원 + 300원은?」</b>(한 자리 덧셈), Q3이 <b>「500원씩 세 번이면?」</b>(반복 덧셈)으로. 삽화 재제작이 없으므로 제작 원가가 붙지 않습니다.</p>
+    </article>
+    <article>
+      <h3>오답을 이렇게 처리했습니다</h3>
+      <p>틀리면 별이 붙지 않고 <b>「이야기 다시 읽기」만</b> 뜹니다. 다시 풀어도 오늘치 별은 이미 소진됩니다.</p>
+      <p>그래서 다시 읽기 화면에는 <b>정답 근거 문장 하나만</b> 크게 띄웁니다. 만화 전체를 다시 보여주면 만 7세는 어디를 봐야 할지 모른 채 창을 닫습니다.</p>
+    </article>
+    <article>
+      <h3>그림에서 의도적으로 뺀 것</h3>
+      <p><b>말풍선 대사를 쓰지 않았습니다.</b> 한글 해득이 덜 된 아이에게 그림 안의 글자는 읽어야 할 것이 두 곳으로 갈리는 부담입니다. 대사는 캡션 한 줄로 모으고 <b>음성으로 읽어 줍니다.</b></p>
+      <p>숫자는 그림 안(동전 <span class="m">200</span>, 가격표 <span class="m">100원</span>)에만 두어, 캡션 문장은 <span class="m">12자</span>를 넘지 않게 했습니다.</p>
+    </article>
+    <article>
+      <h3>다음에 확인할 것</h3>
+      <p>Q4가 검증과제 10번 — <b>만 7세에게 「기다리면 더 좋아진다」가 통하는가</b>를 직접 관측하는 지점입니다. 오답률이 유독 높으면 「불리기」 1단계 설계를 되짚어야 합니다.</p>
+      <p>목표 정답률은 <b><span class="m">70~85%</span></b>로 잡았습니다. 이 값 자체가 추정이라 프로토타입 1~2주 관찰로 보정합니다.</p>
+    </article>
+  </div>
+</section>
+
+<footer>
+  핀프렌즈 · 새싹프렌즈 1팀 2차 역기획 · 수빈 · 2026-08-31<br>
+  기준 문서 <b>기능정의 v13 §7-1 · §7-2 · §9</b> · 설계 근거 <b>학습 난이도 5단계 콘텐츠 설계안 (초1~3)</b><br>
+  캐릭터·삽화는 사양 검토용 임시안입니다. 실제 아트 방향은 아바타 사양(v13 §9-1)에 맞춰 다시 잡습니다.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var stars = document.getElementById('stars');
+  var count = document.getElementById('count');
+  var pins  = stars.querySelectorAll('i');
+  var got = 0;
+
+  function render(){
+    for (var i=0;i<pins.length;i++) pins[i].classList.toggle('on', i < got);
+    count.textContent = got + ' / 4';
+  }
+
+  function wire(card){
+    var answer = card.dataset.answer;
+    var opts = card.querySelectorAll('.opt');
+    var fb = card.querySelector('.fb');
+    var src = fb.dataset.src;
+
+    opts.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if (card.dataset.done) return;
+        card.dataset.done = '1';
+        var right = btn.dataset.k === answer;
+
+        opts.forEach(function(o){
+          o.disabled = true;
+          if (o !== btn) o.classList.add('dim');
+        });
+        btn.classList.add(right ? 'correct' : 'wrong');
+
+        if (right){
+          got++; render();
+          fb.className = 'fb ok show';
+          fb.innerHTML = '<span class="hd">정답 · 별 1개</span>' +
+            '<span class="again">잘했어요! ⭐ 별을 하나 받았어요.</span>' +
+            '<span class="rule">v13 §7-1 — 정답일 때만 ⭐1. 분야별 하루 1개, 총 4개까지.</span>';
+        } else {
+          fb.className = 'fb no show';
+          fb.innerHTML = '<span class="hd">이야기 다시 읽기</span>' +
+            '<span class="again">「' + src + '」</span>' +
+            '<span class="rule">별은 붙지 않습니다. 다시 풀어도 오늘치 별은 이미 소진된 상태입니다 — v13 §7-1.</span>';
+        }
+      });
+    });
+  }
+
+  var cards = document.querySelectorAll('.q');
+  cards.forEach(wire);
+
+  document.getElementById('reset').addEventListener('click', function(){
+    got = 0; render();
+    cards.forEach(function(card){
+      delete card.dataset.done;
+      card.querySelectorAll('.opt').forEach(function(o){
+        o.disabled = false;
+        o.classList.remove('dim','correct','wrong');
+      });
+      var fb = card.querySelector('.fb');
+      fb.className = 'fb';
+      fb.innerHTML = '';
+    });
+  });
+
+  render();
+})();
+</script>

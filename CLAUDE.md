@@ -112,7 +112,7 @@ tags: [경쟁서비스, 국내]
 `sources/` 페이지는 프론트매터에 원본 경로를 추가한다:
 
 ```yaml
-raw_path: raw/prd/PRD_핀프렌즈_v0_2.md
+raw_path: raw/60-internal/prd/PRD_핀프렌즈_v0_2.md
 ```
 
 ## 증거 등급 표기
@@ -130,6 +130,32 @@ raw_path: raw/prd/PRD_핀프렌즈_v0_2.md
 ⚠️ **`[모의]` 와 `[A]` 를 섞지 마라.** 팀 산출물에는 모의 인터뷰 응답이 섞여 있다.
 위키로 옮길 때 등급이 사라지면 나중에 실제 데이터로 오인된다.
 
+## 설계 결정의 기록 위치
+
+결정과 **그 근거는 문서 안에 산다.** 별도 결정 원장 파일을 만들지 않는다.
+
+| 무엇 | 어디 |
+|---|---|
+| **결정 자체**(사양·요구사항) | `공용공간/9. PRD/` · `공용공간/10. SRS/` |
+| **결정 이유**(1줄 + 되돌리는 조건) | PRD **부록 E. ADR** |
+| **판단 배경**(Summary / Evidence / Implication + 기각한 대안) | `wiki/` 각 페이지의 **「🧭 결정 배경 (Context)」** 절 |
+| **작업 이력** | `wiki/log.md` |
+
+- 결정이 확정되면 **같은 작업 안에서** 위 네 곳 중 해당되는 곳을 갱신한다. 같은 내용을 두 곳에 서술하지 않는다.
+- 결정에는 **받아들인 대가와 그것이 의존하는 방어선**을 함께 적는다. 대가 없는 결정은 기록으로 남기지 않는다.
+- 결정이 `wiki/index.md` 의 「이 위키가 지금 알고 있는 모르는 것」 항목을 닫으면 **그 행도 함께 제거**한다.
+
+### 🔴 사람에게 묻는 기준 — CORE만
+
+**MINOR 토픽은 묻지 않는다.** 권장안대로 결정하고, 무엇을 왜 그렇게 정했는지 **사후 보고**한다.
+
+| 등급 | 처리 |
+|---|---|
+| **CORE** — 아키텍처·규제·데이터 모델·핵심 UX 계약·수익 구조 | 선택형 UI로 **묻는다** |
+| **MINOR** — 네이밍·디렉터리·로그 포맷·UI 디테일·운영 세부 | **직접 결정** 후 한 줄 보고 |
+
+결정이 애매하면 **CORE로 올려서 묻는다** — 묻지 않아 생긴 오류가 물어서 생긴 피로보다 비싸다.
+
 ## 저장소 규칙
 
 - 작업 지시를 받으면 **먼저 `git pull`** 한다.
@@ -137,3 +163,35 @@ raw_path: raw/prd/PRD_핀프렌즈_v0_2.md
 - `공용공간/` 은 팀 공유 폴더다. **남의 글을 덮어쓰지 않는다** — 이어 쓰고 이름을 남긴다.
 - 중복 파일을 만들지 않는다. `raw/` 의 원본 스냅샷은 중복이 아니라 **의도된 불변 사본**이다.
 - `llm-wiki.md` · `llm-wiki.ko.md` 는 `.gitignore` 대상이다. 커밋하지 않는다.
+
+## 위키 배포 — GitHub Pages + Quartz v5
+
+`wiki/` 는 [Quartz v5](https://github.com/jackyzha0/quartz)로 빌드돼 GitHub Pages에 배포된다.
+사이트: **https://scene-one.github.io/team1_fin-friends/**
+
+| 파일 | 역할 |
+|---|---|
+| `quartz.config.yaml` | 사이트 설정 — 테마·플러그인·레이아웃 |
+| `.github/workflows/deploy-wiki.yml` | CI/CD — `main`의 `wiki/**` 변경 시 자동 배포 |
+
+**저장소에 중복을 만들지 않는다** — Quartz 프레임워크 소스도, `content/` 사본도 커밋하지 않는다.
+CI가 빌드 시점에 Quartz를 **고정 커밋**으로 내려받고 `wiki/` 를 `content/` 로 복사한다.
+`public/` · `content/` · `node_modules/` 는 `.gitignore` 대상이다.
+
+### 위키를 고칠 때 지킬 것
+
+- **프론트매터에 `title` 과 `updated` 를 반드시 넣는다** — Quartz가 제목과 날짜로 쓴다
+- 위키링크 `[[문서명]]` 는 basename으로 해석된다. **파일을 옮겨도 링크는 안 깨지지만, 이름을 바꾸면 깨진다**
+- 새 최상위 폴더를 만들면 Quartz 탐색기에 그대로 노출된다 — `wiki/README.md` 의 계층 정의를 먼저 갱신할 것
+- 커밋 전 `깨진 링크 0 · 고립 페이지 0` 을 확인한다 (lint 절차)
+
+### Quartz 버전 올리기
+
+`.github/workflows/deploy-wiki.yml` 의 `QUARTZ_REF` 만 바꾼다:
+
+```
+gh api repos/jackyzha0/quartz/commits/v5 --jq .sha
+```
+
+설정 스키마가 바뀔 수 있으므로 올린 뒤 로컬 빌드로 확인한다 —
+Quartz를 임시 폴더에 클론 → `wiki/` 를 `content/` 로 복사 → `quartz.config.yaml` 복사 → `npx quartz build -d content`.

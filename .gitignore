@@ -8,3 +8,10 @@
 # LLM Wiki 설계 원문·번역본 — 로컬 참조용, 저장소에 올리지 않음
 llm-wiki.md
 llm-wiki.ko.md
+
+# Quartz 빌드 산출물 — CI가 생성하므로 커밋하지 않는다
+public/
+node_modules/
+.quartz/
+quartz.lock.json
+content/
