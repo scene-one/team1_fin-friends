@@ -14,3 +14,4 @@ MINOR: 3
 ## 처리 이력
 - #1 UI-001 ParentOnboarding -> PR #14 (draft)
 - #2 UI-002 Main -> PR #15 (draft)
+- #3 UI-003 Learn -> PR #16 (draft · 판단 유보 0)
