@@ -805,3 +805,16 @@ O4 사진 운영 **부담 없음**(무저장의 배당금) · O5 온콜 **자동
 - GitHub Project 보드 생성 및 Issue 연결
 - UI Issue 8건의 `area:ui`/`area:ux` 라벨 세분화 검토(사용자 승인 대기)
 - `/goal-setting` 실행 — Issue와 연결된 첫 개발 목표 고정
+
+## [2026-09-01] setup | UI 이슈 8건 라벨 세분화 — area:ux 정밀화
+
+- UI 이슈 8건 모두에 `area:ui, area:ux`를 무차별 적용했던 것을 재검토 — 다단계 흐름·3분기 이상 상태전환이 핵심인 이슈만 `area:ux`를 남겼다.
+- **`area:ux` 유지(4건)** — #1 ParentOnboarding(동의→등록→링크발급, 만료/소진 예외) · #4 Plan(트리거 진입+검증 흐름) · #5 Spending(지킴/넘김/계획없음 3분기+회고→재계획 루프) · #8 Bank(신청→실시간재계산→상태전환).
+- **`area:ux` 제거(2건)** — #2 Main(단일 화면, 애니메이션 토글은 분기가 아님) · #3 Learn(단일 화면, 정답/오답 결과 표시).
+- **변경 없음(2건, 원래부터 area:ui만)** — #6 Tree · #7 Forest.
+- 각 변경 이슈에 판단 근거를 코멘트로 남겼다.
+
+**미결로 남은 것**
+
+- GitHub Project 보드 생성 및 Issue 연결
+- `/goal-setting` 실행 — Issue와 연결된 첫 개발 목표 고정
