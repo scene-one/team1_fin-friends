@@ -65,4 +65,4 @@
 
 ---
 
-**기준 문서** — [SRS v1.0](../../공용공간/10.%20SRS/SRS_핀프렌즈_v1_0.md) · [PRD v0.3](../../공용공간/9.%20PRD/PRD_핀프렌즈_v0_3.md) · [PWA](../../wiki/entities/tech-stack/PWA.md)
+**기준 문서** — [SRS v1.0](../../공용공간/10.%20SRS/SRS_핀프렌즈_v1_0.md) · [PRD v0.3](../../공용공간/9.%20PRD/PRD_핀프렌즈_v0_3.md) · [PWA](../../wiki/10-제품/PWA.md)
