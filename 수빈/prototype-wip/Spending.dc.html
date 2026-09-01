@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #B36B3A; text-decoration: none; }
+    a:hover { color: #8E5228; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 100%; max-width: 390px; margin: 0 auto; min-height: 1000px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="padding: 22px 20px 0 20px; display: flex; gap: 7px;">
+    <sc-for list="{{sides}}" as="s" hint-placeholder-count="2">
+      <div onClick="{{s.pick}}" style="flex-grow: 1; padding: 10px 6px; border-radius: 11px; background: {{s.bg}}; border: {{s.border}}; text-align: center; font-size: 12.5px; font-weight: {{s.weight}}; color: {{s.color}}; cursor: pointer;">{{s.label}}</div>
+    </sc-for>
+  </div>
+
+  <!-- ══ 아이 화면 · 계획 ↔ 실제 대조 ══════════════════ -->
+  <div style="display: {{dChild}}; flex-direction: column;">
+
+    <div style="padding: 22px 20px 0 20px;">
+      <div style="font-size: 11px; letter-spacing: 0.1em; color: #9C948A; font-weight: 700;">쓰고 나서</div>
+      <div style="margin-top: 8px; font-size: 25px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.3;">{{headline}}</div>
+    </div>
+
+    <!-- 대조 카드 -->
+    <div style="display: {{dCompare}}; margin: 18px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; flex-direction: column; gap: 15px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 12px; font-weight: 800; color: #7E786F;">{{whereLabel}}</span>
+        <div style="display: {{dStar}}; align-items: center; gap: 5px; background: #F7EEE6; border-radius: 999px; padding: 5px 10px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="#E8B978" stroke="#B36B3A" stroke-width="1.4" stroke-linejoin="round"></path>
+          </svg>
+          <span style="font-size: 11px; font-weight: 800; color: #8E5228;">+1</span>
+        </div>
+      </div>
+
+      <!-- 계획 · 실제를 나란히 -->
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="2">
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <span style="font-size: 12px; font-weight: 800; color: {{b.labelColor}};">{{b.label}}</span>
+              <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 17px; font-weight: 600; color: {{b.amtColor}};">{{b.amount}}</span>
+            </div>
+            <div style="height: 12px; border-radius: 999px; background: #EFEAE1; overflow: hidden;">
+              <div style="height: 100%; width: {{b.pct}}%; border-radius: 999px; background: {{b.fill}};"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding: 13px 15px; border-radius: 12px; background: {{verdictBg}}; border: {{verdictBorder}}; display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 15px;">{{verdictIcon}}</span>
+        <span style="font-size: 13.5px; font-weight: 800; color: {{verdictColor}};">{{verdictText}}</span>
+      </div>
+      <div style="font-size: 12.5px; color: #6B655D; line-height: 1.6;">{{verdictBody}}</div>
+
+      <!-- AC-021-2 · 초과면 다음 계획 카드로 연결 -->
+      <div onClick="{{toNextPlan}}" style="display: {{dNext}}; padding: 15px; border-radius: 13px; background: #2A2724; color: #FAF7F1; font-size: 14.5px; font-weight: 800; text-align: center; cursor: pointer;">{{nextText}}</div>
+    </div>
+
+    <!-- Empty -->
+    <div style="display: {{dEmpty}}; margin: 18px 20px 0 20px; padding: 30px 18px; border-radius: 18px; background: #FFFFFF; border: 1px dashed #DDD6CB; flex-direction: column; align-items: center; gap: 7px;">
+      <div style="font-size: 24px;">🧾</div>
+      <div style="font-size: 13.5px; font-weight: 800;">아직 맞춰볼 게 없어요</div>
+      <div style="font-size: 11.5px; color: #9C948A; text-align: center; line-height: 1.55;">오늘 쓴 게 생기면<br>여기서 같이 볼 수 있어요.</div>
+    </div>
+
+    <!-- Loading -->
+    <div style="display: {{dLoading}}; margin: 18px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; flex-direction: column; gap: 13px;">
+      <div style="width: 40%; height: 10px; border-radius: 5px; background: #EBE6DE;"></div>
+      <div style="height: 12px; border-radius: 999px; background: #F4F1EB;"></div>
+      <div style="height: 12px; border-radius: 999px; background: #F4F1EB;"></div>
+      <div style="height: 46px; border-radius: 12px; background: #EFEAE1;"></div>
+    </div>
+
+    <!-- Error -->
+    <div style="display: {{dError}}; margin: 18px 20px 0 20px; padding: 24px 18px; border-radius: 18px; background: #F9E9E4; border: 1px solid #E4BCAE; flex-direction: column; align-items: center; gap: 9px;">
+      <div style="font-size: 13.5px; font-weight: 800; color: #A2452C;">결제 내역을 못 가져왔어요</div>
+      <div style="font-size: 11.5px; color: #8E5A48; text-align: center; line-height: 1.55;">모은 별은 그대로 있어요.</div>
+      <div onClick="{{retry}}" style="margin-top: 2px; padding: 9px 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E4BCAE; font-size: 12px; font-weight: 800; color: #A2452C; cursor: pointer;">다시 시도</div>
+    </div>
+
+    <!-- 시나리오 전환 -->
+    <div style="margin: 14px 20px 0 20px; display: flex; flex-direction: column; gap: 7px;">
+      <div style="display: flex; gap: 6px;">
+        <sc-for list="{{scenes}}" as="c" hint-placeholder-count="3">
+          <div onClick="{{c.pick}}" style="flex-grow: 1; padding: 8px 3px; border-radius: 9px; background: {{c.bg}}; border: {{c.border}}; text-align: center; font-size: 10.5px; font-weight: {{c.weight}}; color: {{c.color}}; cursor: pointer;">{{c.label}}</div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 6px;">
+        <sc-for list="{{states}}" as="v" hint-placeholder-count="3">
+          <div onClick="{{v.pick}}" style="flex-grow: 1; padding: 8px 3px; border-radius: 9px; background: {{v.bg}}; border: {{v.border}}; text-align: center; font-size: 10.5px; font-weight: {{v.weight}}; color: {{v.color}}; cursor: pointer;">{{v.label}}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin: 14px 20px 0 20px; padding: 12px 14px; border-radius: 12px; background: #F4F6F1; border: 1px solid #E3E8DE; display: flex; gap: 9px; align-items: flex-start;">
+      <span style="font-size: 13px; flex-shrink: 0;">⚖️</span>
+      <div style="font-size: 11px; line-height: 1.55; color: #4E6B4A;"><b>별은 금액만 보고 줍니다.</b> 무엇을 샀는지, 어떤 가게로 분류되는지는 <b>판정에 쓰지 않아요.</b></div>
+    </div>
+  </div>
+
+  <!-- ══ 부모 화면 · F13 소비 내역 ═══════════════════ -->
+  <div style="display: {{dParent}}; flex-direction: column;">
+
+    <div style="padding: 22px 20px 0 20px;">
+      <div style="font-size: 11px; letter-spacing: 0.1em; color: #9C948A; font-weight: 700;">부모 화면 · 이번 달</div>
+      <div style="margin-top: 8px; font-size: 25px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.3;">어디에 얼마 썼나</div>
+      <div style="margin-top: 10px; font-size: 12.5px; color: #6B655D; line-height: 1.55;">지난달과 견줘서 보여줍니다. 아래 분류는 <b>보여주기용</b>이고 별 판정에는 쓰지 않습니다.</div>
+    </div>
+
+    <div style="margin: 18px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 12px; font-weight: 800; color: #7E786F;">업종별 집계</span>
+        <span style="font-size: 10px; font-weight: 800; color: #7E786F; background: #F0EBE3; border-radius: 5px; padding: 3px 7px;">표시용 · 판정 미사용</span>
+      </div>
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 7px;">
+              <div style="width: 10px; height: 10px; border-radius: 3px; background: {{c.swatch}};"></div>
+              <span style="font-size: 13px; font-weight: 700;">{{c.name}}</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span style="font-size: 11.5px; font-weight: 700; color: {{c.deltaColor}};">{{c.delta}}</span>
+              <span style="font-family: 'Hoefler Text', Palatino, serif; font-size: 15px; font-weight: 600;">{{c.amount}}</span>
+            </div>
+          </div>
+          <div style="height: 8px; border-radius: 999px; background: #EFEAE1; overflow: hidden;">
+            <div style="height: 100%; width: {{c.pct}}%; border-radius: 999px; background: {{c.swatch}};"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin: 14px 20px 0 20px; padding: 14px 16px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E5DFD5; display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; font-weight: 800; color: #7E786F;">계획을 적지 않고 쓴 것</div>
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <span style="font-size: 12.5px; color: #6B655D;">이번 달 3건 · 4,700원</span>
+        <span style="font-size: 11.5px; color: #9C948A;">별은 안 붙었어요</span>
+      </div>
+      <div style="font-size: 11px; color: #9C948A; line-height: 1.55;">계획을 안 적어도 <b>소비 내역에는 그대로 남습니다.</b> 회고 대상이 아닐 뿐입니다.</div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 20px;"></div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":1120}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // scene: kept | over | noplan   ·   view: ok | empty | loading | error
+    this.state = { side: 'child', scene: 'kept', view: 'ok' };
+  }
+  renderVals() {
+    const st = this.state;
+
+    // ── 3 시나리오 · 판정은 금액만 (AC-021-6 · DR-06) ──
+    const sceneData = {
+      kept: {
+        headline: '적어둔 대로 썼어요',
+        where: '다이소 성수점',
+        plan: 3000, actual: 2500, star: true,
+        icon: '⭐', text: '계획을 지켰어요 · 별 하나',
+        body: '3,000원 안에서 2,500원을 썼어요. 500원이 남았네요.',
+        bg: '#EDF1EA', border: '1.5px solid #4F7A4A', color: '#2F5A2C', next: false
+      },
+      over: {
+        headline: '계획보다 조금 더 썼어요',
+        where: '편의점 성수역점',
+        plan: 3000, actual: 4200, star: false,
+        icon: '📖', text: '별은 안 붙었어요 · 빼앗지도 않아요',
+        body: '3,000원이라고 적었는데 4,200원을 썼어요. 다음엔 얼마로 해볼까요?',
+        bg: '#F4F1EB', border: '1px solid #E5DFD5', color: '#7E786F', next: true
+      },
+      noplan: {
+        headline: '적어두지 않고 썼어요',
+        where: '문구점 (계획 없음)',
+        plan: 0, actual: 2800, star: false,
+        icon: '📝', text: '맞춰볼 계획이 없어요',
+        body: '쓴 건 그대로 남아 있어요. 다음엔 가기 전에 적어볼까요?',
+        bg: '#F4F1EB', border: '1px solid #E5DFD5', color: '#7E786F', next: true
+      }
+    }[st.scene];
+
+    const maxAmt = Math.max(sceneData.plan, sceneData.actual, 1);
+    const bars = [
+      {
+        label: '적어둔 것',
+        amount: sceneData.plan ? sceneData.plan.toLocaleString('ko-KR') + '원' : '없음',
+        pct: Math.round((sceneData.plan / maxAmt) * 100),
+        fill: '#C4BCB1', labelColor: '#7E786F', amtColor: '#7E786F'
+      },
+      {
+        label: '진짜 쓴 것',
+        amount: sceneData.actual.toLocaleString('ko-KR') + '원',
+        pct: Math.round((sceneData.actual / maxAmt) * 100),
+        fill: sceneData.star ? '#4F7A4A' : '#B36B3A',
+        labelColor: '#2A2724',
+        amtColor: sceneData.star ? '#2F5A2C' : '#8E5228'
+      }
+    ];
+
+    // ── 부모 F13 · 표시용 집계 (판정에 쓰지 않음) ──────
+    const raw = [
+      { name: '문구', swatch: '#7E93AC', amount: 12400, delta: '-2,100' },
+      { name: '간식·음료', swatch: '#D8956B', amount: 9800, delta: '-5,600' },
+      { name: '장난감', swatch: '#C98B9E', amount: 5200, delta: '+900' },
+      { name: '책', swatch: '#6E9A78', amount: 3200, delta: '-1,600' },
+      { name: '그 밖', swatch: '#B0A79C', amount: 1400, delta: '0' }
+    ];
+    const maxCat = Math.max.apply(null, raw.map((r) => r.amount));
+
+    const sideDefs = [{ id: 'child', label: '아이 화면 · 대조' }, { id: 'parent', label: '부모 화면 · 소비 내역' }];
+    const sceneDefs = [{ id: 'kept', label: '지킴' }, { id: 'over', label: '넘김' }, { id: 'noplan', label: '계획 없음' }];
+    const stateDefs = [{ id: 'ok', label: '정상' }, { id: 'empty', label: '비어있음' }, { id: 'loading', label: '불러오는 중' }, { id: 'error', label: '오류' }];
+    const chip = (list, cur, set) => list.map((x) => ({
+      label: x.label,
+      pick: () => this.setState(set(x.id)),
+      bg: cur === x.id ? '#2A2724' : '#FFFFFF',
+      border: cur === x.id ? 'none' : '1px solid #E5DFD5',
+      color: cur === x.id ? '#FAF7F1' : '#9C948A',
+      weight: cur === x.id ? '800' : '700'
+    }));
+
+    return {
+      sides: chip(sideDefs, st.side, (id) => ({ side: id })),
+      scenes: chip(sceneDefs, st.scene, (id) => ({ scene: id })),
+      states: chip(stateDefs, st.view, (id) => ({ view: id })),
+
+      dChild: st.side === 'child' ? 'flex' : 'none',
+      dParent: st.side === 'parent' ? 'flex' : 'none',
+
+      headline: sceneData.headline,
+      whereLabel: sceneData.where,
+      bars,
+      dStar: sceneData.star ? 'flex' : 'none',
+      verdictIcon: sceneData.icon,
+      verdictText: sceneData.text,
+      verdictBody: sceneData.body,
+      verdictBg: sceneData.bg,
+      verdictBorder: sceneData.border,
+      verdictColor: sceneData.color,
+      dNext: sceneData.next ? 'block' : 'none',
+      nextText: st.scene === 'over' ? '다음엔 얼마로 할까요?' : '다음엔 가기 전에 적어볼까요?',
+      toNextPlan: () => this.setState({ scene: 'kept' }),
+
+      dCompare: st.view === 'ok' ? 'flex' : 'none',
+      dEmpty: st.view === 'empty' ? 'flex' : 'none',
+      dLoading: st.view === 'loading' ? 'flex' : 'none',
+      dError: st.view === 'error' ? 'flex' : 'none',
+      retry: () => this.setState({ view: 'ok' }),
+
+      cats: raw.map((r) => ({
+        name: r.name,
+        swatch: r.swatch,
+        delta: r.delta,
+        amount: r.amount.toLocaleString('ko-KR'),
+        pct: Math.round((r.amount / maxCat) * 100),
+        deltaColor: r.delta.charAt(0) === '-' ? '#3E6B3A' : r.delta.charAt(0) === '+' ? '#B36B3A' : '#B5AEA5'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
