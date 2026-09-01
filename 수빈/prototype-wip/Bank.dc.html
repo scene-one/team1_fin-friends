@@ -179,6 +179,7 @@
         <div style="border-top: 1px dashed #E1E8DC; padding-top: 15px; display: flex; flex-direction: column; gap: 11px;">
           <div style="font-size: 13.5px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.5;">{{summary}}</div>
           <div style="font-size: 11.5px; color: #6B655D;">내가 넣는 돈은 모두 <b style="font-family: 'Hoefler Text', Palatino, serif; font-size: 14px; color: #2A2724;">{{principal}}</b>원이에요</div>
+          <div style="font-size: 11px; color: #9C948A; line-height: 1.55;">넣은 돈 <b>1,000원마다</b> 얼마를 더 줄지 부모님이 정해 두셨어요.</div>
 
           <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
             <sc-for list="{{offers}}" as="o" hint-placeholder-count="4">
@@ -347,25 +348,22 @@ class Component extends DCLogic {
     const st = this.state;
     const won = (n) => n.toLocaleString('ko-KR');
 
-    // FR-031 — 이자 단계 4구간은 설정값이고 상한만 고정한다 (AC-031-6 · 연 20%).
-    // 산식: 단리 적금 — 회당납입액 x 연이율 x (n(n+1)/2) / 연간 납입 횟수.
-    // 명세에 산식이 없어 이 값을 쓴다. 실제 구간 값은 운영 설정으로 뺀다.
-    const CAP = 0.20;
-    const RATES = [0.05, 0.10, 0.15, CAP];
-    const perYear = st.cycle === 'w1' ? 52 : 26;
+    // FR-031 — 이자 단계 4구간은 이율이 아니라 「넣은 돈 1,000원마다 얹어주는 돈」이다.
+    // 설정도 금액이고 화면에 나가는 것도 금액이라, 어디에도 이율이 끼지 않는다 (AC-031-5).
+    const PER_1000 = [25, 50, 75, 100];
     const n = st.cycle === 'w1' ? st.weeks : Math.floor(st.weeks / 2);
     const principal = st.unit * n;
-    const interest = (r) => Math.round((st.unit * r * (n * (n + 1) / 2)) / perYear / 10) * 10;
+    const bonus = (per1000) => Math.round((principal / 1000) * per1000 / 10) * 10;
 
     const cycleLabel = st.cycle === 'w1' ? '매주' : '2주마다';
     const summary = cycleLabel + ' ' + won(st.unit) + '원씩 · ' + st.weeks + '주 동안 모으면';
 
     const OFFER_LABELS = ['조금', '보통', '많이', '아주 많이'];
-    const offers = RATES.map((r, i) => {
+    const offers = PER_1000.map((per1000, i) => {
       const on = st.picked === i;
       return {
         label: OFFER_LABELS[i],
-        gain: won(interest(r)),           // AC-031-5 — 화면에는 금액만. % 는 쓰지 않는다
+        gain: won(bonus(per1000)),        // AC-031-5 — 화면에는 금액만. % 는 쓰지 않는다
         pick: () => this.setState({ picked: i }),
         bg: on ? '#2F5A2C' : '#FAF7F1',
         border: on ? 'none' : '1px solid #E1E8DC',
@@ -390,15 +388,15 @@ class Component extends DCLogic {
     const units = [1000, 2000, 3000].map((u) => opt(won(u) + '원', st.unit === u, () => this.setState({ unit: u })));
     const spans = [8, 12].map((w) => opt(w + '주', st.weeks === w, () => this.setState({ weeks: w })));
 
-    const gain = interest(RATES[st.picked]);
+    const gain = bonus(PER_1000[st.picked]);
     const total = principal + gain;
 
-    // 12주 뒤 세 곳 비교 — 같은 산식으로 계산한다. 아이 화면이라 % 는 쓰지 않는다
-    const BANK_RATE = 0.05;  // 시중 어린이 적금 3.40~7.00% [A] 의 중간값
+    // 세 곳 비교 — 얹어주는 돈만 다르다. 아이 화면이라 % 는 어디에도 쓰지 않는다
+    const BANK_PER_1000 = 6;  // 은행 칸에 얹는 돈 · 설정값
     const places = [
       { name: '그냥 두기', v: principal, desc: '언제든 쓸 수 있어요. 대신 늘어나지 않아요.', on: false },
-      { name: '은행 적금', v: principal + interest(BANK_RATE), desc: '매번 꼭 넣어야 해요. 중간에 빼면 덜 받아요.', on: false },
-      { name: '부모님이랑 모으기', v: principal + interest(CAP), desc: '부모님이 얼마 더 줄지 정해요. 대신 약속을 지켜야 해요.', on: true }
+      { name: '은행 적금', v: principal + bonus(BANK_PER_1000), desc: '매번 꼭 넣어야 해요. 중간에 빼면 덜 받아요.', on: false },
+      { name: '부모님이랑 모으기', v: principal + bonus(PER_1000[3]), desc: '부모님이 얼마 더 줄지 정해요. 대신 약속을 지켜야 해요.', on: true }
     ];
 
     const stateDefs = [
