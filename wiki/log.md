@@ -1,7 +1,7 @@
 ---
 title: 로그
 type: log
-updated: 2026-08-31
+updated: 2026-09-01
 tags: [로그, 이력]
 ---
 
