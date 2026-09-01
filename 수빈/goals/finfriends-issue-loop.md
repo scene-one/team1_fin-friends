@@ -2,16 +2,16 @@
 
 ## 1) 작업 핵심 목표 및 범위
 - 목표: `scene-one/team1_fin-friends` 의 열린 GitHub 이슈 13건을 아래 고정 순서대로 처리해, 처리 가능한 건마다 draft PR 하나를 연다.
-- 시작 지점: `main` 최신 커밋. 코드베이스·빌드 도구·테스트 러너가 저장소에 **없으므로**, UI 이슈는 `프로토타입/*.dc.html` 화면 파일 개정으로 처리한다.
+- 시작 지점: `main` 최신 커밋. 코드베이스·빌드 도구·테스트 러너가 저장소에 **없으므로**, UI 이슈는 `프로토타입/*.dc.html` 을 `수빈/prototype-wip/` 로 복사해 사본을 개정하는 방식으로 처리한다. 원본은 고치지 않는다.
 - 작업 대상 (이 순서를 바꾸지 않는다):
-  1. `#1` UI-001 ParentOnboarding → `프로토타입/ParentOnboarding.dc.html`
-  2. `#2` UI-002 Main → `프로토타입/Main.dc.html`
-  3. `#3` UI-003 Learn → `프로토타입/Learn.dc.html`
-  4. `#4` UI-004 Plan → `프로토타입/Plan.dc.html`
-  5. `#5` UI-005 Spending → `프로토타입/Spending.dc.html`
-  6. `#6` UI-006 Tree → `프로토타입/Tree.dc.html`
-  7. `#7` UI-007 Forest → `프로토타입/Forest.dc.html`
-  8. `#8` UI-008 Bank → `프로토타입/Bank.dc.html`
+  1. `#1` UI-001 ParentOnboarding → `수빈/prototype-wip/ParentOnboarding.dc.html`
+  2. `#2` UI-002 Main → `수빈/prototype-wip/Main.dc.html`
+  3. `#3` UI-003 Learn → `수빈/prototype-wip/Learn.dc.html`
+  4. `#4` UI-004 Plan → `수빈/prototype-wip/Plan.dc.html`
+  5. `#5` UI-005 Spending → `수빈/prototype-wip/Spending.dc.html`
+  6. `#6` UI-006 Tree → `수빈/prototype-wip/Tree.dc.html`
+  7. `#7` UI-007 Forest → `수빈/prototype-wip/Forest.dc.html`
+  8. `#8` UI-008 Bank → `수빈/prototype-wip/Bank.dc.html`
   9. `#9`~`#13` SYS-001~005 — 백엔드 스택 스캐폴드가 없어 §5 「처리 불가 판정」에 걸릴 가능성이 높다. 예산이 남아 있는 한 순서대로 시도한다.
 - 작업 자율성: 사용자 확인 없이 브랜치 생성·커밋·푸시·draft PR 생성까지 진행한다. 종료 조건에 도달하거나 큐가 소진될 때까지 멈추지 않는다.
 
@@ -50,14 +50,14 @@
   2) `cat "수빈/goals/LOOP_CHECKPOINT.md"` 를 실행해 `CORE: N` · `MINOR: M` · `STOP REASON:` 세 줄이 보이는 출력을 대화에 남긴다.
   3) `gh pr list --state open` 을 실행해 루프가 연 draft PR 목록을 대화에 남긴다.
   4) `gh issue list --state open` 을 실행해 남은 열린 이슈 목록을 대화에 남긴다.
-  5) `git diff --name-only origin/main...HEAD` 를 실행해, 변경 파일이 `프로토타입/` 과 `수빈/goals/` 아래에만 있음을 대화에 남긴다.
+  5) `git diff --name-only origin/main...HEAD` 를 실행해, 변경 파일이 `수빈/prototype-wip/` 와 `수빈/goals/` 아래에만 있음을 대화에 남긴다.
 
 ## 4) 기타 제약조건
 - 어떤 PR 도 `main` 에 머지하지 않는다. **draft 상태로 둔다.**
 - `wiki/` 를 수정하지 않는다 — `main` 의 `wiki/**` 변경은 GitHub Pages 자동 배포(`.github/workflows/deploy-wiki.yml`)를 유발한다.
 - 다음을 수정하지 않는다: `공용공간/` · `raw/` · `CLAUDE.md` · `.github/` · `quartz.config.yaml` · `병윤/` · `유림/` · `하영/` · `혜원/`
-- `프로토타입/canvas.json` 과 `프로토타입/README.md` 는 화면 파일 변경을 반영하는 **최소 범위**에서만 고친다.
-- 활성 이슈의 대상 화면 파일 밖은 수정하지 않는다. **예외: `수빈/goals/LOOP_CHECKPOINT.md`**
+- 🔴 `프로토타입/` **전체를 읽기 전용으로 둔다.** 원본 화면 파일 · `canvas.json` · `README.md` 중 무엇도 고치지 않는다. 작업은 `수빈/prototype-wip/` 의 사본에서만 한다.
+- 활성 이슈의 대상 **사본** 화면 파일 밖은 수정하지 않는다. **예외: `수빈/goals/LOOP_CHECKPOINT.md`**
 - `--force` 푸시를 하지 않는다. 기존 브랜치·PR 을 지우지 않는다.
 - GitHub 이슈의 본문·라벨·상태를 바꾸지 않는다. 이슈는 읽기 전용이다.
 
@@ -75,7 +75,7 @@
 ```
 ## 대상
 - Closes #<이슈번호>
-- 파일: 프로토타입/<Screen>.dc.html
+- 파일: 수빈/prototype-wip/<Screen>.dc.html
 
 ## Acceptance Criteria
 - [x] AC-XXX-1: <이슈 원문 그대로> — <충족 근거 한 줄>
