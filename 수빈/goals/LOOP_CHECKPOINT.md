@@ -17,3 +17,4 @@ MINOR: 3
 - #3 UI-003 Learn -> PR #16 (draft · 판단 유보 0)
 - #4 UI-004 Plan -> PR #17 (draft · 판단 유보 0 · 업종 선택기 제거는 DR-05 반영)
 - #5 UI-005 Spending -> PR #18 (draft · 판단 유보 0)
+- #6 UI-006 Tree -> PR #19 (draft · 판단 유보 0 · 3단계->4단계 FR-030 정합 · 불리기 잠금 해제는 AC-031-2 반영)
