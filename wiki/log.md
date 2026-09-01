@@ -765,3 +765,16 @@ O4 사진 운영 **부담 없음**(무저장의 배당금) · O5 온콜 **자동
   §5-4 위치 기반 미제공 · §6-2 부모 적금 협상·버튼 4개 · §8 실천하기 그리드와 미실행 강조.
 - **SRS** — FR-020(작성) · FR-022(트리거) · FR-021(대조·판정) 재작성 · **FR-034 실천하기 화면** 신설 ·
   §3.3 시퀀스 교체 · NFR-024를 알림 도달률로 · NFR-055(모션 접근성) 신설 · DR-05/06 갱신.
+
+## [2026-09-01] setup | SRS v1.0 → GitHub Issue 13건 생성
+
+- SRS v1.0(FR-001~041, NFR)을 [[3차-교안|3차 교안]] 권장 범위(8~15개)로 쪼개 GitHub Issue 13건 생성 — UI 8건(#1~8, 기존 프로토타입 화면 8개에 1:1 매핑) + 시스템/백엔드 5건(#9~13, 규제·정합성 중심).
+- 라벨 체계 신설 — `area:research` · `area:spec` · `area:ui` · `area:ux` · `area:qa` · `risk` (교안 권장 라벨셋).
+- 각 Issue는 교안 템플릿(Why/Scope/AC/References/Verification)을 따르고 SRS의 AC-ID를 그대로 인용해 추적성을 확보했다.
+- GitHub Project 보드는 아직 미생성 — 다음 단계.
+
+**미결로 남은 것**
+
+- GitHub Project 보드 생성 및 Issue 연결
+- UI Issue 8건의 `area:ui`/`area:ux` 라벨 세분화 검토(사용자 승인 대기)
+- `/goal-setting` 실행 — Issue와 연결된 첫 개발 목표 고정
