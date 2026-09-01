@@ -15,3 +15,4 @@ MINOR: 3
 - #1 UI-001 ParentOnboarding -> PR #14 (draft)
 - #2 UI-002 Main -> PR #15 (draft)
 - #3 UI-003 Learn -> PR #16 (draft · 판단 유보 0)
+- #4 UI-004 Plan -> PR #17 (draft · 판단 유보 0 · 업종 선택기 제거는 DR-05 반영)
