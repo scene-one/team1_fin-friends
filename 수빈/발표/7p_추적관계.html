@@ -1,0 +1,293 @@
+<title>근거에서 화면까지</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --paper:#FAF7F1; --surface:#FFFFFF; --sunk:#F4F1EB;
+    --ink:#2A2724; --ink2:#6B655D; --ink3:#9C948A;
+    --rule:#E5DFD5; --rule2:#F0EBE3;
+    --a:#3E6B3A; --abg:#EAF0E7; --aline:#C6D8C1;
+    --b:#8E5228; --bbg:#F8EFE6; --bline:#E8D5C1;
+    --c:#6B655D; --cbg:#F1EEE9; --cline:#DCD5CA;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#191715; --surface:#221F1D; --sunk:#1F1C1A;
+      --ink:#EDE7DE; --ink2:#B0A79C; --ink3:#857D74;
+      --rule:#332F2B; --rule2:#2A2724;
+      --a:#9CC292; --abg:#212B1F; --aline:#3A4A36;
+      --b:#DDA271; --bbg:#2D231A; --bline:#4A3826;
+      --c:#A79E94; --cbg:#252220; --cline:#3A3532;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#191715; --surface:#221F1D; --sunk:#1F1C1A;
+    --ink:#EDE7DE; --ink2:#B0A79C; --ink3:#857D74;
+    --rule:#332F2B; --rule2:#2A2724;
+    --a:#9CC292; --abg:#212B1F; --aline:#3A4A36;
+    --b:#DDA271; --bbg:#2D231A; --bline:#4A3826;
+    --c:#A79E94; --cbg:#252220; --cline:#3A3532;
+  }
+
+  body{background:var(--paper); color:var(--ink);
+    font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px; margin:0 auto; padding:54px 22px 84px;}
+  h1,h2{font-family:'Nanum Myeongjo','AppleMyungjo',serif; font-weight:800; text-wrap:balance; letter-spacing:-.01em;}
+  .id{font-family:'IBM Plex Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; font-weight:600;}
+
+  .eyebrow{font-size:11px; letter-spacing:.16em; color:var(--ink3); font-weight:600;}
+  h1{font-size:clamp(28px,4.6vw,40px); line-height:1.32; margin:13px 0 0;}
+  .lede{margin-top:15px; font-size:16px; color:var(--ink2); max-width:64ch;}
+
+  /* ── 층 구조 ── */
+  section{margin-top:52px;}
+  h2{font-size:21px; margin:0 0 5px;}
+  .sub{font-size:13.5px; color:var(--ink2); margin-bottom:20px; max-width:68ch;}
+
+  .stack{display:flex; flex-direction:column; gap:0;}
+  .layer{display:grid; grid-template-columns:150px 1fr auto; gap:18px; align-items:center;
+    background:var(--surface); border:1px solid var(--rule); border-radius:12px; padding:14px 18px;}
+  .layer .nm{display:flex; flex-direction:column; gap:2px;}
+  .layer .nm b{font-size:14.5px; font-weight:700;}
+  .layer .nm span{font-size:10.5px; color:var(--ink3); letter-spacing:.04em;}
+  .layer .ds{font-size:12.5px; color:var(--ink2); line-height:1.6;}
+  .layer .ct{font-size:12px; color:var(--ink3); white-space:nowrap;}
+  .down{height:16px; display:flex; align-items:center; justify-content:flex-start; padding-left:72px;}
+  .down span{font-size:10.5px; color:var(--ink3); background:var(--paper); padding:0 7px; position:relative; z-index:1;}
+  .down{position:relative;}
+  .down::before{content:""; position:absolute; left:78px; top:-2px; bottom:-2px; width:1.5px; background:var(--rule);}
+
+  /* ── 줄기 ── */
+  .chain{background:var(--surface); border:1px solid var(--rule); border-radius:16px; padding:20px 20px 22px; margin-bottom:14px;}
+  .chain.a{border-left:4px solid var(--a);} .chain.b{border-left:4px solid var(--b);} .chain.c{border-left:4px solid var(--c);}
+  .chead{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:16px;}
+  .badge{font-size:10.5px; font-weight:700; border-radius:6px; padding:4px 9px; border:1px solid;}
+  .a .badge{background:var(--abg); border-color:var(--aline); color:var(--a);}
+  .b .badge{background:var(--bbg); border-color:var(--bline); color:var(--b);}
+  .c .badge{background:var(--cbg); border-color:var(--cline); color:var(--c);}
+  .chead h3{font-size:17px; margin:0; font-weight:700; letter-spacing:-.015em;}
+  .chead .note{font-size:12.5px; color:var(--ink2);}
+
+  .flow{display:grid; grid-template-columns:repeat(6,1fr); gap:0; align-items:stretch;}
+  .step{position:relative; padding:0 15px 0 0;}
+  .step:first-child{padding-left:0;}
+  .step::after{content:"›"; position:absolute; right:3px; top:26px; font-size:17px; color:var(--ink3); line-height:1;}
+  .step:last-child::after{content:none;}
+  .step:last-child{padding-right:0;}
+  .lay{font-size:9.5px; letter-spacing:.1em; color:var(--ink3); font-weight:700; margin-bottom:6px;}
+  .card{background:var(--sunk); border:1px solid var(--rule2); border-radius:10px; padding:11px 12px; height:calc(100% - 22px); display:flex; flex-direction:column; gap:5px;}
+  .a .card.on{background:var(--abg); border-color:var(--aline);}
+  .b .card.on{background:var(--bbg); border-color:var(--bline);}
+  .c .card.on{background:var(--cbg); border-color:var(--cline); border-style:dashed;}
+  .card .k{font-size:11.5px; line-height:1.35;}
+  .a .card .k{color:var(--a);} .b .card .k{color:var(--b);} .c .card .k{color:var(--c);}
+  .card .t{font-size:12px; color:var(--ink); font-weight:600; line-height:1.45; letter-spacing:-.01em;}
+  .card .m{font-size:11px; color:var(--ink2); line-height:1.5;}
+  .kicker{margin-top:15px; font-size:12.5px; color:var(--ink2); line-height:1.7; border-top:1px dashed var(--rule); padding-top:13px;}
+  .kicker b{color:var(--ink);}
+
+  .why{margin-top:34px; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px;}
+  .w{background:var(--sunk); border-radius:12px; padding:16px 17px;}
+  .w h4{font-size:13.5px; margin:0 0 6px; font-weight:700;}
+  .w p{margin:0; font-size:12.5px; color:var(--ink2); line-height:1.65;}
+
+  .foot{margin-top:50px; padding-top:17px; border-top:1px solid var(--rule); font-size:12px; color:var(--ink3); line-height:1.7;}
+  .foot code{font-family:'IBM Plex Mono',monospace; font-size:.9em;}
+
+  @media (max-width:900px){
+    .flow{grid-template-columns:repeat(2,1fr); gap:12px;}
+    .step{padding:0;} .step::after{content:none;}
+    .card{height:auto;}
+    .layer{grid-template-columns:1fr; gap:7px;}
+    .down{padding-left:20px;} .down::before{left:26px;}
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="eyebrow">핀프렌즈 · 7p 추적관계</div>
+  <h1>근거에서 화면까지,<br>번호가 끊기지 않습니다</h1>
+  <p class="lede">문서를 여섯 층으로 쌓고 층마다 <b class="id">번호</b>를 달았습니다. 그래서 화면 아무거나 하나를 짚으면
+  <b>어느 연구에서 나왔는지까지 거꾸로 되짚을 수 있고</b>, 반대로 근거 하나를 바꾸면 어느 화면이 흔들리는지 미리 압니다.</p>
+
+  <section>
+    <h2>여섯 층</h2>
+    <p class="sub">각 층은 아래층의 번호를 <b>인용만</b> 합니다. 같은 내용을 두 곳에 적지 않으므로 한쪽만 고쳐지는 일이 생기지 않습니다.</p>
+
+    <div class="stack">
+      <div class="layer">
+        <div class="nm"><b>raw/</b><span>원본 수집</span></div>
+        <div class="ds">통계·논문·약관·리뷰 원문을 6계층으로 받아 둡니다. 요약하지 않고 <b>그대로</b> 둡니다.</div>
+        <div class="ct">6계층</div>
+      </div>
+      <div class="down"><span>요약</span></div>
+      <div class="layer">
+        <div class="nm"><b>wiki/</b><span>지식베이스</span></div>
+        <div class="ds">개념·개체·이론·규칙을 서로 링크된 문서로. 각 판단의 <b>「🧭 결정 배경」</b>이 여기 삽니다.</div>
+        <div class="ct">59장 · Quartz 배포</div>
+      </div>
+      <div class="down"><span>근거</span></div>
+      <div class="layer">
+        <div class="nm"><b>PRD v0.3</b><span>무엇을 왜</span></div>
+        <div class="ds">Pain 코드 → 사용자 스토리 <span class="id">US-1~11</span> → 기능. 되돌릴 조건까지 적은 <b>부록 E · ADR</b>.</div>
+        <div class="ct">ADR 17건</div>
+      </div>
+      <div class="down"><span>명세</span></div>
+      <div class="layer">
+        <div class="nm"><b>SRS v1.0</b><span>어떻게 · 판정 가능하게</span></div>
+        <div class="ds"><span class="id">FR-001~041</span> · <span class="id">NFR-001~055</span> · <span class="id">DR-01~07</span>, 그리고 §8 <b>추적성 매트릭스</b>가 US ↔ FR ↔ NFR ↔ 검증을 묶습니다.</div>
+        <div class="ct">수용 기준 49개</div>
+      </div>
+      <div class="down"><span>분해</span></div>
+      <div class="layer">
+        <div class="nm"><b>GitHub Issue</b><span>일 단위</span></div>
+        <div class="ds">이슈마다 <b>「연결 Requirement」</b> 줄에 FR 번호를 적고, Acceptance Criteria는 <b>AC 번호를 그대로</b> 가져옵니다.</div>
+        <div class="ct">UI 8 · SYS 5</div>
+      </div>
+      <div class="down"><span>구현</span></div>
+      <div class="layer">
+        <div class="nm"><b>PR · 화면</b><span>증거</span></div>
+        <div class="ds">PR 본문이 <b>AC 한 줄마다 충족 근거</b>를 답니다. 못 채운 줄은 사유를 답니다.</div>
+        <div class="ct">PR 8 · 화면 8</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>실제로 이어 본 세 줄기</h2>
+    <p class="sub">하나는 화면까지 완주하고, 하나는 근거가 UI를 <b>지우고</b>, 하나는 <b>중간에서 멈춥니다.</b> 셋 다 같은 구조로 읽힙니다.</p>
+
+    <!-- 줄기 A -->
+    <div class="chain a">
+      <div class="chead">
+        <span class="badge">줄기 A · 완주</span>
+        <h3>메타분석 한 줄이 나무의 승급 조건이 되기까지</h3>
+      </div>
+      <div class="flow">
+        <div class="step"><div class="lay">KB</div><div class="card on">
+          <div class="k id">학습-행동-전이-격차</div>
+          <div class="t">지식 +0.33 SD ↔ 행동 +0.07 SD</div>
+          <div class="m">국제 메타분석 37개 실험 · 등급 <span class="id">[A]</span></div></div></div>
+        <div class="step"><div class="lay">PRD v0.3</div><div class="card">
+          <div class="k id">C1 · C2 → US-1 · US-3</div>
+          <div class="t">변화를 한 문장으로 읽는다<br>멈춘 이유를 화면에서 안다</div>
+          <div class="m">Pain 「성장 증거 부재」·「실천 공백」</div></div></div>
+        <div class="step"><div class="lay">SRS v1.0</div><div class="card">
+          <div class="k id">FR-030</div>
+          <div class="t">4단계 기준표 · 세 조건 모두 충족해야 승급</div>
+          <div class="m"><span class="id">AC-030-1</span> 퀴즈 100 · 실천 0 → 전부 새싹</div></div></div>
+        <div class="step"><div class="lay">ISSUE</div><div class="card">
+          <div class="k id">#6 UI-006 Tree</div>
+          <div class="t">성장 나무 승급 표시</div>
+          <div class="m">「연결 Requirement: FR-030」</div></div></div>
+        <div class="step"><div class="lay">PR</div><div class="card">
+          <div class="k id">#19</div>
+          <div class="t">3단계 → 4단계로 정합</div>
+          <div class="m">AC 네 줄에 충족 근거</div></div></div>
+        <div class="step"><div class="lay">화면</div><div class="card on">
+          <div class="k id">Tree.dc.html</div>
+          <div class="t">「학습 5회 · 실천 2회가 남았습니다 · 퀴즈는 충족」</div>
+          <div class="m">조건 단위 정체 원인</div></div></div>
+      </div>
+      <div class="kicker">문헌이 <b>「지식은 늘어도 행동은 안 바뀐다」</b>고 했기 때문에, 나무는 <b>퀴즈만으로 자라지 않습니다.</b>
+      화면의 저 한 문장은 취향이 아니라 <b class="id">FR-030</b> 기준표의 산술 결과이고, 그 기준표는 위 메타분석에 대한 응답입니다.</div>
+    </div>
+
+    <!-- 줄기 B -->
+    <div class="chain b">
+      <div class="chead">
+        <span class="badge">줄기 B · 삭제</span>
+        <h3>근거가 기능을 넣은 게 아니라 <b>뺀</b> 경우</h3>
+      </div>
+      <div class="flow">
+        <div class="step"><div class="lay">KB</div><div class="card on">
+          <div class="k id">카드-업종-분류-MCC</div>
+          <div class="t">결제 승인에는 가맹점당 업종 코드가 하나뿐</div>
+          <div class="m">간편결제는 판매자가 아니라 PG사로 찍힘</div></div></div>
+        <div class="step"><div class="lay">PRD 부록E</div><div class="card">
+          <div class="k id">ADR-001</div>
+          <div class="t">품목·업종을 <b>받지 않는다</b> · ⭐ 판정은 금액만</div>
+          <div class="m">「받아도 대조가 성립하지 않는다」</div></div></div>
+        <div class="step"><div class="lay">SRS v1.0</div><div class="card">
+          <div class="k id">FR-021 · DR-05</div>
+          <div class="t">계획 카드는 날짜·어디서·얼마까지 3필드</div>
+          <div class="m"><span class="id">AC-021-6</span> 판정이 MCC를 참조하지 않음</div></div></div>
+        <div class="step"><div class="lay">ISSUE</div><div class="card">
+          <div class="k id">#4 UI-004 Plan</div>
+          <div class="t">계획 카드 작성 + 작성 트리거</div>
+          <div class="m">「연결 Requirement: FR-020·021」</div></div></div>
+        <div class="step"><div class="lay">PR</div><div class="card">
+          <div class="k id">#17</div>
+          <div class="t">업종 6분류 선택기 <b>제거</b></div>
+          <div class="m">DR-05 반영</div></div></div>
+        <div class="step"><div class="lay">화면</div><div class="card on">
+          <div class="k id">Plan.dc.html</div>
+          <div class="t">묻는 것이 세 개로 줄어듦</div>
+          <div class="m">업종은 표시만 · 판정 미사용</div></div></div>
+      </div>
+      <div class="kicker">프로토타입에는 <b>업종 6분류 선택기가 그려져 있었습니다.</b> 근거를 따라 내려오니 그 칸은 <b>아이에게 물어도 판정에 못 쓰는 칸</b>이었습니다.
+      추적관계는 무엇을 넣을지만이 아니라 <b>무엇을 지울지</b>도 알려줍니다.</div>
+    </div>
+
+    <!-- 줄기 C -->
+    <div class="chain c">
+      <div class="chead">
+        <span class="badge">줄기 C · 멈춤</span>
+        <h3>어디서 멈췄는지도 같은 번호로 적힙니다</h3>
+      </div>
+      <div class="flow">
+        <div class="step"><div class="lay">KB</div><div class="card on">
+          <div class="k id">규제-상수 P-13</div>
+          <div class="t">미션 인증 사진은 판정 즉시 파기</div>
+          <div class="m">서버에 아동 이미지를 남기지 않는다</div></div></div>
+        <div class="step"><div class="lay">PRD 부록E</div><div class="card">
+          <div class="k id">ADR-007</div>
+          <div class="t">사진은 서버에 저장하지 않는다</div>
+          <div class="m">저장하면 보존·파기·열람권이 딸려온다</div></div></div>
+        <div class="step"><div class="lay">SRS v1.0</div><div class="card">
+          <div class="k id">FR-032 · NFR-005 · DR-02</div>
+          <div class="t">승인 즉시 삭제 · 스토리지 객체 0건</div>
+          <div class="m"><span class="id">AC-032-2</span> 스캔 결과 0건</div></div></div>
+        <div class="step"><div class="lay">ISSUE</div><div class="card">
+          <div class="k id">#11 SYS-003</div>
+          <div class="t">미션 승인 파이프라인 · 사진 즉시파기</div>
+          <div class="m">「연결 Requirement: FR-032」</div></div></div>
+        <div class="step"><div class="lay">판정</div><div class="card on">
+          <div class="k id">BLOCKED</div>
+          <div class="t">스토리지 스캔과 72h 배치는 <b>실행되는 백엔드</b>를 요구</div>
+          <div class="m">화면 개정으로는 판정 불가</div></div></div>
+        <div class="step"><div class="lay">기록</div><div class="card">
+          <div class="k id">LOOP_CHECKPOINT.md</div>
+          <div class="t">사유 한 줄로 남김</div>
+          <div class="m">다음 스프린트 백로그가 됨</div></div></div>
+      </div>
+      <div class="kicker">SYS 다섯 건이 전부 이 자리에서 멈췄습니다. 중요한 건 <b>멈춘 자리가 비어 있지 않다</b>는 것입니다 —
+      어느 요구사항이 왜 못 갔는지가 번호와 함께 남아 있어서, <b>그대로 다음 개발 로드맵</b>이 됩니다.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>이 구조가 실제로 한 일</h2>
+    <div class="why">
+      <div class="w">
+        <h4>어긋남이 자동으로 드러납니다</h4>
+        <p>프로토타입의 나무가 <b>3단계</b>인데 <span class="id">FR-030</span>은 <b>4단계</b>였습니다. 번호가 이어져 있지 않았다면 화면과 명세가 다른 걸 발표 직전에 알았을 겁니다.</p>
+      </div>
+      <div class="w">
+        <h4>고칠 범위가 먼저 보입니다</h4>
+        <p>「불리기」 실천 요건이 복원되자 <span class="id">AC-031-2</span>를 인용한 화면 <b>둘</b>이 바로 지목됐습니다 — <span class="id">Tree</span>와 <span class="id">Bank</span>.</p>
+      </div>
+      <div class="w">
+        <h4>결정을 한 곳에만 적습니다</h4>
+        <p>판단은 <b>PRD ADR · SRS · wiki 「결정 배경」</b> 세 곳에만 삽니다. 이슈·PR·화면은 <b>번호를 인용할 뿐</b>이라 원장이 늘지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    출처 — <code>wiki/50-이론/학습-행동-전이-격차.md</code> · <code>wiki/50-이론/카드-업종-분류-MCC.md</code> · <code>wiki/60-규칙/규제-상수.md</code> ·
+    <code>PRD_핀프렌즈_v0_3.md</code> §3 US · 부록 E ADR-001 · ADR-007 ·
+    <code>SRS_핀프렌즈_v1_0.md</code> §4.3 FR-021 · §4.4 FR-030 · FR-032 · §8 추적성 매트릭스 ·
+    Issue <code>#4</code> <code>#6</code> <code>#11</code> · PR <code>#17</code> <code>#19</code> · <code>수빈/goals/LOOP_CHECKPOINT.md</code>
+  </div>
+</div>

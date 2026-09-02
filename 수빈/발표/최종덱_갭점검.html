@@ -1,0 +1,365 @@
+<title>Master Deck 갭 점검</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper:#FAF7F1; --surface:#FFFFFF; --sunk:#F4F1EB;
+    --ink:#2A2724; --ink2:#6B655D; --ink3:#9C948A;
+    --rule:#E5DFD5; --rule2:#F0EBE3;
+
+    --s1:#3E6B3A; --s1bg:#EAF0E7; --s1line:#C9D9C4;
+    --s2:#5F7F58; --s2bg:#F0F3ED; --s2line:#D8E1D3;
+    --s3:#8E5228; --s3bg:#F8EFE6; --s3line:#E8D5C1;
+    --s4:#A2452C; --s4bg:#F8E8E2; --s4line:#EDCCC0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#191715; --surface:#221F1D; --sunk:#1F1C1A;
+      --ink:#EDE7DE; --ink2:#B0A79C; --ink3:#857D74;
+      --rule:#332F2B; --rule2:#2A2724;
+
+      --s1:#9CC292; --s1bg:#222C20; --s1line:#3A4A36;
+      --s2:#A8BFA1; --s2bg:#232A21; --s2line:#37432F;
+      --s3:#DDA271; --s3bg:#2E241B; --s3line:#4A3826;
+      --s4:#E29277; --s4bg:#2F201B; --s4line:#4C2F26;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#191715; --surface:#221F1D; --sunk:#1F1C1A;
+    --ink:#EDE7DE; --ink2:#B0A79C; --ink3:#857D74;
+    --rule:#332F2B; --rule2:#2A2724;
+
+    --s1:#9CC292; --s1bg:#222C20; --s1line:#3A4A36;
+    --s2:#A8BFA1; --s2bg:#232A21; --s2line:#37432F;
+    --s3:#DDA271; --s3bg:#2E241B; --s3line:#4A3826;
+    --s4:#E29277; --s4bg:#2F201B; --s4line:#4C2F26;
+  }
+
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 24px 90px; }
+  h1, h2, .display { font-family: 'Nanum Myeongjo', 'AppleMyungjo', serif; font-weight: 800; text-wrap: balance; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  b, strong { font-weight: 700; }
+
+  /* ── 머리 ── */
+  .eyebrow { font-size: 11px; letter-spacing: .16em; color: var(--ink3); font-weight: 600; text-transform: uppercase; }
+  h1 { font-size: clamp(30px, 5vw, 42px); line-height: 1.3; margin: 14px 0 0; letter-spacing: -.01em; }
+  .lede { margin-top: 16px; font-size: 16px; color: var(--ink2); line-height: 1.75; max-width: 62ch; }
+  .sources { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .src { font-size: 12px; color: var(--ink2); background: var(--sunk); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px; }
+  .src span { color: var(--ink3); }
+
+  /* ── 한눈에 ── */
+  .tally { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+  .t { border-radius: 14px; padding: 16px 17px; border: 1px solid; display: flex; flex-direction: column; gap: 3px; }
+  .t .n { font-size: 27px; font-weight: 600; line-height: 1.1; }
+  .t .k { font-size: 13px; font-weight: 700; }
+  .t .d { font-size: 11.5px; line-height: 1.5; opacity: .82; }
+  .t1 { background: var(--s1bg); border-color: var(--s1line); color: var(--s1); }
+  .t2 { background: var(--s2bg); border-color: var(--s2line); color: var(--s2); }
+  .t3 { background: var(--s3bg); border-color: var(--s3line); color: var(--s3); }
+  .t4 { background: var(--s4bg); border-color: var(--s4line); color: var(--s4); }
+
+  .strip { margin-top: 14px; display: flex; gap: 3px; }
+  .strip i { height: 9px; border-radius: 3px; display: block; }
+  .striplabel { margin-top: 9px; font-size: 11.5px; color: var(--ink3); display: flex; justify-content: space-between; }
+
+  /* ── 절 ── */
+  section { margin-top: 56px; }
+  h2 { font-size: 22px; margin: 0 0 6px; letter-spacing: -.01em; }
+  .sub { font-size: 13.5px; color: var(--ink2); margin-bottom: 22px; max-width: 66ch; }
+
+  /* ── 구멍 카드 ── */
+  .holes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .hole { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--s4); border-radius: 12px; padding: 18px 19px; }
+  .hole .tag { font-size: 11px; font-weight: 700; color: var(--s4); letter-spacing: .04em; }
+  .hole h3 { font-size: 15.5px; margin: 7px 0 8px; font-weight: 700; letter-spacing: -.01em; }
+  .hole p { margin: 0; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .hole p + p { margin-top: 8px; }
+
+  /* ── 원장 ── */
+  .row { display: grid; grid-template-columns: 92px 1fr; gap: 20px; padding: 22px 0; border-top: 1px solid var(--rule); }
+  .row:last-child { border-bottom: 1px solid var(--rule); }
+  .pg { display: flex; flex-direction: column; gap: 8px; }
+  .pgnum { font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
+  .chip { align-self: flex-start; font-size: 10.5px; font-weight: 700; border-radius: 6px; padding: 4px 8px; border: 1px solid; line-height: 1.3; }
+  .c1 { background: var(--s1bg); border-color: var(--s1line); color: var(--s1); }
+  .c2 { background: var(--s2bg); border-color: var(--s2line); color: var(--s2); }
+  .c3 { background: var(--s3bg); border-color: var(--s3line); color: var(--s3); }
+  .c4 { background: var(--s4bg); border-color: var(--s4line); color: var(--s4); }
+
+  .body h3 { font-size: 16.5px; margin: 0 0 12px; font-weight: 700; letter-spacing: -.015em; }
+  .have { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .box { background: var(--sunk); border-radius: 10px; padding: 12px 14px; }
+  .box .h { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; color: var(--ink3); margin-bottom: 5px; }
+  .box .c { font-size: 12.5px; line-height: 1.6; color: var(--ink2); }
+  .box .c em { font-style: normal; color: var(--ink); font-weight: 600; }
+  .none { color: var(--s4); font-weight: 600; }
+  .need { border-left: 2px solid var(--rule); padding-left: 13px; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
+  .need .lb { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; color: var(--ink3); display: block; margin-bottom: 3px; }
+
+  code { font-family: 'IBM Plex Mono', monospace; font-size: .88em; background: var(--sunk); border: 1px solid var(--rule2); border-radius: 4px; padding: 1px 5px; }
+
+  /* ── 바로 쓸 것 ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .scroll { overflow-x: auto; }
+  th { text-align: left; font-size: 11px; letter-spacing: .06em; color: var(--ink3); font-weight: 700; padding: 0 14px 9px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule2); vertical-align: top; color: var(--ink2); }
+  td:first-child { color: var(--ink); font-weight: 600; white-space: nowrap; }
+
+  .foot { margin-top: 54px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--ink3); line-height: 1.7; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 38px 18px 70px; }
+    .row { grid-template-columns: 1fr; gap: 12px; }
+    .pg { flex-direction: row; align-items: center; gap: 10px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="eyebrow">핀프렌즈 · 3차 최종 발표</div>
+  <h1>Master Deck 16장 —<br>지금 있는 것과 없는 것</h1>
+  <p class="lede">권장 구성 12~16장을 기준으로, <b>2차 발표덱 v2(17장)</b>와 <b>GitHub 저장소</b>에 이미 있는 것을 페이지마다 맞춰 봤습니다.
+  결론부터: <b>슬라이드를 만들면 되는 것</b>과 <b>실물부터 없는 것</b>을 갈라 두는 게 남은 시간을 쓰는 기준입니다.</p>
+
+  <div class="sources">
+    <div class="src"><span>대조 대상 ①</span> 발표덱_v2.html · 17장</div>
+    <div class="src"><span>대조 대상 ②</span> scene-one/team1_fin-friends · main</div>
+    <div class="src"><span>점검일</span> 2026-09-02</div>
+  </div>
+
+  <div class="tally">
+    <div class="t t1"><div class="n mono">3</div><div class="k">그대로 쓸 수 있음</div><div class="d">1p 표지 · 10~11p 프로토타입 UX</div></div>
+    <div class="t t2"><div class="n mono">3</div><div class="k">압축·재구성만</div><div class="d">2~3p · 15p — 재료가 오히려 넘침</div></div>
+    <div class="t t3"><div class="n mono">7</div><div class="k">슬라이드가 0장</div><div class="d">문서는 다 있는데 덱에 없음</div></div>
+    <div class="t t4"><div class="n mono">3</div><div class="k">실물부터 없음</div><div class="d">배포 · 검증 결과 · 회고</div></div>
+  </div>
+
+  <div class="strip" aria-hidden="true">
+    <i style="flex:1;background:var(--s1)"></i>
+    <i style="flex:2;background:var(--s2)"></i>
+    <i style="flex:1;background:var(--s3)"></i>
+    <i style="flex:2;background:var(--s3)"></i>
+    <i style="flex:1;background:var(--s3)"></i>
+    <i style="flex:1;background:var(--s3)"></i>
+    <i style="flex:1;background:var(--s3)"></i>
+    <i style="flex:2;background:var(--s1)"></i>
+    <i style="flex:1;background:var(--s4)"></i>
+    <i style="flex:1;background:var(--s3)"></i>
+    <i style="flex:1;background:var(--s4)"></i>
+    <i style="flex:1;background:var(--s2)"></i>
+    <i style="flex:1;background:var(--s4)"></i>
+  </div>
+  <div class="striplabel"><span class="mono">1p</span><span class="mono">16p</span></div>
+
+  <section>
+    <h2>먼저 정해야 할 것 세 가지</h2>
+    <p class="sub">나머지는 문서를 슬라이드로 옮기는 일이라 시간만 있으면 끝납니다. 이 셋은 <b>결정이 먼저</b>라 미루면 그대로 발표에서 빈칸이 됩니다.</p>
+    <div class="holes">
+      <div class="hole">
+        <div class="tag">10~12p</div>
+        <h3>「실제 데모 · Vercel · 도메인」이 0건입니다</h3>
+        <p>프로토타입 18장은 전부 <code>.dc.html</code> — <b>Design Canvas 아트보드</b>지 실행되는 웹앱이 아닙니다. 저장소에 <code>package.json</code>도 배포 설정도 없습니다.</p>
+        <p>정할 것 — ① 화면을 정적 HTML로 내보내 Vercel에 올릴지 ② 라이브 데모를 <b>화면 녹화</b>로 대체할지. ①이면 도메인까지 하루는 잡아야 합니다.</p>
+      </div>
+      <div class="hole">
+        <div class="tag">14p</div>
+        <h3>「검증 결과」로 내놓을 실측이 없습니다</h3>
+        <p>부모 인터뷰 <b>0건</b>은 v2 p16에서 이미 스스로 적어 둔 한계입니다. MVP도 안 돌았으니 계획 카드 작성률 같은 지표도 없습니다.</p>
+        <p>정할 것 — 남은 시간에 <b>프로토타입 사용성 테스트 8명</b>을 돌릴지, 아니면 「수용 기준 49개 자체 점검 결과」를 검증으로 내세울지.</p>
+      </div>
+      <div class="hole">
+        <div class="tag">8p · 16p</div>
+        <h3>사람이 써야만 나오는 두 장</h3>
+        <p><b>비개발자 PM의 학습·적용 경험</b>(8p)과 <b>팀 회고</b>(16p)는 저장소 어디서도 못 뽑습니다. 기술 스택 문서는 「무엇을 골랐나」만 있고 「내가 무엇을 몰랐다가 어디까지 갔나」가 없습니다.</p>
+        <p>각자 <b>15분씩</b> 잡고 먼저 써 두면 마지막 날에 몰리지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>페이지별 대조</h2>
+    <p class="sub">각 줄의 왼쪽이 권장 구성의 페이지, 오른쪽이 지금 가진 재료와 해야 할 일입니다.</p>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">1</div><div class="chip c1">그대로</div></div>
+      <div class="body">
+        <h3>프로젝트명 · 한 문장 가치 · 팀</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c"><em>p1 표지</em> — 「아이가 얼마를 ‘썼는지’보다, 얼마나 ‘자랐는지’ 보여줍니다」</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><code>README.md</code> 「한 문장」 — 배운 것을 실천할 자리를 만든다</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>표지 팀 표기가 <b>유림 · 병윤 · 하영 · 혜원 네 명</b>입니다. 수빈 님이 빠져 있으니 먼저 확인하세요. 그 외엔 손댈 것 없습니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">2~3</div><div class="chip c2">압축</div></div>
+      <div class="body">
+        <h3>기존 분석의 사용자 · 문제 · 시장 근거 + 이번 Scope</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c"><em>p2~p7 여섯 장</em> — 육하원칙 · 시장 첫 손님 · 지금 앱들 · 실제 사용자 · 문제 정의 · 숫자로 확인</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c">Evidence &amp; Analysis Workbook 10종 · Five Forces · TAM-SAM-SOM · 페르소나 10가정 · 고객여정지도 · AOS/DOS · JTBD · VPS v2.0</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span><b>6장을 2장으로 줄이는 게 전부</b>입니다. 살릴 숫자는 셋 — 저축 희망 65.8% ↔ 실제 12.8% · 지식 +0.33 SD ↔ 행동 +0.07 SD · 1차 타깃 29.3만 가구.<br>
+        <b>「이번 Scope」는 v2에도 저장소에도 없습니다.</b> 3차에서 무엇을 하기로 했고 무엇을 뺐는지 한 장이 새로 필요합니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">4</div><div class="chip c3">슬라이드 신규</div></div>
+      <div class="body">
+        <h3>Knowledge Base 구조와 핵심 추가 리서치</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c none">없음 — KB를 아예 안 다룸</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><em>실물이 가장 강한 항목</em>. wiki 59장이 Quartz로 배포돼 있고(<code>scene-one.github.io</code>), <code>raw/</code> 6계층 수집 규약 · <code>70-원본요약</code> · <code>80-종합</code> · <code>wiki/log.md</code> 궤적까지 있음</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>KB 계층도 한 장 + <b>3차에서 새로 한 리서치 목록</b>. 후자는 이미 다 있습니다 — 학습 난이도 5단계 설계안 · 퀴즈 60문항 · 초1~3 소비 패턴 실측 · 예적금 6종 비교 · 법령조사(병윤) · 교차산업 벤치마킹(혜원).<br>발표에서는 <b>사이트를 실제로 띄워 그래프 뷰를 보여주는 게</b> 슬라이드보다 셉니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">5~6</div><div class="chip c3">슬라이드 신규</div></div>
+      <div class="body">
+        <h3>PRD 핵심 목표 · SRS 주요 Requirement · 예외 · 비기능</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c none">없음 — 2차 덱은 PRD·SRS를 다루지 않음</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><code>9. PRD/PRD_핀프렌즈_v0_3.md</code> · <code>10. SRS/SRS_핀프렌즈_v1_0.md</code> — <em>FR-001~041 · NFR-001~055 · DR-01~07 · 수용 기준 49개</em></div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>원문이 커서 <b>무엇을 뽑느냐</b>가 전부입니다. 권장 — 예외는 <b>실패 경로</b>로 보여주세요(72h 미승인 자동 지급 · 7일 미응답 만료 · 부모 잔액 부족 시 충전만 보류). 비기능은 <b>규제 NFR-001~011</b>이 성능보다 위라는 구조 자체가 이야기가 됩니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">7</div><div class="chip c3">슬라이드 신규</div></div>
+      <div class="body">
+        <h3>KB → PRD → SRS → Issue 추적관계</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c none">없음</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><em>조각은 전부 있습니다.</em> SRS 추적표(US ↔ FR ↔ NFR ↔ AC) · 이슈 13건이 FR 번호를 인용 · PR 8건이 AC 번호로 충족을 적음 · wiki 문서가 PRD ADR을 참조</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>흩어진 걸 <b>한 줄기로 끝까지 따라가는 그림 한 장</b>. 지금 재료만으로 바로 그릴 수 있습니다 —<br>
+        <code>wiki/학습-행동-전이-격차</code> → PRD 문제 정의 → <code>SRS FR-030</code>(4단계 기준표) → <code>Issue #6</code> → <code>PR #19</code> → <code>Tree.dc.html</code>.<br>
+        한 화면이 어느 근거에서 나왔는지 끝까지 이어지는 사례가 <b>이 발표의 핵심 증거</b>입니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">8</div><div class="chip c3">슬라이드 신규</div></div>
+      <div class="body">
+        <h3>기술 선택과 비개발자 PM의 학습·적용 경험</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c none">없음</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><code>wiki/기술-스택</code>(채택 · 가드레일 6개 · 미결) · <code>기술스택 슬라이드 계획.md</code>는 <em>이미 스토리텔링 형태</em> · 시스템 아키텍처 · 배포 설계 · API 명세 38개 · 증강 시퀀스 6종</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>기술 쪽은 <code>기술스택 슬라이드 계획.md</code>를 거의 그대로 옮기면 됩니다(「스택은 취향이 아니라 약속의 결과」 구조가 좋습니다).<br>
+        <b>「비개발자 PM의 학습·적용 경험」은 저장소에 없습니다.</b> 문서에서 못 뽑는 개인 서사라 직접 써야 합니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">9</div><div class="chip c3">슬라이드 신규</div></div>
+      <div class="body">
+        <h3>GitHub Project · 팀 분업 · 로드맵과 Scope 변화</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c none">없음</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c">이슈 13건 · PR 8건 · 팀 폴더 5개 · <code>WBS.md</code>(다만 <em>2차용 8/14~8/20</em>) · <code>wiki/log.md</code> 결정 궤적</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>3차용 WBS·로드맵이 없습니다. Project 보드가 실제로 있는지는 <b>제 토큰 권한이 없어 확인 못 했습니다</b>(<code>read:project</code> 스코프 필요).<br>
+        <b>Scope 변화는 재료가 아주 좋습니다</b> — F14·F19 삭제, 봉투형 폐기, 「불리기」 실천 복원, 업종 판정 폐기(DR-05), 72h 자동 지급 확정. <b>「무엇을 뺐는가」가 「무엇을 넣었는가」보다 설득력이 큽니다.</b></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">10~12</div><div class="chip c1">그대로</div><div class="chip c4">단, 배포 없음</div></div>
+      <div class="body">
+        <h3>프로토타입 핵심 UX · 실제 데모 · Vercel · 도메인</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c"><em>p9~p14 여섯 장 — 덱에서 가장 완성도가 높은 구간</em>. 성장 나무 · 소비 계획 카드 · 부모 가입 · 아이 화면 · 부모 화면 · 월간 숲</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c">원본 10화면 + 이슈 반영 개정본 8화면(<code>수빈/prototype-wip/</code>). <span class="none">배포 설정 · 빌드 도구 · 도메인은 0건</span></div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>UX 두 장(10~11p)은 v2에서 <b>그대로 가져오되 개정본 기준으로 갱신</b>해야 합니다. v2 p13의 부모 화면이 <b>3단계 나무 · 「씨앗」</b>으로 그려져 있는데, 지금 명세는 <b>4단계</b>(🌱🌳🌸🍎)입니다. 그대로 발표하면 SRS와 어긋납니다.<br>
+        12p 「실제 데모 · Vercel · 도메인」은 <b>위의 구멍 ①</b>과 같은 건입니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">13</div><div class="chip c3">슬라이드 신규</div></div>
+      <div class="body">
+        <h3>/grill-it · /goal-setting · /goal 의 대표 활용 · 개입 · 결과</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c none">없음</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><em>/goal은 결과까지 다 있습니다.</em> <code>수빈/goals/finfriends-issue-loop.md</code>(프롬프트 전문) · <code>LOOP_CHECKPOINT.md</code>(CORE 0 · MINOR 3 · BLOCKED 5 · STOP REASON) · 이슈 13 → PR 8 → 화면 8 · Decision &amp; AI Usage Log</div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>요구가 「활용 · <b>개입</b> · 결과」인데 <b>개입 사례가 이 프로젝트의 강점</b>입니다 —<br>
+        ① 루프가 <b>스스로 정하지 않고 유보</b>한 MINOR 3건 ② BLOCKED 5건을 사유와 함께 남긴 것 ③ 사람이 루프의 구현을 <b>뒤집은 것</b>(적금 이자 단계를 이율 계산에서 금액 설정으로).<br>
+        <b>/grill-it 은 <code>wiki/log.md</code>에 흔적만 있고 대표 사례가 정리돼 있지 않습니다.</b> 어느 문서를 어떻게 깨뜨렸는지 하나만 골라 두세요.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">14</div><div class="chip c4">실물 없음</div></div>
+      <div class="body">
+        <h3>검증 결과</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c">p15에 <em>수용 기준 49개(정상 30 + 예외 19)</em>와 통과 기준 예시(「나무 5초 보여주고 덮은 뒤 변화 한 문장 — 8명 중 6명」)는 있음. <span class="none">실측 결과는 없음</span></div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><code>wiki/측정가능성-리뷰</code> · <code>PASS-HOLD-FAIL-3구간-판정</code> — <em>판정 틀은 있는데 돌린 데이터가 없음</em></div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span><b>위의 구멍 ②</b>와 같은 건입니다. 지금 상태로는 「검증 설계」는 되고 「검증 결과」는 안 됩니다.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">15</div><div class="chip c2">압축</div></div>
+      <div class="body">
+        <h3>남은 한계</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c"><em>p16 「과제」 세 건이 그대로 쓸 만합니다</em> — 부모 인터뷰 0건 · 계획 미작성 소비는 못 잡음 · 인앱 결제 3초는 대응 0개로 확정</div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c"><code>wiki/기술-스택</code> 「미결」 · <code>LOOP_CHECKPOINT.md</code> 판단 유보 3건 · <code>SRS</code> 가설 표기 <code>[가설]</code></div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>v2 p16을 그대로 쓰되 <b>3차에서 새로 생긴 한계</b>를 얹으세요 — SYS 5건이 백엔드 없이는 검증 불가라는 것, 판단 유보 3건이 아직 열려 있다는 것.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="pg"><div class="pgnum mono">16</div><div class="chip c4">실물 없음</div></div>
+      <div class="body">
+        <h3>다음 개발 로드맵 · 팀 회고</h3>
+        <div class="have">
+          <div class="box"><div class="h">발표덱 V2</div><div class="c">p17 마무리·기대효과는 있으나 <span class="none">로드맵도 회고도 없음</span></div></div>
+          <div class="box"><div class="h">GITHUB</div><div class="c">로드맵 재료는 있음 — <em>BLOCKED 5건(SYS-001~005)이 그대로 다음 스프린트 백로그</em>. <span class="none">회고는 없음</span></div></div>
+        </div>
+        <div class="need"><span class="lb">할 일</span>로드맵은 BLOCKED 5건 + 판단 유보 3건 + 검증 과제를 <b>순서만 매기면</b> 나옵니다.<br><b>팀 회고는 사람이 쓸 수밖에 없습니다</b> — <b>위의 구멍 ③</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>v2 덱 17장이 어디로 가는가</h2>
+    <p class="sub">2차 덱은 「서비스 기획」이 전부였고, 이번 권장 구성은 그걸 <b>2~3p로 접고</b> 그 자리에 KB · PRD/SRS · 추적 · 기술 · 프로젝트 관리 · 에이전틱 도구를 넣습니다. 그래서 v2에서 가져올 수 있는 건 절반이 안 됩니다.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>v2</th><th>내용</th><th>Master Deck</th><th>어떻게</th></tr></thead>
+        <tbody>
+          <tr><td>p1</td><td>표지</td><td>1p</td><td>그대로 · 팀 표기만 확인</td></tr>
+          <tr><td>p2~p7</td><td>육하원칙 · 시장 · 기존 앱 · 사용자 · 문제 · 숫자</td><td>2~3p</td><td>여섯 장을 두 장으로 압축</td></tr>
+          <tr><td>p8</td><td>약속 · KSF · 가치사슬</td><td>2~3p 또는 5p</td><td>PRD 목표로 옮겨 붙임</td></tr>
+          <tr><td>p9~p10</td><td>성장 나무 · 소비 계획 카드</td><td>10p</td><td>그대로 · <b>4단계로 갱신</b></td></tr>
+          <tr><td>p11~p14</td><td>가입 · 아이 화면 · 부모 화면 · 월간 숲</td><td>11p</td><td>네 장을 한 장으로 · <b>개정본 반영</b></td></tr>
+          <tr><td>p15</td><td>북극성 지표 · 가드레일</td><td>5~6p 또는 14p</td><td>PRD 목표 또는 검증 설계로</td></tr>
+          <tr><td>p16</td><td>남은 과제 3건</td><td>15p</td><td>그대로 + 3차 한계 추가</td></tr>
+          <tr><td>p17</td><td>마무리 · 기대효과</td><td>16p</td><td>로드맵·회고와 합침</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="foot">
+    점검 근거 — <code>발표덱_v2.html</code> 17개 <code>&lt;section&gt;</code> 전문, <code>origin/main</code> 파일 목록 178건, 이슈 13건 · PR 8건 상태.<br>
+    확인 못 한 것 — GitHub Project 보드 존재 여부(<code>read:project</code> 스코프 없음). <code>gh auth refresh -s read:project</code> 뒤에 다시 보면 됩니다.
+  </div>
+</div>
