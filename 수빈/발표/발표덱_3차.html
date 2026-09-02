@@ -488,6 +488,26 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 #stage{word-break:keep-all;overflow-wrap:break-word}
 .cover .lead{max-width:700px}
 
+/* AI 도구 3열 — 활용 · 개입 · 결과 */
+.tool3{display:flex;gap:12px;align-items:stretch}
+.tool3 .tc{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column}
+.tool3 .tc .hd6{padding:10px 15px;color:#fff}
+.tool3 .tc .hd6 .nm6{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.tool3 .tc .hd6 .sb6{font-size:11.5px;font-weight:600;margin-top:2px;opacity:.85}
+.tool3 .g6h .hd6{background:var(--amber)}
+.tool3 .g6s .hd6{background:#5E655C}
+.tool3 .g6g .hd6{background:var(--green)}
+.tool3 .tc .bd6{padding:12px 15px;display:flex;flex-direction:column;gap:10px;flex:1}
+.tool3 .sg{display:flex;flex-direction:column;gap:3px}
+.tool3 .sg .lb6{font-size:10.5px;font-weight:800;letter-spacing:.07em;color:var(--grey)}
+.tool3 .sg .tx6{font-size:12.5px;line-height:1.55;color:var(--sub)}
+.tool3 .sg .tx6 b{color:var(--ink);font-weight:700}
+.tool3 .sg.iv .lb6{color:var(--red)}
+.tool3 .sg.rs{margin-top:auto;background:var(--green-l);border:1px solid #CFE3D7;border-radius:9px;padding:9px 11px}
+.tool3 .sg.rs .lb6{color:var(--green)}
+.tool3 .sg.rs .tx6{color:#2F5A44} .tool3 .sg.rs .tx6 b{color:var(--green)}
+
 </style>
 </head>
 <body>
@@ -905,37 +925,43 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 </section>
 
 <!-- 13 ── [13p] AI 도구 -->
-<section class="slide" data-blk="블록 9 · AI 도구" data-sec="35"
- data-note="이 작업을 <em>AI 에이전트 루프</em>로 굴렸습니다.<br>먼저 목표 설계 도구로 <em>목표 프롬프트</em>를 만들었어요. 네 항목이 필수입니다 — 목표와 범위, 세부 규칙, <em>종료 조건</em>, 제약. 종료 조건이 없으면 무한히 돕니다.<br>그다음 루프를 돌려 이슈 열세 건을 순회시켰습니다. 결과가 검토 요청 여덟 건, 막힘 다섯 건이에요.<br>그런데 <em>중요한 건 개입입니다.</em> 세 가지가 있었어요.<br>첫째, 루프가 <em>스스로 정하지 않고 유보</em>했습니다. 문서에 답이 없는 판단 세 건을 카운터만 올리고 넘겼어요.<br>둘째, 막힌 다섯 건을 <em>사유와 함께</em> 남겼습니다. 그게 그대로 다음 할 일이 됐고요.<br>셋째, <em>사람이 루프를 뒤집었습니다.</em> 적금 이자를 이율로 계산하게 짜놨는데, 저희 설계는 금액이었거든요. 되돌렸습니다."
+<section class="slide" data-blk="블록 9 · AI 도구" data-sec="45"
+ data-note="AI 도구는 세 개를 썼습니다. 하나씩 <em>어디에 썼고, 사람이 어디서 끼어들었고, 무엇이 남았는지</em> 말씀드리겠습니다.<br><em>첫째, 문서를 캐묻는 도구.</em> 저희가 내린 결정 쉰네 건을 다섯 관점에서 다 캐물었어요. 그런데 중간에 <em>저희가 스스로 구멍을 냈습니다.</em> 「불리기는 판정할 수 없으니 실천 요건을 0으로 하자」고 정했는데, 그러면 <em>「퀴즈만으로는 못 자란다」는 우리 주장이 네 칸 중 세 칸에만</em> 해당하게 돼요. 퍼핀과 갈리는 바로 그 축인데요.<br>그래서 <em>대외에 그 문장을 쓰지 못하게 금지 목록에 올렸습니다.</em> 그리고 <em>같은 날 되돌렸어요</em> — 부모와의 합의 기록은 앱 안에서 일어나니까 판정이 된다는 걸 찾아냈거든요.<br><em>둘째, 목표를 설계하는 도구.</em> 루프를 돌리기 전에 목표 프롬프트를 네 항목으로 만들었습니다. 핵심은 <em>종료 조건이 없으면 아예 만들지 않는다</em>는 거예요.<br><em>셋째, 루프를 돌리는 도구.</em> 결과는 검토 요청 여덟 건, 막힘 다섯 건입니다. 여기서도 <em>사람이 뒤집었어요</em> — 적금 이자를 이율로 계산하게 짜놨는데 저희 설계는 금액이었거든요."
  data-br="이제 검증과 남은 한계로 마무리하겠습니다.">
-  <div class="kicker">AI 도구 <span>· 목표 설계 · 자동 루프 · 문서 검증</span></div>
-  <h1>루프를 돌리되, <em>결정은 사람이</em> 하게 막아뒀습니다</h1>
+  <div class="kicker">AI 도구 <span>· 대표 활용 · 개입 · 결과</span></div>
+  <h1>도구가 답을 내되, <em>멈출 조건과 되돌릴 조건</em>은 사람이 박았습니다</h1>
   <div class="body">
-    <div class="flow" style="margin-bottom:13px">
-      <div class="n">목표 설계 <small>4항목 프롬프트를 함께 만듦</small></div><div class="s">→</div>
-      <div class="n">자동 루프 <small>이슈 13건 순회</small></div><div class="s">→</div>
-      <div class="n">이슈별 브랜치 <small>이슈 1건 = 요청 1건</small></div><div class="s">→</div>
-      <div class="n k">체크포인트 <small>카운터 · 사유 기록</small></div>
-    </div>
-    <div class="row">
-      <div class="card grow" style="padding:15px 18px"><h3>개입 ① · 스스로 정하지 않게 막았습니다</h3>
-        <p>문서에 답이 없는 판단이 나오면 <strong>그 자리에서 정하지 말고</strong> 카운터만 올리게 했습니다. 결과 <strong>판단 유보 3건</strong> — 사람이 기획서와 명세서에 씁니다</p></div>
-      <div class="card grow" style="padding:15px 18px"><h3>개입 ② · 막힌 자리를 사유와 함께 남겼습니다</h3>
-        <p>실행되는 서버가 있어야 하는 건 <strong>요청 없이 막힘 처리</strong>. <strong>5건</strong>이 사유 한 줄씩과 함께 남아 <strong>그대로 다음 할 일</strong>이 됐습니다</p></div>
-      <div class="card r grow" style="padding:15px 18px"><h3>개입 ③ · 사람이 루프를 뒤집었습니다</h3>
-        <p>루프가 적금 이자를 <strong>이율로 계산</strong>하게 구현했는데, 저희 설계는 <strong>금액</strong>이었습니다. 되돌리고 명세를 금액 기준으로 다시 맞췄습니다</p></div>
-    </div>
-    <div class="anz">
-      <div class="ah"><span class="m">종료 조건</span><span class="t">루프가 무한히 돌지 않게 조기 종료 조건을 미리 박아둡니다</span></div>
-      <div class="ab">
-        <div class="kv"><div class="k">조기 종료</div><div class="v">핵심 판단 <b>3건</b> 누적 · 부수 판단 <b>10건</b> 누적 · 대기열 소진</div></div>
-        <div class="sep"></div>
-        <div class="kv"><div class="k">실제 종료</div><div class="v">핵심 <b>0</b> · 부수 <b>3</b> · <b>대기열 소진으로 정상 종료</b></div></div>
-        <div class="sep"></div>
-        <div class="kv"><div class="k">여러 세션 공유</div><div class="v">카운터를 <b>별도 파일</b>에 둬 다른 작업 세션도 읽습니다</div></div>
+    <div class="tool3">
+
+      <div class="tc g6h">
+        <div class="hd6"><div class="nm6">① 문서를 캐묻는 도구</div><div class="sb6">우리가 내린 결정을 되묻게 한다</div></div>
+        <div class="bd6">
+          <div class="sg"><div class="lb6">대표 활용</div><div class="tx6">확정한 결정 <b>54건</b>을 <b>다섯 관점</b>에서 캐물었습니다 — 서비스 흐름 · 고객 · 운영 · 수익모델 · 규제</div></div>
+          <div class="sg iv"><div class="lb6">사람의 개입</div><div class="tx6">캐묻다가 <b>우리가 낸 구멍</b>을 찾았습니다. 「불리기는 판정할 수 없으니 실천 요건을 0으로」 → 그러면 <b>「퀴즈만으로는 못 자란다」가 네 칸 중 세 칸</b>에만 해당합니다.<br>대외에 그 문장을 <b>못 쓰게 금지 목록에 올렸습니다</b></div></div>
+          <div class="sg rs"><div class="lb6">결과</div><div class="tx6"><b>같은 날 되돌렸습니다</b> — 부모와의 합의 기록은 앱 안 행위라 판정이 됩니다. 실천 요건 복원 · 금지 해제 · <b>54건 전부 해소</b></div></div>
+        </div>
       </div>
+
+      <div class="tc g6s">
+        <div class="hd6"><div class="nm6">② 목표를 설계하는 도구</div><div class="sb6">루프를 돌리기 전에 규칙부터 만든다</div></div>
+        <div class="bd6">
+          <div class="sg"><div class="lb6">대표 활용</div><div class="tx6">이슈 13건을 도는 <b>목표 프롬프트를 네 항목</b>으로 짰습니다 — 목표·범위 / 세부 규칙 / <b>종료 조건</b> / 제약</div></div>
+          <div class="sg iv"><div class="lb6">사람의 개입</div><div class="tx6"><b>「종료 조건이 없으면 아예 만들지 않는다」</b><br>멈출 기준을 <b>돌리기 전에</b> 못박았습니다 — 핵심 판단 3건 · 부수 판단 10건 · 대기열 소진</div></div>
+          <div class="sg rs"><div class="lb6">결과</div><div class="tx6"><b>「문서에 답이 없으면 정하지 말고 유보하라」</b>가 프롬프트 규칙으로 들어갔습니다. 결정 권한을 <b>루프에 주지 않았습니다</b></div></div>
+        </div>
+      </div>
+
+      <div class="tc g6g">
+        <div class="hd6"><div class="nm6">③ 루프를 돌리는 도구</div><div class="sb6">이슈를 순회하며 화면을 고친다</div></div>
+        <div class="bd6">
+          <div class="sg"><div class="lb6">대표 활용</div><div class="tx6">이슈 <b>13건</b>을 정해진 순서로 순회 — <b>이슈 1건 = 브랜치 1개 = 검토 요청 1건</b></div></div>
+          <div class="sg iv"><div class="lb6">사람의 개입</div><div class="tx6">루프가 적금 이자를 <b>이율로 계산</b>하게 구현했는데, 저희 설계는 <b>금액</b>이었습니다 → <b>사람이 되돌리고</b> 명세를 금액 기준으로 다시 맞췄습니다</div></div>
+          <div class="sg rs"><div class="lb6">결과</div><div class="tx6">검토 요청 <b>8건</b> · 막힘 <b>5건</b>(사유와 함께) · 판단 유보 <b>3건</b> · <b>대기열 소진으로 정상 종료</b></div></div>
+        </div>
+      </div>
+
     </div>
-    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>문서 검증 도구 대표 사례 한 건</b> — 어느 문서의 어떤 주장을 깨뜨렸고 그래서 문서가 어떻게 바뀌었는지</div></div>
+    <div class="bridge" style="margin-top:13px;padding:12px 22px;font-size:18px">가장 크게 되돌린 것 — <b style="color:#BFE6CF">스스로 판 구멍을 같은 날 메웠습니다</b></div>
   </div>
 </section>
 
@@ -1037,7 +1063,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 16장 · 목표 8분 55초</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 16장 · 목표 9분 5초</p>
   <p style="color:#B8801F;font-size:14px">노란 점선 <b>「채워 넣을 것」</b> 박스는 발표 전에 채우고 지우세요.</p>
 </div></div>
 
