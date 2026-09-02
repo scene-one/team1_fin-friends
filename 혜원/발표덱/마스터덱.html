@@ -187,6 +187,12 @@ h1 b{color:var(--red);font-weight:800}
 .techcard .ttr.show .lbl{color:var(--amber)}
 .techcard .ttr b{font-weight:800;color:var(--green)}
 .techcard .ttr.show b{color:var(--amber)}
+.techcard.solo{max-width:760px;padding:30px 36px;gap:18px}
+.techcard.solo h3{font-size:23px}
+.techcard.solo .desc{font-size:16px;line-height:1.65}
+.techcard.solo .ttr{padding:14px 18px}
+.techcard.solo .ttr .lbl{font-size:12.5px;width:86px}
+.techcard.solo .ttr .val{font-size:15px;line-height:1.6}
 
 @media print{body{background:#fff}#hud,#bar,#tmr,#notes,#help{display:none!important}
   #stage{box-shadow:none;transform:none!important}.slide{display:flex!important;page-break-after:always}}
@@ -252,7 +258,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">문제 <span>· 기존 사용자</span></div>
   <h1>배운 금융 지식이 <em>숫자</em>로만 남습니다</h1>
   <div class="body">
-    <div class="row" style="align-items:flex-start;gap:52px">
+    <div class="row" style="align-items:flex-start;gap:52px;justify-content:center">
       <div class="row" style="gap:40px;flex:none">
         <div style="flex:none;text-align:center">
           <img src="../../공용공간/발표준비/img/퍼핀_퀘스트완료.png" alt="퍼핀 학습 보상 화면" style="height:280px;border:6px solid #2B2F2A;border-radius:18px;display:block">
@@ -263,7 +269,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
           <div class="capnote">퍼핀 — 아이 홈 · 월 통계</div>
         </div>
       </div>
-      <div class="col grow" style="gap:14px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card r"><h3>학습의 끝이 “얼마 벌었다”입니다</h3>
           <p>퀘스트를 마치면 <strong>1,200원 획득</strong>만 남고, 무엇을 알게 됐는지는 남지 않습니다</p></div>
         <div class="card r"><h3>부모 화면은 숫자 세 개뿐입니다</h3>
@@ -281,7 +287,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="아이 쪽 가치 선언은 하나입니다 — 배우고, 실천하고, 그 과정에서 스스로 성장을 확인합니다.<br>흐름은 말로 설명드리면 이렇습니다. 먼저 퀴즈로 배웁니다. 정답을 맞히면 별을 받습니다. 그 별을 모아서 아바타 아이템을 삽니다.<br>퀴즈만 풀어서는 별이 안 쌓입니다 — 실제로 해봐야 다음 단계로 넘어갑니다."
  data-br="이 세 단계를 화면으로 하나씩 보여드리겠습니다.">
   <div class="kicker">아이 <span>· 가치 선언 (2-1)</span></div>
-  <h1>“아이는 금융 학습과 실천을 하며 <em>성장을 확인</em>한다”</h1>
+  <h1>“아이는 금융 학습과 실천을 하며 <em>성장을 확인</em>합니다”</h1>
   <div class="body">
     <div class="steps">
       <div class="stc"><div class="stn">① 학습</div>
@@ -307,9 +313,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 학습–별 획득–구매 <span>· ① 학습</span></div>
   <h1>퀴즈로 <em>오늘의 학습</em>을 합니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">📘</div><div class="pt">프로토타입 준비 중</div><div class="ps">Learn.dc.html</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>오늘 배울 주제(벌기·잘 쓰기·모으기·불리기 중)를 짧게 읽고 <strong>퀴즈</strong>를 풉니다.</p></div>
         <div class="card g"><p>분야별 하루 최대 <strong>1문제</strong>, 총 <strong>4문제</strong>까지만 풀 수 있습니다. 정답이면 <strong>별 1개</strong>가 지급됩니다.</p></div>
         <div class="card a"><p>오답이면 별이 추가로 붙지 않고 <strong>“이야기 다시 읽기”</strong>만 제공됩니다.</p></div>
@@ -326,9 +332,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 학습–별 획득–구매 <span>· ② 별 획득</span></div>
   <h1>학습과 실천을 하면 <em>별</em>이 모입니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">⭐</div><div class="pt">프로토타입 준비 중</div><div class="ps">Main.dc.html</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>오늘 모은 별 개수와 출석 현황이 홈 화면 상단에 보입니다.</p></div>
         <div class="card g"><p>퀴즈만으로는 부족하고 <strong>실제 실천 1회</strong>가 있어야 별이 쌓입니다 — 실천 경로는 미션·소비 계획·위시리스트·예적금 4가지입니다.</p></div>
       </div>
@@ -344,9 +350,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 학습–별 획득–구매 <span>· ③ 구매</span></div>
   <h1>모은 별로 <em>아바타</em>를 꾸밀 아이템을 삽니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">🧥</div><div class="pt">프로토타입 준비 중</div><div class="ps">아바타 옷장 · three.js</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>옷장에서 아이템을 골라 별로 구매하면 <strong>아바타</strong>가 그 자리에서 바뀝니다.</p></div>
         <div class="card g"><p>여덟 살에게는 나무·진도율보다 <strong>“별 세 개만 더 모으면 새 옷”</strong>이 훨씬 잘 통합니다 — 같은 기록이 부모 화면에서는 나무로 번역됩니다.</p></div>
       </div>
@@ -362,9 +368,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 실천 기능 (2-2) <span>· 소비 계획</span></div>
   <h1>쓰기 전에 <em>소비 계획</em>을 세우고<br>결제 내역과 비교합니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">🧾</div><div class="pt">프로토타입 준비 중</div><div class="ps">Plan.dc.html · Spending.dc.html</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>나가기 전에 <strong>어디서 · 무슨 가게 · 얼마까지 · 무엇을</strong> 적습니다.</p></div>
         <div class="card g"><p>결제가 끝나면 적어둔 것과 실제 결제를 <strong>가게 종류별로 겹쳐서</strong> 비교해 보여줍니다.</p></div>
         <div class="card a"><p>계획을 지켰으면 <strong>별 1개</strong>, 넘겼어도 <strong>별을 뺏지 않습니다</strong>.</p></div>
@@ -381,9 +387,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 실천 기능 (2-2) <span>· 위시리스트</span></div>
   <h1><em>위시리스트</em>를 위해 저금합니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">🎯</div><div class="pt">프로토타입 준비 중</div><div class="ps">Main.dc.html</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>목표 아이템 하나를 정해두고 돈을 모읍니다.</p></div>
         <div class="card g"><p>달성률 <strong>30% · 70% · 100%</strong>마다 각 별 1개씩, 최대 <strong>별 3개</strong>를 받습니다.</p></div>
         <div class="card a"><p>목표 아이템을 바꾸는 <strong>항목 변경은 횟수 제한이 없고</strong>, 순서 변경은 한 달에 한 번입니다.</p></div>
@@ -400,9 +406,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 실천 기능 (2-2) <span>· 미션 수행</span></div>
   <h1>용돈 벌기 <em>미션</em>을 수행합니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">🧹</div><div class="pt">프로토타입 준비 중</div><div class="ps">미션 인증 화면</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>집안일 등 미션을 <strong>사진으로 인증</strong>하면 부모에게 승인 요청이 갑니다.</p></div>
         <div class="card g"><p>부모가 승인하면 별이 지급되고, <strong>72시간 안에 확인이 없으면 자동으로 지급</strong>되어 아이가 한 일이 사라지지 않습니다.</p></div>
         <div class="card a"><p>인증 사진은 부모 승인 즉시 서버에서 <strong>파기</strong>되고, 화면에는 승인 배지만 남습니다.</p></div>
@@ -419,9 +425,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="kicker">아이 · 실천 기능 (2-2) <span>· 예적금</span></div>
   <h1>예적금 상품을 <em>비교하고 저축</em>합니다</h1>
   <div class="body">
-    <div class="row" style="align-items:center;gap:48px">
+    <div class="row" style="align-items:center;gap:48px;justify-content:center">
       <div class="protoslot lg"><div class="pi">🏦</div><div class="pt">프로토타입 준비 중</div><div class="ps">Bank.dc.html</div></div>
-      <div class="col grow" style="gap:14px;max-width:620px">
+      <div class="col" style="gap:14px;width:460px">
         <div class="card"><p>현재 가능한 것은 <strong>부모가 이자율을 정하는 부모 적금</strong>뿐입니다.</p></div>
         <div class="card g"><p>아이가 납입 주기·금액·이자 단계를 신청하면 부모 화면에 도착하고, <strong>실제 협상은 앱 밖에서</strong> 이뤄집니다.</p></div>
         <div class="card a"><p><strong>합의가 성립하는 것 자체가 실천 1회</strong>입니다 — 별은 지급되지 않아도 나무는 자랍니다.</p></div>
@@ -436,7 +442,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-note="부모 쪽 가치 선언은 — 아이가 배운 걸 얼마나 해봤는지 부모가 확인할 수 있다는 겁니다.<br>성장 나무는 벌기·잘쓰기·모으기·불리기 네 그루로, 학습과 퀴즈만으로는 안 자라고 실천 조건을 채워야 자랍니다.<br>월간 숲은 나무가 매달 초기화되는 대신, 그 달의 변화 — 사려다 멈춘 횟수, 가격을 비교해본 횟수, 저축 비율 — 를 지난달과 비교해서 보여줍니다."
  data-br="이걸 실제로 구현하려면 어떤 기술이 필요한지 보여드리겠습니다.">
   <div class="kicker">부모 <span>· 가치 선언 (3)</span></div>
-  <h1>“아이가 배운 걸 얼마나 해봤는지 <em>부모가 확인</em>할 수 있다”</h1>
+  <h1>“아이가 배운 걸 얼마나 해봤는지 <em>부모가 확인</em>할 수 있습니다”</h1>
   <div class="body">
     <div class="parent2">
       <div class="pcard">
@@ -458,70 +464,88 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 </section>
 
 <!-- 12 -->
-<section class="slide" data-blk="블록 5 · 구현" data-sec="45"
- data-note="이 약속들을 지키려고 기술을 역산해서 골랐습니다.<br>첫째, 배운 걸 실제로 했는지를 증명하는 기술입니다. 아이가 퀴즈를 풀어 별을 받는 순간, 서버는 같은 주제의 실천 미션을 곧바로 연결해 보여줍니다. 사진으로 인증하면 부모 승인 후 별이 확정되고, 72시간 안에 확인이 없으면 자동 지급됩니다. 사진은 확인 즉시 삭제됩니다.<br>둘째, 부모와 아이가 각자의 화면만 보게 하는 기술입니다. 겉보기엔 한 서비스지만 실제로는 서로 다른 주소로 배포된 별개의 PWA입니다. 아이 토큰으로는 부모 API를 아예 호출할 수 없습니다."
- data-br="이어서 오프라인 안전과 월간 요약 기술을 보여드리겠습니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4) — ①②</span></div>
+<section class="slide" data-blk="블록 5 · 구현" data-sec="30"
+ data-note="배운 걸 실제로 했는지 증명하는 기술입니다. 아이가 퀴즈를 풀어 별을 받는 순간, 서버는 같은 주제의 실천 미션을 곧바로 연결해 보여줍니다. 사진으로 인증하면 부모 승인 후 별이 확정되고, 72시간 안에 확인이 없으면 자동 지급됩니다. 사진은 확인 즉시 삭제됩니다."
+ data-br="다음은 부모와 아이 화면을 분리하는 기술입니다.">
+  <div class="kicker">구현 <span>· 필요 기술 (4) — ①</span></div>
   <h1>이런 <em>기술</em>을 사용했습니다</h1>
-  <div class="body">
-    <div class="row" style="gap:28px;align-items:stretch">
-      <div class="techcard">
-        <div class="tn">기술 ①</div>
-        <h3>“배운 걸 실제로 했는지”를 증명하는 기술</h3>
-        <p class="desc">아이가 퀴즈를 풀어 별을 받는 순간, 서버는 그 정답과 <strong>같은 주제의 실천 미션</strong>을 곧바로 연결해 보여줍니다. 미션을 사진으로 인증하면 부모에게 승인 요청이 가고, 부모가 승인하면 별이 지급됩니다. <strong>72시간 안에 부모 확인이 없으면 자동으로 지급</strong>되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다(ADR-016).</p>
-        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">서버(<b>Next.js 서버 런타임</b>)가 학습 이벤트와 미션 이벤트를 하나의 흐름으로 묶고, 이 지급을 원장(<b>PostgreSQL</b>) 이중 기입으로 기록</div></div>
-        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">“퀴즈 정답 → 별 1개 → 실천 카드 등장 → 사진 인증 → 부모 승인 → 별 확정 → 나무 성장”이 화면 안에서 끊기지 않고 이어짐. 승인용 사진은 확인 즉시 서버에서 삭제되어, 화면에는 <b>“승인됨”</b> 표시만 남음</div></div>
-      </div>
-      <div class="techcard">
-        <div class="tn">기술 ②</div>
-        <h3>부모와 아이가 각자의 화면만 보게 하는 기술</h3>
-        <p class="desc">부모 앱과 아이 앱은 겉보기엔 한 서비스지만, 실제로는 <strong>서로 다른 주소(오리진)</strong>로 배포된 별개의 PWA입니다.</p>
-        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>PWA 2개</b>(부모/아이) + 오리진 분리, 아이 토큰으로는 부모 API를 아예 호출할 수 없게 서버가 막음</div></div>
-        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">부모는 초대 링크를 만들어 문자로 보내고, 아이는 그 링크로만 들어옴. 두 화면이 같은 코드베이스(Next.js)에서 나오지만, 사용자는 완전히 분리된 두 개의 앱처럼 경험함</div></div>
-      </div>
+  <div class="body" style="display:flex;justify-content:center">
+    <div class="techcard solo">
+      <div class="tn">기술 ①</div>
+      <h3>배운 걸 실제로 했는지 증명하기</h3>
+      <p class="desc">아이가 퀴즈를 풀어 별을 받는 순간, 서버는 그 정답과 <strong>같은 주제의 실천 미션</strong>을 곧바로 연결해 보여줍니다. 미션을 사진으로 인증하면 부모에게 승인 요청이 가고, 부모가 승인하면 별이 지급됩니다. <strong>72시간 안에 부모 확인이 없으면 자동으로 지급</strong>되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다(ADR-016).</p>
+      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">서버(<b>Next.js 서버 런타임</b>)가 학습 이벤트와 미션 이벤트를 하나의 흐름으로 묶고, 이 지급을 원장(<b>PostgreSQL</b>) 이중 기입으로 기록</div></div>
+      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">“퀴즈 정답 → 별 1개 → 실천 카드 등장 → 사진 인증 → 부모 승인 → 별 확정 → 나무 성장”이 화면 안에서 끊기지 않고 이어짐. 승인용 사진은 확인 즉시 서버에서 삭제되어, 화면에는 <b>“승인됨”</b> 표시만 남음</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §1·§2</div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §1</div>
 </section>
 
 <!-- 13 -->
-<section class="slide" data-blk="블록 5 · 구현" data-sec="45"
- data-note="셋째, 인터넷이 끊겨도 성장 기록이 안전한 기술입니다. 아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않도록, 앱이 오프라인 큐에 잠깐 저장해두고 재연결되면 고유 키로 서버에 전송해 중복 지급을 막습니다.<br>넷째, 이번 달 얼마나 자랐는지를 말로 설명해주는 기술입니다. AWS Bedrock을 이 기능 하나에만 한정해서 쓰고, 아동 식별 정보 없이 집계 수치만 넘깁니다. 이 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 있으면 좋은 설명이지 서비스의 전제가 아닙니다."
- data-br="이상으로 마스터덱을 마칩니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4) — ③④</span></div>
+<section class="slide" data-blk="블록 5 · 구현" data-sec="25"
+ data-note="부모와 아이가 각자의 화면만 보게 하는 기술입니다. 겉보기엔 한 서비스지만 실제로는 서로 다른 주소로 배포된 별개의 PWA입니다. 아이 토큰으로는 부모 API를 아예 호출할 수 없습니다."
+ data-br="이어서 오프라인에서도 안전한 기록 기술을 보여드리겠습니다.">
+  <div class="kicker">구현 <span>· 필요 기술 (4) — ②</span></div>
   <h1>이런 <em>기술</em>을 사용했습니다</h1>
-  <div class="body">
-    <div class="row" style="gap:28px;align-items:stretch">
-      <div class="techcard">
-        <div class="tn">기술 ③</div>
-        <h3>인터넷이 끊겨도 성장 기록이 안전한 기술</h3>
-        <p class="desc">아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않습니다.</p>
-        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">아이 앱의 <b>Service Worker</b>가 오프라인 큐에 행동을 잠깐 저장해두고, 재연결되면 <b>고유 키(멱등 키)</b>로 서버에 전송해 중복 지급을 막음</div></div>
-        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">화면엔 <b>“오프라인”</b> 표시만 뜨고, 다시 연결되면 자동으로 별이 반영됨 — 아이가 따로 뭘 다시 누를 필요가 없음</div></div>
-      </div>
-      <div class="techcard">
-        <div class="tn">기술 ④</div>
-        <h3>“이번 달 얼마나 자랐는지”를 말로 설명해주는 기술</h3>
-        <p class="desc">숫자(별 개수·완료 미션 수)만 보여주는 대신, 한 줄 요약 문장으로 성장을 설명합니다.</p>
-        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>AWS Bedrock</b>(Claude, 서울 리전)을 이 기능 하나에만 사용. 아동 식별 정보 없이 집계 수치만 넘김</div></div>
-        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">월간 숲 화면 상단에 “이번 달엔 저축을 3번 더 실천했어요” 같은 한 줄이 뜸. 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 <b>있으면 좋은 설명</b>이지 서비스의 전제가 아님</div></div>
-      </div>
+  <div class="body" style="display:flex;justify-content:center">
+    <div class="techcard solo">
+      <div class="tn">기술 ②</div>
+      <h3>부모와 아이 화면 분리하기</h3>
+      <p class="desc">부모 앱과 아이 앱은 겉보기엔 한 서비스지만, 실제로는 <strong>서로 다른 주소(오리진)</strong>로 배포된 별개의 PWA입니다.</p>
+      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>PWA 2개</b>(부모/아이) + 오리진 분리, 아이 토큰으로는 부모 API를 아예 호출할 수 없게 서버가 막음</div></div>
+      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">부모는 초대 링크를 만들어 문자로 보내고, 아이는 그 링크로만 들어옴. 두 화면이 같은 코드베이스(Next.js)에서 나오지만, 사용자는 완전히 분리된 두 개의 앱처럼 경험함</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §3·§4</div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §2</div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-blk="블록 5 · 구현" data-sec="25"
+ data-note="인터넷이 끊겨도 성장 기록이 안전한 기술입니다. 아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않도록, 앱이 오프라인 큐에 잠깐 저장해두고 재연결되면 고유 키로 서버에 전송해 중복 지급을 막습니다."
+ data-br="마지막은 월간 요약을 말로 설명하는 기술입니다.">
+  <div class="kicker">구현 <span>· 필요 기술 (4) — ③</span></div>
+  <h1>이런 <em>기술</em>을 사용했습니다</h1>
+  <div class="body" style="display:flex;justify-content:center">
+    <div class="techcard solo">
+      <div class="tn">기술 ③</div>
+      <h3>인터넷이 끊겨도 성장 기록 지키기</h3>
+      <p class="desc">아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않습니다.</p>
+      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">아이 앱의 <b>Service Worker</b>가 오프라인 큐에 행동을 잠깐 저장해두고, 재연결되면 <b>고유 키(멱등 키)</b>로 서버에 전송해 중복 지급을 막음</div></div>
+      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">화면엔 <b>“오프라인”</b> 표시만 뜨고, 다시 연결되면 자동으로 별이 반영됨 — 아이가 따로 뭘 다시 누를 필요가 없음</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §3</div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-blk="블록 5 · 구현" data-sec="30"
+ data-note="이번 달 얼마나 자랐는지를 말로 설명해주는 기술입니다. AWS Bedrock을 이 기능 하나에만 한정해서 쓰고, 아동 식별 정보 없이 집계 수치만 넘깁니다. 이 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 있으면 좋은 설명이지 서비스의 전제가 아닙니다."
+ data-br="이상으로 마스터덱을 마칩니다.">
+  <div class="kicker">구현 <span>· 필요 기술 (4) — ④</span></div>
+  <h1>이런 <em>기술</em>을 사용했습니다</h1>
+  <div class="body" style="display:flex;justify-content:center">
+    <div class="techcard solo">
+      <div class="tn">기술 ④</div>
+      <h3>이번 달 얼마나 자랐는지 말로 설명하기</h3>
+      <p class="desc">숫자(별 개수·완료 미션 수)만 보여주는 대신, 한 줄 요약 문장으로 성장을 설명합니다.</p>
+      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>AWS Bedrock</b>(Claude, 서울 리전)을 이 기능 하나에만 사용. 아동 식별 정보 없이 집계 수치만 넘김</div></div>
+      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">월간 숲 화면 상단에 “이번 달엔 저축을 3번 더 실천했어요” 같은 한 줄이 뜸. 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 <b>있으면 좋은 설명</b>이지 서비스의 전제가 아님</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §4</div>
 </section>
 
 </div></div>
 
 <div id="ov">
-  <h2>제목만 이어 읽기 — 13장</h2>
+  <h2>제목만 이어 읽기 — 15장</h2>
   <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
   <div class="grid" id="ovg"></div>
 </div>
 
 <div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
 <div id="tmr">⏱ —</div>
-<div id="hud"><span id="pg"><b>1</b> / 13</span><span id="blk"></span>
+<div id="hud"><span id="pg"><b>1</b> / 15</span><span id="blk"></span>
   <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
 
 <div id="help"><div class="box">
@@ -533,7 +557,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 13장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 15장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
 </div></div>
 
 <script>
