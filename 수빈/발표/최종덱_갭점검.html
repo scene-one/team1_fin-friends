@@ -1,4 +1,15 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Master Deck 갭 점검</title>
+<style>
+  html { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root {
@@ -118,7 +129,8 @@
     .pg { flex-direction: row; align-items: center; gap: 10px; }
   }
 </style>
-
+</head>
+<body>
 <div class="wrap">
 
   <div class="eyebrow">핀프렌즈 · 3차 최종 발표</div>
@@ -363,3 +375,5 @@
     확인 못 한 것 — GitHub Project 보드 존재 여부(<code>read:project</code> 스코프 없음). <code>gh auth refresh -s read:project</code> 뒤에 다시 보면 됩니다.
   </div>
 </div>
+</body>
+</html>
