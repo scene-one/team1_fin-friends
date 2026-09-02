@@ -133,12 +133,16 @@ h1 b{color:var(--red);font-weight:800}
 .protoslot .pi{font-size:26px;opacity:.7}
 .protoslot .pt{font-size:12.5px;font-weight:800;letter-spacing:.02em;color:#8A9186}
 .protoslot .ps{font-size:11px;color:#A8AFA4;line-height:1.4;max-width:150px}
-.flow{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-.flow .fs{display:flex;flex-direction:column;align-items:center;gap:10px;flex:1}
-.flow .fs .protoslot{width:100%;height:180px}
-.flow .fs .lb2{font-size:14px;font-weight:800;text-align:center;line-height:1.4}
-.flow .fs .lb2 small{display:block;font-weight:600;color:var(--grey);font-size:12px;margin-top:3px}
-.flow .s{color:var(--grey);font-size:22px;flex:none}
+.protoslot.lg{width:280px;height:440px;flex:none}
+.protoslot.lg .pi{font-size:44px}
+.protoslot.lg .pt{font-size:14px}
+.protoslot.lg .ps{font-size:12px;max-width:200px}
+
+.steps{display:flex;align-items:stretch;gap:14px}
+.steps .stc{flex:1;display:flex;flex-direction:column;gap:8px}
+.steps .stc .stn{font-size:13px;font-weight:800;color:var(--green)}
+
+.capnote{font-size:11.5px;color:var(--grey);text-align:center;margin-top:7px;font-weight:600}
 
 .feat{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .feat .fc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;
@@ -221,7 +225,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
  data-br="먼저 문제부터 한 장으로 보여드리겠습니다.">
   <div class="brand">F I N F R I E N D S</div>
   <h1>아이가 얼마를 <em>‘썼는지’</em>보다,<br>얼마나 <em>‘자랐는지’</em> 보여줍니다</h1>
-  <p class="lead">배우고 · 실천하고 · 확인하는 초등 자녀 금융 서비스 — 마스터덱</p>
+  <p class="lead">배우고 · 실천하고 · 확인하는 초등 자녀 금융 서비스</p>
   <div class="meta">기준 서비스 퍼핀 · 개선 실천 기능<br>팀 유림 · 병윤 · 하영 · 혜원</div>
   <div class="phone"><div class="nub"></div><div class="wm">FINFRIENDS</div></div>
 </section>
@@ -230,92 +234,187 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 <section class="slide" data-blk="블록 2 · 문제" data-sec="45"
  data-note="정기적으로 용돈을 주는 82만 가정 중 저축을 가르치고 싶다는 부모가 66%인데, 아이가 실제로 저축하는 비율은 13%뿐입니다.<br>지금 앱을 열어보면 이유가 보입니다. 퍼핀은 학습이 끝나면 '1,200원 획득'만 남고, 부모 화면에는 누적 일수·문제 수·보상 금액 숫자 세 개만 있습니다. 7과목 중 4과목은 금융도 아닙니다.<br>그러니까 지금 앱들은 '얼마나 했는지'는 보여주지만, '무엇이 달라졌는지'는 보여주지 못합니다."
  data-br="그래서 저희는 아이 쪽부터 다시 설계했습니다.">
-  <div class="kicker">문제 <span>· 시장과 기존 사용자</span></div>
+  <div class="kicker">문제 <span>· 기존 사용자</span></div>
   <h1>배운 금융 지식이 <em>숫자</em>로만 남습니다</h1>
   <div class="body">
-    <div class="bars">
-      <div class="bar"><div class="lb">부모가 가르치고 싶은 것 1위 — 저축</div>
-        <div class="tr"><div class="fl g" style="width:66%">65.8%</div></div></div>
-      <div class="bar"><div class="lb">아이가 실제로 저축하는 비율 — 꼴찌</div>
-        <div class="tr"><div class="fl r" style="width:13%">12.8%</div></div></div>
+    <div class="row" style="align-items:flex-start;gap:16px">
+      <div style="flex:none;text-align:center">
+        <img src="../../공용공간/발표준비/img/퍼핀_퀘스트완료.png" alt="퍼핀 학습 보상 화면" style="height:280px;border:6px solid #2B2F2A;border-radius:18px;display:block">
+        <div class="capnote">퍼핀 — 학습 완료 화면</div>
+      </div>
+      <div style="flex:none;text-align:center">
+        <img src="../../공용공간/발표준비/img/퍼핀_아이홈.png" alt="퍼핀 아이 홈 화면" style="height:280px;border:6px solid #2B2F2A;border-radius:18px;display:block">
+        <div class="capnote">퍼핀 — 아이 홈 · 월 통계</div>
+      </div>
+      <div class="col grow" style="gap:14px">
+        <div class="card r"><h3>학습의 끝이 “얼마 벌었다”입니다</h3>
+          <p>퀘스트를 마치면 <strong>1,200원 획득</strong>만 남고, 무엇을 알게 됐는지는 남지 않습니다</p></div>
+        <div class="card r"><h3>부모 화면은 숫자 세 개뿐입니다</h3>
+          <p><strong>누적 일수 · 문제 수 · 보상 금액</strong> — 확인은 되지만 해석은 안 됩니다</p></div>
+        <div class="card r"><h3>퀴즈 7과목 중 4과목이 금융이 아닙니다</h3>
+          <p>한국사 · 시사 · 어휘 · 과학기술 — <strong>돈 이야기가 아닌 문제로 숫자가 올라갑니다</strong></p></div>
+      </div>
     </div>
-    <div class="row" style="margin-top:18px;gap:14px">
-      <div class="card r grow" style="padding:16px 20px"><h3 style="font-size:15.5px">학습의 끝이 “얼마 벌었다”입니다</h3>
-        <p style="font-size:14.5px">퀘스트를 마치면 <strong>1,200원 획득</strong>만 남고, 무엇을 알게 됐는지는 남지 않습니다</p></div>
-      <div class="card r grow" style="padding:16px 20px"><h3 style="font-size:15.5px">부모 화면은 숫자 세 개뿐입니다</h3>
-        <p style="font-size:14.5px"><strong>누적 일수 · 문제 수 · 보상 금액</strong> — 확인은 되지만 해석은 안 됩니다</p></div>
-      <div class="card r grow" style="padding:16px 20px"><h3 style="font-size:15.5px">퀴즈 7과목 중 4과목이 금융이 아닙니다</h3>
-        <p style="font-size:14.5px">한국사 · 시사 · 어휘 · 과학기술 — <strong>돈 이야기가 아닌 문제로 숫자가 올라갑니다</strong></p></div>
-    </div>
-    <div class="anz"><div class="ah"><span class="m">시장 · 국제 메타분석</span><span class="t">가르치는 것과 행동을 바꾸는 것은 다른 문제</span></div><div class="ab"><div class="kv"><div class="k">타깃 규모</div><div class="v">정기적으로 용돈을 주는 <b>81.8만 가정</b></div></div><div class="kv"><div class="k">금융교육 → 지식</div><div class="v"><b>+0.33 SD</b> — 확실히 늘어남</div></div><div class="kv"><div class="k">금융교육 → 행동</div><div class="v"><i>+0.07 SD</i> — 거의 안 바뀜</div></div><div class="kv"><div class="k">우리 결론</div><div class="v">실천 없이는 화면이 <b>안 움직이게</b> 만들어야 함</div></div></div></div>
   </div>
-  <div class="src">초등 학부모 586명 — 저축 희망 65.8%(1위) ↔ 실제 저축 12.8%(최하위) · 국제 메타분석 37개 실험 · 팀 직접 캡처(퍼핀) — 부모 화면 숫자 3개 · 7과목 중 4과목 비금융</div>
+  <div class="src">팀 직접 캡처(퍼핀) — 학습 완료 시 보상액만 표시 · 부모 화면 숫자 3개(누적 일수·문제 수·보상 금액) · 퀴즈 7과목 중 4과목 비금융</div>
 </section>
 
 <!-- 3 -->
 <section class="slide" data-blk="블록 3 · 아이" data-sec="35"
- data-note="아이 쪽 가치 선언은 하나입니다 — 배우고, 실천하고, 그 과정에서 스스로 성장을 확인합니다.<br>흐름은 퀴즈로 배우고, 실천하면 별을 모으고, 그 별로 아바타 아이템을 삽니다. 화면은 아직 준비 중이라 자리만 비워뒀습니다 — 프로토타입이 완성되면 이 자리에 넣습니다."
- data-br="이 흐름 안에서 아이가 실제로 만나는 실천 기능 네 가지를 보여드리겠습니다.">
+ data-note="아이 쪽 가치 선언은 하나입니다 — 배우고, 실천하고, 그 과정에서 스스로 성장을 확인합니다.<br>흐름은 말로 설명드리면 이렇습니다. 먼저 퀴즈로 배웁니다. 정답을 맞히면 별을 받습니다. 그 별을 모아서 아바타 아이템을 삽니다.<br>퀴즈만 풀어서는 별이 안 쌓입니다 — 실제로 해봐야 다음 단계로 넘어갑니다."
+ data-br="이 세 단계를 화면으로 하나씩 보여드리겠습니다.">
   <div class="kicker">아이 <span>· 가치 선언 (2-1)</span></div>
   <h1>“아이는 금융 학습과 실천을 하며 <em>성장을 확인</em>한다”</h1>
   <div class="body">
-    <div class="flow">
-      <div class="fs">
-        <div class="protoslot"><div class="pi">📘</div><div class="pt">프로토타입 준비 중</div><div class="ps">Learn.dc.html</div></div>
-        <div class="lb2">① 퀴즈 학습하기<small>오늘 배울 것 → 정답 시 별 지급</small></div>
-      </div>
-      <div class="s">→</div>
-      <div class="fs">
-        <div class="protoslot"><div class="pi">⭐</div><div class="pt">프로토타입 준비 중</div><div class="ps">Main.dc.html</div></div>
-        <div class="lb2">② 별 모으기<small>학습 + 실천을 해야 쌓임</small></div>
-      </div>
-      <div class="s">→</div>
-      <div class="fs">
-        <div class="protoslot"><div class="pi">🧥</div><div class="pt">프로토타입 준비 중</div><div class="ps">아바타 옷장</div></div>
-        <div class="lb2">③ 아바타 아이템 사기<small>모은 별로 옷장 꾸미기</small></div>
-      </div>
+    <div class="steps">
+      <div class="stc"><div class="stn">① 학습</div>
+        <div class="card grow"><p style="font-size:16px">오늘 배울 것을 짧게 <strong>퀴즈로 학습</strong>합니다. 정답을 맞히면 그 자리에서 <strong>별 1개</strong>가 지급됩니다.</p></div></div>
+      <div class="arrow">→</div>
+      <div class="stc"><div class="stn">② 별 획득</div>
+        <div class="card grow"><p style="font-size:16px">학습과 퀴즈만으로는 부족합니다 — <strong>실제로 해봐야</strong> 별이 쌓입니다. 오늘 모은 별과 실천 여부가 함께 표시됩니다.</p></div></div>
+      <div class="arrow">→</div>
+      <div class="stc"><div class="stn">③ 구매</div>
+        <div class="card grow"><p style="font-size:16px">모은 별로 옷장에서 아이템을 사서 <strong>아바타를 꾸밉니다</strong>. 아이 눈에는 이게 성장입니다.</p></div></div>
     </div>
     <div class="card g" style="margin-top:18px;padding:16px 22px">
-      <p style="font-size:16.5px">퀴즈만 풀어서는 별이 안 쌓입니다 — <strong>실제로 해봐야</strong> 다음 단계로 넘어갑니다. 이 흐름이 아이가 스스로 성장을 확인하는 자리입니다.</p>
+      <p style="font-size:16.5px">이 흐름이 아이가 스스로 성장을 확인하는 자리입니다 — 다음 장부터 각 단계 화면을 순서대로 보여드립니다.</p>
     </div>
   </div>
-  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §7 아이 온보딩(학습→퀴즈→실천 흐름) · 프로토타입 화면은 혜원/발표덱/ 완성 후 삽입 예정</div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §7 아이 온보딩(학습→퀴즈→실천 흐름)</div>
 </section>
 
 <!-- 4 -->
-<section class="slide" data-blk="블록 3 · 아이" data-sec="40"
- data-note="아이가 실제로 해보는 실천 기능은 네 가지입니다.<br>먼저 소비 계획 — 나가기 전에 어디서 얼마를 쓸지 적고, 결제 뒤 계획과 실제를 가게 종류별로 비교합니다.<br>위시리스트는 목표 아이템을 정해두면 30·70·100% 달성마다 별을 받습니다.<br>미션은 집안일 등을 사진으로 인증하면 부모 승인 후 별이 지급되고, 72시간 안에 확인이 없으면 자동으로 지급됩니다.<br>예적금은 지금은 부모가 이자율을 직접 정하는 '부모 적금'만 가능합니다 — 아이가 신청하면 부모가 현실에서 협상해서 합의합니다."
- data-br="같은 실천이 부모 쪽에서는 이렇게 확인됩니다.">
-  <div class="kicker">아이 <span>· 실천 기능 화면 (2-2)</span></div>
-  <h1>아이는 <em>네 가지 방법</em>으로 배운 걸 실제로 해봅니다</h1>
+<section class="slide" data-blk="블록 3 · 아이" data-sec="25"
+ data-note="① 학습 화면입니다. 오늘 배울 주제를 짧게 읽고 퀴즈를 풉니다. 하루에 풀 수 있는 문제는 분야별 최대 1개, 총 4개로 제한돼 있습니다. 오답이면 별을 더 주지 않고 이야기를 다시 읽도록 안내합니다."
+ data-br="정답을 맞히면 별이 쌓이는 화면으로 넘어갑니다.">
+  <div class="kicker">아이 · 학습–별 획득–구매 <span>· ① 학습</span></div>
+  <h1>퀴즈로 <em>오늘의 학습</em>을 합니다</h1>
   <div class="body">
-    <div class="feat">
-      <div class="fc">
-        <div class="fh"><span class="ic">📝</span><h3>소비 계획 세우고 결제 내역과 비교</h3></div>
-        <p>나가기 전에 <strong>어디서 · 무슨 가게 · 얼마까지 · 무엇을</strong> 적고, 결제가 끝나면 계획과 실제를 가게 종류별로 겹쳐 보여줍니다. 지켰으면 별 1개, 넘겼어도 별을 뺏지 않습니다.</p>
-        <div class="protoslot"><div class="pi">🧾</div><div class="pt">프로토타입 준비 중 — Plan.dc.html · Spending.dc.html</div></div>
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>오늘 배울 주제(벌기·잘 쓰기·모으기·불리기 중)를 짧게 읽고 <strong>퀴즈</strong>를 풉니다.</p></div>
+        <div class="card g"><p>분야별 하루 최대 <strong>1문제</strong>, 총 <strong>4문제</strong>까지만 풀 수 있습니다. 정답이면 <strong>별 1개</strong>가 지급됩니다.</p></div>
+        <div class="card a"><p>오답이면 별이 추가로 붙지 않고 <strong>“이야기 다시 읽기”</strong>만 제공됩니다.</p></div>
       </div>
-      <div class="fc">
-        <div class="fh"><span class="ic">🎯</span><h3>위시리스트에 저금</h3></div>
-        <p>목표 아이템 하나를 정해두고 모읍니다. <strong>달성률 30% · 70% · 100%</strong>마다 각 별 1개씩, 최대 3개를 받습니다.</p>
-        <div class="protoslot"><div class="pi">🎯</div><div class="pt">프로토타입 준비 중 — Main.dc.html</div></div>
-      </div>
-      <div class="fc">
-        <div class="fh"><span class="ic">🧹</span><h3>용돈 벌기 미션 수행</h3></div>
-        <p>집안일 등 미션을 사진으로 인증하면 부모 승인 후 별이 지급됩니다. <strong>72시간 안에 부모 확인이 없으면 자동 지급</strong>되어 아이가 한 일이 사라지지 않습니다.</p>
-        <div class="protoslot"><div class="pi">🧹</div><div class="pt">프로토타입 준비 중</div></div>
-      </div>
-      <div class="fc">
-        <div class="fh"><span class="ic">💰</span><h3>예적금 넣기</h3></div>
-        <p>현재 가능한 것은 <strong>부모가 이자율을 정하는 부모 적금</strong>뿐입니다. 아이가 납입 주기·금액·이자 단계를 신청하면, 부모가 현실에서 협상해 합의합니다 — 합의 성립 자체가 실천 1회입니다.</p>
-        <div class="protoslot"><div class="pi">🏦</div><div class="pt">프로토타입 준비 중 — Bank.dc.html</div></div>
-      </div>
+      <div class="protoslot lg"><div class="pi">📘</div><div class="pt">프로토타입 준비 중</div><div class="ps">Learn.dc.html</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §6(위시리스트·예적금) — 예적금 비교·선택 화면은 열되 실제 가입 중개는 하지 않음(P-20) · 미션 승인 72시간 자동 지급(ADR-016)</div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §7-1 학습→퀴즈 흐름 · 일일 문제 한도</div>
 </section>
 
 <!-- 5 -->
+<section class="slide" data-blk="블록 3 · 아이" data-sec="25"
+ data-note="② 별 획득 화면입니다. 오늘 모은 별과 출석 현황이 보이고, 학습·실천이 쌓일수록 별이 늘어납니다. 이 화면이 곧 부모 화면의 성장 나무로 이어집니다."
+ data-br="모은 별로 옷장에서 아이템을 사는 화면으로 넘어갑니다.">
+  <div class="kicker">아이 · 학습–별 획득–구매 <span>· ② 별 획득</span></div>
+  <h1>학습과 실천이 쌓이면 <em>별</em>이 쌓입니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>오늘 모은 별 개수와 출석 현황이 홈 화면 상단에 보입니다.</p></div>
+        <div class="card g"><p>퀴즈만으로는 부족하고 <strong>실제 실천 1회</strong>가 있어야 별이 쌓입니다 — 실천 경로는 미션·소비 계획·위시리스트·예적금 4가지입니다.</p></div>
+      </div>
+      <div class="protoslot lg"><div class="pi">⭐</div><div class="pt">프로토타입 준비 중</div><div class="ps">Main.dc.html</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §1 성장 조건(학습 완주+퀴즈 정답+행동 실천)</div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-blk="블록 3 · 아이" data-sec="25"
+ data-note="③ 구매 화면입니다. 모은 별로 옷장에서 아이템을 사서 아바타를 꾸밉니다. 아이에게는 숫자나 진도율보다 이 아바타 변화가 훨씬 잘 통합니다."
+ data-br="이제 아이가 실제로 해보는 실천 기능 네 가지를 하나씩 보여드리겠습니다.">
+  <div class="kicker">아이 · 학습–별 획득–구매 <span>· ③ 구매</span></div>
+  <h1>모은 별로 <em>아바타 아이템</em>을 삽니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>옷장에서 아이템을 골라 별로 구매하면 <strong>아바타</strong>가 그 자리에서 바뀝니다.</p></div>
+        <div class="card g"><p>여덟 살에게는 나무·진도율보다 <strong>“별 세 개만 더 모으면 새 옷”</strong>이 훨씬 잘 통합니다 — 같은 기록이 부모 화면에서는 나무로 번역됩니다.</p></div>
+      </div>
+      <div class="protoslot lg"><div class="pi">🧥</div><div class="pt">프로토타입 준비 중</div><div class="ps">아바타 옷장 · three.js</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §1(스택을 고르는 힘 — 아바타-옷장의 3D)</div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-blk="블록 3 · 아이" data-sec="30"
+ data-note="첫 번째 실천 기능은 소비 계획입니다. 나가기 전에 어디서, 무슨 가게, 얼마까지, 무엇을 살지 적습니다. 결제가 끝나면 적어둔 것과 실제 결제를 가게 종류별로 겹쳐서 보여줍니다. 계획을 지켰으면 별 1개, 넘겼어도 별을 뺏지 않습니다."
+ data-br="두 번째 실천 기능, 위시리스트입니다.">
+  <div class="kicker">아이 · 실천 기능 (2-2) <span>· 소비 계획</span></div>
+  <h1>쓰기 전에 <em>소비 계획</em>을 세우고<br>결제 내역과 비교합니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>나가기 전에 <strong>어디서 · 무슨 가게 · 얼마까지 · 무엇을</strong> 적습니다.</p></div>
+        <div class="card g"><p>결제가 끝나면 적어둔 것과 실제 결제를 <strong>가게 종류별로 겹쳐서</strong> 비교해 보여줍니다.</p></div>
+        <div class="card a"><p>계획을 지켰으면 <strong>별 1개</strong>, 넘겼어도 <strong>별을 뺏지 않습니다</strong>.</p></div>
+      </div>
+      <div class="protoslot lg"><div class="pi">🧾</div><div class="pt">프로토타입 준비 중</div><div class="ps">Plan.dc.html · Spending.dc.html</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md — 소비 계획 카드 4단계 루프 · 위치정보 미사용</div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-blk="블록 3 · 아이" data-sec="30"
+ data-note="두 번째는 위시리스트입니다. 목표 아이템 하나를 정해두고 모으면, 달성률 30·70·100퍼센트마다 별을 받습니다. 목표 자체를 바꾸는 건 횟수 제한이 없고, 순서 변경은 한 달에 한 번입니다."
+ data-br="세 번째, 미션 수행입니다.">
+  <div class="kicker">아이 · 실천 기능 (2-2) <span>· 위시리스트</span></div>
+  <h1><em>위시리스트</em>에 저금합니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>목표 아이템 하나를 정해두고 돈을 모읍니다.</p></div>
+        <div class="card g"><p>달성률 <strong>30% · 70% · 100%</strong>마다 각 별 1개씩, 최대 <strong>별 3개</strong>를 받습니다.</p></div>
+        <div class="card a"><p>목표 아이템을 바꾸는 <strong>항목 변경은 횟수 제한이 없고</strong>, 순서 변경은 한 달에 한 번입니다.</p></div>
+      </div>
+      <div class="protoslot lg"><div class="pi">🎯</div><div class="pt">프로토타입 준비 중</div><div class="ps">Main.dc.html</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §6-1 위시리스트</div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-blk="블록 3 · 아이" data-sec="30"
+ data-note="세 번째는 미션 수행입니다. 집안일 등을 사진으로 인증하면 부모 승인 후 별이 지급됩니다. 부모가 72시간 안에 확인하지 않으면 자동으로 지급되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다."
+ data-br="마지막으로, 예적금입니다.">
+  <div class="kicker">아이 · 실천 기능 (2-2) <span>· 미션 수행</span></div>
+  <h1>용돈 벌기 <em>미션</em>을 수행합니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>집안일 등 미션을 <strong>사진으로 인증</strong>하면 부모에게 승인 요청이 갑니다.</p></div>
+        <div class="card g"><p>부모가 승인하면 별이 지급되고, <strong>72시간 안에 확인이 없으면 자동으로 지급</strong>되어 아이가 한 일이 사라지지 않습니다.</p></div>
+        <div class="card a"><p>인증 사진은 부모 승인 즉시 서버에서 <strong>파기</strong>되고, 화면에는 승인 배지만 남습니다.</p></div>
+      </div>
+      <div class="protoslot lg"><div class="pi">🧹</div><div class="pt">프로토타입 준비 중</div><div class="ps">미션 인증 화면</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 미션 72시간 자동 지급(ADR-016) · 사진 즉시 파기</div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-blk="블록 3 · 아이" data-sec="30"
+ data-note="마지막 실천 기능은 예적금입니다. 지금 가능한 건 부모가 이자율을 직접 정하는 부모 적금뿐입니다. 아이가 납입 주기와 금액, 이자 단계를 신청하면 부모 화면에 도착하고, 실제 협상은 앱 밖에서 이뤄집니다. 합의가 이뤄지면 그 자체가 실천 1회입니다."
+ data-br="지금까지가 아이 쪽 실천 기능입니다. 이제 부모 쪽을 보여드리겠습니다.">
+  <div class="kicker">아이 · 실천 기능 (2-2) <span>· 예적금</span></div>
+  <h1><em>예적금</em>을 넣습니다</h1>
+  <div class="body">
+    <div class="row" style="align-items:center;gap:28px">
+      <div class="col grow" style="gap:14px">
+        <div class="card"><p>현재 가능한 것은 <strong>부모가 이자율을 정하는 부모 적금</strong>뿐입니다.</p></div>
+        <div class="card g"><p>아이가 납입 주기·금액·이자 단계를 신청하면 부모 화면에 도착하고, <strong>실제 협상은 앱 밖에서</strong> 이뤄집니다.</p></div>
+        <div class="card a"><p><strong>합의가 성립하는 것 자체가 실천 1회</strong>입니다 — 별은 지급되지 않아도 나무는 자랍니다.</p></div>
+      </div>
+      <div class="protoslot lg"><div class="pi">🏦</div><div class="pt">프로토타입 준비 중</div><div class="ps">Bank.dc.html</div></div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §6-2 예금·적금 vs 부모 적금 — 이자 단계 상한 연 20% · 실제 가입 중개는 하지 않음(P-20)</div>
+</section>
+
+<!-- 11 -->
 <section class="slide" data-blk="블록 4 · 부모" data-sec="35"
  data-note="부모 쪽 가치 선언은 — 아이가 배운 걸 얼마나 해봤는지 부모가 확인할 수 있다는 겁니다.<br>성장 나무는 벌기·잘쓰기·모으기·불리기 네 그루로, 학습과 퀴즈만으로는 안 자라고 실천 조건을 채워야 자랍니다.<br>월간 숲은 나무가 매달 초기화되는 대신, 그 달의 변화 — 사려다 멈춘 횟수, 가격을 비교해본 횟수, 저축 비율 — 를 지난달과 비교해서 보여줍니다."
  data-br="이걸 실제로 구현하려면 어떤 기술이 필요한지 보여드리겠습니다.">
@@ -341,7 +440,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §3(성장 나무) — 4분할(2×2) 레이아웃, 영역별 초기화 주기 상이 · 월간 숲 지표는 예시 수치</div>
 </section>
 
-<!-- 6 -->
+<!-- 12 -->
 <section class="slide" data-blk="블록 5 · 구현" data-sec="45"
  data-note="이 약속들을 지키려고 기술을 역산해서 골랐습니다.<br>실천 루프는 서버가 퀴즈 정답과 미션 승인을 한 흐름으로 묶고 이중 기입 원장에 기록합니다. 부모·아이 화면은 다른 오리진의 PWA 두 개로 완전히 분리했습니다. 별은 이중 기입 원장과 멱등 키로 사라지거나 중복 지급되지 않게 막았습니다. 미션 인증 사진은 부모 승인 직후 서버가 즉시 파기합니다. 월간 요약 한 줄만 AWS Bedrock을 쓰고, 꺼져도 숫자 지표는 그대로 보입니다. 아바타는 three.js로 3D 구현하되, 저사양 기기에서는 유휴 애니메이션을 CSS로 대체합니다."
  data-br="이상으로 마스터덱을 마칩니다.">
@@ -363,14 +462,14 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 </div></div>
 
 <div id="ov">
-  <h2>제목만 이어 읽기 — 6장</h2>
+  <h2>제목만 이어 읽기 — 12장</h2>
   <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
   <div class="grid" id="ovg"></div>
 </div>
 
 <div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
 <div id="tmr">⏱ —</div>
-<div id="hud"><span id="pg"><b>1</b> / 6</span><span id="blk"></span>
+<div id="hud"><span id="pg"><b>1</b> / 12</span><span id="blk"></span>
   <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
 
 <div id="help"><div class="box">
@@ -382,7 +481,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 6장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 12장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
 </div></div>
 
 <script>
