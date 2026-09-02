@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핀프렌즈 — 배운 걸 실제로 했는지, 한 눈에</title>
+<meta name="description" content="아이가 배운 금융 지식을 실제 돈 행동으로 잇고, 그 변화를 부모가 읽을 수 있게 합니다. 실천 없이는 자라지 않는 성장 나무.">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#fff; --bg-2:#F6F8F4; --paper:#fff; --sand:#EEF3E9;
+  --ink:#172019; --ink-2:#4E5A51; --ink-3:#7B877E;
+  --line:#E5EAE4; --line-2:#D8E0D7;
+  --green:#397343; --green-d:#285C31; --green-l:#75A86F; --green-p:#C8DDC5; --green-bg:#EDF6EA;
+  --clay:#B36B3A; --clay-bg:#F7EEE6; --gold:#E8B978;
+  --sans:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;
+  --serif:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;
+  --wrap:1180px;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);
+     line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+section{padding:116px 0}
+h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.35rem);line-height:1.13;
+   margin:0 0 20px;font-weight:800;letter-spacing:-.045em;text-wrap:balance}
+h3{font-family:var(--serif);font-size:1.12rem;margin:0 0 7px;font-weight:700}
+p{margin:0 0 14px;max-width:62ch}
+.lead{font-size:1.08rem;color:var(--ink-2);line-height:1.75}
+.eyebrow{font-size:.74rem;letter-spacing:.14em;color:var(--green);
+   text-transform:uppercase;margin:0 0 16px;font-weight:800}
+.center{text-align:center}
+.center p{margin-left:auto;margin-right:auto}
+/* 헤더 */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);
+   backdrop-filter:blur(18px);border-bottom:1px solid rgba(229,234,228,.85)}
+header .wrap{display:flex;align-items:center;gap:12px;padding-top:17px;padding-bottom:17px}
+.logo{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:-.04em}
+.logo span{color:var(--green)}
+header .sp{flex:1}
+header a.mini{font-size:.84rem;color:var(--ink-2);text-decoration:none;padding:8px 13px;border-radius:999px;font-weight:650}
+header a.mini:hover{background:var(--bg-2);color:var(--ink)}
+.cta{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;text-decoration:none;
+   padding:13px 23px;border-radius:999px;font-weight:750;font-size:.93rem;
+   box-shadow:0 1px 2px rgba(23,32,25,.1),0 10px 26px rgba(23,32,25,.14);transition:transform .2s,background .2s}
+.cta:hover{background:var(--green-d)}
+.cta:hover{transform:translateY(-2px)}
+.cta.sm{padding:9px 16px;font-size:.85rem;box-shadow:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+/* 히어로 */
+.hero{padding:108px 0 0;background:#fff;overflow:hidden}
+.hero .wrap{display:block;text-align:center}
+.hero-copy{max-width:850px;margin:0 auto}
+.hero h1{font-family:var(--serif);font-size:clamp(2.75rem,7.1vw,5.75rem);line-height:1.02;
+   margin:0 0 28px;font-weight:900;letter-spacing:-.065em;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero .sub{font-size:clamp(1rem,2vw,1.22rem);color:var(--ink-2);margin:0 auto 30px;max-width:590px;line-height:1.7}
+.hero .row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.free{font-size:.83rem;color:var(--green-d);background:var(--green-bg);
+   border:1px solid var(--green-p);border-radius:99px;padding:5px 13px;font-weight:700}
+.hero-stage{position:relative;margin:82px auto 0;min-height:510px;border-radius:34px 34px 0 0;
+   background:linear-gradient(145deg,#F1F7ED 0%,#E8F2E4 45%,#F6F9F3 100%);border:1px solid var(--line);
+   border-bottom:0;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;gap:24px;padding:58px 42px 0}
+.hero-stage::before,.hero-stage::after{content:"";position:absolute;border-radius:999px;filter:blur(2px)}
+.hero-stage::before{width:260px;height:260px;background:rgba(255,255,255,.64);top:-110px;right:9%}
+.hero-stage::after{width:190px;height:190px;background:rgba(117,168,111,.12);bottom:44px;left:6%}
+.hero-stage .phone{position:relative;z-index:2;margin:0;transform:translateY(20px)}
+.hero-stage .phone.side{width:282px;opacity:.92;transform:translateY(72px) rotate(-2deg)}
+.hero-stage .phone.side:last-child{transform:translateY(72px) rotate(2deg)}
+/* 폰 */
+.phone{width:328px;max-width:100%;margin:0 auto;background:var(--paper);
+   border:1px solid var(--line-2);border-radius:28px;overflow:hidden;
+   box-shadow:0 2px 8px rgba(23,32,25,.06),0 28px 70px rgba(43,66,47,.15)}
+.ph-h{padding:14px 16px 0;font-size:.64rem;color:var(--ink-3);display:flex;justify-content:space-between}
+.ph-b{padding:10px 16px 20px}
+.ph-role{font-size:.63rem;color:var(--ink-3);letter-spacing:.05em}
+.ph-t{font-family:var(--serif);font-size:1.15rem;font-weight:700;margin:2px 0 12px}
+.trees{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tree{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+.tree.hl{background:var(--green-bg);border-color:var(--green-p)}
+.tree .ic{font-size:1.5rem;line-height:1.1}
+.tree .nm{font-size:.74rem;font-weight:700;margin-top:3px}
+.tree .st{font-size:.63rem;color:var(--ink-3)}
+.tree .bar{height:4px;background:var(--line);border-radius:99px;margin-top:6px;overflow:hidden}
+.tree .bar i{display:block;height:100%;background:var(--green-l)}
+.ev{margin-top:10px;background:var(--green-bg);border:1px solid var(--green-p);
+   border-radius:11px;padding:10px 11px;font-size:.79rem;line-height:1.6}
+.ev b{color:var(--green-d)}
+/* 문제 */
+.screen-intro{padding:98px 0 42px;background:#fff}
+.screen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;text-align:left}
+.screen-card{border:1px solid var(--line);border-radius:22px;padding:25px;background:#fff;box-shadow:0 14px 45px rgba(30,55,34,.07)}
+.screen-no{font-size:.71rem;font-weight:850;letter-spacing:.12em;color:var(--green)}
+.screen-card h3{font-size:1.14rem;margin:14px 0 7px}
+.screen-card p{font-size:.86rem;color:var(--ink-2);margin:0}
+.problem{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+.quote{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 12px 34px rgba(23,32,25,.04)}
+.quote .who{font-size:.76rem;color:var(--ink-3);margin-bottom:9px}
+.quote .q{font-family:var(--serif);font-size:1.12rem;line-height:1.6;color:var(--ink);margin:0 0 11px}
+.quote .why{font-size:.86rem;color:var(--ink-2);margin:0}
+.nums{display:flex;gap:9px;flex-wrap:wrap;margin-top:26px;justify-content:center}
+.num{background:var(--paper);border:1px solid var(--line);border-radius:14px;
+   padding:12px 18px;text-align:center;min-width:104px}
+.num b{display:block;font-size:1.35rem;font-variant-numeric:tabular-nums;color:var(--ink-3)}
+.num span{font-size:.73rem;color:var(--ink-3)}
+.strike{margin-top:18px;font-family:var(--serif);font-size:1.2rem;color:var(--clay)}
+/* 해법 */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.split.rev>div:first-child{order:2}
+.badge{display:inline-block;font-size:.73rem;font-weight:700;letter-spacing:.04em;
+   color:var(--clay);background:var(--clay-bg);border:1px solid #E5CDB8;
+   border-radius:99px;padding:4px 12px;margin-bottom:12px}
+.pts{list-style:none;padding:0;margin:20px 0 0}
+.pts li{position:relative;padding-left:26px;margin-bottom:11px;font-size:.95rem;color:var(--ink-2)}
+.pts li::before{content:"";position:absolute;left:4px;top:.62em;width:8px;height:8px;
+   border-radius:99px;background:var(--green-l)}
+.pts li b{color:var(--ink)}
+/* 두 갈래 */
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.br{border-radius:13px;padding:15px}
+.br.met{background:var(--green-bg);border:1px solid var(--green-p)}
+.br.exc{background:var(--clay-bg);border:1px solid #E5CDB8}
+.br h4{margin:0 0 6px;font-size:.82rem}
+.br.met h4{color:var(--green-d)} .br.exc h4{color:var(--clay)}
+.br p{font-size:.83rem;margin:0;color:var(--ink-2);line-height:1.6}
+.br .tag{display:block;margin-top:9px;font-size:.78rem;font-weight:700}
+.br.met .tag{color:var(--green-d)} .br.exc .tag{color:var(--clay)}
+/* 4영역 */
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.f{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px 18px;text-align:left;transition:transform .2s,box-shadow .2s}
+.f:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(23,32,25,.08)}
+.f .ic{font-size:1.9rem}
+.f h4{font-family:var(--serif);margin:9px 0 4px;font-size:1.02rem}
+.f p{font-size:.83rem;color:var(--ink-2);margin:0}
+.f.soon{opacity:.72}
+.f .soon-t{display:inline-block;margin-top:8px;font-size:.68rem;color:var(--clay);
+   background:var(--clay-bg);border:1px solid #E5CDB8;border-radius:99px;padding:2px 9px}
+.flow{margin-top:22px;text-align:center;font-family:var(--serif);font-size:1.02rem;color:var(--ink-2)}
+/* 장벽 */
+.barriers{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bl{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
+.b{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px}
+.b .q{font-size:.88rem;color:var(--ink-3);margin:0 0 8px}
+.b h4{font-family:var(--serif);font-size:1.05rem;margin:0 0 6px}
+.b p{font-size:.87rem;color:var(--ink-2);margin:0}
+/* 안전 */
+.safe{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.s{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px}
+.s .ic{font-size:1.35rem}
+.s h4{font-size:.95rem;margin:8px 0 5px;font-family:var(--serif)}
+.s p{font-size:.83rem;color:var(--ink-2);margin:0}
+/* CTA */
+.final{background:#fff;text-align:center;padding-top:30px}
+.final .wrap{background:linear-gradient(145deg,#EAF5E7,#DDEED9);border:1px solid var(--green-p);border-radius:32px;padding:88px 24px}
+.final h2{color:var(--green-d)}
+.final p{margin-left:auto;margin-right:auto;color:var(--ink-2)}
+.final .cta{margin-top:10px;font-size:1rem;padding:15px 34px}
+.fine{margin-top:16px;font-size:.79rem;color:var(--ink-3)}
+footer{background:#fff;color:var(--ink-3);padding:48px 0;font-size:.83rem;border-top:1px solid var(--line);margin-top:96px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+footer .lg{font-family:var(--serif);color:var(--ink);font-weight:850}
+footer .sp{flex:1}
+footer a{color:var(--ink-2)}
+@media (max-width:880px){
+  section{padding:78px 0}
+  .hero .wrap,.split,.quotes,.branch,.bl{grid-template-columns:1fr;gap:32px}
+  .split.rev>div:first-child{order:0}
+  .four{grid-template-columns:1fr 1fr}
+  .safe{grid-template-columns:1fr}
+  .hero{padding:72px 0 0}
+  .hero-stage{min-height:440px;padding-left:20px;padding-right:20px}
+  .hero-stage .phone.side{display:none}
+  .screen-grid{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  header a.mini{display:none}
+  .wrap{padding-left:18px;padding-right:18px}
+  .hero h1{font-size:clamp(2.55rem,14vw,4rem)}
+  .hero-stage{margin-top:56px;min-height:410px;border-radius:24px 24px 0 0;padding-top:36px}
+  .hero-stage .phone{width:290px}
+  .four{grid-template-columns:1fr}
+  .final .wrap{border-radius:24px;padding:64px 18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="logo">핀<span>프렌즈</span></span>
+    <span class="sp"></span>
+    <a class="mini" href="#how">어떻게 되나요</a>
+    <a class="mini" href="service-example.html">화면 보기</a>
+    <a class="cta sm" href="#start">무료로 시작하기</a>
+  </div>
+</header>
+
+<!-- ① 히어로 -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">아이 금융교육</p>
+      <h1>배운 돈 공부가<br><em>생활이 되는 순간</em></h1>
+      <p class="sub">문제를 몇 개 풀었는지 말고, 아이의 돈 쓰는 행동이 어떻게 달라졌는지를 보여드립니다.</p>
+      <div class="row">
+        <a class="cta" href="#start">무료로 시작하기</a>
+        <span class="free">부모도 아이도 무료</span>
+      </div>
+    </div>
+    <div class="hero-stage" aria-label="핀프렌즈의 세 가지 핵심 화면 예시">
+      <div class="phone side" aria-hidden="true">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">아이 화면</div>
+          <div class="ph-t">계획 ↔ 실제</div>
+          <div class="ev">적어둔 것 <b>문구 5,000원</b></div>
+          <div class="ev">실제로 쓴 것 <b>문구 3,000원</b></div>
+          <div class="ev">계획한 만큼 안에서 썼어요. <b>⭐ 1개</b></div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">부모 화면 · 예시값</div>
+          <div class="ph-t">성장 나무</div>
+          <div class="trees">
+            <div class="tree"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">나무</div><div class="bar"><i style="width:100%"></i></div></div>
+            <div class="tree hl"><div class="ic">🌿</div><div class="nm">잘 쓰기</div><div class="st">새싹</div><div class="bar"><i style="width:62%"></i></div></div>
+            <div class="tree"><div class="ic">🌱</div><div class="nm">모으기</div><div class="st">씨앗</div><div class="bar"><i style="width:28%"></i></div></div>
+            <div class="tree"><div class="ic">🌱</div><div class="nm">불리기</div><div class="st">씨앗</div><div class="bar"><i style="width:0%"></i></div></div>
+          </div>
+          <div class="ev">이번 달 달라진 것<br><b>사려다 멈춘 일이 2회 → 5회</b>로 늘었어요.</div>
+        </div>
+      </div>
+      <div class="phone side" aria-hidden="true">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">부모 화면 · 월말 기록 · 예시값</div>
+          <div class="ph-t">3월의 숲</div>
+          <div class="ev"><b>이번 달 획득 별 ⭐ 12개</b></div>
+          <div class="trees">
+            <div class="tree hl"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">실천 4회</div></div>
+            <div class="tree"><div class="ic">🌿</div><div class="nm">잘 쓰기</div><div class="st">실천 2회</div></div>
+          </div>
+          <div class="ev">다음 달에도 변화를 이어서 볼 수 있어요.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="screen-intro" aria-labelledby="screen-title">
+  <div class="wrap center">
+    <p class="eyebrow">세 가지 핵심 화면</p>
+    <h2 id="screen-title">배움보다 행동을<br>먼저 보여줍니다</h2>
+    <p class="lead">아이의 실천과 부모가 읽는 변화를 세 화면에 나눠 담았습니다.</p>
+    <div class="screen-grid">
+      <article class="screen-card"><span class="screen-no">01 · 성장 나무</span><h3>실천해야 자라는 나무</h3><p>학습·퀴즈·실천이 모두 채워졌을 때만 다음 단계로 갑니다.</p></article>
+      <article class="screen-card"><span class="screen-no">02 · 계획 ↔ 실제</span><h3>쓰기 전과 쓴 뒤를 대조</h3><p>계획한 소비와 실제 소비를 같은 자리에서 확인합니다.</p></article>
+      <article class="screen-card"><span class="screen-no">03 · 월간 숲</span><h3>한 달의 변화를 한눈에</h3><p>누적 숫자 대신 지난달과 달라진 행동을 보여줍니다.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ② 문제 -->
+<section class="problem">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">부모가 겪는 것</p>
+      <h2>숫자는 쌓이는데,<br>확신은 안 쌓입니다</h2>
+      <p class="lead">용돈 앱을 쓰면 이런 숫자가 남습니다.</p>
+      <div class="nums">
+        <div class="num"><b>116</b><span>학습 일수</span></div>
+        <div class="num"><b>75</b><span>푼 문제</span></div>
+        <div class="num"><b>6,650</b><span>받은 보상액</span></div>
+      </div>
+      <p class="strike">그래서 우리 아이가 <b>달라졌나요?</b></p>
+    </div>
+
+    <div class="quotes">
+      <div class="quote">
+        <div class="who">중학교 교사 · 초2 아이 · 용돈 앱 8개월차</div>
+        <p class="q">“보고도 모르겠어요.<br>숫자가 늘어난 건 알겠는데<br>그게 뭘 뜻하는지를 모르겠어요.”</p>
+        <p class="why">확인은 됩니다. <b>그게 성장인지 알 수 없는 것</b>이 문제입니다.</p>
+      </div>
+      <div class="quote">
+        <div class="who">카페 자영업 · 초3 아이 · 현금 봉투 3년차</div>
+        <p class="q">“어디에 얼마 썼는지,<br>그거 하나만 알면 좋겠어요.<br>지금은 볼 게 아예 없어요.”</p>
+        <p class="why">현금으로 주면 <b>기록이 0건</b>입니다. 무엇을 가르칠지도 알 수 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 해법 1 -->
+<section id="how">
+  <div class="wrap split">
+    <div>
+      <span class="badge">다른 점 하나</span>
+      <h2>퀴즈만 100개 풀어도<br>나무는 자라지 않습니다</h2>
+      <p class="lead">나무가 다음 단계로 가려면 <b>학습 · 퀴즈 · 그리고 행동 실천</b>이 모두 필요합니다.
+      셋 중 하나라도 비면 멈춥니다.</p>
+      <ul class="pts">
+        <li><b>실천이 0이면 승급하지 않습니다.</b> 학습을 아무리 채워도 마찬가지입니다</li>
+        <li>그래서 <b>나무가 자랐다 = 배운 걸 실제로 했다</b> 가 성립합니다</li>
+        <li>멈추면 <b>왜 멈췄는지</b>를 조건 단위로 알려드립니다 — 아이 탓으로 읽히지 않게</li>
+      </ul>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">부모 화면 · 예시값</div>
+          <div class="ph-t">왜 멈췄나요</div>
+          <div class="trees">
+            <div class="tree hl" style="grid-column:1/-1;background:var(--clay-bg);border-color:#E5CDB8">
+              <div class="ic">🌿</div><div class="nm">잘 쓰기</div>
+              <div class="st">14일째 그대로</div>
+            </div>
+          </div>
+          <div class="ev" style="background:var(--clay-bg);border-color:#E5CDB8">
+            <b style="color:var(--clay)">실천 1회가 남았어요</b><br>
+            학습·퀴즈는 이미 충족했어요.
+          </div>
+          <div class="ev">이건 아이 문제가 아니에요.<br>조건 하나가 남았을 뿐입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 해법 2 -->
+<section style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap split rev">
+    <div>
+      <span class="badge">다른 점 둘</span>
+      <h2>쓰기 전에 적고,<br>쓴 뒤에 맞춰봅니다</h2>
+      <p class="lead">아이에게 <b>영수증을 미리 쓰게 하는 것</b>입니다.
+      어디서 · 무슨 가게에서 · 얼마까지 살지 적어두면, 결제 뒤에 그 카드와 실제를 겹쳐 보여줍니다.</p>
+      <div class="branch">
+        <div class="br met">
+          <h4>적은 대로 썼을 때</h4>
+          <p>“지우개랑 스티커, 계획한 만큼만 샀네요.”</p>
+          <span class="tag">⭐ 1개</span>
+        </div>
+        <div class="br exc">
+          <h4>계획을 넘겼을 때</h4>
+          <p>“젤리와 음료는 적어두지 않았던 가게예요.”</p>
+          <span class="tag">⭐ 없음 · 가진 별은 그대로</span>
+        </div>
+      </div>
+      <ul class="pts">
+        <li><b>별은 「확인」이 아니라 「지킴」에 붙습니다.</b> 참은 날과 안 참은 날이 구별됩니다</li>
+        <li>넘겨도 <b>가진 별을 빼앗지 않습니다.</b> 주지 않을 뿐입니다</li>
+        <li>넘긴 날에도 <b>돌아보는 화면은 똑같이</b> 보여드립니다</li>
+      </ul>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">아이 화면</div>
+          <div class="ph-t">계획 ↔ 실제</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:11px">
+              <div style="font-size:.68rem;color:var(--ink-3);margin-bottom:6px">적어둔 것</div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem">🖊 문구<span>5,000원</span></div>
+            </div>
+            <div style="background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:11px">
+              <div style="font-size:.68rem;color:var(--ink-3);margin-bottom:6px">실제로 쓴 것</div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem">🖊 문구<span>3,000원</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--clay);font-weight:700">🍬 간식<span>3,000원</span></div>
+            </div>
+          </div>
+          <div class="ev" style="background:var(--clay-bg);border-color:#E5CDB8">
+            계획보다 <b style="color:var(--clay)">3,000원</b> 더 썼어요.<br>
+            젤리와 음료는 적어두지 않았던 가게예요.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 4영역 -->
+<section>
+  <div class="wrap center">
+    <p class="eyebrow">배우는 것</p>
+    <h2>돈의 네 가지 일을<br>나눠서 배웁니다</h2>
+    <p class="lead">배우는 것과 자라는 나무가 같은 네 칸으로 묶여 있습니다.</p>
+    <div class="four">
+      <div class="f"><div class="ic">💰</div><h4>벌기</h4><p>일하면 돈이 생겨요</p></div>
+      <div class="f"><div class="ic">🛒</div><h4>잘 쓰기</h4><p>진짜 필요한 걸까?</p></div>
+      <div class="f"><div class="ic">🐷</div><h4>모으기</h4><p>안 쓰고 두면 쌓여요</p></div>
+      <div class="f soon"><div class="ic">🌱</div><h4>불리기</h4><p>모아두면 저절로 늘어나요</p><span class="soon-t">곧 열려요</span></div>
+    </div>
+    <p class="flow">💰 돈이 생기고 → 🛒 잘 쓰면 → 🐷 모이고 → 🌱 저절로 늘어나요</p>
+  </div>
+</section>
+
+<!-- ⑥ 장벽 -->
+<section class="barriers">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">시작하기 전에</p>
+      <h2>망설이는 이유,<br>먼저 말씀드릴게요</h2>
+    </div>
+    <div class="bl">
+      <div class="b">
+        <p class="q">“돈 드나요?”</p>
+        <h4>부모도 아이도 무료입니다</h4>
+        <p>월 구독료가 없습니다. 카드 결제 수수료와 금융사 제휴로 운영합니다.</p>
+      </div>
+      <div class="b">
+        <p class="q">“한 번에 다 해야 하나요?”</p>
+        <h4>나눠서 하셔도 됩니다</h4>
+        <p>중간에 멈춰도 다음에 그 자리에서 이어집니다. 처음부터 다시 입력하지 않습니다.</p>
+      </div>
+      <div class="b">
+        <p class="q">“카드 올 때까지 못 쓰나요?”</p>
+        <h4>기다리는 동안에도 시작합니다</h4>
+        <p>카드가 도착하기 전에도 아이는 학습하고 별을 모을 수 있습니다.</p>
+      </div>
+      <div class="b">
+        <p class="q">“쓰던 앱 기록은요?”</p>
+        <h4>옮겨드리지는 못합니다</h4>
+        <p>다른 앱의 기록은 가져올 수 없습니다. <b>지금부터 쌓이는 기록</b>으로 보여드립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 안전 -->
+<section>
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">아이 정보</p>
+      <h2>덜 모으는 쪽을 택했습니다</h2>
+      <p class="lead">아이 서비스라서, 편해지는 기능이라도 정보를 더 받아야 하면 만들지 않았습니다.</p>
+    </div>
+    <div class="safe">
+      <div class="s"><div class="ic">📍</div><h4>위치정보를 받지 않습니다</h4>
+        <p>아이가 어디 있는지 수집하지 않습니다. 옵션으로 끄는 게 아니라 <b>기능 자체가 없습니다</b>.</p></div>
+      <div class="s"><div class="ic">🔐</div><h4>보호자 동의가 먼저입니다</h4>
+        <p>법정대리인 동의가 끝나기 전에는 아이 화면이 열리지 않습니다.</p></div>
+      <div class="s"><div class="ic">⭐</div><h4>별은 현금이 아닙니다</h4>
+        <p>별로는 앱 안의 꾸미기 아이템만 살 수 있습니다. 현금으로 바꾸거나 주고받을 수 없습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ CTA -->
+<section class="final" id="start">
+  <div class="wrap">
+    <h2>이번 달에 뭐가 달라졌는지,<br>한 문장으로 보세요</h2>
+    <p class="lead">가입하고 아이가 첫 실천을 하면 나무가 움직이기 시작합니다.</p>
+    <a class="cta" href="#start">무료로 시작하기</a>
+    <p class="fine">부모·아이 모두 무료 · 월 구독료 없음 · 위치정보 미수집</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="lg">핀프렌즈</span>
+    <span class="sp"></span>
+    <a href="service-example.html">서비스 화면 예시</a>
+    <span>·</span>
+    <span>본 페이지는 기획 산출물 예시입니다</span>
+  </div>
+</footer>
+
+</body>
+</html>

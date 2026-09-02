@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핀프렌즈 서비스 예시</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#F3EFE7; --paper:#FAF7F1; --ink:#2A2724; --ink-2:#6B655D; --ink-3:#9C948A;
+  --line:#E5DFD5; --line-2:#D6CEC1;
+  --green:#4F7A4A; --green-d:#3E6B3A; --green-l:#8FB07F; --green-p:#C6D0BE; --green-bg:#E8F0E4;
+  --clay:#B36B3A; --clay-bg:#F7EEE6; --gold:#E8B978; --sand:#F0E6D2;
+  --sans:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;
+  --serif:'AppleMyungjo','Nanum Myeongjo','Batang',serif;
+}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;word-break:keep-all}
+/* ── 상단 바 ── */
+.bar{position:sticky;top:0;z-index:50;background:rgba(250,247,241,.94);
+     backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 20px;
+     display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.bar h1{font-family:var(--serif);font-size:1.05rem;margin:0;font-weight:700;letter-spacing:-.01em}
+.bar .tag{font-size:.7rem;color:var(--ink-3);border:1px solid var(--line-2);
+     border-radius:99px;padding:2px 9px}
+.bar .sp{flex:1}
+.ctl{display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--ink-2)}
+select{font-family:var(--sans);font-size:.8rem;padding:6px 10px;border:1px solid var(--line-2);
+     border-radius:8px;background:var(--paper);color:var(--ink)}
+select:focus-visible{outline:2px solid var(--green);outline-offset:1px}
+.note{max-width:1200px;margin:22px auto 0;padding:0 20px;font-size:.8rem;color:var(--ink-3)}
+.note b{color:var(--clay)}
+/* ── 화면 배치 ── */
+.stage{max-width:1200px;margin:0 auto;padding:22px 20px 70px;
+     display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;align-items:start}
+.slot{display:flex;flex-direction:column;gap:9px}
+.slot>h2{font-family:var(--serif);font-size:.95rem;margin:0;font-weight:700}
+.slot>p{margin:0;font-size:.76rem;color:var(--ink-3);line-height:1.5}
+/* ── 폰 프레임 390px ── */
+.phone{width:390px;max-width:100%;background:var(--paper);border:1px solid var(--line-2);
+     border-radius:26px;overflow:hidden;box-shadow:0 1px 2px rgba(42,39,36,.05),0 14px 34px rgba(42,39,36,.09)}
+.ph-top{padding:9px 18px 0;display:flex;justify-content:space-between;
+     font-size:.66rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ph-body{padding:14px 18px 22px}
+.role{font-size:.66rem;color:var(--ink-3);letter-spacing:.06em}
+.scr-h{font-family:var(--serif);font-size:1.24rem;font-weight:700;margin:3px 0 2px;letter-spacing:-.01em}
+.scr-s{font-size:.74rem;color:var(--ink-3);margin-bottom:14px}
+/* ── 공통 ── */
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px}
+.empty{background:var(--sand);border:1px dashed var(--line-2);border-radius:13px;
+     padding:22px 16px;text-align:center}
+.empty .em{font-size:1.6rem}
+.empty p{margin:7px 0 0;font-size:.82rem;color:var(--ink-2);line-height:1.55}
+.empty small{display:block;margin-top:7px;font-size:.71rem;color:var(--ink-3)}
+.pill{display:inline-block;font-size:.66rem;padding:2px 8px;border-radius:99px;
+     background:var(--green-bg);color:var(--green-d);border:1px solid var(--green-p)}
+.pill.warn{background:var(--clay-bg);color:var(--clay);border-color:#E5CDB8}
+/* ── 나무 ── */
+.trees{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.tree{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 11px;text-align:center}
+.tree.stall{border-color:#E5CDB8;background:var(--clay-bg)}
+.tree .ic{font-size:1.75rem;line-height:1.1}
+.tree .nm{font-size:.79rem;font-weight:700;margin-top:5px}
+.tree .st{font-size:.68rem;color:var(--ink-3);margin-top:1px}
+.tree .bar2{height:5px;background:var(--line);border-radius:99px;margin-top:8px;overflow:hidden}
+.tree .bar2 i{display:block;height:100%;background:var(--green-l);border-radius:99px}
+.tree .cond{font-size:.65rem;color:var(--ink-2);margin-top:6px;line-height:1.45}
+.tree .cond b{color:var(--clay)}
+.evidence{margin-top:11px;background:var(--green-bg);border:1px solid var(--green-p);
+     border-radius:11px;padding:11px 12px}
+.evidence h4{margin:0 0 4px;font-size:.72rem;color:var(--green-d);letter-spacing:.03em}
+.evidence p{margin:0;font-size:.8rem;line-height:1.6;color:var(--ink)}
+.pending{margin-top:9px;background:var(--sand);border:1px solid var(--line-2);
+     border-radius:11px;padding:9px 12px;font-size:.75rem;color:var(--ink-2);
+     display:flex;justify-content:space-between;align-items:center}
+.pending b{color:var(--clay)}
+.stallbox{margin-top:9px;background:var(--clay-bg);border:1px solid #E5CDB8;
+     border-radius:11px;padding:11px 12px}
+.stallbox h4{margin:0 0 5px;font-size:.72rem;color:var(--clay)}
+.stallbox ol{margin:0;padding-left:16px;font-size:.75rem;color:var(--ink-2);line-height:1.7}
+.stallbox ol li:first-child{color:var(--ink);font-weight:700}
+/* ── 대조/회고 ── */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.cmp>div{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px}
+.cmp h4{margin:0 0 8px;font-size:.71rem;color:var(--ink-3);letter-spacing:.04em}
+.row{display:flex;justify-content:space-between;font-size:.79rem;padding:4px 0;line-height:1.5}
+.row.ov{color:var(--clay);font-weight:700}
+.sum{border-top:1px solid var(--line);margin-top:7px;padding-top:7px;font-weight:700;font-size:.83rem}
+.retro{margin-top:11px;border-radius:13px;padding:14px}
+.retro.met{background:var(--green-bg);border:1px solid var(--green-p)}
+.retro.exc{background:var(--clay-bg);border:1px solid #E5CDB8}
+.retro .msg{font-family:var(--serif);font-size:1rem;line-height:1.6;margin:0 0 10px}
+.retro .rw{font-size:.78rem;font-weight:700}
+.retro.met .rw{color:var(--green-d)}
+.retro.exc .rw{color:var(--clay)}
+.btn{display:block;width:100%;margin-top:11px;padding:11px;border:0;border-radius:11px;
+     background:var(--green);color:#fff;font-family:var(--sans);font-size:.87rem;font-weight:700;cursor:pointer}
+/* ── 숲 ── */
+.oneline{background:var(--sand);border:1px solid var(--line-2);border-radius:13px;
+     padding:14px;text-align:center;font-family:var(--serif);font-size:1rem;line-height:1.55}
+.stars{margin-top:9px;background:linear-gradient(180deg,#FDF6E8,#F7EAD2);
+     border:1px solid var(--gold);border-radius:13px;padding:13px;text-align:center}
+.stars b{display:block;font-size:1.7rem;color:#B8862F;font-variant-numeric:tabular-nums}
+.stars span{font-size:.73rem;color:var(--ink-2)}
+.delta{margin-top:9px}
+.delta h4{margin:0 0 7px;font-size:.72rem;color:var(--ink-3);letter-spacing:.04em}
+.d-row{display:flex;justify-content:space-between;align-items:center;font-size:.79rem;
+     padding:7px 11px;background:#fff;border:1px solid var(--line);border-radius:9px;margin-bottom:5px}
+.d-row .v{font-variant-numeric:tabular-nums;font-weight:700}
+.d-row .up{color:var(--green-d)}
+.foot{max-width:1200px;margin:0 auto;padding:0 20px 60px;font-size:.75rem;color:var(--ink-3);line-height:1.7}
+.foot code{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.94em}
+@media (max-width:800px){.stage{grid-template-columns:1fr;justify-items:center}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>핀프렌즈 서비스 예시</h1>
+  <span class="tag">보호자 화면</span>
+  <span class="sp"></span>
+  <label class="ctl">상태
+    <select id="sc">
+      <option value="normal">정상 — 실천이 쌓이는 중</option>
+      <option value="empty">실천 0건 — 빈 화면</option>
+      <option value="stall">정체 14일 — 원인 표시</option>
+      <option value="first">첫 달 — 전월 데이터 없음</option>
+      <option value="over">계획 넘김 — 별 미지급</option>
+      <option value="pending">승인 대기 누적</option>
+    </select>
+  </label>
+</div>
+
+<p class="note">
+  실제 화면 예시입니다. 좌측 상단에서 <b>상태를 바꾸면</b> 같은 화면이 어떻게 달라지는지 볼 수 있습니다.
+  수치와 이름은 예시값이며, 나무 단계 수는 <b>미확정 사양</b>입니다.
+</p>
+
+<div class="stage">
+
+  <!-- 성장 나무 -->
+  <section class="slot">
+    <h2>🌳 성장 나무</h2>
+    <p>보호자가 여는 첫 화면. <b>실천 없이는 자라지 않습니다</b> — 학습·퀴즈를 아무리 채워도 실천이 0이면 단계가 오르지 않습니다.</p>
+    <div class="phone">
+      <div class="ph-top"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="ph-body">
+        <div class="role">보호자 화면</div>
+        <div class="scr-h">성장 나무</div>
+        <div class="scr-s" id="t-sub">서연 · 3월 · 실시간</div>
+        <div id="t-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 계획↔실제 대조 -->
+  <section class="slot">
+    <h2>💳 계획 ↔ 실제 대조</h2>
+    <p>쓰기 전에 적고, 쓴 뒤에 맞춰봅니다. <b>별은 「확인」이 아니라 「지킴」에 붙습니다</b> — 넘겨도 빼앗지 않고, 주지 않을 뿐입니다.</p>
+    <div class="phone">
+      <div class="ph-top"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="ph-body">
+        <div class="role">아이 화면</div>
+        <div class="scr-h">계획 ↔ 실제</div>
+        <div class="scr-s" id="r-sub">어제 · 다이소 성수점</div>
+        <div id="r-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 월간 숲 -->
+  <section class="slot">
+    <h2>🌲 월간 숲</h2>
+    <p>한 달을 한 화면으로. <b>전월 대비 변화가 성장의 증거</b>입니다 — 누적 숫자는 증거가 되지 못합니다.</p>
+    <div class="phone">
+      <div class="ph-top"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="ph-body">
+        <div class="role">보호자 화면 · 월말 기록</div>
+        <div class="scr-h" id="f-title">2026년 3월 숲</div>
+        <div class="scr-s">서연</div>
+        <div id="f-body"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<p class="foot">
+  이 페이지는 <b>시각 확인용 예시</b>입니다. 실제 데이터가 아니라 고정값으로 그렸습니다.<br>
+  상태 전환은 인터뷰에서 한 세션에 여러 상황을 보여주기 위한 것이며, 실제 제품에는 없습니다.<br>
+  화면 정의 근거 — <code>[SRS]FinFriends-SRS-v1_0.md</code> §4.1 · <code>[Diagrams]FinFriends-Diagrams.md</code> §5
+</p>
+
+<script>
+const TREE = {
+  earn:{ic:"🌳",nm:"벌기",st:"나무",pct:100,cond:"학습 3 · 퀴즈 5 · 실천 4"},
+  spend:{ic:"🌿",nm:"잘 쓰기",st:"새싹",pct:62,cond:"학습 2 · 퀴즈 4 · 실천 2"},
+  save:{ic:"🌱",nm:"모으기",st:"씨앗",pct:28,cond:"학습 1 · 퀴즈 2 · 실천 1"},
+  grow:{ic:"🌱",nm:"불리기",st:"씨앗",pct:0,cond:"곧 열려요"}
+};
+function treeCard(k,o,stall){
+  return `<div class="tree${stall?' stall':''}">
+    <div class="ic">${o.ic}</div><div class="nm">${o.nm}</div>
+    <div class="st">${o.st}</div>
+    <div class="bar2"><i style="width:${o.pct}%"></i></div>
+    <div class="cond">${o.cond}</div></div>`;
+}
+function trees(mod){
+  const t = JSON.parse(JSON.stringify(TREE));
+  if (mod === "empty") { for (const k in t){ t[k].ic="🌱"; t[k].st="씨앗"; t[k].pct=0; t[k].cond="아직 기록이 없어요"; } }
+  if (mod === "stall") { t.spend.cond="<b>실천 1회 남음</b> · 학습·퀴즈 충족"; }
+  // 첫 달은 정상 상태를 재사용하지 않는다 — 재사용하면 가입 첫 달인데 벌기가 100%가 되고,
+  // 같은 화면 오른쪽 숲의 「첫 달 · 별 12개」와 앞뒤가 맞지 않는다. 명세 §6.2.1
+  if (mod === "first") {
+    t.earn.ic="🌿"; t.earn.st="새싹"; t.earn.pct=55; t.earn.cond="학습 2 · 퀴즈 3 · 실천 2";
+    t.spend.ic="🌱"; t.spend.st="씨앗"; t.spend.pct=30; t.spend.cond="학습 1 · 퀴즈 2 · 실천 1";
+    t.save.ic="🌱";  t.save.st="씨앗";  t.save.pct=15; t.save.cond="학습 1 · 퀴즈 1 · 실천 0";
+  }
+  return `<div class="trees">${Object.entries(t).map(([k,o])=>treeCard(k,o,mod==="stall"&&k==="spend")).join("")}</div>`;
+}
+const V = {
+  normal:{
+    tree: trees()+`<div class="evidence"><h4>이번 달 달라진 것</h4>
+      <p>사려다 멈춘 일이 <b>2회 → 5회</b>로 늘었어요.<br>「잘 쓰기」가 새싹까지 자랐습니다.</p></div>`,
+    tsub:"서연 · 3월 · 실시간",
+    retro:`<div class="cmp">
+      <div><h4>적어둔 것</h4><div class="row"><span>🖊 문구</span><span>5,000원</span></div>
+        <div class="sum row"><span>합계</span><span>5,000원</span></div></div>
+      <div><h4>실제로 쓴 것</h4><div class="row"><span>🖊 문구</span><span>3,000원</span></div>
+        <div class="sum row"><span>합계</span><span>3,000원</span></div></div></div>
+      <div class="retro met"><p class="msg">적은 대로 잘 썼어요.<br>지우개랑 스티커, 계획한 만큼만 샀네요.</p>
+      <div class="rw">⭐ 1개를 받았어요</div></div>
+      <button class="btn">확인했어요</button>`,
+    rsub:"어제 · 다이소 성수점",
+    forest:`<div class="oneline">이번 달 한 줄<br><b>쓰기와 모으기가 함께 자랐습니다</b></div>
+      <div class="stars"><b>46</b><span>이번 달 획득 별</span></div>
+      <div class="delta"><h4>지난달과 비교</h4>
+      <div class="d-row"><span>사려다 멈춤</span><span class="v up">2회 → 5회</span></div>
+      <div class="d-row"><span>가격 비교</span><span class="v up">0회 → 4회</span></div>
+      <div class="d-row"><span>저축률</span><span class="v up">12% → 32%</span></div>
+      <div class="d-row"><span>벌기</span><span class="v up">새싹 → 나무</span></div>
+      <div class="d-row"><span>잘 쓰기</span><span class="v up">씨앗 → 새싹</span></div></div>`,
+    ftitle:"2026년 3월 숲"
+  },
+  empty:{
+    tree: trees("empty")+`<div class="empty"><div class="em">🌱</div>
+      <p><b>아직 기록이 없어요</b><br>첫 실천 하나면 나무가 움직입니다</p>
+      <small>미션을 하나 만들어 보세요</small></div>`,
+    tsub:"서연 · 3월 · 가입 3일차",
+    retro:`<div class="empty"><div class="em">📝</div>
+      <p><b>아직 적어둔 계획이 없어요</b><br>가기 전에 적으면 쓴 뒤에 맞춰볼 수 있어요</p>
+      <small>다음엔 가기 전에 적어볼까요?</small></div>`,
+    rsub:"기록 없음",
+    forest:`<div class="empty"><div class="em">🌲</div>
+      <p><b>이번 달 기록을 모으는 중이에요</b><br>월말에 한 화면으로 정리해 드릴게요</p></div>`,
+    ftitle:"2026년 3월 숲"
+  },
+  stall:{
+    tree: trees("stall")+`<div class="stallbox"><h4>🛑 「잘 쓰기」가 14일째 그대로예요</h4>
+      <ol><li>실천 1회가 남았어요</li><li>학습·퀴즈는 이미 충족했어요</li></ol></div>
+      <div class="evidence"><h4>이건 아이 문제가 아니에요</h4>
+      <p>조건 하나가 남았을 뿐입니다.<br>계획 카드를 한 번 적으면 채워집니다.</p></div>`,
+    tsub:"서연 · 3월 · 실시간",
+    retro:`<div class="empty"><div class="em">📝</div>
+      <p><b>2주째 적은 계획이 없어요</b><br>계획을 적어야 대조할 것이 생깁니다</p></div>`,
+    rsub:"최근 기록 없음",
+    forest:`<div class="oneline">이번 달 한 줄<br><b>「잘 쓰기」가 멈춰 있습니다</b></div>
+      <div class="stars"><b>18</b><span>이번 달 획득 별</span></div>
+      <div class="delta"><h4>지난달과 비교</h4>
+      <div class="d-row"><span>사려다 멈춤</span><span class="v">2회 → 2회</span></div>
+      <div class="d-row"><span>가격 비교</span><span class="v">0회 → 0회</span></div>
+      <div class="d-row"><span>저축률</span><span class="v up">12% → 15%</span></div></div>`,
+    ftitle:"2026년 3월 숲"
+  },
+  first:{
+    tree: trees("first")+`<div class="evidence"><h4>이번 달 달라진 것</h4>
+      <p>첫 달이라 비교할 지난달이 없어요.<br>이번 달 기록이 다음 달의 기준이 됩니다.</p></div>`,
+    tsub:"서연 · 3월 · 가입 첫 달",
+    retro:`<div class="cmp">
+      <div><h4>적어둔 것</h4><div class="row"><span>🍬 간식·음료</span><span>3,000원</span></div>
+        <div class="sum row"><span>합계</span><span>3,000원</span></div></div>
+      <div><h4>실제로 쓴 것</h4><div class="row"><span>🍬 간식·음료</span><span>2,500원</span></div>
+        <div class="sum row"><span>합계</span><span>2,500원</span></div></div></div>
+      <div class="retro met"><p class="msg">적은 대로 잘 썼어요.<br>처음인데 계획을 지켰네요.</p>
+      <div class="rw">⭐ 1개를 받았어요</div></div><button class="btn">확인했어요</button>`,
+    rsub:"어제 · 편의점",
+    forest:`<div class="oneline">이번 달 한 줄<br><b>첫 달 기록이 쌓이고 있습니다</b></div>
+      <div class="stars"><b>12</b><span>이번 달 획득 별</span></div>
+      <div class="delta"><h4>지난달과 비교</h4>
+      <div class="empty" style="padding:18px"><p><b>다음 달부터 비교할 수 있어요</b>
+      <small>이번 달이 첫 기준이 됩니다</small></p></div></div>`,
+    ftitle:"2026년 3월 숲 · 첫 달"
+  },
+  over:{
+    tree: trees()+`<div class="evidence"><h4>이번 달 달라진 것</h4>
+      <p>계획을 넘긴 날이 있었지만<br>돌아본 기록은 그대로 남습니다.</p></div>`,
+    tsub:"서연 · 3월 · 실시간",
+    retro:`<div class="cmp">
+      <div><h4>적어둔 것</h4><div class="row"><span>🖊 문구</span><span>5,000원</span></div>
+        <div class="sum row"><span>합계</span><span>5,000원</span></div></div>
+      <div><h4>실제로 쓴 것</h4><div class="row"><span>🖊 문구</span><span>3,000원</span></div>
+        <div class="row ov"><span>🍬 간식·음료</span><span>3,000원</span></div>
+        <div class="sum row ov"><span>합계</span><span>8,000원</span></div></div></div>
+      <div class="retro exc"><p class="msg">계획보다 <b>3,000원</b> 더 썼어요.<br>젤리와 음료는 적어두지 않았던 가게예요.</p>
+      <div class="rw">⭐ 없음 · 가진 별은 그대로예요</div></div>
+      <button class="btn">확인했어요</button>`,
+    rsub:"어제 · 다이소 성수점",
+    forest:`<div class="oneline">이번 달 한 줄<br><b>쓰기는 아직 흔들립니다</b></div>
+      <div class="stars"><b>31</b><span>이번 달 획득 별</span></div>
+      <div class="delta"><h4>지난달과 비교</h4>
+      <div class="d-row"><span>사려다 멈춤</span><span class="v up">2회 → 3회</span></div>
+      <div class="d-row"><span>계획 지킨 날</span><span class="v">5일 → 4일</span></div>
+      <div class="d-row"><span>저축률</span><span class="v up">12% → 18%</span></div></div>`,
+    ftitle:"2026년 3월 숲"
+  },
+  pending:{
+    tree: trees()+`<div class="pending"><span>승인을 기다리는 미션</span><b>3건</b></div>
+      <div class="evidence"><h4>아직 반영되지 않았어요</h4>
+      <p>아이는 이미 했습니다.<br>승인하면 <b>한 날짜 기준으로 소급</b>해서 반영됩니다.</p></div>`,
+    tsub:"서연 · 3월 · 승인 대기 3건",
+    retro:`<div class="cmp">
+      <div><h4>적어둔 것</h4><div class="row"><span>🧸 장난감</span><span>10,000원</span></div>
+        <div class="sum row"><span>합계</span><span>10,000원</span></div></div>
+      <div><h4>실제로 쓴 것</h4><div class="row"><span>🧸 장난감</span><span>9,000원</span></div>
+        <div class="sum row"><span>합계</span><span>9,000원</span></div></div></div>
+      <div class="retro met"><p class="msg">적은 대로 잘 썼어요.<br>고민하다 조금 덜 썼네요.</p>
+      <div class="rw">⭐ 1개를 받았어요</div></div><button class="btn">확인했어요</button>`,
+    rsub:"3일 전 · 문구점",
+    forest:`<div class="oneline">이번 달 한 줄<br><b>승인이 밀려 반영이 늦습니다</b></div>
+      <div class="stars"><b>28</b><span>이번 달 획득 별</span></div>
+      <div class="delta"><h4>지난달과 비교</h4>
+      <div class="d-row"><span>사려다 멈춤</span><span class="v up">2회 → 4회</span></div>
+      <div class="d-row"><span>미션 완료</span><span class="v up">5회 → 8회</span></div>
+      <div class="d-row"><span>승인 대기</span><span class="v">0건 → 3건</span></div></div>`,
+    ftitle:"2026년 3월 숲"
+  }
+};
+const $ = (id) => document.getElementById(id);
+function render(k){
+  const v = V[k];
+  $("t-body").innerHTML = v.tree;  $("t-sub").textContent = v.tsub;
+  $("r-body").innerHTML = v.retro; $("r-sub").textContent = v.rsub;
+  $("f-body").innerHTML = v.forest; $("f-title").textContent = v.ftitle;
+}
+$("sc").addEventListener("change", (e) => render(e.target.value));
+// 첫 렌더도 드롭다운을 읽는다 — 하드코딩하면 선택값과 화면이 어긋난다
+render($("sc").value);
+</script>
+</body>
+</html>
