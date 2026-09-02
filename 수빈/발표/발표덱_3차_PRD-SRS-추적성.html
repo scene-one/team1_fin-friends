@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핀프렌즈 3차 · PRD→SRS 확장과 요구사항 추적성</title>
+<style>
+:root{
+  --bg:#FAFAF7; --ink:#171A17; --sub:#5E655C; --line:#E2E3DD;
+  --green:#1F6B4A; --green-l:#EAF3EE; --amber:#B8801F; --amber-l:#FBF3E2;
+  --red:#B0402C; --red-l:#FBECE8; --grey:#9AA096;
+  --f:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
+  --m:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#22251F;font-family:var(--f);overflow:hidden}
+body.ov{overflow:auto;background:#1A1D18}
+
+/* ---------- stage ---------- */
+#wrap{position:fixed;inset:0;display:grid;place-items:center}
+#stage{width:1280px;height:720px;background:var(--bg);color:var(--ink);
+  position:relative;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.slide{position:absolute;inset:0;padding:84px 76px 64px;display:none;flex-direction:column}
+.slide.on{display:flex}
+
+/* ---------- 상단 목차 레일 ---------- */
+#rail{position:absolute;top:0;left:0;right:0;height:54px;z-index:12;background:#fff;
+  border-bottom:1px solid var(--line);display:flex;align-items:stretch;padding:0 76px}
+#rail.hide{display:none}
+#rail .ri{display:flex;align-items:center;gap:9px;padding:0 15px;cursor:pointer;
+  position:relative;border-bottom:3px solid transparent;transition:.15s}
+#rail .ri:first-child{padding-left:0}
+#rail .ri .lb{font-size:13.5px;font-weight:700;color:#B7BDB3;letter-spacing:-.01em;white-space:nowrap}
+#rail .ri .dt{display:flex;gap:4px}
+#rail .ri .dt i{width:5px;height:5px;border-radius:50%;background:#E4E6E0;display:block}
+#rail .ri.done .lb{color:#98A093}
+#rail .ri.done .dt i{background:#BFC7BB}
+#rail .ri.cur{border-bottom-color:var(--green)}
+#rail .ri.cur .lb{color:var(--green);font-weight:800}
+#rail .ri.cur .dt i{background:#A9CDB9}
+#rail .ri.cur .dt i.now{background:var(--green);width:7px;height:7px;margin:-1px 0}
+#rail .ri:hover .lb{color:var(--green)}
+#rail .sp{flex:1}
+#rail .cnt{display:flex;align-items:center;font-size:12.5px;font-weight:700;color:#A8AFA4;
+  white-space:nowrap;padding-left:10px}
+#rail .cnt b{color:var(--green);font-size:15px;margin-right:1px}
+#rail .pl{position:absolute;left:0;bottom:-1px;height:2px;background:var(--green);
+  width:0;transition:width .22s ease;z-index:1}
+
+/* ---------- type ---------- */
+.kicker{font-size:15px;letter-spacing:.08em;color:var(--green);font-weight:700;margin-bottom:14px}
+.kicker span{color:var(--grey);font-weight:600}
+h1{font-size:36px;line-height:1.36;letter-spacing:-.02em;font-weight:800;max-width:1100px}
+h1 em{font-style:normal;color:var(--green)}
+h1 b{color:var(--red);font-weight:800}
+.lead{margin-top:14px;font-size:19px;line-height:1.5;color:var(--sub);max-width:1000px;font-weight:500}
+.lead strong{color:var(--ink);font-weight:700}
+.body{margin-top:auto;margin-bottom:auto;padding:22px 0}
+.src{position:absolute;left:76px;right:76px;bottom:24px;font-size:12px;color:var(--grey);
+  line-height:1.5;border-top:1px solid var(--line);padding-top:9px}
+.src b{color:var(--sub)}
+.id{font-family:var(--m);font-weight:700;letter-spacing:-.01em}
+
+/* ---------- primitives ---------- */
+.row{display:flex;gap:16px;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:12px}
+.grow{flex:1}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.card.g{background:var(--green-l);border-color:#CFE3D7}
+.card.a{background:var(--amber-l);border-color:#EEDFBD}
+.card.r{background:var(--red-l);border-color:#F0D6CE}
+.card h3{font-size:16px;font-weight:800;margin-bottom:9px;color:var(--green)}
+.card.r h3{color:var(--red)} .card.a h3{color:var(--amber)}
+.card p{font-size:15px;line-height:1.6;color:var(--sub)}
+.card p strong{color:var(--ink)}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:5px 11px;border-radius:999px;
+  background:var(--green-l);color:var(--green);border:1px solid #CFE3D7}
+.tag.r{background:var(--red-l);color:var(--red);border-color:#F0D6CE}
+.tag.a{background:var(--amber-l);color:var(--amber);border-color:#EEDFBD}
+.tag.o{background:#fff;color:var(--grey);border-color:var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.arrow{display:grid;place-items:center;font-size:24px;color:var(--grey);padding:0 2px}
+
+/* flow (v2 원본 유지) */
+.flow{display:flex;align-items:center;gap:7px;flex-wrap:nowrap}
+.flow .n{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 9px;
+  text-align:center;font-size:14.5px;font-weight:700;line-height:1.4}
+.flow .n small{display:block;font-weight:600;color:var(--grey);font-size:12px;margin-top:5px}
+.flow .n.k{background:var(--green);color:#fff;border-color:var(--green)}
+.flow .n.k small{color:#C8E4D5}
+.flow .s{color:var(--grey);font-size:18px;flex:none}
+
+/* split */
+.split{display:flex;gap:0;align-items:stretch;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.split .h2{flex:1;padding:20px 22px;background:#F2F3EF}
+.split .h2+.h2{background:var(--green-l);border-left:1px solid var(--line)}
+.split .h2 .t2{font-size:13px;font-weight:800;letter-spacing:.04em;color:var(--grey);margin-bottom:12px}
+.split .h2+.h2 .t2{color:var(--green)}
+.split .h2 p{font-size:16px;line-height:1.6;color:var(--sub)}
+.split .h2 p strong{color:var(--ink)}
+
+/* 분석 근거 패널 (v2 원본 유지) */
+.anz{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+.anz .ah{display:flex;align-items:center;gap:9px;padding:8px 16px;background:#F1F3EF;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.anz .ah .m{font-size:11px;font-weight:800;letter-spacing:.05em;color:var(--green);
+  border:1px solid #CFE3D7;background:#fff;border-radius:5px;padding:3px 8px;white-space:nowrap}
+.anz .ah .t{font-size:13px;font-weight:700;color:var(--sub)}
+.anz .ab{padding:10px 16px;display:flex;gap:18px;flex-wrap:wrap}
+.anz .kv{display:flex;flex-direction:column;gap:3px;min-width:0}
+.anz .kv .k{font-size:11.5px;color:var(--grey);font-weight:700}
+.anz .kv .v{font-size:14px;font-weight:700;line-height:1.45}
+.anz .kv .v b{color:var(--green)} .anz .kv .v i{font-style:normal;color:var(--red)}
+.anz .sep{width:1px;background:var(--line);align-self:stretch}
+
+/* ===== 3차 전용 ===== */
+
+/* 명세 블록 — 입력/처리/출력/예외 */
+.spec{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.spec .sh{display:flex;align-items:center;gap:10px;padding:11px 18px;background:var(--green);color:#fff}
+.spec .sh .no{font-family:var(--m);font-size:15px;font-weight:700;letter-spacing:-.01em}
+.spec .sh .nm{font-size:15px;font-weight:800}
+.spec .sh .tail{margin-left:auto;font-size:12px;color:#BFE6CF;font-weight:700}
+.spec .r3{display:flex;gap:14px;padding:10px 18px;border-bottom:1px solid #F0F1ED;align-items:flex-start}
+.spec .r3:last-child{border-bottom:0}
+.spec .r3 .k{width:52px;flex:none;font-size:12.5px;font-weight:800;color:var(--grey);padding-top:1px}
+.spec .r3 .v{font-size:14.5px;line-height:1.55;color:var(--sub)}
+.spec .r3 .v b{color:var(--ink);font-weight:700}
+.spec .r3.ex{background:var(--amber-l)}
+.spec .r3.ex .k{color:var(--amber)}
+.spec .r3.ex .v{color:#7A5A18}
+.spec .r3.ex .v b{color:#5E4512}
+
+/* AC 목록 */
+.acl{display:flex;flex-direction:column;gap:7px}
+.acl .ac{display:flex;gap:11px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;align-items:flex-start}
+.acl .ac .no{font-family:var(--m);font-size:12.5px;font-weight:700;color:var(--green);flex:none;padding-top:2px;width:78px}
+.acl .ac .tx{font-size:14.5px;line-height:1.5;color:var(--sub)}
+.acl .ac .tx b{color:var(--ink);font-weight:700}
+.acl .ac.fail{background:var(--red-l);border-color:#F0D6CE}
+.acl .ac.fail .no{color:var(--red)}
+.acl .ac.fail .tx{color:#8A3B2A}
+.acl .ac.fail .tx b{color:#6E2C1E}
+
+/* NFR 계층 */
+.nfrl{display:flex;flex-direction:column;gap:7px}
+.nfrl .lv{display:flex;align-items:center;gap:14px;border-radius:11px;padding:11px 17px;font-size:14.5px}
+.nfrl .lv .rk{font-size:11.5px;font-weight:800;letter-spacing:.05em;width:96px;flex:none}
+.nfrl .lv .rg{font-family:var(--m);font-size:12.5px;font-weight:700;width:112px;flex:none;opacity:.85}
+.nfrl .lv .tx{flex:1;line-height:1.45;font-weight:600}
+.nfrl .l0{background:var(--red);color:#fff} .nfrl .l0 .rk{color:#F6D3CA}
+.nfrl .l1{background:#C97F63;color:#fff} .nfrl .l1 .rk{color:#FBEAE3}
+.nfrl .l2{background:#E4D3B4;color:#4A3B1C} .nfrl .l2 .rk{color:#8A7440}
+.nfrl .l3{background:#EEEFE9;color:var(--sub)} .nfrl .l3 .rk{color:var(--grey)}
+.nfrl .l4{background:var(--green-l);color:#245C42;border:1px solid #CFE3D7} .nfrl .l4 .rk{color:var(--green)}
+
+/* 상태 스트립 */
+.stt{display:flex;gap:8px}
+.stt .s2{flex:1;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;text-align:center}
+.stt .s2 .n3{font-size:14.5px;font-weight:800}
+.stt .s2 .d3{font-size:12px;color:var(--grey);margin-top:3px;line-height:1.4}
+.stt .s2.on{background:var(--green-l);border-color:#CFE3D7} .stt .s2.on .n3{color:var(--green)}
+.stt .s2.ex{background:var(--amber-l);border-color:#EEDFBD} .stt .s2.ex .n3{color:var(--amber)}
+
+/* 추적 6층 */
+.tr6{display:flex;flex-direction:column;gap:5px}
+.tr6 .ly{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);
+  border-radius:11px;padding:10px 18px}
+.tr6 .ly .nm{width:132px;flex:none;font-size:14.5px;font-weight:800;letter-spacing:-.01em}
+.tr6 .ly .nm small{display:block;font-size:11px;font-weight:600;color:var(--grey);letter-spacing:0}
+.tr6 .ly .ds{flex:1;font-size:14px;line-height:1.5;color:var(--sub)}
+.tr6 .ly .ds b{color:var(--ink)}
+.tr6 .ly .ct{font-size:12.5px;font-weight:700;color:var(--green);white-space:nowrap;flex:none}
+.tr6 .ar{text-align:center;font-size:12px;color:var(--grey);line-height:1;font-weight:700;letter-spacing:.06em}
+
+/* 줄기 흐름 */
+.cf{display:flex;align-items:stretch;gap:0}
+.cf .st{flex:1;position:relative;padding-right:13px}
+.cf .st:last-child{padding-right:0}
+.cf .st::after{content:"›";position:absolute;right:1px;top:30px;font-size:16px;color:var(--grey)}
+.cf .st:last-child::after{content:none}
+.cf .lb4{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--grey);margin-bottom:5px}
+.cf .bx{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;height:calc(100% - 20px);
+  display:flex;flex-direction:column;gap:4px}
+.cf .bx .k4{font-family:var(--m);font-size:11.5px;font-weight:700;color:var(--green);line-height:1.3}
+.cf .bx .t4{font-size:13px;font-weight:700;line-height:1.45;letter-spacing:-.01em}
+.cf .bx .m4{font-size:11.5px;color:var(--sub);line-height:1.45}
+.cf .bx.on{background:var(--green-l);border-color:#CFE3D7}
+.cf .bx.ex{background:var(--amber-l);border-color:#EEDFBD} .cf .bx.ex .k4{color:var(--amber)}
+.cf .bx.no{background:#F2F3EF;border-style:dashed} .cf .bx.no .k4{color:var(--grey)}
+.cf .bx.rd{background:var(--red-l);border-color:#F0D6CE} .cf .bx.rd .k4{color:var(--red)}
+
+/* 3줄기 요약 */
+.br3{display:flex;flex-direction:column;gap:10px}
+.br3 .b3{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:13px 18px}
+.br3 .b3 .bd{font-size:12px;font-weight:800;border-radius:6px;padding:5px 11px;flex:none;width:92px;text-align:center}
+.br3 .b3.a .bd{background:var(--green-l);color:var(--green);border:1px solid #CFE3D7}
+.br3 .b3.b .bd{background:var(--amber-l);color:var(--amber);border:1px solid #EEDFBD}
+.br3 .b3.c .bd{background:#F2F3EF;color:var(--grey);border:1px solid var(--line)}
+.br3 .b3 .pt{flex:1;font-family:var(--m);font-size:12.5px;font-weight:700;color:var(--sub);line-height:1.6}
+.br3 .b3 .pt em{font-style:normal;color:var(--green)}
+.br3 .b3 .rs{width:230px;flex:none;font-size:13.5px;font-weight:700;line-height:1.45}
+.br3 .b3.c .rs{color:var(--grey)}
+
+.bridge{margin-top:12px;background:var(--green);color:#fff;border-radius:14px;padding:14px 22px;
+  font-size:19px;font-weight:800;letter-spacing:-.02em;text-align:center;line-height:1.4}
+.bridge.d{background:#2C3129}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:3px;background:var(--green);width:0;z-index:40;transition:width .2s}
+#hud{position:fixed;right:16px;bottom:14px;z-index:40;display:flex;gap:8px;align-items:center;
+  font:600 12.5px var(--f);color:#8E958A}
+#hud b{color:#DCE3D7;font-weight:800}
+#hud .k{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:6px;
+  padding:3px 8px;color:#C3CBBD}
+#tmr{position:fixed;left:16px;bottom:14px;z-index:40;font:700 13px var(--f);color:#8E958A}
+#tmr.run{color:#8FD3AC} #tmr.over{color:#E58C74}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;z-index:45;
+  background:rgba(16,18,15,.97);color:#E4E8E0;padding:20px 26px 24px;display:none;
+  border-top:2px solid var(--green);font-size:16px;line-height:1.7}
+#notes.on{display:block}
+#notes .nh{font:800 12.5px var(--f);letter-spacing:.1em;color:#8FD3AC;margin-bottom:10px}
+#notes em{color:#fff;font-style:normal}
+#notes .br{margin-top:12px;padding-top:10px;border-top:1px dashed #394134;color:#A9B3A3;font-size:15px}
+#help{position:fixed;inset:0;background:rgba(10,12,9,.9);z-index:60;display:none;place-items:center}
+#help.on{display:grid}
+#help .box{background:#fff;border-radius:16px;padding:34px 40px;max-width:520px;font-size:16px;line-height:1.9}
+#help h4{font-size:20px;font-weight:800;margin-bottom:14px}
+#help kbd{background:#F1F2EE;border:1px solid var(--line);border-radius:5px;padding:2px 7px;
+  font:700 13px var(--f);margin-right:6px}
+#ov{display:none;padding:44px 40px 60px}
+body.ov #wrap{display:none} body.ov #ov{display:block}
+#ov h2{color:#E8EDE4;font-size:22px;font-weight:800;margin-bottom:6px}
+#ov .sn{color:#8E958A;font-size:14px;margin-bottom:26px}
+#ov .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1560px;margin:0 auto}
+#ov .c{background:#F7F8F4;border-radius:12px;padding:16px 18px;cursor:pointer;border:2px solid transparent}
+#ov .c:hover{border-color:var(--green)}
+#ov .c .n{font:800 12px var(--f);color:var(--green);letter-spacing:.06em;margin-bottom:8px}
+#ov .c .t{font-size:15.5px;font-weight:700;line-height:1.45;color:var(--ink)}
+#ov .c .s{margin-top:9px;font-size:12px;color:var(--grey);font-weight:600}
+@media print{body{background:#fff}#hud,#bar,#tmr,#notes,#help{display:none!important}
+  #stage{box-shadow:none;transform:none!important}.slide{display:flex!important;page-break-after:always}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<div id="wrap"><div id="stage">
+
+<div id="rail"></div>
+
+<!-- 1 ───────────────────────────── 5p · PRD 핵심 목표 -->
+<section class="slide" data-blk="블록 1 · PRD" data-sec="35"
+ data-note="먼저 PRD입니다. 2차에서 찾은 문제 여덟 개 중 <em>세 개만 골랐습니다.</em> 아픈 정도와 시장 도달을 곱해서 걸렀어요.<br>그 세 개를 <em>사용자 스토리 열한 개</em>로 쪼갰고, 스토리마다 수용 기준을 붙였습니다.<br>목표는 하나입니다 — <em>이번 주에 실제로 뭔가 해본 아이의 비율.</em> 접속만, 퀴즈만으로는 분자에 안 들어갑니다.<br>그리고 부록 E에 <em>결정 열일곱 건을 되돌릴 조건까지 함께</em> 적었습니다. 「이렇게 정한다」가 아니라 「이게 틀리면 이렇게 되돌린다」까지요."
+ data-br="이 PRD가 SRS로 넘어가면서 무엇이 늘어났는지 보여드리겠습니다.">
+  <div class="kicker">PRD v0.3 <span>· 핵심 목표</span></div>
+  <h1>문제 <b>세 개</b>만 골라 <em>사용자 스토리 11개</em>로 쪼갰습니다</h1>
+  <div class="body">
+    <div class="flow" style="margin-bottom:16px">
+      <div class="n">고객 문제 <small>Pain 코드 8건</small></div><div class="s">→</div>
+      <div class="n">★ 선별 <small>아픈 정도 × 시장 도달</small></div><div class="s">→</div>
+      <div class="n">사용자 스토리 <small>US-1 ~ US-11</small></div><div class="s">→</div>
+      <div class="n">수용 기준 <small>스토리마다 AC</small></div><div class="s">→</div>
+      <div class="n k">북극성 지표 <small>단 하나</small></div>
+    </div>
+    <div class="row">
+      <div class="card grow"><h3>C1 · 성장 증거 부재</h3>
+        <p><b class="id">US-1</b> 변화를 한 문장으로 읽는다<br><b class="id">US-3</b> 멈춘 이유를 화면에서 안다</p></div>
+      <div class="card grow"><h3>C2 · 실천 공백 → 나무 정체</h3>
+        <p><b class="id">US-2</b> 첫 실천 한 건이 나무에 반영된다<br><b class="id">US-6</b> 늦어도 한 일이 사라지지 않는다</p></div>
+      <div class="card grow"><h3>C5 · 사전 개입 사각지대</h3>
+        <p><b class="id">US-4</b> 쓰기 전에 미리 적어둔다<br><b class="id">US-5</b> 참은 날이 확인만 한 날과 다르다</p></div>
+    </div>
+    <div class="anz">
+      <div class="ah"><span class="m">목표</span><span class="t">「만들었다」로 끝내지 않기 위해 판정 가능한 것만 목표로 둡니다</span></div>
+      <div class="ab">
+        <div class="kv"><div class="k">북극성 지표 (WPA)</div><div class="v">이번 주에 <b>실제로 뭔가 해본 아이</b>의 비율 — 접속만 · 퀴즈만은 분자 제외</div></div>
+        <div class="sep"></div>
+        <div class="kv"><div class="k">생존 조건</div><div class="v">계획 카드 작성률 <b>50% 이상</b></div></div>
+        <div class="sep"></div>
+        <div class="kv"><div class="k">절대 넘지 말 선</div><div class="v"><i>모두 0건</i> — 별 개수 오차 · 동의 전 진입 · 위치 수집</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="src">출처 — <b>PRD_핀프렌즈_v0_3.md</b> §0-3 고객 문제 코드 8건 · §3 사용자 스토리 US-1~11 · §1-3 북극성/가드레일 · <b>부록 E · ADR 17건</b>(결정마다 되돌릴 조건 병기)</div>
+</section>
+
+<!-- 2 ───────────────────────────── 6p ① · 확장과 AC -->
+<section class="slide" data-blk="블록 2 · SRS" data-sec="40"
+ data-note="SRS로 넘어오면 스토리 <em>한 줄이 명세 한 덩어리</em>가 됩니다.<br>기능마다 칸이 네 개로 고정돼 있습니다 — 입력, 처리, 출력, <em>그리고 예외.</em> 예외 칸이 비면 명세로 인정하지 않았습니다.<br>여기 보시는 게 성장 나무 FR-030입니다. 처리 칸에 <em>세 조건을 모두 충족해야 승급한다</em>가 박혀 있고, 아래 수용 기준 첫 줄이 <em>실패 케이스</em>예요.<br>퀴즈 백 번 맞혀도 실천이 0이면 전부 새싹. 이 한 줄이 나중에 이슈가 되고 코드가 됩니다."
+ data-br="예외 칸을 좀 더 자세히 보겠습니다. 사실 요구사항의 절반이 거기 있습니다.">
+  <div class="kicker">SRS v1.0 <span>· 기능 요구사항과 수용 기준</span></div>
+  <h1>스토리 한 줄이 <em>입력 · 처리 · 출력 · 예외</em>로 늘어납니다</h1>
+  <div class="body">
+    <div class="row">
+      <div class="col" style="width:322px;flex:none">
+        <div class="split" style="flex-direction:column">
+          <div class="h2"><div class="t2">PRD v0.3</div>
+            <p><b class="id">US-3</b><br><strong>멈춘 이유를 화면에서 안다</strong></p></div>
+          <div class="h2" style="border-left:0;border-top:1px solid var(--line)"><div class="t2">SRS v1.0 — 무엇이 늘었나</div>
+            <p><strong>FR</strong> 41개 · <strong>NFR</strong> 55개<br><strong>DR</strong> 7개 · <strong>수용 기준</strong> 49개</p></div>
+        </div>
+        <div class="card a" style="padding:14px 17px"><p style="font-size:14px">§8 <strong>추적성 매트릭스</strong>가 US ↔ FR ↔ NFR ↔ 검증을 한 표로 묶습니다.<br><span class="id" style="font-size:13px">US-3 → FR-030 → AC-030-2</span></p></div>
+      </div>
+      <div class="grow col">
+        <div class="spec">
+          <div class="sh"><span class="no">FR-030</span><span class="nm">성장 나무</span><span class="tail">PRD §4-1 F1 · US-1 · US-3</span></div>
+          <div class="r3"><div class="k">입력</div><div class="v">학습 완료 수, 퀴즈 정답 수, <b>실천 횟수(영역별)</b></div></div>
+          <div class="r3"><div class="k">처리</div><div class="v">영역별 기준표로 4단계를 판정한다. <b>세 조건을 모두 충족해야 승급한다</b></div></div>
+          <div class="r3"><div class="k">출력</div><div class="v">영역별 단계, <b>조건 단위 정체 원인 문구</b></div></div>
+          <div class="r3 ex"><div class="k">예외</div><div class="v">주기 종료 후 승인된 실천 → <b>주기 N에 귀속</b>하고 N+1 나무에 가산하지 않으며 <b>월간 숲 스냅샷에만</b> 반영</div></div>
+        </div>
+        <div class="acl">
+          <div class="ac fail"><div class="no">AC-030-1</div><div class="tx"><b>(실패)</b> 퀴즈 정답 100회 · 실천 0회 → 모든 영역이 <b>🌱 새싹</b>에 머문다</div></div>
+          <div class="ac"><div class="no">AC-030-2</div><div class="tx">승급 조건 미충족 → <b>「실천 1회가 남았어요 · 학습·퀴즈는 충족」</b>처럼 조건 단위로 표시</div></div>
+          <div class="ac"><div class="no">AC-030-3</div><div class="tx">매월 1일 00:00 KST → 나무 초기화 · 직전 주기 스냅샷이 월간 숲에 확정</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="src">출처 — <b>SRS_핀프렌즈_v1_0.md</b> ISO/IEC/IEEE 29148:2018 · §4.4 FR-030 · §8 추적성 매트릭스 · 기능 41 · 비기능 55 · 데이터 7 · 수용 기준 49</div>
+</section>
+
+<!-- 3 ───────────────────────────── 6p ② · 예외 -->
+<section class="slide" data-blk="블록 2 · SRS" data-sec="40"
+ data-note="수용 기준 마흔아홉 개 중 <em>열아홉 개가 실패 케이스</em>입니다. 거의 절반이에요.<br>왜 이렇게 많냐면, 이 서비스에서 <em>잘 안 되는 경우가 아이한테 직접 타격</em>이거든요.<br>예를 들어 미션. 아이는 다 했는데 부모님이 사흘째 안 눌러요. 그러면 아이 입장에선 <em>했는데 아무 일도 안 일어난 겁니다.</em> 그게 한 번 생기면 다음에 제출할 이유가 없어져요.<br>그래서 72시간이 지나면 <em>자동으로 지급합니다.</em> 별도, 실천도, 돈도요. 대신 표시는 「칭찬받았어요」가 아니라 <em>「확인하지 못했어요」</em>로 다르게 합니다.<br>원칙은 하나예요 — <em>병목의 비용을 아이에게 물리지 않는다.</em>"
+ data-br="이번엔 비기능과 상태입니다.">
+  <div class="kicker">SRS v1.0 <span>· 예외 조건</span></div>
+  <h1>수용 기준 49개 중 <b>19개</b>가 <em>「잘 안 될 때」</em>를 적은 것입니다</h1>
+  <div class="lead">이 서비스에서 예외는 드문 경우가 아니라 <strong>가장 자주 일어나는 경우</strong>입니다. 부모가 늦고, 잔액이 모자라고, 응답이 없습니다.</div>
+  <div class="body">
+    <div class="row">
+      <div class="card a grow" style="padding:16px 18px"><h3><span class="id">FR-032</span> · 미션 승인이 안 올 때</h3>
+        <p><strong>24h</strong> 리마인드 1회 → <strong>72h 자동 지급</strong><br>⭐ · 실천 · <strong>보상 금액 충전까지 모두 집행</strong>하고<br>표시는 <strong>「확인하지 못했어요」</strong> <span class="id" style="font-size:13px">auto=true</span></p></div>
+      <div class="card a grow" style="padding:16px 18px"><h3><span class="id">FR-033</span> · 부모 지갑이 비었을 때</h3>
+        <p>승인은 되되 <strong>충전만 보류</strong>합니다.<br><strong>⭐와 실천은 정상 지급</strong> — 부모 사정으로<br>아이가 한 일이 사라지지 않습니다</p></div>
+      <div class="card a grow" style="padding:16px 18px"><h3><span class="id">FR-031</span> · 적금 신청에 응답이 없을 때</h3>
+        <p><strong>7일 미응답 → 자동 만료</strong> · 재신청 즉시 가능<br>반려 문구는 <strong>「다시 이야기해요」</strong><br>「거절」이라는 단어를 쓰지 않습니다 <span class="id" style="font-size:13px">NFR-053</span></p></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="card r grow" style="padding:15px 18px"><h3>실패 수용 기준은 이렇게 씁니다</h3>
+        <p><span class="id" style="font-size:13.5px">AC-033-4 (실패)</span> — <strong>Given</strong> 부모 지갑 잔액이 보상 금액보다 적다 / <strong>When</strong> 승인한다 / <strong>Then</strong> ⭐와 실천은 지급되고 <strong>충전만 보류</strong>되며 부모에게 충전 요청이 표시된다</p></div>
+      <div class="card g" style="width:352px;flex:none;padding:15px 18px"><h3>원칙</h3>
+        <p style="font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.5">병목의 비용을<br>아이에게 물리지 않는다</p>
+        <p style="margin-top:6px;font-size:13.5px">승인은 아이가 통제할 수 없는 변수에 걸려 있습니다</p></div>
+    </div>
+  </div>
+  <div class="src">출처 — <b>SRS</b> §4.4 FR-031 · FR-032 · FR-033 예외 항 · AC-031-3 · AC-032-3 · AC-033-4 · §5.5 NFR-053 · <b>PRD 부록 E</b> ADR-016(72h 자동 지급) · 수용 기준 49 = 정상 30 + <b>예외 19</b></div>
+</section>
+
+<!-- 4 ───────────────────────────── 6p ③ · 비기능과 상태 -->
+<section class="slide" data-blk="블록 2 · SRS" data-sec="40"
+ data-note="비기능은 <em>순서를 매겼습니다.</em> 아동 금융 서비스에서 1순위는 성능이 아니라 규제입니다.<br>맨 위 다섯 줄은 <em>설계 변수가 아니라 상수</em>예요. 동의 전 진입 100% 차단, 아이 앱 번들에 부모 주소가 하나라도 있으면 <em>배포가 막힙니다.</em> 별을 현금으로 바꾸는 경로는 기능 플래그로 끄는 게 아니라 <em>코드에 아예 없어야</em> 합니다.<br>맨 아래는 여덟 살 기준입니다. 퍼센트를 안 씁니다. 「이번 달」 같은 말도 안 씁니다.<br>그리고 <em>상태.</em> 화면마다 네 가지 상태를 다 만들었습니다. 이슈의 수용 기준에 <em>「Loading · Empty · Error 상태 확인」이 줄로 들어가</em> 있어서 빠뜨릴 수가 없었어요."
+ data-br="이제 이게 실제로 이슈와 코드까지 이어졌는지 보여드리겠습니다.">
+  <div class="kicker">SRS v1.0 <span>· 비기능 조건과 상태</span></div>
+  <h1>비기능은 <em>규제가 성능보다 위</em>에 있습니다</h1>
+  <div class="body">
+    <div class="nfrl">
+      <div class="lv l0"><span class="rk">1순위 · 상수</span><span class="rg">NFR-001~011</span><span class="tx">동의 전 아이 화면 진입 차단 <b>100%</b> · 아이 번들 내 부모 엔드포인트 <b>0건(배포 차단)</b> · 스토리지 내 미션 이미지 <b>0건</b> · 별↔현금 전환 경로 <b>코드에 부재</b></span></div>
+      <div class="lv l1"><span class="rk">2순위</span><span class="rg">NFR-020~025</span><span class="tx">정합성 — 별 원장 이중 기입 · 중복 지급 0건 · 자동 지급 비율 감시</span></div>
+      <div class="lv l2"><span class="rk">3순위</span><span class="rg">NFR-030~034</span><span class="tx">성능 — 수용 기준에서 <b>역산한 잠정 상한</b>이지 확정 SLO가 아님</span></div>
+      <div class="lv l3"><span class="rk">4순위</span><span class="rg">NFR-040~044</span><span class="tx">가용성 · 운영</span></div>
+      <div class="lv l4"><span class="rk">아동 인지 제약</span><span class="rg">NFR-050~055</span><span class="tx">아이 화면에 <b>% 미사용</b> · 시간은 <b>주 단위 이하</b> · <b>「거절」 미사용</b> · 애니메이션은 <b>prefers-reduced-motion 존중</b></span></div>
+    </div>
+    <div class="row" style="margin-top:14px;align-items:flex-start">
+      <div style="flex:1">
+        <div style="font-size:13.5px;font-weight:800;color:var(--sub);margin-bottom:8px">상태 — 화면 8개가 <span style="color:var(--green)">모두</span> 네 가지를 갖습니다</div>
+        <div class="stt">
+          <div class="s2 on"><div class="n3">정상</div><div class="d3">데이터가 있을 때</div></div>
+          <div class="s2"><div class="n3">비어있음</div><div class="d3">아직 기록이 없을 때</div></div>
+          <div class="s2"><div class="n3">불러오는 중</div><div class="d3">스켈레톤</div></div>
+          <div class="s2 ex"><div class="n3">오류</div><div class="d3">「돈은 그대로 있어요」</div></div>
+        </div>
+      </div>
+      <div class="card" style="width:400px;flex:none;padding:14px 17px"><p style="font-size:14px">이슈 8건의 수용 기준에 <strong>「Loading / Empty / Error 상태 확인」</strong>이 <strong>줄로 박혀</strong> 있습니다.<br>명세의 예외가 <strong>화면의 상태로 내려온</strong> 결과입니다.</p></div>
+    </div>
+  </div>
+  <div class="src">출처 — <b>SRS</b> §5.1 규제 NFR-001~011 · §5.2 정합성 · §5.3 성능(수용 기준 역산) · §5.5 아동 인지 제약 NFR-050~055 · <b>Issue</b> UI-001~008 공통 수용 기준</div>
+</section>
+
+<!-- 5 ───────────────────────────── 7p ① · 여섯 층 -->
+<section class="slide" data-blk="블록 3 · 추적성" data-sec="35"
+ data-note="문서를 <em>여섯 층으로 쌓고 층마다 번호</em>를 달았습니다.<br>중요한 건 각 층이 아래층 번호를 <em>인용만 한다</em>는 겁니다. 같은 내용을 두 곳에 적지 않아요. 그래야 한쪽만 고쳐지는 일이 안 생깁니다.<br>이슈에는 「연결 Requirement」 줄이 있고, PR 본문에는 <em>수용 기준 한 줄마다 충족 근거</em>를 답니다. 못 채운 줄은 사유를 답니다.<br>그래서 화면 아무거나 하나를 짚으면 <em>어느 연구에서 나왔는지까지 거꾸로 되짚을 수 있습니다.</em>"
+ data-br="실제로 한 줄기를 끝까지 따라가 보겠습니다.">
+  <div class="kicker">추적성 <span>· 구조</span></div>
+  <h1>여섯 층을 쌓고 층마다 <em>번호</em>를 달았습니다</h1>
+  <div class="lead">각 층은 아래층의 번호를 <strong>인용만</strong> 합니다 — 같은 내용을 두 곳에 적지 않으므로 <strong>한쪽만 고쳐지는 일</strong>이 생기지 않습니다.</div>
+  <div class="body">
+    <div class="tr6">
+      <div class="ly"><div class="nm">raw/<small>원본 수집</small></div><div class="ds">통계 · 논문 · 약관 · 리뷰 원문을 6계층으로 받아 둡니다. <b>요약하지 않고 그대로</b> 둡니다</div><div class="ct">6계층</div></div>
+      <div class="ar">↓ 요약</div>
+      <div class="ly"><div class="nm">wiki/<small>지식베이스</small></div><div class="ds">개념 · 개체 · 이론 · 규칙이 서로 링크됩니다. 각 판단의 <b>「🧭 결정 배경」</b>이 여기 삽니다</div><div class="ct">59장 · 사이트 배포</div></div>
+      <div class="ar">↓ 근거</div>
+      <div class="ly"><div class="nm">PRD v0.3<small>무엇을 · 왜</small></div><div class="ds">Pain 코드 → <b class="id">US-1~11</b> → 기능. 부록 E <b>ADR</b>은 결정마다 <b>되돌릴 조건</b>을 함께 적습니다</div><div class="ct">ADR 17건</div></div>
+      <div class="ar">↓ 명세</div>
+      <div class="ly"><div class="nm">SRS v1.0<small>판정 가능하게</small></div><div class="ds"><b class="id">FR-001~041</b> · <b class="id">NFR-001~055</b> · <b class="id">DR-01~07</b> · §8 추적성 매트릭스</div><div class="ct">수용 기준 49</div></div>
+      <div class="ar">↓ 분해</div>
+      <div class="ly"><div class="nm">GitHub Issue<small>일 단위</small></div><div class="ds">이슈마다 <b>「연결 Requirement」</b>에 FR 번호를 적고, 수용 기준은 <b>AC 번호를 그대로</b> 가져옵니다</div><div class="ct">UI 8 · SYS 5</div></div>
+      <div class="ar">↓ 구현</div>
+      <div class="ly" style="background:var(--green-l);border-color:#CFE3D7"><div class="nm">PR · 화면<small>증거</small></div><div class="ds">PR 본문이 <b>수용 기준 한 줄마다 충족 근거</b>를 답니다. 못 채운 줄은 <b>사유</b>를 답니다</div><div class="ct">PR 8 · 화면 8</div></div>
+    </div>
+  </div>
+  <div class="src">저장소 — <b>scene-one/team1_fin-friends</b> · <b>raw/</b> 6계층 · <b>wiki/</b> 59장(Quartz 배포) · <b>공용공간/9. PRD</b> · <b>10. SRS</b> · Issue #1~#13 · PR #14~#21</div>
+</section>
+
+<!-- 6 ───────────────────────────── 7p ② · 한 줄기 완주 (하이라이트) -->
+<section class="slide" data-blk="블록 3 · 추적성" data-sec="45"
+ data-note="이게 오늘 가장 보여드리고 싶은 한 장입니다.<br>맨 왼쪽, <em>규제 상수 P-20</em>에서 출발합니다. 예적금 중개로 보이면 안 된다는 규제죠. 그래서 ADR-009가 <em>「협상은 앱 밖에서, 앱은 기록만」</em>으로 정했고, 그 결과 <em>반려와 만료라는 예외</em>가 생겼습니다.<br>SRS는 그 예외를 수용 기준 두 줄로 적었어요. 「거절」이라는 단어를 쓰지 말라는 <em>비기능 NFR-053</em>도 같이 걸렸고요.<br>이슈 8번이 그 번호들을 그대로 인용했고, PR 21번이 줄마다 충족 근거를 달았습니다.<br>그래서 <em>화면에 상태가 네 개</em>가 됐습니다. 신청 전, 물어보는 중, <em>다시 이야기해요</em>, <em>확인하지 못했어요.</em><br>규제 조항 하나가 <em>여덟 살이 보는 화면의 문구</em>까지 끊기지 않고 내려온 겁니다."
+ data-br="같은 방식으로 이어 본 줄기가 셋 있습니다.">
+  <div class="kicker">추적성 <span>· 실제로 이어 본 한 줄기</span></div>
+  <h1>규제 조항 하나가 <em>여덟 살이 보는 문구</em>까지 내려옵니다</h1>
+  <div class="body">
+    <div class="cf">
+      <div class="st"><div class="lb4">KB · 규칙</div><div class="bx on">
+        <div class="k4">규제-상수 P-20</div><div class="t4">예적금 중개로 보이면 안 된다</div><div class="m4">앱 안 흥정은 금융 거래 중개 모양</div></div></div>
+      <div class="st"><div class="lb4">PRD 부록 E</div><div class="bx">
+        <div class="k4">ADR-009</div><div class="t4">협상은 앱 밖에서 · 앱은 <b>기록만</b></div><div class="m4">채팅·흥정 UI를 제공하지 않는다</div></div></div>
+      <div class="st"><div class="lb4">SRS · 예외</div><div class="bx ex">
+        <div class="k4">FR-031 예외 ①②</div><div class="t4">반려 → 재신청 즉시<br>7일 미응답 → <b>자동 만료</b></div><div class="m4">병목이 아이 탓이 되지 않게</div></div></div>
+      <div class="st"><div class="lb4">SRS · 수용 기준 · 비기능</div><div class="bx">
+        <div class="k4">AC-031-3 · AC-031-4<br>NFR-053</div><div class="t4">「거절」이라는 단어가 <b>표시되지 않는다</b></div><div class="m4">실패 AC 두 줄 + 비기능 한 줄</div></div></div>
+      <div class="st"><div class="lb4">ISSUE · PR</div><div class="bx">
+        <div class="k4">#8 UI-008 → PR #21</div><div class="t4">「연결 Requirement: FR-031」</div><div class="m4">AC 줄마다 충족 근거</div></div></div>
+      <div class="st"><div class="lb4">화면 · 상태</div><div class="bx on">
+        <div class="k4">Bank.dc.html</div><div class="t4">적금 <b>상태 4종</b></div><div class="m4">신청 전 · 물어보는 중<br>다시 이야기해요 · 확인하지 못했어요</div></div></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <div class="card grow" style="padding:15px 18px"><h3>기능 · 비기능 · 예외 · 수용 기준 · 상태가 한 줄에 다 있습니다</h3>
+        <p><span class="id">FR-031</span>이 <strong>기능</strong>, <span class="id">NFR-053</span>이 <strong>비기능</strong>, 반려·만료가 <strong>예외</strong>, <span class="id">AC-031-3·4</span>가 <strong>수용 기준</strong>, 화면의 네 칸이 <strong>상태</strong>입니다. 하나라도 빠지면 이 줄기는 <strong>중간에서 끊깁니다.</strong></p></div>
+      <div class="card g" style="width:336px;flex:none;padding:15px 18px"><h3>거꾸로도 됩니다</h3>
+        <p>화면의 <strong>「확인하지 못했어요」</strong>를 짚으면 <strong>왜 이 문구인지</strong>가 <span class="id">NFR-053</span> → <span class="id">ADR-009</span> → <span class="id">P-20</span> 으로 끝까지 나옵니다</p></div>
+    </div>
+  </div>
+  <div class="src">출처 — <b>wiki/60-규칙/규제-상수</b> P-20 · <b>PRD 부록 E</b> ADR-009 · <b>SRS</b> §4.4 FR-031 예외 ①②, AC-031-3·4, §5.5 NFR-053 · <b>Issue #8</b> · <b>PR #21</b> · <b>수빈/prototype-wip/Bank.dc.html</b></div>
+</section>
+
+<!-- 7 ───────────────────────────── 7p ③ · 세 줄기 -->
+<section class="slide" data-blk="블록 3 · 추적성" data-sec="40"
+ data-note="같은 구조로 이어 본 줄기가 셋입니다.<br>첫째는 <em>완주.</em> 메타분석 한 줄이 나무의 승급 조건이 됐습니다.<br>둘째가 재미있는데, 근거가 기능을 넣은 게 아니라 <em>뺐습니다.</em> 프로토타입에 업종 선택기가 그려져 있었는데, 카드 결제는 가맹점당 업종 코드가 하나뿐이라 <em>아이한테 물어봐야 판정에 못 쓰는 칸</em>이었어요. 그래서 지웠습니다.<br>셋째는 <em>멈춤.</em> 백엔드가 없어서 다섯 건이 멈췄는데, 중요한 건 <em>멈춘 자리가 비어 있지 않다</em>는 겁니다. 어느 요구사항이 왜 못 갔는지가 번호와 함께 남아 있어서, 그게 그대로 다음 로드맵이 됩니다.<br>추적관계는 무엇을 넣을지만이 아니라 <em>무엇을 지울지, 어디서 멈췄는지</em>까지 알려줍니다."
+ data-br="여기까지가 PRD에서 SRS, 그리고 구현까지 이어지는 구조였습니다.">
+  <div class="kicker">추적성 <span>· 세 줄기</span></div>
+  <h1>넣은 것 · <em>지운 것</em> · <b>멈춘 것</b>이 같은 구조로 읽힙니다</h1>
+  <div class="body">
+    <div class="br3">
+      <div class="b3 a"><div class="bd">완주</div>
+        <div class="pt">학습-행동-전이-격차 <em>›</em> US-1 · US-3 <em>›</em> FR-030 · AC-030-1 <em>›</em> #6 <em>›</em> PR #19 <em>›</em> Tree.dc.html</div>
+        <div class="rs">메타분석 <b class="id">+0.33 / +0.07 SD</b> 가<br>나무의 <b>승급 조건</b>이 됨</div></div>
+      <div class="b3 b"><div class="bd">삭제</div>
+        <div class="pt">카드-업종-분류-MCC <em>›</em> ADR-001 <em>›</em> FR-021 · DR-05 · AC-021-6 <em>›</em> #4 <em>›</em> PR #17 <em>›</em> Plan.dc.html</div>
+        <div class="rs">근거를 따라가니 <b>업종 선택기</b>가<br>판정에 못 쓰는 칸이라 <b>제거</b></div></div>
+      <div class="b3 c"><div class="bd">멈춤</div>
+        <div class="pt">규제-상수 P-13 <em>›</em> ADR-007 <em>›</em> FR-032 · NFR-005 · DR-02 <em>›</em> #11 <em>›</em> BLOCKED <em>›</em> LOOP_CHECKPOINT.md</div>
+        <div class="rs">백엔드 부재로 <b>SYS 5건 정지</b><br>사유가 남아 <b>다음 로드맵</b>이 됨</div></div>
+    </div>
+    <div class="row" style="margin-top:15px">
+      <div class="card grow" style="padding:14px 17px"><h3>어긋남이 저절로 드러났습니다</h3>
+        <p>프로토타입의 나무가 <strong>3단계</strong>인데 <span class="id">FR-030</span>은 <strong>4단계</strong>였습니다. 번호가 이어져 있지 않았다면 <strong>발표 직전에</strong> 알았을 겁니다</p></div>
+      <div class="card grow" style="padding:14px 17px"><h3>고칠 범위가 먼저 보입니다</h3>
+        <p>「불리기」 실천 요건이 복원되자 <span class="id">AC-031-2</span>를 인용한 화면 <strong>둘</strong>이 바로 지목됐습니다 — <span class="id">Tree</span> · <span class="id">Bank</span></p></div>
+      <div class="card grow" style="padding:14px 17px"><h3>결정을 한 곳에만 적습니다</h3>
+        <p>판단은 <strong>PRD ADR · SRS · wiki</strong> 세 곳에만 삽니다. 이슈 · PR · 화면은 <strong>번호를 인용할 뿐</strong>이라 원장이 늘지 않습니다</p></div>
+    </div>
+    <div class="bridge">추적관계는 <b style="color:#BFE6CF">무엇을 넣을지</b>만이 아니라 <b style="color:#BFE6CF">무엇을 지울지 · 어디서 멈췄는지</b>까지 알려줍니다</div>
+  </div>
+  <div class="src">근거 — Issue <b>#4 · #6 · #11</b> · PR <b>#17 · #19</b> · <b>수빈/goals/LOOP_CHECKPOINT.md</b>(BLOCKED 5건 · 판단 유보 3건) · <b>수빈/prototype-wip/</b> 화면 8개</div>
+</section>
+
+</div></div>
+
+<div id="ov">
+  <h2>제목만 이어 읽기 — 7장</h2>
+  <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
+  <div class="grid" id="ovg"></div>
+</div>
+
+<div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
+<div id="tmr">⏱ —</div>
+<div id="hud"><span id="pg"><b>1</b> / 7</span><span id="blk"></span>
+  <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
+
+<div id="help"><div class="box">
+  <h4>키 안내</h4>
+  <p><kbd>←</kbd><kbd>→</kbd> 이전 / 다음 장 &nbsp;·&nbsp; <kbd>Space</kbd> 다음</p>
+  <p><kbd>Home</kbd><kbd>End</kbd> 처음 / 끝</p>
+  <p><kbd>O</kbd> 제목 목차 (제목만 이어 읽기)</p>
+  <p style="color:#5E655C;font-size:14px">상단 목차의 <b>구간 이름을 클릭</b>하면 그 구간 첫 장으로 이동합니다.</p>
+  <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
+  <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
+  <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 7장 · 목표 4분 35초 · Master Deck 5~6p · 7p 구간</p>
+</div></div>
+
+<script>
+(function(){
+  var S=[].slice.call(document.querySelectorAll('.slide')), n=S.length, i=0;
+  var stage=document.getElementById('stage'), bar=document.getElementById('bar'),
+      pg=document.getElementById('pg'), blk=document.getElementById('blk'),
+      notes=document.getElementById('notes'), nx=document.getElementById('nx'),
+      help=document.getElementById('help'), tmr=document.getElementById('tmr'),
+      rail=document.getElementById('rail');
+  var budget=S.map(function(s){return +s.dataset.sec||25});
+  var total=budget.reduce(function(a,b){return a+b},0);
+
+  function fit(){var s=Math.min(innerWidth/1280,innerHeight/720)*0.965;
+    stage.style.transform='scale('+s+')';}
+  addEventListener('resize',fit); fit();
+
+  var NAMES={1:'5p · PRD 목표',2:'6p · SRS 명세',3:'7p · 추적성'};
+  var groups=[], gof=[];
+  S.forEach(function(s,x){
+    var no=+((s.dataset.blk.match(/블록\s*(\d+)/)||[])[1]||0);
+    var g=groups.length-1;
+    if(g<0||groups[g].no!==no){groups.push({no:no,label:NAMES[no]||('구간 '+no),idx:[]});g=groups.length-1}
+    groups[g].idx.push(x); gof[x]=g;
+  });
+  groups.forEach(function(gr,g){
+    var el=document.createElement('div'); el.className='ri'; el.dataset.g=g;
+    var dots=gr.idx.map(function(){return '<i></i>'}).join('');
+    el.innerHTML='<span class="lb">'+gr.label+'</span><span class="dt">'+dots+'</span>';
+    el.onclick=function(){show(gr.idx[0])};
+    rail.appendChild(el);
+  });
+  rail.insertAdjacentHTML('beforeend','<div class="sp"></div><div class="cnt"><b id="rc">1</b>/'+n+'</div><div class="pl" id="rp"></div>');
+  var RIS=[].slice.call(rail.querySelectorAll('.ri')), rc=document.getElementById('rc'), rp=document.getElementById('rp');
+
+  function paintRail(){
+    var cg=gof[i];
+    RIS.forEach(function(el,g){
+      el.classList.toggle('cur',g===cg);
+      el.classList.toggle('done',g<cg);
+      [].slice.call(el.querySelectorAll('.dt i')).forEach(function(d,x){
+        d.classList.toggle('now',g===cg&&groups[g].idx[x]===i);
+      });
+    });
+    rc.textContent=i+1;
+    rp.style.width=((i+1)/n*100)+'%';
+  }
+
+  function show(k){
+    i=Math.max(0,Math.min(n-1,k));
+    S.forEach(function(s,x){s.classList.toggle('on',x===i)});
+    paintRail();
+    bar.style.width=((i+1)/n*100)+'%';
+    pg.innerHTML='<b>'+(i+1)+'</b> / '+n;
+    blk.textContent=S[i].dataset.blk+' · 목표 '+budget[i]+'초';
+    nx.innerHTML=(S[i].dataset.note||'')+
+      (S[i].dataset.br?'<div class="br">▶ 다음 장으로 — '+S[i].dataset.br+'</div>':'');
+    location.hash='p'+(i+1);
+  }
+
+  var g=document.getElementById('ovg');
+  S.forEach(function(s,x){
+    var t=s.querySelector('h1');
+    var c=document.createElement('div');
+    c.className='c';
+    c.innerHTML='<div class="n">'+(x+1)+' · '+s.dataset.blk.replace(/블록 \d+ · /,'')+'</div>'+
+      '<div class="t">'+(t?t.innerHTML.replace(/<br>/g,' '):'')+'</div>'+
+      '<div class="s">'+s.dataset.sec+'초</div>';
+    c.onclick=function(){document.body.classList.remove('ov');show(x)};
+    g.appendChild(c);
+  });
+
+  var t0=null,acc=0,iv=null;
+  function fmt(x){var m=Math.floor(x/60),s=x%60;return m+':'+(s<10?'0':'')+s}
+  function tick(){
+    var e=acc+(t0?Math.floor((Date.now()-t0)/1000):0);
+    var upto=budget.slice(0,i+1).reduce(function(a,b){return a+b},0);
+    tmr.textContent='⏱ '+fmt(e)+' / '+fmt(total)+'  (이 장까지 목표 '+fmt(upto)+')';
+    tmr.className=t0?(e>upto+20?'over run':'run'):(e>0?'':'');
+  }
+  function toggleT(){
+    if(t0){acc+=Math.floor((Date.now()-t0)/1000);t0=null;clearInterval(iv);iv=null}
+    else{t0=Date.now();iv=setInterval(tick,500)}
+    tick();
+  }
+  tick();
+
+  addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='Escape'){if(help.classList.contains('on'))help.classList.remove('on');
+      else document.body.classList.remove('ov'); return}
+    if(document.body.classList.contains('ov')&&k!=='o'&&k!=='O')return;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();show(i+1)}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();show(i-1)}
+    else if(k==='Home'){show(0)} else if(k==='End'){show(n-1)}
+    else if(k==='n'||k==='N'){notes.classList.toggle('on')}
+    else if(k==='o'||k==='O'){document.body.classList.toggle('ov')}
+    else if(k==='t'||k==='T'){toggleT()}
+    else if(k==='r'||k==='R'){acc=0;t0=null;clearInterval(iv);iv=null;tick()}
+    else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+    else if(k==='p'||k==='P'){print()}
+    else if(k==='?'||k==='/'){help.classList.toggle('on')}
+  });
+  stage.addEventListener('click',function(e){show(i+(e.clientX<innerWidth*0.28?-1:1))});
+
+  var h=+((location.hash||'').replace('#p',''));
+  show(h?h-1:0);
+})();
+</script>
+</body>
+</html>
