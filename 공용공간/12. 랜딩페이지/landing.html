@@ -8,7 +8,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
-  --bg:#fff; --bg-2:#F6F8F4; --paper:#fff; --sand:#EEF3E9;
+  --bg:#F6FAEE; --bg-2:#EBF4DC; --paper:#fff; --sand:#EEF3E9;
   --ink:#172019; --ink-2:#4E5A51; --ink-3:#7B877E;
   --line:#E5EAE4; --line-2:#D8E0D7;
   --green:#397343; --green-d:#285C31; --green-l:#75A86F; --green-p:#C8DDC5; --green-bg:#EDF6EA;
@@ -25,6 +25,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
 section{padding:116px 0;scroll-snap-align:start;scroll-snap-stop:always;min-height:100vh;min-height:100svh;display:flex;align-items:center}
 h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.35rem);line-height:1.5;
    margin:0 0 20px;font-weight:800;letter-spacing:-.045em;text-wrap:balance}
+h2 em{font-style:normal;color:var(--green-d)}
 h3{font-family:var(--serif);font-size:1.12rem;margin:0 0 7px;font-weight:700}
 p{margin:0 0 14px;max-width:62ch}
 .lead{font-size:1.08rem;color:var(--ink-2);line-height:1.75}
@@ -33,8 +34,8 @@ p{margin:0 0 14px;max-width:62ch}
 .center{text-align:center}
 .center p{margin-left:auto;margin-right:auto}
 /* 헤더 */
-header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);
-   backdrop-filter:blur(18px);border-bottom:1px solid rgba(229,234,228,.85);scroll-snap-align:none}
+header{position:sticky;top:0;z-index:60;background:rgba(246,250,238,.9);
+   backdrop-filter:blur(18px);border-bottom:1px solid rgba(216,224,215,.85);scroll-snap-align:none}
 header .wrap{display:flex;align-items:center;gap:12px;padding-top:17px;padding-bottom:17px}
 .logo{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:-.04em}
 .logo span{color:var(--green)}
@@ -49,7 +50,7 @@ header a.mini:hover{background:var(--bg-2);color:var(--ink)}
 .cta.sm{padding:9px 16px;font-size:.85rem;box-shadow:none}
 a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 /* 히어로 */
-.hero{padding:108px 0 0;background:#fff;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;min-height:100vh;min-height:100svh;display:flex;align-items:center}
+.hero{padding:108px 0 0;background:var(--bg);overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;min-height:100vh;min-height:100svh;display:flex;align-items:center}
 .hero .wrap{display:block;text-align:center}
 .hero-copy{max-width:850px;margin:0 auto}
 .hero h1{font-family:var(--serif);font-size:clamp(2.75rem,7.1vw,5.75rem);line-height:1.3;
@@ -88,7 +89,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offs
    border-radius:11px;padding:10px 11px;font-size:.79rem;line-height:1.6}
 .ev b{color:var(--green-d)}
 /* 문제 */
-.screen-intro{padding:98px 0 42px;background:#fff}
+.screen-intro{padding:98px 0 42px;background:var(--bg)}
 .screen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;text-align:left}
 .screen-card{border:1px solid var(--line);border-radius:22px;padding:25px;background:#fff;box-shadow:0 14px 45px rgba(30,55,34,.07)}
 .screen-no{font-size:.71rem;font-weight:850;letter-spacing:.12em;color:var(--green)}
@@ -129,12 +130,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offs
 .br.met .tag{color:var(--green-d)} .br.exc .tag{color:var(--clay)}
 /* 4영역 */
 .four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
-.f{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px 18px;text-align:center;transition:transform .2s,box-shadow .2s}
-.f:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(23,32,25,.08)}
+.f{background:var(--green-bg);border:1px solid var(--green-p);border-radius:20px;padding:28px 18px;text-align:center;transition:transform .2s,box-shadow .2s}
+.f:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(57,115,67,.14)}
 .f .ic{font-size:1.9rem}
-.f h4{font-family:var(--serif);margin:9px 0 4px;font-size:1.02rem}
+.f h4{font-family:var(--serif);margin:9px 0 4px;font-size:1.05rem;font-weight:800;color:var(--green-d)}
 .f p{font-size:.83rem;color:var(--ink-2);margin:0}
-.f.soon{opacity:.72}
+.f.soon{opacity:.68;background:var(--paper);border:1px dashed var(--line-2)}
+.f.soon h4{color:var(--ink)}
 .f .soon-t{display:inline-block;margin-top:8px;font-size:.68rem;color:var(--clay);
    background:var(--clay-bg);border:1px solid #E5CDB8;border-radius:99px;padding:2px 9px}
 .flow{margin-top:22px;text-align:center;font-family:var(--serif);font-size:1.02rem;color:var(--ink-2)}
@@ -145,13 +147,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offs
 .preview-slot .ic{font-size:2rem}
 .preview-slot .cap{font-size:.8rem;font-weight:700;color:var(--ink-2)}
 /* CTA */
-.final{background:#fff;text-align:center;padding-top:30px}
+.final{background:var(--bg);text-align:center;padding-top:30px}
 .final .wrap{background:linear-gradient(145deg,#EAF5E7,#DDEED9);border:1px solid var(--green-p);border-radius:32px;padding:88px 24px}
 .final h2{color:var(--green-d)}
 .final p{margin-left:auto;margin-right:auto;color:var(--ink-2)}
 .final .cta{margin-top:10px;font-size:1rem;padding:15px 34px}
 .fine{margin-top:16px;font-size:.79rem;color:var(--ink-3)}
-footer{background:#fff;color:var(--ink-3);padding:40px 0;font-size:.83rem;border-top:1px solid var(--line);margin-top:96px;scroll-snap-align:none}
+footer{background:var(--bg);color:var(--ink-3);padding:40px 0;font-size:.83rem;border-top:1px solid var(--line);margin-top:96px;scroll-snap-align:none}
 footer .wrap{display:flex;flex-direction:column;gap:10px}
 footer .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 footer .lg{font-family:var(--serif);color:var(--ink);font-weight:850}
@@ -250,7 +252,7 @@ footer .credit{font-size:.78rem;color:var(--ink-3)}
 <section class="screen-intro" aria-labelledby="screen-title">
   <div class="wrap center">
     <p class="eyebrow">세 가지 핵심 화면</p>
-    <h2 id="screen-title">배움보다 행동을<br>먼저 보여줍니다</h2>
+    <h2 id="screen-title">배움보다 <em>행동</em>을<br>먼저 보여줍니다</h2>
     <p class="lead">아이의 실천을 세 화면에 나눠 담았습니다.</p>
     <div class="screen-grid">
       <article class="screen-card"><span class="screen-no">01 · 성장 나무</span><h3>실천해야 자라는 나무</h3><p>학습·퀴즈·실천이 모두 채워졌을 때만 다음 단계로 갑니다.</p></article>
@@ -295,7 +297,7 @@ footer .credit{font-size:.78rem;color:var(--ink-3)}
   <div class="wrap split">
     <div>
       <span class="badge">다른 점 하나</span>
-      <h2> 배운 것을 행동으로 옮겨야<br>나무가 자랍니다</h2>
+      <h2><em>배운 것을 행동으로 옮겨야</em><br>나무가 자랍니다</h2>
       <p class="lead">나무가 다음 단계로 가려면 <b>학습 · 퀴즈 · 그리고 행동 실천</b>이 모두 필요합니다.
       </p>
       <ul class="pts"> 
@@ -331,7 +333,7 @@ footer .credit{font-size:.78rem;color:var(--ink-3)}
   <div class="wrap split rev">
     <div>
       <span class="badge">다른 점 둘</span>
-      <h2>쓰기 전에 적고,<br>쓴 뒤에 맞춰봅니다</h2>
+      <h2>쓰기 전에 적고,<br><em>쓴 뒤에 맞춰봅니다</em></h2>
       <p class="lead">아이에게 <b>소비 계획을 미리 세우게 하는 것</b>입니다.
       어디서 · 얼마까지 살지 적어두면, 결제 이후 비교해서 보여줍니다.</p>
       <div class="branch">
@@ -381,7 +383,7 @@ footer .credit{font-size:.78rem;color:var(--ink-3)}
 <section>
   <div class="wrap center">
     <p class="eyebrow">배우는 것</p>
-    <h2>금융 활동의 흐름을<br> 네 가지로 배웁니다</h2>
+    <h2>금융 활동의 흐름을<br><em>네 가지로 배웁니다</em></h2>
     <p class="lead">배움이 실천으로 이어지는 네 개의 카테고리를 나눴습니다.</p>
     <div class="four">
       <div class="f"><div class="ic">💰</div><h4>벌기</h4><p>미션으로 용돈 벌기</p></div>
