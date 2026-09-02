@@ -173,6 +173,21 @@ h1 b{color:var(--red);font-weight:800}
 .techrow .tr2 .stack{flex:1;font-size:13.5px;line-height:1.55;color:var(--sub)}
 .techrow .tr2 .stack b{color:var(--green);font-weight:800}
 
+.techcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+  display:flex;flex-direction:column;gap:11px;flex:1}
+.techcard .tn{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--green)}
+.techcard h3{font-size:18px;font-weight:800;color:var(--ink);line-height:1.35}
+.techcard .desc{font-size:13.5px;line-height:1.6;color:var(--sub)}
+.techcard .ttr{display:flex;gap:10px;align-items:flex-start;background:var(--green-l);
+  border:1px solid #CFE3D7;border-radius:10px;padding:10px 14px}
+.techcard .ttr .lbl{font-size:11px;font-weight:800;color:var(--green);letter-spacing:.02em;
+  width:64px;flex:none;padding-top:1px}
+.techcard .ttr .val{font-size:13px;line-height:1.55;color:var(--ink)}
+.techcard .ttr.show{background:var(--amber-l);border-color:#EEDFBD}
+.techcard .ttr.show .lbl{color:var(--amber)}
+.techcard .ttr b{font-weight:800;color:var(--green)}
+.techcard .ttr.show b{color:var(--amber)}
+
 @media print{body{background:#fff}#hud,#bar,#tmr,#notes,#help{display:none!important}
   #stage{box-shadow:none;transform:none!important}.slide{display:flex!important;page-break-after:always}}
 
@@ -442,34 +457,69 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 
 <!-- 12 -->
 <section class="slide" data-blk="블록 5 · 구현" data-sec="45"
- data-note="이 약속들을 지키려고 기술을 역산해서 골랐습니다.<br>실천 루프는 서버가 퀴즈 정답과 미션 승인을 한 흐름으로 묶고 이중 기입 원장에 기록합니다. 부모·아이 화면은 다른 오리진의 PWA 두 개로 완전히 분리했습니다. 별은 이중 기입 원장과 멱등 키로 사라지거나 중복 지급되지 않게 막았습니다. 미션 인증 사진은 부모 승인 직후 서버가 즉시 파기합니다. 월간 요약 한 줄만 AWS Bedrock을 쓰고, 꺼져도 숫자 지표는 그대로 보입니다. 아바타는 three.js로 3D 구현하되, 저사양 기기에서는 유휴 애니메이션을 CSS로 대체합니다."
- data-br="이상으로 마스터덱을 마칩니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4)</span></div>
+ data-note="이 약속들을 지키려고 기술을 역산해서 골랐습니다.<br>첫째, 배운 걸 실제로 했는지를 증명하는 기술입니다. 아이가 퀴즈를 풀어 별을 받는 순간, 서버는 같은 주제의 실천 미션을 곧바로 연결해 보여줍니다. 사진으로 인증하면 부모 승인 후 별이 확정되고, 72시간 안에 확인이 없으면 자동 지급됩니다. 사진은 확인 즉시 삭제됩니다.<br>둘째, 부모와 아이가 각자의 화면만 보게 하는 기술입니다. 겉보기엔 한 서비스지만 실제로는 서로 다른 주소로 배포된 별개의 PWA입니다. 아이 토큰으로는 부모 API를 아예 호출할 수 없습니다."
+ data-br="이어서 오프라인 안전과 월간 요약 기술을 보여드리겠습니다.">
+  <div class="kicker">구현 <span>· 필요 기술 (4) — ①②</span></div>
   <h1>약속을 지키기 위해 <em>기술을 역산</em>했습니다</h1>
   <div class="body">
-    <div class="techrow">
-      <div class="tr2"><div class="no2">1</div><div class="cols"><div class="promise">배운 것을 실천으로</div><div class="stack">Next.js 서버 런타임이 퀴즈 정답과 미션 승인을 <b>하나의 흐름</b>으로 묶어, 정답 → 별 지급 → 실천 카드로 끊기지 않고 이어집니다</div></div></div>
-      <div class="tr2"><div class="no2">2</div><div class="cols"><div class="promise">부모·아이 화면 완전 분리</div><div class="stack">PWA 2개를 <b>다른 오리진</b>으로 배포 — 아이 토큰으로는 부모 API를 아예 호출할 수 없게 서버가 막습니다</div></div></div>
-      <div class="tr2"><div class="no2">3</div><div class="cols"><div class="promise">별이 사라지거나 중복 지급 없음</div><div class="stack">PostgreSQL <b>이중 기입 원장</b> + 일일 정산 배치, 오프라인 큐는 <b>멱등 키</b>로 중복 지급을 막습니다</div></div></div>
-      <div class="tr2"><div class="no2">4</div><div class="cols"><div class="promise">미션 인증 사진 남기지 않음</div><div class="stack">부모가 승인하는 즉시 서버가 이미지를 <b>바로 파기</b>하고, 승인 이력만 남습니다</div></div></div>
-      <div class="tr2"><div class="no2">5</div><div class="cols"><div class="promise">월간 성장 요약</div><div class="stack">AWS Bedrock(서울 리전)을 <b>부모용 한 줄 요약</b>에만 한정 사용 — 꺼져 있어도 숫자·그래프 지표는 그대로 보입니다</div></div></div>
-      <div class="tr2"><div class="no2">6</div><div class="cols"><div class="promise">아바타 3D 구현</div><div class="stack"><b>three.js(glTF)</b>로 구현하고, 저사양 Android 기기 대응을 위해 유휴 애니메이션은 <b>CSS transform</b>으로 대체합니다</div></div></div>
+    <div class="row" style="gap:18px;align-items:stretch">
+      <div class="techcard">
+        <div class="tn">기술 ①</div>
+        <h3>“배운 걸 실제로 했는지”를 증명하는 기술</h3>
+        <p class="desc">아이가 퀴즈를 풀어 별을 받는 순간, 서버는 그 정답과 <strong>같은 주제의 실천 미션</strong>을 곧바로 연결해 보여줍니다. 미션을 사진으로 인증하면 부모에게 승인 요청이 가고, 부모가 승인하면 별이 지급됩니다. <strong>72시간 안에 부모 확인이 없으면 자동으로 지급</strong>되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다(ADR-016).</p>
+        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">서버(<b>Next.js 서버 런타임</b>)가 학습 이벤트와 미션 이벤트를 하나의 흐름으로 묶고, 이 지급을 원장(<b>PostgreSQL</b>) 이중 기입으로 기록</div></div>
+        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">“퀴즈 정답 → 별 1개 → 실천 카드 등장 → 사진 인증 → 부모 승인 → 별 확정 → 나무 성장”이 화면 안에서 끊기지 않고 이어짐. 승인용 사진은 확인 즉시 서버에서 삭제되어, 화면에는 <b>“승인됨”</b> 표시만 남음</div></div>
+      </div>
+      <div class="techcard">
+        <div class="tn">기술 ②</div>
+        <h3>부모와 아이가 각자의 화면만 보게 하는 기술</h3>
+        <p class="desc">부모 앱과 아이 앱은 겉보기엔 한 서비스지만, 실제로는 <strong>서로 다른 주소(오리진)</strong>로 배포된 별개의 PWA입니다.</p>
+        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>PWA 2개</b>(부모/아이) + 오리진 분리, 아이 토큰으로는 부모 API를 아예 호출할 수 없게 서버가 막음</div></div>
+        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">부모는 초대 링크를 만들어 문자로 보내고, 아이는 그 링크로만 들어옴. 두 화면이 같은 코드베이스(Next.js)에서 나오지만, 사용자는 완전히 분리된 두 개의 앱처럼 경험함</div></div>
+      </div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md · 공용공간/10. SRS/SRS_핀프렌즈_v1_0.md §2.5 · 공용공간/0. 확정 기능 정의/기능정의_v14.md §1(스택을 고르는 힘 — 아동 개인정보 규제 · 아바타 3D · 별 지급 원장 정합성 0%)</div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §1·§2</div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-blk="블록 5 · 구현" data-sec="45"
+ data-note="셋째, 인터넷이 끊겨도 성장 기록이 안전한 기술입니다. 아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않도록, 앱이 오프라인 큐에 잠깐 저장해두고 재연결되면 고유 키로 서버에 전송해 중복 지급을 막습니다.<br>넷째, 이번 달 얼마나 자랐는지를 말로 설명해주는 기술입니다. AWS Bedrock을 이 기능 하나에만 한정해서 쓰고, 아동 식별 정보 없이 집계 수치만 넘깁니다. 이 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 있으면 좋은 설명이지 서비스의 전제가 아닙니다."
+ data-br="이상으로 마스터덱을 마칩니다.">
+  <div class="kicker">구현 <span>· 필요 기술 (4) — ③④</span></div>
+  <h1>약속을 지키기 위해 <em>기술을 역산</em>했습니다</h1>
+  <div class="body">
+    <div class="row" style="gap:18px;align-items:stretch">
+      <div class="techcard">
+        <div class="tn">기술 ③</div>
+        <h3>인터넷이 끊겨도 성장 기록이 안전한 기술</h3>
+        <p class="desc">아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않습니다.</p>
+        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">아이 앱의 <b>Service Worker</b>가 오프라인 큐에 행동을 잠깐 저장해두고, 재연결되면 <b>고유 키(멱등 키)</b>로 서버에 전송해 중복 지급을 막음</div></div>
+        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">화면엔 <b>“오프라인”</b> 표시만 뜨고, 다시 연결되면 자동으로 별이 반영됨 — 아이가 따로 뭘 다시 누를 필요가 없음</div></div>
+      </div>
+      <div class="techcard">
+        <div class="tn">기술 ④</div>
+        <h3>“이번 달 얼마나 자랐는지”를 말로 설명해주는 기술</h3>
+        <p class="desc">숫자(별 개수·완료 미션 수)만 보여주는 대신, 한 줄 요약 문장으로 성장을 설명합니다.</p>
+        <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>AWS Bedrock</b>(Claude, 서울 리전)을 이 기능 하나에만 사용. 아동 식별 정보 없이 집계 수치만 넘김</div></div>
+        <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">월간 숲 화면 상단에 “이번 달엔 저축을 3번 더 실천했어요” 같은 한 줄이 뜸. 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 <b>있으면 좋은 설명</b>이지 서비스의 전제가 아님</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §3·§4</div>
 </section>
 
 </div></div>
 
 <div id="ov">
-  <h2>제목만 이어 읽기 — 12장</h2>
+  <h2>제목만 이어 읽기 — 13장</h2>
   <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
   <div class="grid" id="ovg"></div>
 </div>
 
 <div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
 <div id="tmr">⏱ —</div>
-<div id="hud"><span id="pg"><b>1</b> / 12</span><span id="blk"></span>
+<div id="hud"><span id="pg"><b>1</b> / 13</span><span id="blk"></span>
   <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
 
 <div id="help"><div class="box">
@@ -481,7 +531,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 12장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 13장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
 </div></div>
 
 <script>
