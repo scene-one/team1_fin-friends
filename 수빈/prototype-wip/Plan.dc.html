@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #EFEAE1; }
+    a { color: #B36B3A; text-decoration: none; }
+    a:hover { color: #8E5228; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+<div style="width: 100%; max-width: 390px; margin: 0 auto; min-height: 900px; background: #FAF7F1; color: #2A2724; font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif; display: flex; flex-direction: column;">
+
+  <div style="padding: 26px 20px 0 20px;">
+    <div style="font-size: 11px; letter-spacing: 0.1em; color: #9C948A; font-weight: 700;">가기 전에</div>
+    <div style="margin-top: 8px; font-size: 25px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.3;">오늘 어디서<br>얼마 쓸 거예요?</div>
+    <div style="margin-top: 10px; font-size: 12.5px; color: #6B655D; line-height: 1.55;">적어두면 나중에 <b>진짜로 그렇게 썼는지</b> 같이 볼 수 있어요.</div>
+  </div>
+
+  <!-- AC-022 · 오늘 계획 0건일 때만 뜨는 조건부 진입 -->
+  <div style="display: {{dNudge}}; margin: 16px 20px 0 20px; padding: 14px 16px; border-radius: 14px; background: #F7EEE6; border: 1px solid #E6D3C0; flex-direction: column; gap: 6px;">
+    <div style="display: flex; align-items: center; gap: 7px;">
+      <span style="font-size: 14px;">🔔</span>
+      <span style="font-size: 12.5px; font-weight: 800; color: #8E5228;">{{nudgeTitle}}</span>
+    </div>
+    <div style="font-size: 11.5px; color: #8A6A55; line-height: 1.55;">{{nudgeBody}}</div>
+    <div style="font-size: 10.5px; color: #B08574; font-family: ui-monospace, monospace;">{{nudgeMeta}}</div>
+  </div>
+
+  <!-- 작성 카드 -->
+  <div style="display: {{dForm}}; margin: 16px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; flex-direction: column; gap: 18px;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span style="font-size: 11px; letter-spacing: 0.08em; color: #9C948A; font-weight: 700;">계획 카드</span>
+      <span style="font-size: 11px; font-weight: 800; color: {{tapColor}};">{{tapText}}</span>
+    </div>
+
+    <!-- ① 날짜 -->
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; font-weight: 800; color: #7E786F;">언제</div>
+      <div style="display: flex; gap: 8px;">
+        <sc-for list="{{dates}}" as="d" hint-placeholder-count="3">
+          <div onClick="{{d.pick}}" style="flex-grow: 1; padding: 12px 6px; border-radius: 11px; background: {{d.bg}}; border: {{d.border}}; text-align: center; font-size: 13px; font-weight: {{d.weight}}; color: {{d.color}}; cursor: pointer;">{{d.label}}</div>
+        </sc-for>
+      </div>
+      <!-- AC-020-4 · 지난 날짜는 저장이 거부된다 -->
+      <div style="display: {{dPastWarn}}; padding: 11px 13px; border-radius: 10px; background: #F9E9E4; border: 1px solid #E4BCAE; font-size: 11.5px; color: #A2452C; line-height: 1.5;">지난 날은 계획을 적을 수 없어요. <b>오늘이나 내일</b>로 골라 주세요.</div>
+    </div>
+
+    <!-- ② 어디서 -->
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; font-weight: 800; color: #7E786F;">어디서</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+        <sc-for list="{{places}}" as="p" hint-placeholder-count="4">
+          <div onClick="{{p.pick}}" style="padding: 11px 14px; border-radius: 11px; background: {{p.bg}}; border: {{p.border}}; font-size: 13px; font-weight: {{p.weight}}; color: {{p.color}}; cursor: pointer;">{{p.label}}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- ③ 얼마까지 -->
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <span style="font-size: 12px; font-weight: 800; color: #7E786F;">얼마까지</span>
+        <span style="font-size: 11px; color: #9C948A;">쓸 수 있는 돈 5,200원</span>
+      </div>
+      <div style="display: flex; gap: 7px;">
+        <sc-for list="{{amounts}}" as="a" hint-placeholder-count="4">
+          <div onClick="{{a.pick}}" style="flex-grow: 1; padding: 13px 4px; border-radius: 11px; background: {{a.bg}}; border: {{a.border}}; text-align: center; font-size: 13px; font-weight: {{a.weight}}; color: {{a.color}}; cursor: pointer;">{{a.label}}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding: 13px 15px; border-radius: 12px; background: #F4F6F1; border: 1px solid #E3E8DE; font-size: 12px; color: #4E6B4A; line-height: 1.6;">{{summary}}</div>
+
+    <div onClick="{{save}}" style="padding: 17px; border-radius: 14px; background: {{saveBg}}; color: {{saveColor}}; font-size: 16px; font-weight: 800; text-align: center; cursor: pointer;">{{saveText}}</div>
+  </div>
+
+  <!-- 저장 완료 -->
+  <div style="display: {{dSaved}}; margin: 16px 20px 0 20px; background: #F4F6F1; border: 1px solid #E3E8DE; border-radius: 18px; padding: 22px 18px; flex-direction: column; align-items: center; gap: 8px;">
+    <div style="font-size: 24px;">✅</div>
+    <div style="font-size: 14px; font-weight: 800; color: #2F5A2C;">적어뒀어요</div>
+    <div style="font-size: 12px; color: #4E6B4A; text-align: center; line-height: 1.6;">{{summary}}<br>쓰고 나면 여기서 <b>맞춰볼 수</b> 있어요.</div>
+    <div onClick="{{again}}" style="margin-top: 4px; padding: 10px 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DDE5D8; font-size: 12px; font-weight: 800; color: #3E6B3A; cursor: pointer;">다시 적기</div>
+  </div>
+
+  <!-- Empty -->
+  <div style="display: {{dEmpty}}; margin: 16px 20px 0 20px; padding: 30px 18px; border-radius: 18px; background: #FFFFFF; border: 1px dashed #DDD6CB; flex-direction: column; align-items: center; gap: 7px;">
+    <div style="font-size: 24px;">📝</div>
+    <div style="font-size: 13.5px; font-weight: 800;">아직 적은 계획이 없어요</div>
+    <div style="font-size: 11.5px; color: #9C948A; text-align: center; line-height: 1.55;">나가기 전에 한 번만 적어두면<br>돌아와서 맞춰볼 수 있어요.</div>
+  </div>
+
+  <!-- Loading -->
+  <div style="display: {{dLoading}}; margin: 16px 20px 0 20px; background: #FFFFFF; border: 1px solid #E5DFD5; border-radius: 18px; padding: 18px; flex-direction: column; gap: 13px;">
+    <div style="width: 30%; height: 10px; border-radius: 5px; background: #EBE6DE;"></div>
+    <div style="height: 42px; border-radius: 11px; background: #F4F1EB;"></div>
+    <div style="width: 24%; height: 10px; border-radius: 5px; background: #EBE6DE;"></div>
+    <div style="height: 42px; border-radius: 11px; background: #F4F1EB;"></div>
+    <div style="height: 50px; border-radius: 14px; background: #EFEAE1;"></div>
+  </div>
+
+  <!-- Error -->
+  <div style="display: {{dError}}; margin: 16px 20px 0 20px; padding: 24px 18px; border-radius: 18px; background: #F9E9E4; border: 1px solid #E4BCAE; flex-direction: column; align-items: center; gap: 9px;">
+    <div style="font-size: 13.5px; font-weight: 800; color: #A2452C;">계획을 저장하지 못했어요</div>
+    <div style="font-size: 11.5px; color: #8E5A48; text-align: center; line-height: 1.55;">적은 내용은 남아 있어요.<br>다시 눌러 볼까요?</div>
+    <div onClick="{{retry}}" style="margin-top: 2px; padding: 9px 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E4BCAE; font-size: 12px; font-weight: 800; color: #A2452C; cursor: pointer;">다시 시도</div>
+  </div>
+
+  <!-- 아트보드 검토용 -->
+  <div style="margin: 14px 20px 0 20px; display: flex; flex-direction: column; gap: 7px;">
+    <div style="display: flex; gap: 6px;">
+      <sc-for list="{{views}}" as="v" hint-placeholder-count="4">
+        <div onClick="{{v.pick}}" style="flex-grow: 1; padding: 8px 3px; border-radius: 9px; background: {{v.bg}}; border: {{v.border}}; text-align: center; font-size: 10.5px; font-weight: {{v.weight}}; color: {{v.color}}; cursor: pointer;">{{v.label}}</div>
+      </sc-for>
+    </div>
+    <div onClick="{{toggleDay}}" style="padding: 8px; border-radius: 9px; background: #FFFFFF; border: 1px solid #E5DFD5; text-align: center; font-size: 10.5px; font-weight: 700; color: #9C948A; cursor: pointer;">{{dayToggleLabel}}</div>
+  </div>
+
+  <div style="flex-grow: 1; min-height: 16px;"></div>
+
+  <div style="margin: 0 20px 22px 20px; padding: 12px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E5DFD5; display: flex; gap: 9px; align-items: flex-start;">
+    <span style="font-size: 13px; flex-shrink: 0;">🔒</span>
+    <div style="font-size: 11px; line-height: 1.55; color: #8A837A;">무엇을 살지, 어떤 가게인지는 <b>묻지 않아요.</b> 별은 <b>금액만</b> 보고 줍니다.</div>
+  </div>
+
+  <div style="border-top: 1px solid #E5DFD5; background: #FFFFFF; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));">
+    <div style="padding: 12px 0 16px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" stroke="#9C948A" stroke-width="1.8" stroke-linejoin="round"></path>
+      </svg>
+      <span style="font-size: 10px; font-weight: 700; color: #9C948A;">홈</span>
+    </div>
+    <div style="padding: 12px 0 16px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4z" stroke="#9C948A" stroke-width="1.8" stroke-linejoin="round"></path>
+        <path d="M20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z" stroke="#9C948A" stroke-width="1.8" stroke-linejoin="round"></path>
+      </svg>
+      <span style="font-size: 10px; font-weight: 700; color: #9C948A;">학습</span>
+    </div>
+    <div style="padding: 12px 0 16px 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="6" width="18" height="13" rx="2.5" fill="#F2E4D6" stroke="#B36B3A" stroke-width="1.8"></rect>
+        <path d="M3 10.5h18" stroke="#B36B3A" stroke-width="1.8"></path>
+      </svg>
+      <span style="font-size: 10px; font-weight: 800; color: #B36B3A;">내 통장</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // view: form | saved | empty | loading | error
+    this.state = { view: 'form', date: 'today', place: null, amount: null, weekday: true };
+  }
+  renderVals() {
+    const st = this.state;
+
+    // ── ① 날짜 · 기본값은 오늘 (AC-020-1) ──────────────
+    const dateDefs = [
+      { id: 'yesterday', label: '어제', past: true },
+      { id: 'today', label: '오늘', past: false },
+      { id: 'tomorrow', label: '내일', past: false }
+    ];
+    const isPast = st.date === 'yesterday';
+    const dates = dateDefs.map((d) => ({
+      label: d.label,
+      pick: () => this.setState({ date: d.id }),
+      bg: st.date === d.id ? (d.past ? '#F9E9E4' : '#2A2724') : '#FAF7F1',
+      border: st.date === d.id ? (d.past ? '1.5px solid #E4BCAE' : 'none') : '1px solid #E5DFD5',
+      color: st.date === d.id ? (d.past ? '#A2452C' : '#FAF7F1') : '#9C948A',
+      weight: st.date === d.id ? '800' : '700'
+    }));
+
+    // ── ② 어디서 (품목·업종은 받지 않는다 · DR-05) ─────
+    const placeDefs = ['다이소', '편의점', '문구점', '분식집'];
+    const places = placeDefs.map((label) => ({
+      label,
+      pick: () => this.setState({ place: label }),
+      bg: st.place === label ? '#F7EEE6' : '#FAF7F1',
+      border: st.place === label ? '1.5px solid #B36B3A' : '1px solid #E5DFD5',
+      color: st.place === label ? '#8E5228' : '#6B655D',
+      weight: st.place === label ? '800' : '700'
+    }));
+
+    // ── ③ 얼마까지 ────────────────────────────────────
+    const amountDefs = [1000, 2000, 3000, 5000];
+    const amounts = amountDefs.map((n) => ({
+      label: n.toLocaleString('ko-KR'),
+      pick: () => this.setState({ amount: n }),
+      bg: st.amount === n ? '#F7EEE6' : '#FAF7F1',
+      border: st.amount === n ? '1.5px solid #B36B3A' : '1px solid #E5DFD5',
+      color: st.amount === n ? '#8E5228' : '#6B655D',
+      weight: st.amount === n ? '800' : '700'
+    }));
+
+    // AC-020-3 · 3탭 이내 (날짜는 오늘이 기본값이라 탭이 필요 없다)
+    const taps = (st.place ? 1 : 0) + (st.amount ? 1 : 0);
+    const ready = !!st.place && !!st.amount && !isPast;
+    const dateLabel = st.date === 'tomorrow' ? '내일' : st.date === 'yesterday' ? '어제' : '오늘';
+
+    const viewDefs = [
+      { id: 'form', label: '작성' },
+      { id: 'empty', label: '비어있음' },
+      { id: 'loading', label: '불러오는 중' },
+      { id: 'error', label: '오류' }
+    ];
+
+    return {
+      dates, places, amounts,
+      dPastWarn: isPast ? 'block' : 'none',
+
+      tapText: taps + ' / 2 탭',
+      tapColor: ready ? '#3E6B3A' : '#9C948A',
+
+      summary: (st.place && st.amount)
+        ? dateLabel + ' · ' + st.place + ' · ' + st.amount.toLocaleString('ko-KR') + '원까지'
+        : '어디서 · 얼마까지를 고르면 여기에 보여요',
+
+      save: () => { if (ready) this.setState({ view: 'saved' }); },
+      saveText: isPast ? '지난 날은 적을 수 없어요' : ready ? '이렇게 적어둘게요' : '어디서 · 얼마까지를 골라 주세요',
+      saveBg: ready ? '#2A2724' : '#E5DFD5',
+      saveColor: ready ? '#FAF7F1' : '#A8A199',
+      again: () => this.setState({ view: 'form', place: null, amount: null }),
+      retry: () => this.setState({ view: 'form' }),
+
+      // AC-022 · 오늘 계획 0건일 때만 · 평일은 하교 시간대, 주말은 09:00
+      dNudge: st.view === 'form' ? 'flex' : 'none',
+      nudgeTitle: st.weekday ? '오늘 쓸 계획 세웠어?' : '주말이에요. 오늘 쓸 계획 세웠어?',
+      nudgeBody: st.weekday
+        ? '학교 끝날 때쯤 한 번만 물어봐요. 이미 적은 날은 묻지 않아요.'
+        : '주말은 아침에 한 번만 물어봐요. 이미 적은 날은 묻지 않아요.',
+      nudgeMeta: st.weekday ? '평일 · 하교 시간대(부모 설정) · 오늘 계획 0건일 때만' : '주말 · 09:00 · 오늘 계획 0건일 때만',
+      toggleDay: () => this.setState({ weekday: !st.weekday }),
+      dayToggleLabel: st.weekday ? '평일 알림 보는 중 · 눌러서 주말로' : '주말 알림 보는 중 · 눌러서 평일로',
+
+      dForm: st.view === 'form' ? 'flex' : 'none',
+      dSaved: st.view === 'saved' ? 'flex' : 'none',
+      dEmpty: st.view === 'empty' ? 'flex' : 'none',
+      dLoading: st.view === 'loading' ? 'flex' : 'none',
+      dError: st.view === 'error' ? 'flex' : 'none',
+
+      views: viewDefs.map((v) => ({
+        label: v.label,
+        pick: () => this.setState({ view: v.id }),
+        bg: st.view === v.id ? '#2A2724' : '#FFFFFF',
+        border: st.view === v.id ? 'none' : '1px solid #E5DFD5',
+        color: st.view === v.id ? '#FAF7F1' : '#9C948A',
+        weight: st.view === v.id ? '800' : '700'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
