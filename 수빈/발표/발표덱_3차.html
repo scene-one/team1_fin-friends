@@ -492,9 +492,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 
 <div id="rail"></div>
 
-<!-- 1 ── 표지 (v2 p1 계승) -->
+<!-- 1 ── 표지 -->
 <section class="slide cover" data-blk="블록 1 · 표지" data-sec="15"
- data-note="핀프렌즈입니다. 초등 1~3학년 자녀의 용돈 서비스인데, 저희가 보여드리는 건 <em>얼마를 썼는지가 아니라 얼마나 자랐는지</em>입니다.<br>3차에서는 이 아이디어를 <em>PRD와 SRS로 명세하고, 이슈로 쪼개고, 화면까지 구현</em>했습니다."
+ data-note="핀프렌즈입니다. 초등 1~3학년 자녀의 용돈 서비스인데, 저희가 보여드리는 건 <em>얼마를 썼는지가 아니라 얼마나 자랐는지</em>입니다.<br>3차에서는 이 아이디어를 <em>제품 기획서와 요구사항 명세서로 옮기고, 이슈로 쪼개서, 화면까지</em> 만들었습니다."
  data-br="먼저 2차까지 무엇을 찾았는지 한 장으로 정리하겠습니다.">
   <div class="brand">F I N F R I E N D S</div>
   <h1>아이가 얼마를 <em>‘썼는지’</em>보다,<br>얼마나 <em>‘자랐는지’</em> 보여줍니다</h1>
@@ -503,39 +503,38 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="phone"><div class="nub"></div><div class="wm">FINFRIENDS</div></div>
 </section>
 
-<!-- 2 ── 기존 분석 요약 (v2 p2·p3·p7 압축) -->
-<section class="slide" data-blk="블록 2 · 배경" data-sec="35"
- data-note="2차까지 찾은 걸 한 장으로 줄이면 이렇습니다.<br>부모가 가르치고 싶은 1순위는 저축인데 <em>65.8%</em>, 아이가 실제로 저축하는 건 <em>12.8%</em>. 53%p가 벌어져 있습니다.<br>왜 그런지는 국제 메타분석이 답을 줍니다. 금융교육은 <em>지식은 +0.33 SD 늘리는데 행동은 +0.07 SD</em>밖에 못 바꿉니다. 약 다섯 배 차이예요.<br>지금 앱들은 전부 <em>가르치는 쪽</em>만 하고 있습니다. 그래서 저희가 푸는 문제는 두 개입니다 — 아이가 <em>해보지 않는다</em>, 부모가 <em>해봤는지 확인할 수 없다</em>."
+<!-- 2 ── 배경 -->
+<section class="slide" data-blk="블록 2 · 배경" data-sec="30"
+ data-note="2차까지 찾은 걸 한 장으로 줄이면 이렇습니다.<br>부모가 가르치고 싶은 1순위는 저축인데 <em>65.8%</em>, 아이가 실제로 저축하는 건 <em>12.8%</em>. 53%p가 벌어져 있습니다.<br>왜 그런지는 국제 연구가 답을 줍니다. 금융교육은 <em>지식은 크게 늘리는데 행동은 거의 못 바꿉니다.</em> 약 다섯 배 차이예요.<br>지금 앱들은 전부 <em>가르치는 쪽</em>만 하고 있습니다. 그래서 저희가 푸는 문제는 두 개입니다 — 아이가 <em>해보지 않는다</em>, 부모가 <em>해봤는지 확인할 수 없다</em>."
  data-br="이번 3차에서는 이 두 문제를 어디까지 다뤘는지 말씀드리겠습니다.">
   <div class="kicker">배경 <span>· 1~2차에서 가져온 것</span></div>
   <h1>부모 <em>66%</em>가 원하는 것을 아이는 <b>13%</b>만 하고 있습니다</h1>
   <div class="body">
     <div class="row">
-      <div class="col grow" style="gap:11px">
+      <div class="col grow" style="gap:12px">
         <div class="bars">
           <div class="bar"><div class="lb">부모가 가르치고 싶은 것</div><div class="tr"><div class="fl g" style="width:66%">저축 65.8% · 1위</div></div></div>
           <div class="bar"><div class="lb">아이가 실제로 쓰는 곳</div><div class="tr"><div class="fl r" style="width:13%">12.8%</div></div></div>
         </div>
-        <div class="card r" style="padding:14px 18px"><h3>연구가 말하는 것 — 국제 메타분석 37개 실험</h3>
-          <p>금융교육 → 지식 <strong>+0.33 SD</strong> · 금융교육 → 행동 <strong>+0.07 SD</strong><br><strong>차이 약 5배</strong> — 가르치는 것과 행동을 바꾸는 것은 다른 문제입니다</p></div>
+        <div class="card r" style="padding:15px 19px"><h3>연구가 말하는 것 — 37개 실험을 모은 국제 연구</h3>
+          <p>금융교육으로 <strong>아는 것은 크게 늘지만(+0.33)</strong> <strong>행동은 거의 안 바뀝니다(+0.07)</strong><br><strong>약 5배 차이</strong> — 가르치는 것과 행동을 바꾸는 것은 다른 문제입니다 <span style="font-size:13px;color:var(--grey)">(효과크기 기준)</span></p></div>
       </div>
-      <div class="col" style="width:404px;flex:none;gap:11px">
+      <div class="col" style="width:412px;flex:none;gap:12px">
         <div class="tss">
-          <div class="s t1"><div class="lb">TAM</div><div class="vv">2.6조원</div><div class="ds">키즈 금융 플랫폼</div></div>
-          <div class="s t2"><div class="lb">SAM</div><div class="vv">5,700억</div><div class="ds">게임 요소 디지털</div></div>
-          <div class="s t3"><div class="lb">SOM</div><div class="vv">29.3만</div><div class="ds">1차 타깃 가구</div></div>
+          <div class="s t1"><div class="lb">전체 시장</div><div class="vv">2.6조원</div><div class="ds">키즈 금융 플랫폼</div></div>
+          <div class="s t2"><div class="lb">유효 시장</div><div class="vv">5,700억</div><div class="ds">게임 요소 디지털</div></div>
+          <div class="s t3"><div class="lb">첫 타깃</div><div class="vv">29.3만</div><div class="ds">1년 내 만날 가구</div></div>
         </div>
-        <div class="card" style="padding:14px 17px"><h3>저희가 푸는 문제 두 개</h3>
+        <div class="card" style="padding:15px 18px"><h3>저희가 푸는 문제 두 개</h3>
           <p><strong>①</strong> 아이가 배운 걸 실제로 해보지 않습니다<br><strong>②</strong> 해봤는지를 부모가 확인할 수 없습니다</p></div>
       </div>
     </div>
   </div>
-  <div class="src">초등 학부모 <b>586명</b> 저축 희망 65.8%(1위) ↔ 실제 저축 12.8%(최하위) · 국제 <b>메타분석 37개 실험</b> 지식 +0.33 SD vs 행동 +0.07 SD · 정기 용돈 가구 81.8만 중 1차 타깃 29.3만 · 기준 서비스 퍼핀</div>
 </section>
 
-<!-- 3 ── 이번 Scope (신규) -->
-<section class="slide" data-blk="블록 2 · 배경" data-sec="35"
- data-note="3차 나흘 동안 무엇을 했느냐면, <em>아이디어를 명세로 바꿨습니다.</em><br>PRD를 0.3으로 올리고, <em>SRS를 새로 썼고</em>, 지식베이스 45장을 사이트로 배포했고, 이슈 13건으로 쪼개서 화면 8개를 고쳤습니다.<br>그런데 더 중요한 건 오른쪽입니다 — <em>뺀 것들.</em> 봉투형을 폐기했고, 업종으로 판정하는 걸 아예 없앴고, 반대로 잠가뒀던 「불리기」 실천은 다시 열었습니다.<br>넣은 것보다 <em>뺀 것에 근거가 더 많이 붙었습니다.</em>"
+<!-- 3 ── 이번 Scope -->
+<section class="slide" data-blk="블록 2 · 배경" data-sec="30"
+ data-note="3차 나흘 동안 무엇을 했느냐면, <em>아이디어를 명세로 바꿨습니다.</em><br>제품 기획서를 한 단계 올리고, <em>요구사항 명세서를 새로 썼고</em>, 지식베이스 45장을 사이트로 배포했고, 이슈 13건으로 쪼개서 화면 8개를 고쳤습니다.<br>그런데 더 중요한 건 오른쪽입니다 — <em>뺀 것들.</em> 위치 알림을 없앴고, 가게 종류로 판정하던 것도 없앴고, 반대로 잠가뒀던 「불리기」 실천은 다시 열었습니다.<br>넣은 것보다 <em>뺀 것에 근거가 더 많이 붙었습니다.</em>"
  data-br="그 근거가 어디에 쌓여 있는지부터 보여드리겠습니다.">
   <div class="kicker">배경 <span>· 이번 3차의 범위</span></div>
   <h1>아이디어를 <em>판정 가능한 명세</em>로 바꾼 나흘입니다</h1>
@@ -543,385 +542,262 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     <div class="scp">
       <div class="sc did"><div class="st5">✔ 이번에 한 것</div>
         <ul>
-          <li>PRD <b>v0.2 → v0.3</b></li>
-          <li><b>SRS v1.0 신규</b> — ISO/IEC/IEEE 29148</li>
-          <li>Knowledge Base <b>45장</b> · 사이트 배포</li>
-          <li>GitHub 이슈 <b>13건</b> → draft PR <b>8건</b></li>
+          <li>제품 기획서 <b>한 단계 개정</b></li>
+          <li><b>요구사항 명세서 신규 작성</b><br><span style="font-size:12.5px;color:var(--grey)">국제 표준 ISO/IEC/IEEE 29148 형식</span></li>
+          <li>지식베이스 <b>45장</b> · 사이트 배포</li>
+          <li>이슈 <b>13건</b> → 검토 요청 <b>8건</b></li>
           <li>프로토타입 화면 <b>8개</b> 개정</li>
         </ul></div>
       <div class="sc cut"><div class="st5">✂ 이번에 뺀 것 · 되돌린 것</div>
         <ul>
-          <li><b>F14 · F19 삭제</b></li>
-          <li><b>봉투형 폐기</b> — 판정 경로 없음</li>
-          <li><b>업종 판정 폐기</b> <span class="id">DR-05</span></li>
+          <li><b>위치 알림 삭제</b> — 매장 3분 체류 알림</li>
+          <li><b>사전 개입 트리거 삭제</b></li>
+          <li><b>가게 종류로 판정하기 폐기</b></li>
           <li><b>「불리기」 실천 복원</b> — 잠금 해제</li>
-          <li>미션 <b>72h 자동 지급 확정</b> <span class="id">ADR-016</span></li>
+          <li>미션 <b>72시간 자동 지급 확정</b></li>
         </ul></div>
       <div class="sc out"><div class="st5">◻ 이번 범위 밖</div>
         <ul>
-          <li>백엔드 구현 — <b>SYS 5건</b></li>
-          <li>실제 결제 연동 — β는 <b>모의</b></li>
+          <li>서버 구현 — <b>시스템 5건</b></li>
+          <li>실제 결제 연동 — 베타는 <b>모의</b></li>
           <li>부모 인터뷰 — <b>0건</b></li>
-          <li>MVP 실측 지표</li>
+          <li>실사용 지표 측정</li>
         </ul></div>
     </div>
     <div class="anz">
-      <div class="ah"><span class="m">Scope 원칙</span><span class="t">판정할 수 없는 것에는 보상을 붙이지 않는다</span></div>
+      <div class="ah"><span class="m">범위를 정한 기준</span><span class="t">판정할 수 없는 것에는 보상을 붙이지 않는다</span></div>
       <div class="ab">
-        <div class="kv"><div class="k">봉투형을 뺀 이유</div><div class="v">결제 승인은 <b>가맹점당 업종 코드 하나</b>뿐 — 편의점에서 과자와 지우개를 함께 사면 어느 분류도 맞지 않음</div></div>
+        <div class="kv"><div class="k">위치 알림을 뺀 이유</div><div class="v">타깃 아이 상당수가 <b>키즈워치</b>를 씁니다 · 3분 체류로는 <i>30초에 끝나는 자판기</i>를 못 잡습니다</div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">「불리기」를 되돌린 이유</div><div class="v">부모 적금 <b>합의 기록</b>은 앱 안 행위라 <i>판정이 된다</i></div></div>
+        <div class="kv"><div class="k">「불리기」를 되돌린 이유</div><div class="v">부모와의 적금 <b>합의 기록</b>은 앱 안에서 일어나 <i>판정이 됩니다</i></div></div>
       </div>
     </div>
   </div>
-  <div class="src">3차 기간 2026-08-31 ~ 09-03 (4일) · <b>PRD_핀프렌즈_v0_3.md</b> · <b>SRS_핀프렌즈_v1_0.md</b> · <b>wiki/</b> 45장 · Issue #1~#13 · PR #14~#21</div>
 </section>
 
-<!-- 4 ── KB 구조 (신규) -->
-<section class="slide" data-blk="블록 3 · KB" data-sec="35"
- data-note="근거는 이렇게 쌓았습니다. <em>원문은 원문대로 두고</em>, 요약을 따로 만들고, 그걸 서로 링크해서 지식베이스로 만들었습니다.<br>총 <em>45장</em>이고 여덟 계층입니다. 이론, 시장, 사용자, 규칙, 기능, 제품. 그리고 결정마다 <em>「결정 배경」이라는 절</em>이 있어요. 왜 그렇게 정했는지가 거기 삽니다.<br>3차에서 새로 조사한 건 아래 줄입니다. 초등 교육과정에 맞춘 <em>학습 난이도 5단계</em>와 퀴즈 60문항, 초1~3이 언제 어디서 무엇을 사는지 <em>실측 자료</em>, 그리고 법령조사요.<br>이건 슬라이드보다 <em>사이트를 직접 띄워서</em> 그래프 뷰를 보여드리는 게 빠릅니다."
- data-br="이 근거 위에서 PRD가 무엇을 목표로 잡았는지 보겠습니다.">
-  <div class="kicker">Knowledge Base <span>· 구조와 추가 리서치</span></div>
+<!-- 4 ── KB -->
+<section class="slide" data-blk="블록 3 · KB" data-sec="30"
+ data-note="근거는 이렇게 쌓았습니다. <em>원문은 원문대로 두고</em>, 요약을 따로 만들고, 그걸 서로 링크해서 지식베이스로 만들었습니다.<br>총 <em>45장</em>이고 여덟 계층입니다. 이론, 시장, 사용자, 규칙, 기능, 제품. 그리고 결정마다 <em>「결정 배경」이라는 절</em>이 있어요. 왜 그렇게 정했는지가 거기 삽니다.<br>3차에서 새로 조사한 건 아래 줄입니다. 초등 교육과정에 맞춘 <em>학습 난이도 5단계</em>와 퀴즈 60문항, 초1~3이 언제 어디서 무엇을 사는지 <em>실측 자료</em>, 그리고 법령조사요.<br>이건 슬라이드보다 <em>사이트를 직접 띄워서</em> 보여드리는 게 빠릅니다."
+ data-br="이 근거 위에서 제품 기획서가 무엇을 목표로 잡았는지 보겠습니다.">
+  <div class="kicker">지식베이스 <span>· 구조와 추가 리서치</span></div>
   <h1>원문은 <em>그대로 두고</em>, 요약을 링크해 쌓았습니다</h1>
   <div class="body">
-    <div class="flow" style="margin-bottom:13px">
-      <div class="n">raw/ <small>원문 9개 수집함 · 요약하지 않음</small></div><div class="s">→</div>
-      <div class="n">70-원본요약 <small>문서 단위 요약</small></div><div class="s">→</div>
-      <div class="n">80-종합 <small>여러 원본을 가로지른 결론</small></div><div class="s">→</div>
-      <div class="n k">wiki 본문 <small>서로 링크된 45장</small></div>
+    <div class="flow" style="margin-bottom:14px">
+      <div class="n">원본 보관 <small>통계 · 논문 · 약관 · 리뷰 원문 그대로</small></div><div class="s">→</div>
+      <div class="n">문서 단위 요약 <small>원본과 1:1</small></div><div class="s">→</div>
+      <div class="n">가로지른 결론 <small>여러 원본을 종합</small></div><div class="s">→</div>
+      <div class="n k">지식베이스 <small>서로 링크된 45장</small></div>
     </div>
     <div class="kbg">
-      <div class="kc"><div class="kn">10-제품 · 7</div><div class="kt">두 가치 선언 · 3층 구조</div><div class="kd">제품 정의의 최상위 문장</div></div>
-      <div class="kc"><div class="kn">20-기능 · 10</div><div class="kt">성장 나무 · 소비 계획 카드</div><div class="kd">기능마다 「🧭 결정 배경」</div></div>
-      <div class="kc"><div class="kn">30-사용자 · 3</div><div class="kt">정미경 H1 · 배성우 H2</div><div class="kd">Pain 코드 8건</div></div>
-      <div class="kc"><div class="kn">40-시장 · 6</div><div class="kt">퍼핀 · 아이부자 · 카카오뱅크</div><div class="kd">대안 대비 벤치마크</div></div>
-      <div class="kc"><div class="kn">50-이론 · 6</div><div class="kt">학습→행동 전이 격차</div><div class="kd">저축 격차 · MCC · 내재동기</div></div>
-      <div class="kc"><div class="kn">60-규칙 · 5</div><div class="kt">규제 상수 · 증거 등급</div><div class="kd">인용 금지 목록 · 측정가능성</div></div>
-      <div class="kc"><div class="kn">70-원본요약 · 5</div><div class="kt">원문 대응 요약</div><div class="kd">raw 와 1:1</div></div>
-      <div class="kc"><div class="kn">80-종합 · 3</div><div class="kt">예적금 기획 종합</div><div class="kd">여러 원본을 가로지른 결론</div></div>
+      <div class="kc"><div class="kn">제품 · 7장</div><div class="kt">두 가치 선언 · 3층 구조</div><div class="kd">제품 정의의 최상위 문장</div></div>
+      <div class="kc"><div class="kn">기능 · 10장</div><div class="kt">성장 나무 · 소비 계획 카드</div><div class="kd">기능마다 「결정 배경」</div></div>
+      <div class="kc"><div class="kn">사용자 · 3장</div><div class="kt">인물 2명 · 문제 8건</div><div class="kd">여정 11단계에서 뽑음</div></div>
+      <div class="kc"><div class="kn">시장 · 6장</div><div class="kt">퍼핀 · 아이부자 · 카카오뱅크</div><div class="kd">대안 대비 비교표</div></div>
+      <div class="kc"><div class="kn">이론 · 6장</div><div class="kt">학습 → 행동 전이 격차</div><div class="kd">저축 격차 · 내재동기</div></div>
+      <div class="kc"><div class="kn">규칙 · 5장</div><div class="kt">규제 상수 · 증거 등급</div><div class="kd">인용 금지 목록</div></div>
+      <div class="kc"><div class="kn">원본 요약 · 5장</div><div class="kt">원문 대응 요약</div><div class="kd">어디서 왔는지 표시</div></div>
+      <div class="kc"><div class="kn">종합 · 3장</div><div class="kt">예적금 기획 종합</div><div class="kd">여러 원본을 가로지른 결론</div></div>
     </div>
     <div class="anz">
-      <div class="ah"><span class="m">3차 추가 리서치</span><span class="t">이번에 새로 조사해 KB 에 붙인 것</span></div>
+      <div class="ah"><span class="m">3차 추가 리서치</span><span class="t">이번에 새로 조사해 지식베이스에 붙인 것</span></div>
       <div class="ab">
-        <div class="kv"><div class="k">학습 설계</div><div class="v">난이도 <b>5단계</b> 설계안 · 퀴즈 <b>60문항</b> · 지문 4종 × 퀴즈 연결</div></div>
+        <div class="kv"><div class="k">학습 설계</div><div class="v">난이도 <b>5단계</b> 설계안 · 퀴즈 <b>60문항</b> · 지문 4종과 퀴즈 연결</div></div>
         <div class="sep"></div>
         <div class="kv"><div class="k">소비 실측</div><div class="v">초1~3 <b>요일 · 장소 · 품목</b> 패턴 · 어린이 예적금 <b>6종</b> 비교</div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">규제 · 경쟁</div><div class="v">법령조사 · 퍼핀 약관 원문 <b>4종</b> · 리뷰 분류 · 교차산업 벤치마킹</div></div>
+        <div class="kv"><div class="k">규제 · 경쟁</div><div class="v">법령조사 · 경쟁사 약관 원문 <b>4종</b> · 리뷰 분류 · 다른 업계 사례</div></div>
       </div>
     </div>
   </div>
-  <div class="src">사이트 — <b>scene-one.github.io/team1_fin-friends</b> (Quartz · GitHub Pages 자동 배포) · 본문 45장 + index · log · README · 원본 <b>raw/</b> 9개 수집함</div>
 </section>
 
-<!-- 5 ── PRD 핵심 목표 -->
-<section class="slide" data-blk="블록 4 · PRD·SRS" data-sec="35"
- data-note="PRD입니다. 2차에서 찾은 문제 여덟 개 중 <em>세 개만 골랐습니다.</em> 아픈 정도와 시장 도달을 곱해서 걸렀어요.<br>그 세 개를 <em>사용자 스토리 열한 개</em>로 쪼갰고, 스토리마다 수용 기준을 붙였습니다.<br>목표는 하나입니다 — <em>이번 주에 실제로 뭔가 해본 아이의 비율.</em> 접속만, 퀴즈만으로는 분자에 안 들어갑니다.<br>그리고 부록 E에 <em>결정 열일곱 건을 되돌릴 조건까지 함께</em> 적었습니다. 「이렇게 정한다」가 아니라 「이게 틀리면 이렇게 되돌린다」까지요."
- data-br="이 PRD가 SRS로 넘어가면서 무엇이 늘어났는지 보여드리겠습니다.">
-  <div class="kicker">PRD v0.3 <span>· 핵심 목표</span></div>
+<!-- 5 ── [5p] 제품 기획서 핵심 목표 -->
+<section class="slide" data-blk="블록 4 · 기획·명세" data-sec="35"
+ data-note="제품 기획서입니다. 2차에서 찾은 문제 여덟 개 중 <em>세 개만 골랐습니다.</em> 아픈 정도와 시장 도달을 곱해서 걸렀어요.<br>그 세 개를 <em>사용자 스토리 열한 개</em>로 쪼갰고, 스토리마다 <em>「무엇이 되면 다 된 것인가」를 판정하는 문장</em>을 붙였습니다.<br>목표는 하나입니다 — <em>이번 주에 실제로 뭔가 해본 아이의 비율.</em> 접속만, 퀴즈만으로는 세지 않습니다.<br>그리고 결정 열일곱 건마다 <em>되돌릴 조건까지 함께</em> 적었습니다. 「이렇게 정한다」가 아니라 「이게 틀리면 이렇게 되돌린다」까지요."
+ data-br="이 기획서가 요구사항 명세서로 넘어가면서 무엇이 늘어났는지 보여드리겠습니다.">
+  <div class="kicker">제품 기획서 <span>· 핵심 목표</span></div>
   <h1>문제 <b>세 개</b>만 골라 <em>사용자 스토리 11개</em>로 쪼갰습니다</h1>
   <div class="body">
-    <div class="flow" style="margin-bottom:16px">
-      <div class="n">고객 문제 <small>Pain 코드 8건</small></div><div class="s">→</div>
+    <div class="flow" style="margin-bottom:17px">
+      <div class="n">고객 문제 <small>여정 11단계에서 8건</small></div><div class="s">→</div>
       <div class="n">★ 선별 <small>아픈 정도 × 시장 도달</small></div><div class="s">→</div>
-      <div class="n">사용자 스토리 <small>US-1 ~ US-11</small></div><div class="s">→</div>
-      <div class="n">수용 기준 <small>스토리마다 AC</small></div><div class="s">→</div>
-      <div class="n k">북극성 지표 <small>단 하나</small></div>
+      <div class="n">사용자 스토리 <small>11개</small></div><div class="s">→</div>
+      <div class="n">수용 기준 <small>다 됐는지 판정하는 문장</small></div><div class="s">→</div>
+      <div class="n k">성공 지표 <small>단 하나</small></div>
     </div>
     <div class="row">
-      <div class="card grow"><h3>C1 · 성장 증거 부재</h3>
-        <p><b class="id">US-1</b> 변화를 한 문장으로 읽는다<br><b class="id">US-3</b> 멈춘 이유를 화면에서 안다</p></div>
-      <div class="card grow"><h3>C2 · 실천 공백 → 나무 정체</h3>
-        <p><b class="id">US-2</b> 첫 실천 한 건이 나무에 반영된다<br><b class="id">US-6</b> 늦어도 한 일이 사라지지 않는다</p></div>
-      <div class="card grow"><h3>C5 · 사전 개입 사각지대</h3>
-        <p><b class="id">US-4</b> 쓰기 전에 미리 적어둔다<br><b class="id">US-5</b> 참은 날이 확인만 한 날과 다르다</p></div>
+      <div class="card grow"><h3>① 성장 증거가 없다</h3>
+        <p>부모가 보는 건 숫자 세 개뿐<br><strong>→</strong> 변화를 한 문장으로 읽는다<br><strong>→</strong> 멈춘 이유를 화면에서 안다</p></div>
+      <div class="card grow"><h3>② 실천이 비어 나무가 멈춘다</h3>
+        <p>배운 것이 생활로 넘어가지 않음<br><strong>→</strong> 첫 실천 한 건이 나무에 반영된다<br><strong>→</strong> 늦어도 한 일이 사라지지 않는다</p></div>
+      <div class="card grow"><h3>③ 쓰기 직전에 개입할 수단이 없다</h3>
+        <p>돈은 이미 나간 뒤에 보임<br><strong>→</strong> 쓰기 전에 미리 적어둔다<br><strong>→</strong> 참은 날이 확인만 한 날과 다르다</p></div>
     </div>
     <div class="anz">
       <div class="ah"><span class="m">목표</span><span class="t">「만들었다」로 끝내지 않기 위해 판정 가능한 것만 목표로 둡니다</span></div>
       <div class="ab">
-        <div class="kv"><div class="k">북극성 지표 (WPA)</div><div class="v">이번 주에 <b>실제로 뭔가 해본 아이</b>의 비율 — 접속만 · 퀴즈만은 분자 제외</div></div>
+        <div class="kv"><div class="k">성공 지표 단 하나</div><div class="v">이번 주에 <b>실제로 뭔가 해본 아이</b>의 비율 — 접속만 · 퀴즈만은 세지 않음</div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">생존 조건</div><div class="v">계획 카드 작성률 <b>50% 이상</b></div></div>
+        <div class="kv"><div class="k">그 위의 생존 조건</div><div class="v">아이가 계획을 적는 비율 <b>50% 이상</b></div></div>
         <div class="sep"></div>
         <div class="kv"><div class="k">절대 넘지 말 선</div><div class="v"><i>모두 0건</i> — 별 개수 오차 · 동의 전 진입 · 위치 수집</div></div>
       </div>
     </div>
   </div>
-  <div class="src">출처 — <b>PRD_핀프렌즈_v0_3.md</b> §0-3 고객 문제 코드 8건 · §3 사용자 스토리 US-1~11 · §1-3 북극성/가드레일 · <b>부록 E · ADR 17건</b>(결정마다 되돌릴 조건 병기)</div>
 </section>
 
-<!-- 6 ── 기능과 AC -->
-<section class="slide" data-blk="블록 4 · PRD·SRS" data-sec="40"
- data-note="SRS로 넘어오면 스토리 <em>한 줄이 명세 한 덩어리</em>가 됩니다.<br>기능마다 칸이 네 개로 고정돼 있습니다 — 입력, 처리, 출력, <em>그리고 예외.</em> 예외 칸이 비면 명세로 인정하지 않았습니다.<br>여기 보시는 게 성장 나무 FR-030입니다. 처리 칸에 <em>세 조건을 모두 충족해야 승급한다</em>가 박혀 있고, 아래 수용 기준 첫 줄이 <em>실패 케이스</em>예요.<br>퀴즈 백 번 맞혀도 실천이 0이면 전부 새싹. 이 한 줄이 나중에 이슈가 되고 코드가 됩니다."
- data-br="예외 칸을 좀 더 자세히 보겠습니다. 사실 요구사항의 절반이 거기 있습니다.">
-  <div class="kicker">SRS v1.0 <span>· 기능 요구사항과 수용 기준</span></div>
+<!-- 6 ── [6p] 요구사항 · 예외 · 비기능 · 상태 -->
+<section class="slide" data-blk="블록 4 · 기획·명세" data-sec="50"
+ data-note="명세로 넘어오면 스토리 <em>한 줄이 명세 한 덩어리</em>가 됩니다.<br>기능마다 칸이 네 개로 고정돼 있습니다 — 입력, 처리, 출력, <em>그리고 예외.</em> 예외 칸이 비면 명세로 인정하지 않았습니다.<br>왼쪽이 성장 나무입니다. 처리 칸에 <em>세 조건을 모두 충족해야 자란다</em>가 박혀 있고, 아래 판정 문장 첫 줄이 <em>실패 케이스</em>예요. 퀴즈 백 번 맞혀도 실천이 0이면 전부 새싹입니다.<br>오른쪽 위가 예외인데, 판정 문장 마흔아홉 개 중 <em>열아홉 개가 실패 케이스</em>입니다. 이 서비스에서 <em>잘 안 되는 경우가 아이한테 직접 타격</em>이거든요. 부모가 사흘 안 누르면 아이는 「했는데 아무 일도 안 일어난」 겁니다. 그래서 72시간이면 자동으로 줍니다.<br>오른쪽 아래는 비기능인데, <em>규제가 성능보다 위</em>에 있습니다. 그리고 예외가 그대로 <em>화면의 상태 네 개</em>로 내려옵니다."
+ data-br="이게 실제로 이슈와 코드까지 이어졌는지 보여드리겠습니다.">
+  <div class="kicker">요구사항 명세서 <span>· 기능 · 예외 · 비기능 · 상태</span></div>
   <h1>스토리 한 줄이 <em>입력 · 처리 · 출력 · 예외</em>로 늘어납니다</h1>
   <div class="body">
-    <div class="row">
-      <div class="col" style="width:322px;flex:none">
-        <div class="split" style="flex-direction:column">
-          <div class="h2"><div class="t2">PRD v0.3</div>
-            <p><b class="id">US-3</b><br><strong>멈춘 이유를 화면에서 안다</strong></p></div>
-          <div class="h2" style="border-left:0;border-top:1px solid var(--line)"><div class="t2">SRS v1.0 — 무엇이 늘었나</div>
-            <p><strong>FR</strong> 41개 · <strong>NFR</strong> 55개<br><strong>DR</strong> 7개 · <strong>수용 기준</strong> 49개</p></div>
-        </div>
-        <div class="card a" style="padding:14px 17px;margin-top:12px"><p style="font-size:14px">§8 <strong>추적성 매트릭스</strong>가 US ↔ FR ↔ NFR ↔ 검증을 한 표로 묶습니다.<br><span class="id" style="font-size:13px">US-3 → FR-030 → AC-030-2</span></p></div>
-      </div>
-      <div class="grow col">
+    <div class="row" style="gap:14px">
+      <div class="col" style="width:566px;flex:none;gap:9px">
         <div class="spec">
-          <div class="sh"><span class="no">FR-030</span><span class="nm">성장 나무</span><span class="tail">PRD §4-1 F1 · US-1 · US-3</span></div>
+          <div class="sh"><span class="no">FR-030</span><span class="nm">성장 나무</span><span class="tail">기능 요구사항 41개 중 하나</span></div>
           <div class="r3"><div class="k">입력</div><div class="v">학습 완료 수, 퀴즈 정답 수, <b>실천 횟수(영역별)</b></div></div>
-          <div class="r3"><div class="k">처리</div><div class="v">영역별 기준표로 4단계를 판정한다. <b>세 조건을 모두 충족해야 승급한다</b></div></div>
-          <div class="r3"><div class="k">출력</div><div class="v">영역별 단계, <b>조건 단위 정체 원인 문구</b></div></div>
-          <div class="r3 ex"><div class="k">예외</div><div class="v">주기 종료 후 승인된 실천 → <b>주기 N에 귀속</b>하고 N+1 나무에 가산하지 않으며 <b>월간 숲 스냅샷에만</b> 반영</div></div>
+          <div class="r3"><div class="k">처리</div><div class="v">영역별 기준표로 4단계 판정 · <b>세 조건을 모두 충족해야 자란다</b></div></div>
+          <div class="r3"><div class="k">출력</div><div class="v">영역별 단계, <b>무엇이 남았는지 조건 단위 문구</b></div></div>
+          <div class="r3 ex"><div class="k">예외</div><div class="v">주기가 끝난 뒤 승인된 실천 → <b>지난 달에 넣고</b> 이번 달 나무에는 더하지 않는다</div></div>
         </div>
         <div class="acl">
           <div class="ac fail"><div class="no">AC-030-1</div><div class="tx"><b>(실패)</b> 퀴즈 정답 100회 · 실천 0회 → 모든 영역이 <b>🌱 새싹</b>에 머문다</div></div>
-          <div class="ac"><div class="no">AC-030-2</div><div class="tx">승급 조건 미충족 → <b>「실천 1회가 남았어요 · 학습·퀴즈는 충족」</b>처럼 조건 단위로 표시</div></div>
-          <div class="ac"><div class="no">AC-030-3</div><div class="tx">매월 1일 00:00 KST → 나무 초기화 · 직전 주기 스냅샷이 월간 숲에 확정</div></div>
+          <div class="ac"><div class="no">AC-030-2</div><div class="tx"><b>「실천 1회가 남았어요 · 학습·퀴즈는 충족」</b>처럼 조건 단위로 표시</div></div>
+        </div>
+        <div style="font-size:12.5px;color:var(--grey);line-height:1.5;padding-left:2px">
+          <b style="color:var(--sub)">FR</b> 기능 요구사항 41 · <b style="color:var(--sub)">NFR</b> 비기능 요구사항 55 · <b style="color:var(--sub)">AC</b> 수용 기준 49 — 스토리 한 줄이 이만큼으로 늘어납니다</div>
+      </div>
+      <div class="col grow" style="gap:9px">
+        <div class="card a" style="padding:13px 16px"><h3>예외 — 판정 문장 <b>49개 중 19개</b>가 「잘 안 될 때」</h3>
+          <p style="font-size:14px;line-height:1.55">· 미션 승인이 안 올 때 → <strong>72시간이면 자동 지급</strong>, 표시는 「확인하지 못했어요」<br>
+          · 부모 지갑이 비었을 때 → <strong>별과 실천은 주고 충전만 보류</strong><br>
+          · 적금 신청에 응답이 없을 때 → <strong>7일이면 만료</strong>, 문구는 「다시 이야기해요」</p>
+          <p style="margin-top:7px;font-size:13.5px;font-weight:700;color:var(--amber)">원칙 — 병목의 비용을 아이에게 물리지 않는다</p></div>
+        <div class="nfrl" style="gap:5px">
+          <div class="lv l0" style="padding:8px 14px;font-size:13px"><span class="rk" style="width:78px">1순위 · 상수</span><span class="tx">규제 — 동의 전 진입 차단 <b>100%</b> · 아이 앱에 부모 주소 <b>0건</b>(있으면 배포 차단) · 별 ↔ 현금 전환 경로 <b>코드에 부재</b></span></div>
+          <div class="lv l2" style="padding:8px 14px;font-size:13px"><span class="rk" style="width:78px">2·3순위</span><span class="tx">정합성 · 성능 — 성능은 <b>판정 문장에서 역산한 잠정치</b></span></div>
+          <div class="lv l4" style="padding:8px 14px;font-size:13px"><span class="rk" style="width:78px">아동 인지</span><span class="tx">아이 화면에 <b>% 안 씀</b> · 시간은 <b>주 단위 이하</b> · <b>「거절」 안 씀</b> · 움직임 최소화 설정 존중</span></div>
+        </div>
+        <div>
+          <div style="font-size:12.5px;font-weight:800;color:var(--sub);margin-bottom:6px">상태 — 화면 8개가 <span style="color:var(--green)">모두</span> 네 가지를 갖습니다</div>
+          <div class="stt">
+            <div class="s2 on" style="padding:8px 6px"><div class="n3" style="font-size:13px">정상</div></div>
+            <div class="s2" style="padding:8px 6px"><div class="n3" style="font-size:13px">비어있음</div></div>
+            <div class="s2" style="padding:8px 6px"><div class="n3" style="font-size:13px">불러오는 중</div></div>
+            <div class="s2 ex" style="padding:8px 6px"><div class="n3" style="font-size:13px">오류</div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="src">출처 — <b>SRS_핀프렌즈_v1_0.md</b> ISO/IEC/IEEE 29148:2018 · §4.4 FR-030 · §8 추적성 매트릭스 · 기능 41 · 비기능 55 · 데이터 7 · 수용 기준 49</div>
 </section>
 
-<!-- 7 ── 예외 -->
-<section class="slide" data-blk="블록 4 · PRD·SRS" data-sec="40"
- data-note="수용 기준 마흔아홉 개 중 <em>열아홉 개가 실패 케이스</em>입니다. 거의 절반이에요.<br>왜 이렇게 많냐면, 이 서비스에서 <em>잘 안 되는 경우가 아이한테 직접 타격</em>이거든요.<br>예를 들어 미션. 아이는 다 했는데 부모님이 사흘째 안 눌러요. 그러면 아이 입장에선 <em>했는데 아무 일도 안 일어난 겁니다.</em> 한 번 겪으면 다음에 제출할 이유가 없어져요.<br>그래서 72시간이 지나면 <em>자동으로 지급합니다.</em> 별도, 실천도, 돈도요. 대신 표시는 「칭찬받았어요」가 아니라 <em>「확인하지 못했어요」</em>로 다르게 합니다.<br>원칙은 하나예요 — <em>병목의 비용을 아이에게 물리지 않는다.</em>"
- data-br="이번엔 비기능과 상태입니다.">
-  <div class="kicker">SRS v1.0 <span>· 예외 조건</span></div>
-  <h1>수용 기준 49개 중 <b>19개</b>가 <em>「잘 안 될 때」</em>를 적은 것입니다</h1>
-  <div class="lead">이 서비스에서 예외는 드문 경우가 아니라 <strong>가장 자주 일어나는 경우</strong>입니다. 부모가 늦고, 잔액이 모자라고, 응답이 없습니다.</div>
-  <div class="body">
-    <div class="row">
-      <div class="card a grow" style="padding:16px 18px"><h3><span class="id">FR-032</span> · 미션 승인이 안 올 때</h3>
-        <p><strong>24h</strong> 리마인드 1회 → <strong>72h 자동 지급</strong><br>⭐ · 실천 · <strong>보상 금액 충전까지 모두 집행</strong>하고<br>표시는 <strong>「확인하지 못했어요」</strong> <span class="id" style="font-size:13px">auto=true</span></p></div>
-      <div class="card a grow" style="padding:16px 18px"><h3><span class="id">FR-033</span> · 부모 지갑이 비었을 때</h3>
-        <p>승인은 되되 <strong>충전만 보류</strong>합니다.<br><strong>⭐와 실천은 정상 지급</strong> — 부모 사정으로<br>아이가 한 일이 사라지지 않습니다</p></div>
-      <div class="card a grow" style="padding:16px 18px"><h3><span class="id">FR-031</span> · 적금 신청에 응답이 없을 때</h3>
-        <p><strong>7일 미응답 → 자동 만료</strong> · 재신청 즉시 가능<br>반려 문구는 <strong>「다시 이야기해요」</strong><br>「거절」이라는 단어를 쓰지 않습니다 <span class="id" style="font-size:13px">NFR-053</span></p></div>
-    </div>
-    <div class="row" style="margin-top:14px">
-      <div class="card r grow" style="padding:15px 18px"><h3>실패 수용 기준은 이렇게 씁니다</h3>
-        <p><span class="id" style="font-size:13.5px">AC-033-4 (실패)</span> — <strong>Given</strong> 부모 지갑 잔액이 보상 금액보다 적다 / <strong>When</strong> 승인한다 / <strong>Then</strong> ⭐와 실천은 지급되고 <strong>충전만 보류</strong>되며 부모에게 충전 요청이 표시된다</p></div>
-      <div class="card g" style="width:352px;flex:none;padding:15px 18px"><h3>원칙</h3>
-        <p style="font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.5">병목의 비용을<br>아이에게 물리지 않는다</p>
-        <p style="margin-top:6px;font-size:13.5px">승인은 아이가 통제할 수 없는 변수에 걸려 있습니다</p></div>
-    </div>
-  </div>
-  <div class="src">출처 — <b>SRS</b> §4.4 FR-031 · FR-032 · FR-033 예외 항 · AC-031-3 · AC-032-3 · AC-033-4 · §5.5 NFR-053 · <b>PRD 부록 E</b> ADR-016(72h 자동 지급) · 수용 기준 49 = 정상 30 + <b>예외 19</b></div>
-</section>
-
-<!-- 8 ── 비기능과 상태 -->
-<section class="slide" data-blk="블록 4 · PRD·SRS" data-sec="40"
- data-note="비기능은 <em>순서를 매겼습니다.</em> 아동 금융 서비스에서 1순위는 성능이 아니라 규제입니다.<br>맨 위 줄은 <em>설계 변수가 아니라 상수</em>예요. 동의 전 진입 100% 차단, 아이 앱 번들에 부모 주소가 하나라도 있으면 <em>배포가 막힙니다.</em> 별을 현금으로 바꾸는 경로는 기능 플래그로 끄는 게 아니라 <em>코드에 아예 없어야</em> 합니다.<br>맨 아래는 여덟 살 기준입니다. 퍼센트를 안 씁니다. 「이번 달」 같은 말도 안 씁니다.<br>그리고 <em>상태.</em> 화면마다 네 가지 상태를 다 만들었습니다. 이슈의 수용 기준에 <em>「Loading · Empty · Error 상태 확인」이 줄로 들어가</em> 있어서 빠뜨릴 수가 없었어요."
- data-br="이제 이게 실제로 이슈와 코드까지 이어졌는지 보여드리겠습니다.">
-  <div class="kicker">SRS v1.0 <span>· 비기능 조건과 상태</span></div>
-  <h1>비기능은 <em>규제가 성능보다 위</em>에 있습니다</h1>
-  <div class="body">
-    <div class="nfrl">
-      <div class="lv l0"><span class="rk">1순위 · 상수</span><span class="rg">NFR-001~011</span><span class="tx">동의 전 아이 화면 진입 차단 <b>100%</b> · 아이 번들 내 부모 엔드포인트 <b>0건(배포 차단)</b> · 스토리지 내 미션 이미지 <b>0건</b> · 별↔현금 전환 경로 <b>코드에 부재</b></span></div>
-      <div class="lv l1"><span class="rk">2순위</span><span class="rg">NFR-020~025</span><span class="tx">정합성 — 별 원장 이중 기입 · 중복 지급 0건 · 자동 지급 비율 감시</span></div>
-      <div class="lv l2"><span class="rk">3순위</span><span class="rg">NFR-030~034</span><span class="tx">성능 — 수용 기준에서 <b>역산한 잠정 상한</b>이지 확정 SLO가 아님</span></div>
-      <div class="lv l3"><span class="rk">4순위</span><span class="rg">NFR-040~044</span><span class="tx">가용성 · 운영</span></div>
-      <div class="lv l4"><span class="rk">아동 인지 제약</span><span class="rg">NFR-050~055</span><span class="tx">아이 화면에 <b>% 미사용</b> · 시간은 <b>주 단위 이하</b> · <b>「거절」 미사용</b> · 애니메이션은 <b>prefers-reduced-motion 존중</b></span></div>
-    </div>
-    <div class="row" style="margin-top:14px;align-items:flex-start">
-      <div style="flex:1">
-        <div style="font-size:13.5px;font-weight:800;color:var(--sub);margin-bottom:8px">상태 — 화면 8개가 <span style="color:var(--green)">모두</span> 네 가지를 갖습니다</div>
-        <div class="stt">
-          <div class="s2 on"><div class="n3">정상</div><div class="d3">데이터가 있을 때</div></div>
-          <div class="s2"><div class="n3">비어있음</div><div class="d3">아직 기록이 없을 때</div></div>
-          <div class="s2"><div class="n3">불러오는 중</div><div class="d3">스켈레톤</div></div>
-          <div class="s2 ex"><div class="n3">오류</div><div class="d3">「돈은 그대로 있어요」</div></div>
-        </div>
-      </div>
-      <div class="card" style="width:400px;flex:none;padding:14px 17px"><p style="font-size:14px">이슈 8건의 수용 기준에 <strong>「Loading / Empty / Error 상태 확인」</strong>이 <strong>줄로 박혀</strong> 있습니다.<br>명세의 예외가 <strong>화면의 상태로 내려온</strong> 결과입니다.</p></div>
-    </div>
-  </div>
-  <div class="src">출처 — <b>SRS</b> §5.1 규제 NFR-001~011 · §5.2 정합성 · §5.3 성능(수용 기준 역산) · §5.5 아동 인지 제약 NFR-050~055 · <b>Issue</b> UI-001~008 공통 수용 기준</div>
-</section>
-
-<!-- 9 ── 추적 여섯 층 -->
-<section class="slide" data-blk="블록 5 · 추적성" data-sec="35"
- data-note="문서를 <em>여섯 층으로 쌓고 층마다 번호</em>를 달았습니다.<br>중요한 건 각 층이 아래층 번호를 <em>인용만 한다</em>는 겁니다. 같은 내용을 두 곳에 적지 않아요. 그래야 한쪽만 고쳐지는 일이 안 생깁니다.<br>이슈에는 「연결 Requirement」 줄이 있고, PR 본문에는 <em>수용 기준 한 줄마다 충족 근거</em>를 답니다. 못 채운 줄은 사유를 답니다.<br>그래서 화면 아무거나 하나를 짚으면 <em>어느 연구에서 나왔는지까지 거꾸로 되짚을 수 있습니다.</em>"
- data-br="실제로 한 줄기를 끝까지 따라가 보겠습니다.">
-  <div class="kicker">추적성 <span>· 구조</span></div>
-  <h1>여섯 층을 쌓고 층마다 <em>번호</em>를 달았습니다</h1>
-  <div class="lead">각 층은 아래층의 번호를 <strong>인용만</strong> 합니다 — 같은 내용을 두 곳에 적지 않으므로 <strong>한쪽만 고쳐지는 일</strong>이 생기지 않습니다.</div>
-  <div class="body">
-    <div class="tr6">
-      <div class="ly"><div class="nm">raw/<small>원본 수집</small></div><div class="ds">통계 · 논문 · 약관 · 리뷰 원문을 9개 수집함에. <b>요약하지 않고 그대로</b> 둡니다</div><div class="ct">9개 수집함</div></div>
-      <div class="ar">↓ 요약</div>
-      <div class="ly"><div class="nm">wiki/<small>지식베이스</small></div><div class="ds">개념 · 개체 · 이론 · 규칙이 서로 링크됩니다. 각 판단의 <b>「🧭 결정 배경」</b>이 여기 삽니다</div><div class="ct">45장 · 사이트 배포</div></div>
-      <div class="ar">↓ 근거</div>
-      <div class="ly"><div class="nm">PRD v0.3<small>무엇을 · 왜</small></div><div class="ds">Pain 코드 → <b class="id">US-1~11</b> → 기능. 부록 E <b>ADR</b>은 결정마다 <b>되돌릴 조건</b>을 함께 적습니다</div><div class="ct">ADR 17건</div></div>
-      <div class="ar">↓ 명세</div>
-      <div class="ly"><div class="nm">SRS v1.0<small>판정 가능하게</small></div><div class="ds"><b class="id">FR-001~041</b> · <b class="id">NFR-001~055</b> · <b class="id">DR-01~07</b> · §8 추적성 매트릭스</div><div class="ct">수용 기준 49</div></div>
-      <div class="ar">↓ 분해</div>
-      <div class="ly"><div class="nm">GitHub Issue<small>일 단위</small></div><div class="ds">이슈마다 <b>「연결 Requirement」</b>에 FR 번호를 적고, 수용 기준은 <b>AC 번호를 그대로</b> 가져옵니다</div><div class="ct">UI 8 · SYS 5</div></div>
-      <div class="ar">↓ 구현</div>
-      <div class="ly" style="background:var(--green-l);border-color:#CFE3D7"><div class="nm">PR · 화면<small>증거</small></div><div class="ds">PR 본문이 <b>수용 기준 한 줄마다 충족 근거</b>를 답니다. 못 채운 줄은 <b>사유</b>를 답니다</div><div class="ct">PR 8 · 화면 8</div></div>
-    </div>
-  </div>
-  <div class="src">저장소 — <b>scene-one/team1_fin-friends</b> · <b>raw/</b> 9개 수집함 · <b>wiki/</b> 45장(Quartz 배포) · <b>공용공간/9. PRD</b> · <b>10. SRS</b> · Issue #1~#13 · PR #14~#21</div>
-</section>
-
-<!-- 10 ── 한 줄기 완주 (하이라이트) -->
-<section class="slide" data-blk="블록 5 · 추적성" data-sec="45"
- data-note="이게 오늘 가장 보여드리고 싶은 한 장입니다.<br>맨 왼쪽, <em>규제 상수 P-20</em>에서 출발합니다. 예적금 중개로 보이면 안 된다는 규제죠. 그래서 ADR-009가 <em>「협상은 앱 밖에서, 앱은 기록만」</em>으로 정했고, 그 결과 <em>반려와 만료라는 예외</em>가 생겼습니다.<br>SRS는 그 예외를 수용 기준 두 줄로 적었어요. 「거절」이라는 단어를 쓰지 말라는 <em>비기능 NFR-053</em>도 같이 걸렸고요.<br>이슈 8번이 그 번호들을 그대로 인용했고, PR 21번이 줄마다 충족 근거를 달았습니다.<br>그래서 <em>화면에 상태가 네 개</em>가 됐습니다. 신청 전, 물어보는 중, <em>다시 이야기해요</em>, <em>확인하지 못했어요.</em><br>규제 조항 하나가 <em>여덟 살이 보는 화면의 문구</em>까지 끊기지 않고 내려온 겁니다."
- data-br="같은 방식으로 이어 본 줄기가 셋 있습니다.">
-  <div class="kicker">추적성 <span>· 실제로 이어 본 한 줄기</span></div>
+<!-- 7 ── [7p] 추적관계 -->
+<section class="slide" data-blk="블록 5 · 추적성" data-sec="50"
+ data-note="문서를 <em>여섯 층으로 쌓고 층마다 번호</em>를 달았습니다. 각 층은 아래층 번호를 <em>인용만 합니다.</em> 같은 내용을 두 곳에 적지 않아요.<br>아래가 실제로 끝까지 따라간 한 줄기입니다. 맨 왼쪽, <em>예적금 중개로 보이면 안 된다</em>는 규제에서 출발합니다. 그래서 「협상은 앱 밖에서, 앱은 기록만」으로 정했고, 그 결과 <em>반려와 만료라는 예외</em>가 생겼습니다.<br>명세는 그 예외를 판정 문장 두 줄로 적었고, <em>「거절」이라는 단어를 쓰지 말라는 비기능</em>도 같이 걸렸어요.<br>이슈 8번이 그 번호들을 그대로 인용했고, 검토 요청 21번이 줄마다 충족 근거를 달았습니다. 그래서 <em>화면에 상태가 네 개</em>가 됐습니다.<br>규제 조항 하나가 <em>여덟 살이 보는 문구</em>까지 끊기지 않고 내려온 겁니다. <em>거꾸로도 됩니다.</em>"
+ data-br="이 명세를 어떤 기술로 만들 건지로 넘어가겠습니다.">
+  <div class="kicker">추적관계 <span>· 지식베이스 → 기획서 → 명세서 → 이슈 → 구현</span></div>
   <h1>규제 조항 하나가 <em>여덟 살이 보는 문구</em>까지 내려옵니다</h1>
   <div class="body">
+    <div class="flow" style="margin-bottom:15px">
+      <div class="n">원본 보관 <small>요약 없이 그대로</small></div><div class="s">→</div>
+      <div class="n">지식베이스 <small>45장 · 「결정 배경」</small></div><div class="s">→</div>
+      <div class="n">제품 기획서 <small>스토리 11 · 결정 17</small></div><div class="s">→</div>
+      <div class="n">요구사항 명세서 <small>기능 41 · 비기능 55</small></div><div class="s">→</div>
+      <div class="n">이슈 <small>13건 · 요구사항 번호 인용</small></div><div class="s">→</div>
+      <div class="n k">검토 요청 · 화면 <small>8건 · 8개</small></div>
+    </div>
     <div class="cf">
-      <div class="st"><div class="lb4">KB · 규칙</div><div class="bx on">
-        <div class="k4">규제-상수 P-20</div><div class="t4">예적금 중개로 보이면 안 된다</div><div class="m4">앱 안 흥정은 금융 거래 중개 모양</div></div></div>
-      <div class="st"><div class="lb4">PRD 부록 E</div><div class="bx">
-        <div class="k4">ADR-009</div><div class="t4">협상은 앱 밖에서 · 앱은 <b>기록만</b></div><div class="m4">채팅·흥정 UI를 제공하지 않는다</div></div></div>
-      <div class="st"><div class="lb4">SRS · 예외</div><div class="bx ex">
-        <div class="k4">FR-031 예외 ①②</div><div class="t4">반려 → 재신청 즉시<br>7일 미응답 → <b>자동 만료</b></div><div class="m4">병목이 아이 탓이 되지 않게</div></div></div>
-      <div class="st"><div class="lb4">SRS · AC · 비기능</div><div class="bx">
-        <div class="k4">AC-031-3 · AC-031-4<br>NFR-053</div><div class="t4">「거절」이라는 단어가 <b>표시되지 않는다</b></div><div class="m4">실패 AC 두 줄 + 비기능 한 줄</div></div></div>
-      <div class="st"><div class="lb4">ISSUE · PR</div><div class="bx">
-        <div class="k4">#8 UI-008 → PR #21</div><div class="t4">「연결 Requirement: FR-031」</div><div class="m4">AC 줄마다 충족 근거</div></div></div>
+      <div class="st"><div class="lb4">지식베이스</div><div class="bx on">
+        <div class="t4">예적금 중개로 <b>보이면 안 된다</b></div><div class="m4">앱 안 흥정은 금융 거래 중개 모양</div></div></div>
+      <div class="st"><div class="lb4">기획서 · 결정 기록</div><div class="bx">
+        <div class="t4">협상은 앱 밖에서 · 앱은 <b>기록만</b></div><div class="m4">채팅·흥정 화면을 만들지 않는다</div></div></div>
+      <div class="st"><div class="lb4">명세서 · 예외</div><div class="bx ex">
+        <div class="k4">FR-031</div><div class="t4">반려 → 재신청 즉시<br>7일 무응답 → <b>자동 만료</b></div><div class="m4">병목이 아이 탓이 되지 않게</div></div></div>
+      <div class="st"><div class="lb4">판정 문장 · 비기능</div><div class="bx">
+        <div class="k4">AC-031-3 · 4<br>NFR-053</div><div class="t4">「거절」이라는 단어가 <b>표시되지 않는다</b></div><div class="m4">실패 판정 두 줄 + 비기능 한 줄</div></div></div>
+      <div class="st"><div class="lb4">이슈 · 검토 요청</div><div class="bx">
+        <div class="k4">이슈 #8 → 요청 #21</div><div class="t4">「연결 요구사항: FR-031」</div><div class="m4">판정 문장마다 충족 근거</div></div></div>
       <div class="st"><div class="lb4">화면 · 상태</div><div class="bx on">
-        <div class="k4">Bank.dc.html</div><div class="t4">적금 <b>상태 4종</b></div><div class="m4">신청 전 · 물어보는 중<br>다시 이야기해요 · 확인하지 못했어요</div></div></div>
+        <div class="t4">「내 통장」 <b>상태 4종</b></div><div class="m4">신청 전 · 물어보는 중<br>다시 이야기해요 · 확인하지 못했어요</div></div></div>
     </div>
-    <div class="row" style="margin-top:16px">
-      <div class="card grow" style="padding:15px 18px"><h3>기능 · 비기능 · 예외 · 수용 기준 · 상태가 한 줄에 다 있습니다</h3>
-        <p><span class="id">FR-031</span>이 <strong>기능</strong>, <span class="id">NFR-053</span>이 <strong>비기능</strong>, 반려·만료가 <strong>예외</strong>, <span class="id">AC-031-3·4</span>가 <strong>수용 기준</strong>, 화면의 네 칸이 <strong>상태</strong>입니다. 하나라도 빠지면 이 줄기는 <strong>중간에서 끊깁니다.</strong></p></div>
-      <div class="card g" style="width:336px;flex:none;padding:15px 18px"><h3>거꾸로도 됩니다</h3>
-        <p>화면의 <strong>「확인하지 못했어요」</strong>를 짚으면 <strong>왜 이 문구인지</strong>가 <span class="id">NFR-053</span> → <span class="id">ADR-009</span> → <span class="id">P-20</span> 으로 끝까지 나옵니다</p></div>
+    <div class="row" style="margin-top:14px">
+      <div class="card grow" style="padding:13px 17px"><h3>기능 · 비기능 · 예외 · 판정 문장 · 상태가 한 줄에 다 있습니다</h3>
+        <p style="font-size:14px">하나라도 빠지면 이 줄기는 중간에서 끊깁니다. <strong>거꾸로도 됩니다</strong> — 화면의 「확인하지 못했어요」를 짚으면 왜 이 문구인지가 규제까지 나옵니다</p></div>
+      <div class="card g" style="width:392px;flex:none;padding:13px 17px"><h3>그래서 어긋남이 저절로 드러났습니다</h3>
+        <p style="font-size:14px">프로토타입 나무가 <strong>3단계</strong>인데 명세는 <strong>4단계</strong>였습니다 · 아이 화면의 <strong>% 표기 3곳</strong>이 규칙 위반</p></div>
     </div>
   </div>
-  <div class="src">출처 — <b>wiki/60-규칙/규제-상수</b> P-20 · <b>PRD 부록 E</b> ADR-009 · <b>SRS</b> §4.4 FR-031 예외 ①②, AC-031-3·4, §5.5 NFR-053 · <b>Issue #8</b> · <b>PR #21</b> · <b>수빈/prototype-wip/Bank.dc.html</b></div>
 </section>
 
-<!-- 11 ── 세 줄기 -->
-<section class="slide" data-blk="블록 5 · 추적성" data-sec="40"
- data-note="같은 구조로 이어 본 줄기가 셋입니다.<br>첫째는 <em>완주.</em> 메타분석 한 줄이 나무의 승급 조건이 됐습니다.<br>둘째가 재미있는데, 근거가 기능을 넣은 게 아니라 <em>뺐습니다.</em> 프로토타입에 업종 선택기가 그려져 있었는데, 카드 결제는 가맹점당 업종 코드가 하나뿐이라 <em>아이한테 물어봐야 판정에 못 쓰는 칸</em>이었어요. 그래서 지웠습니다.<br>셋째는 <em>멈춤.</em> 백엔드가 없어서 다섯 건이 멈췄는데, 중요한 건 <em>멈춘 자리가 비어 있지 않다</em>는 겁니다. 어느 요구사항이 왜 못 갔는지가 번호와 함께 남아 있어서, 그게 그대로 다음 로드맵이 됩니다.<br>그리고 실제로 <em>어긋남도 잡혔습니다.</em> 프로토타입 나무가 3단계인데 명세는 4단계였어요."
- data-br="이 명세를 어떤 기술로 만들 건지로 넘어가겠습니다.">
-  <div class="kicker">추적성 <span>· 세 줄기</span></div>
-  <h1>넣은 것 · <em>지운 것</em> · <b>멈춘 것</b>이 같은 구조로 읽힙니다</h1>
-  <div class="body">
-    <div class="br3">
-      <div class="b3 a"><div class="bd">완주</div>
-        <div class="pt">학습-행동-전이-격차 <em>›</em> US-1 · US-3 <em>›</em> FR-030 · AC-030-1 <em>›</em> #6 <em>›</em> PR #19 <em>›</em> Tree.dc.html</div>
-        <div class="rs">메타분석 <b class="id">+0.33 / +0.07 SD</b> 가<br>나무의 <b>승급 조건</b>이 됨</div></div>
-      <div class="b3 b"><div class="bd">삭제</div>
-        <div class="pt">카드-업종-분류-MCC <em>›</em> ADR-001 <em>›</em> FR-021 · DR-05 · AC-021-6 <em>›</em> #4 <em>›</em> PR #17 <em>›</em> Plan.dc.html</div>
-        <div class="rs">근거를 따라가니 <b>업종 선택기</b>가<br>판정에 못 쓰는 칸이라 <b>제거</b></div></div>
-      <div class="b3 c"><div class="bd">멈춤</div>
-        <div class="pt">규제-상수 P-13 <em>›</em> ADR-007 <em>›</em> FR-032 · NFR-005 · DR-02 <em>›</em> #11 <em>›</em> BLOCKED <em>›</em> LOOP_CHECKPOINT.md</div>
-        <div class="rs">백엔드 부재로 <b>SYS 5건 정지</b><br>사유가 남아 <b>다음 로드맵</b>이 됨</div></div>
-    </div>
-    <div class="row" style="margin-top:15px">
-      <div class="card grow" style="padding:14px 17px"><h3>어긋남이 저절로 드러났습니다</h3>
-        <p>프로토타입의 나무가 <strong>3단계</strong>인데 <span class="id">FR-030</span>은 <strong>4단계</strong>였습니다. 번호가 이어져 있지 않았다면 <strong>발표 직전에</strong> 알았을 겁니다</p></div>
-      <div class="card grow" style="padding:14px 17px"><h3>고칠 범위가 먼저 보입니다</h3>
-        <p>「불리기」 실천 요건이 복원되자 <span class="id">AC-031-2</span>를 인용한 화면 <strong>둘</strong>이 바로 지목됐습니다 — <span class="id">Tree</span> · <span class="id">Bank</span></p></div>
-      <div class="card grow" style="padding:14px 17px"><h3>결정을 한 곳에만 적습니다</h3>
-        <p>판단은 <strong>PRD ADR · SRS · wiki</strong> 세 곳에만 삽니다. 이슈 · PR · 화면은 <strong>번호를 인용할 뿐</strong>이라 원장이 늘지 않습니다</p></div>
-    </div>
-    <div class="bridge">추적관계는 <b style="color:#BFE6CF">무엇을 넣을지</b>만이 아니라 <b style="color:#BFE6CF">무엇을 지울지 · 어디서 멈췄는지</b>까지 알려줍니다</div>
-  </div>
-  <div class="src">근거 — Issue <b>#4 · #6 · #11</b> · PR <b>#17 · #19</b> · <b>수빈/goals/LOOP_CHECKPOINT.md</b>(BLOCKED 5건 · 판단 유보 3건) · <b>수빈/prototype-wip/</b> 화면 8개</div>
-</section>
-
-<!-- 12 ── 기술 선택 -->
-<section class="slide" data-blk="블록 6 · 기술" data-sec="40"
- data-note="기술은 <em>취향으로 고른 게 하나도 없습니다.</em> 전부 앞에서 정한 약속을 지키려다 나온 결과예요.<br>앱을 부모용·아이용 <em>두 개로 쪼갠 건</em>, 동의 전 차단을 오리진 단위로 검증할 수 있어야 해서입니다. 아이 앱 번들에 부모 주소가 하나라도 있으면 배포가 막히게요.<br>웹 PWA로 간 건 <em>초대 링크가 설치 없이 연결</em>되기 때문이고요.<br>AI가 재밌는데, <em>「아동 데이터를 만지느냐」로 세 평면을 갈랐습니다.</em> 개발 도구와 콘텐츠 저작은 아동 데이터를 안 만지니까 자유롭게 쓰고, <em>제품 안에서 돌아가는 AI는 딱 하나</em>예요 — 월간 요약 문장. 그것도 서울 리전 안에서 끝냅니다.<br>가드레일 여섯 개 중 하나라도 깨지면 <em>그 기능을 끄고 템플릿 문장으로 되돌립니다.</em> AI는 보완이지 전제가 아닙니다."
- data-br="이 기술을 비개발자인 저희가 어떻게 다뤘는지 말씀드리겠습니다.">
-  <div class="kicker">기술 <span>· 스택은 약속의 결과</span></div>
+<!-- 8 ── [8p] 기술 선택 + 비개발자 PM -->
+<section class="slide" data-blk="블록 6 · 기술" data-sec="45"
+ data-note="기술은 <em>취향으로 고른 게 하나도 없습니다.</em> 전부 앞에서 정한 약속을 지키려다 나온 결과예요.<br>앱을 부모용·아이용 <em>두 개로 쪼갠 건</em>, 동의 전 차단을 앱 단위로 검증할 수 있어야 해서입니다. 아이 앱 안에 부모 주소가 하나라도 있으면 배포가 막히게요.<br>설치 없이 열리는 웹으로 간 건 <em>초대 링크가 그냥 열리기</em> 때문이고요.<br>AI는 <em>「아동 데이터를 만지느냐」로 갈랐습니다.</em> 제품 안에서 돌아가는 AI는 딱 하나 — 월간 요약 문장이고, 그것도 국내 서버 안에서 끝냅니다. 안전장치 하나라도 깨지면 <em>그 기능을 끄고 정해진 문장으로 되돌립니다.</em><br>아래는 저희 이야기인데, 코드는 못 쓰지만 <em>「무엇이 만들어졌는지 판정하는 문장」은 쓸 수 있게 됐습니다.</em> 실제로 명세와 화면이 어긋난 걸 네 군데 잡아냈어요."
+ data-br="그럼 이 작업을 어떻게 굴렸는지, 프로젝트 운영을 보겠습니다.">
+  <div class="kicker">기술 <span>· 선택의 근거와 우리가 배운 것</span></div>
   <h1>기술을 먼저 고르지 않고, <em>약속에서 역산</em>했습니다</h1>
   <div class="body">
-    <div class="row">
-      <div class="col grow" style="gap:9px">
-        <div class="card" style="padding:14px 18px"><h3><span class="id">ADR-004</span> · 앱을 부모용 · 아이용 <b>둘</b>로 분리</h3>
-          <p>동의 전 진입 차단을 <strong>오리진 단위로 검증</strong>할 수 있습니다 — 아이 번들에 부모 엔드포인트 문자열이 있으면 <strong>배포가 막힙니다</strong> <span class="id" style="font-size:13px">NFR-003</span></p></div>
-        <div class="card" style="padding:14px 18px"><h3><span class="id">ADR-005</span> · 전달 방식은 <b>PWA(웹)</b></h3>
-          <p><strong>초대 링크가 설치 없이 연결</strong>되어, 앱을 둘로 나눈 마찰을 온보딩에서 되돌려받습니다. 앱 2개를 한 코드베이스에서 냅니다</p></div>
-        <div class="card" style="padding:14px 18px"><h3><span class="id">ADR-006</span> · β는 제휴 없이 <b>모의 결제</b></h3>
-          <p>계획 카드가 결제를 막지 않고 <strong>대조만</strong> 하므로 제휴사 한도 API에 의존하지 않습니다 — <strong>β 결과 자체가 협상 카드</strong>가 됩니다</p></div>
-      </div>
-      <div class="col" style="width:472px;flex:none;gap:9px">
-        <div class="card g" style="padding:15px 18px"><h3><span class="id">ADR-017</span> · AI는 「아동 데이터를 만지는가」로 가릅니다</h3>
-          <p><strong>① 개발</strong> 코딩 도구 · <strong>② 콘텐츠 저작</strong> 오프라인(Claude/OpenAI API + ChromaDB) — 아동 데이터를 만지지 않아 규제 대상이 아님<br><strong>③ 제품 런타임</strong> — <strong>AWS Bedrock 서울 리전</strong>, 용도는 <strong>월간 요약 문장 하나</strong> <span class="id" style="font-size:13px">FR-042</span></p></div>
-        <div class="card r" style="padding:15px 18px"><h3>🔴 가드레일 — 하나라도 깨지면 기능을 끕니다</h3>
-          <p>아동 대상 <strong>실시간 생성 텍스트 · 생성형 아바타 · 미션 사진 AI 판정</strong>은 금지<br>위반 1건 → <span class="id">FR-042</span>를 끄고 <strong>템플릿 문장으로 되돌립니다</strong></p></div>
-        <div class="tag" style="align-self:flex-start;font-size:14px;padding:8px 15px">AI 는 보완이지 <b>전제가 아닙니다</b></div>
-      </div>
+    <div class="row" style="gap:11px;margin-bottom:13px">
+      <div class="card grow" style="padding:13px 16px"><h3>앱을 부모용 · 아이용 <b>둘</b>로 분리</h3>
+        <p style="font-size:13.5px">동의 전 진입 차단을 <strong>앱 단위로 검증</strong>할 수 있습니다 — 아이 앱 안에 부모 쪽 주소가 있으면 <strong>배포가 막힙니다</strong></p></div>
+      <div class="card grow" style="padding:13px 16px"><h3>설치 없이 열리는 <b>웹앱</b></h3>
+        <p style="font-size:13.5px"><strong>초대 링크가 설치 없이 연결</strong>되어, 앱을 둘로 나눈 마찰을 온보딩에서 되돌려받습니다</p></div>
+      <div class="card g grow" style="padding:13px 16px"><h3>AI 는 <b>「아동 데이터를 만지는가」</b>로 가릅니다</h3>
+        <p style="font-size:13.5px">제품 안에서 도는 AI 는 <strong>월간 요약 문장 하나</strong>뿐이고 <strong>국내 서버 안</strong>에서 끝냅니다. 안전장치 <strong>1건이라도 깨지면 끄고</strong> 정해진 문장으로 되돌립니다</p></div>
+    </div>
+    <div class="split" style="margin-bottom:11px">
+      <div class="h2" style="padding:14px 18px"><div class="t2">3차 전 — 몰랐던 것</div>
+        <p style="font-size:14.5px">· 요구사항을 <strong>「기능 목록」</strong>으로만 적었습니다<br>· 예외와 상태는 <strong>화면 그릴 때 생각하는 것</strong>이라 여겼습니다<br>· 기술 선택은 <strong>개발자의 영역</strong>이라고 봤습니다</p></div>
+      <div class="h2" style="padding:14px 18px"><div class="t2">3차 후 — 할 수 있게 된 것</div>
+        <p style="font-size:14.5px">· <strong>「이런 상황에서 이렇게 하면 이렇게 된다」</strong> 형식으로 판정 문장을 씁니다<br>· 예외를 <strong>먼저</strong> 적고 그것이 화면의 <strong>상태</strong>가 되게 합니다<br>· 기술 선택을 <strong>지켜야 할 약속에서 역산</strong>해 설명합니다</p></div>
+    </div>
+    <div class="row" style="gap:11px">
+      <div class="card grow" style="padding:12px 16px"><h3>실제로 개입한 지점</h3>
+        <p style="font-size:13.5px">나무 <strong>3단계 ↔ 명세 4단계</strong> 어긋남 · 아이 화면 <strong>% 표기 3곳</strong> 규칙 위반 · 판정에 못 쓰는 <strong>가게 종류 선택기</strong> 삭제</p></div>
+      <div class="todo" style="margin-top:0;flex:1"><span class="tg">채워 넣을 것</span><div class="tt">발표자 <b>본인의 사례 한 가지</b> — 「무엇을 몰랐다가 → 무엇을 찾아봤고 → 어디까지 적용했는지」</div></div>
     </div>
   </div>
-  <div class="src">출처 — <b>PRD 부록 E</b> ADR-004 · 005 · 006 · 017 · <b>wiki/10-제품/기술-스택</b>(채택 · 가드레일 G-1~G-6 · 미결) · <b>공용공간/11. 기술기획 산출물</b> 시스템 아키텍처 · API 명세 38개 · 증강 시퀀스 6종</div>
 </section>
 
-<!-- 13 ── 비개발자 PM (골격 + TODO) -->
-<section class="slide" data-blk="블록 6 · 기술" data-sec="40"
- data-note="여기는 각자 <em>본인 이야기로 바꿔서</em> 말씀하시면 됩니다. 아래 칸이 골격이에요.<br>공통으로 말할 수 있는 건 이겁니다 — 저희는 코드를 쓰지는 못하지만, <em>「무엇이 만들어졌는지 판정하는 문장」은 쓸 수 있습니다.</em> 그게 수용 기준이고요.<br>실제로 이번에 개발자가 아니어도 <em>이슈를 쪼개고, PR을 읽고, 명세와 화면이 어긋난 걸 잡아냈습니다.</em> 나무 3단계 대 4단계가 그 예입니다.<br>못 한 것도 분명합니다. 백엔드가 필요한 다섯 건은 <em>판정 자체를 못 했어요.</em>"
- data-br="그럼 이 작업을 어떻게 굴렸는지, 프로젝트 운영을 보겠습니다.">
-  <div class="kicker">기술 <span>· 비개발자 PM 의 학습과 적용</span></div>
-  <h1>코드는 못 써도 <em>「무엇이 만들어졌는지 판정하는 문장」</em>은 씁니다</h1>
-  <div class="body">
-    <div class="split">
-      <div class="h2"><div class="t2">3차 전 — 몰랐던 것</div>
-        <p>· 요구사항을 「기능 목록」으로만 적었습니다<br>· 예외와 상태는 <strong>화면을 그릴 때 생각하는 것</strong>이라 여겼습니다<br>· 기술 선택은 <strong>개발자의 영역</strong>이라고 봤습니다</p></div>
-      <div class="h2"><div class="t2">3차 후 — 할 수 있게 된 것</div>
-        <p>· <strong>Given / When / Then</strong> 으로 판정 가능한 수용 기준을 씁니다<br>· 예외를 <strong>먼저</strong> 적고 그것이 화면의 <strong>상태</strong>가 되게 합니다<br>· 기술 선택을 <strong>지켜야 할 약속에서 역산</strong>해 설명합니다</p></div>
-    </div>
-    <div class="row" style="margin-top:13px">
-      <div class="card grow" style="padding:14px 17px"><h3>실제로 개입한 지점</h3>
-        <p>· 프로토타입 나무 <strong>3단계 ↔ 명세 4단계</strong> 어긋남을 잡음<br>· 아이 화면의 <span class="id">%</span> 표기 <strong>세 곳</strong>이 <span class="id">NFR-050</span> 위반임을 확인해 제거<br>· 판정에 못 쓰는 <strong>업종 선택기</strong>를 근거를 들어 삭제</p></div>
-      <div class="card a grow" style="padding:14px 17px"><h3>여전히 못 한 것</h3>
-        <p>· <strong>백엔드가 필요한 5건</strong>은 충족 여부를 <strong>판정조차 못 했습니다</strong><br>· 성능 목표는 <strong>수용 기준에서 역산한 잠정치</strong>일 뿐 실측이 아닙니다</p></div>
-    </div>
-    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt">발표자 <b>본인의 구체적 사례 한 가지</b>를 넣으세요 — 「무엇을 몰랐다가 → 무엇을 찾아봤고 → 어디까지 적용했는지」. 위 칸은 팀 공통 골격이라 <b>개인 서사가 하나 붙어야</b> 이 장이 살아납니다.</div></div>
-  </div>
-  <div class="src">근거 — <b>PR #17 · #19 · #21</b> 본문의 AC 충족 근거 · <b>수빈/prototype-wip/README.md</b>(명세보다 뒤처져 있던 곳 4가지) · <b>LOOP_CHECKPOINT.md</b> BLOCKED 5건</div>
-</section>
-
-<!-- 14 ── 운영 · 분업 · 로드맵 -->
-<section class="slide" data-blk="블록 7 · 운영" data-sec="35"
- data-note="나흘을 어떻게 굴렸냐면, 이슈 열세 건으로 쪼갰습니다. 화면 여덟 개, 시스템 다섯 개요.<br>이슈 하나가 <em>브랜치 하나, PR 하나</em>입니다. PR 본문에는 수용 기준마다 충족 근거를 답니다.<br>분업은 이렇게 나눴고, 문서마다 <em>담당자가 SRS 머리말에 박혀</em> 있습니다.<br>그리고 오른쪽 — <em>범위가 바뀐 것들.</em> 이게 제일 중요한데, 넣은 것보다 <em>뺀 것에 근거가 더 많이 붙었습니다.</em> 봉투형도, 업종 판정도 전부 「판정할 수 없어서」 뺐어요."
+<!-- 9 ── [9p] 운영 · 분업 · 로드맵 -->
+<section class="slide" data-blk="블록 7 · 운영" data-sec="30"
+ data-note="나흘을 어떻게 굴렸냐면, 이슈 열세 건으로 쪼갰습니다. 화면 여덟 개, 시스템 다섯 개요.<br>이슈 하나가 <em>브랜치 하나, 검토 요청 하나</em>입니다. 요청 본문에는 판정 문장마다 충족 근거를 답니다.<br>분업은 이렇게 나눴고, 문서마다 담당자가 명세서 머리말에 박혀 있습니다.<br>오른쪽이 <em>범위가 바뀐 것들</em>인데, 넣은 것보다 <em>뺀 것에 근거가 더 많이 붙었습니다.</em>"
  data-br="그럼 그 결과물, 실제 화면을 보여드리겠습니다.">
-  <div class="kicker">운영 <span>· 분업 · 로드맵 · Scope 변화</span></div>
-  <h1>이슈 <em>13건</em>으로 쪼개고 <em>PR 8건</em>으로 증거를 남겼습니다</h1>
+  <div class="kicker">운영 <span>· 분업 · 로드맵 · 범위 변화</span></div>
+  <h1>이슈 <em>13건</em>으로 쪼개고 <em>검토 요청 8건</em>으로 증거를 남겼습니다</h1>
   <div class="body">
-    <div class="row" style="margin-bottom:13px">
-      <div class="lp grow">
-        <div class="n5 g5"><div class="v5">13</div><div class="k5">GitHub 이슈<br>UI 8 · SYS 5</div></div>
-        <div class="n5 g5"><div class="v5">8</div><div class="k5">draft PR<br>AC 줄마다 근거</div></div>
-        <div class="n5 a5"><div class="v5">5</div><div class="k5">BLOCKED<br>백엔드 필요</div></div>
-        <div class="n5 o5"><div class="v5">3</div><div class="k5">판단 유보<br>사람이 정할 것</div></div>
-      </div>
+    <div class="lp" style="margin-bottom:13px">
+      <div class="n5 g5"><div class="v5">13</div><div class="k5">이슈<br>화면 8 · 시스템 5</div></div>
+      <div class="n5 g5"><div class="v5">8</div><div class="k5">검토 요청<br>판정 문장마다 근거</div></div>
+      <div class="n5 a5"><div class="v5">5</div><div class="k5">막힘<br>서버가 있어야 판정 가능</div></div>
+      <div class="n5 o5"><div class="v5">3</div><div class="k5">판단 유보<br>사람이 정할 것</div></div>
     </div>
     <div class="tm" style="margin-bottom:13px">
-      <div class="p2"><div class="nm5">수빈</div><div class="rl">제품기획</div><div class="op">PRD · SRS · 학습 설계 · 화면 개정</div></div>
+      <div class="p2"><div class="nm5">수빈</div><div class="rl">제품기획</div><div class="op">기획서 · 명세서 · 학습 설계 · 화면</div></div>
       <div class="p2"><div class="nm5">병윤</div><div class="rl">정책 · 법령</div><div class="op">법령조사 · 약관 원문 · 구현</div></div>
       <div class="p2"><div class="nm5">하영</div><div class="rl">경쟁 · 리뷰</div><div class="op">리뷰 수집 · 분류 · 근거화</div></div>
-      <div class="p2"><div class="nm5">혜원</div><div class="rl">서비스분석</div><div class="op">고객여정 · 교차산업 벤치마킹</div></div>
-      <div class="p2"><div class="nm5">유림</div><div class="rl">사업기획</div><div class="op">시장 · 마이데이터 검토</div></div>
+      <div class="p2"><div class="nm5">혜원</div><div class="rl">서비스분석</div><div class="op">고객여정 · 다른 업계 사례</div></div>
+      <div class="p2"><div class="nm5">유림</div><div class="rl">사업기획</div><div class="op">시장 · 데이터 활용 검토</div></div>
     </div>
     <div class="anz" style="margin-top:0">
-      <div class="ah"><span class="m">Scope 변화 5건</span><span class="t">넣은 것보다 뺀 것에 근거가 더 많이 붙었습니다</span></div>
+      <div class="ah"><span class="m">범위 변화 5건</span><span class="t">넣은 것보다 뺀 것에 근거가 더 많이 붙었습니다</span></div>
       <div class="ab">
-        <div class="kv"><div class="k">삭제</div><div class="v">F14 · F19 · <b>봉투형</b> · <b>업종 판정</b> <span class="id">DR-05</span></div></div>
+        <div class="kv"><div class="k">삭제</div><div class="v"><b>위치 알림 · 사전 개입 트리거 · 봉투형 · 가게 종류 판정</b></div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">복원</div><div class="v"><b>「불리기」 실천</b> — 부모 적금 합의는 앱 안 행위라 판정 가능</div></div>
+        <div class="kv"><div class="k">복원</div><div class="v"><b>「불리기」 실천</b> — 부모와의 적금 합의는 앱 안 행위라 판정 가능</div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">확정</div><div class="v">미션 <b>72h 자동 지급</b> <span class="id">ADR-016</span> · 계획 카드 <b>3필드</b> <span class="id">ADR-001</span></div></div>
+        <div class="kv"><div class="k">확정</div><div class="v">미션 <b>72시간 자동 지급</b> · 계획 카드 <b>3필드</b></div></div>
       </div>
     </div>
-    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>GitHub Project 보드 캡처</b> 한 장. 이슈 13건이 컬럼에 배치된 화면이면 됩니다 — 지금은 이슈·PR 목록만 근거로 쓰고 있습니다.</div></div>
+    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>깃허브 프로젝트 보드 캡처</b> 한 장 — 이슈 13건이 컬럼에 배치된 화면</div></div>
   </div>
-  <div class="src">저장소 — Issue <b>#1~#13</b> · PR <b>#14~#21</b>(전부 draft) · 이슈 1건 = 브랜치 1개 = PR 1개 · <b>SRS 머리말</b> Owner 표기 · <b>수빈/goals/LOOP_CHECKPOINT.md</b></div>
 </section>
 
-<!-- 15 ── 프로토타입 UX ① 실천 (v2 p9 계승 · 4단계로 갱신) -->
-<section class="slide" data-blk="블록 8 · 화면" data-sec="35"
- data-note="이제 화면입니다. 핵심은 하나예요 — <em>실천까지 해야 나무가 자랍니다.</em><br>왼쪽을 보시면 학습도 다 했고 퀴즈도 다 맞혔는데 <em>새싹에 멈춰 있습니다.</em> 실천이 0이라서요. 화면이 <em>무엇이 남았는지 조건 단위로</em> 말해줍니다.<br>실천을 두 번 하면 오른쪽처럼 나무가 됩니다.<br>단계는 넷이에요. 새싹, 나무, 꽃나무, 열매나무. 영역마다 필요한 실천 횟수가 다릅니다.<br>이게 아까 보신 <em>FR-030 기준표가 그대로 화면이 된 것</em>입니다."
+<!-- 10 ── [10p] 프로토타입 UX ① -->
+<section class="slide" data-blk="블록 8 · 화면" data-sec="30"
+ data-note="이제 화면입니다. 핵심은 하나예요 — <em>실천까지 해야 나무가 자랍니다.</em><br>왼쪽을 보시면 학습도 다 했고 퀴즈도 다 맞혔는데 <em>새싹에 멈춰 있습니다.</em> 실천이 0이라서요. 화면이 <em>무엇이 남았는지 조건 단위로</em> 말해줍니다.<br>실천을 두 번 하면 오른쪽처럼 나무가 됩니다. 단계는 넷이에요 — 새싹, 나무, 꽃나무, 열매나무.<br>이게 아까 보신 <em>명세의 기준표가 그대로 화면이 된 것</em>입니다."
  data-br="다음은 돈을 쓰기 전에 적게 하는 화면입니다.">
   <div class="kicker">화면 <span>· 실천이 성장의 조건</span></div>
   <h1><em>실천까지 해야</em> 나무가 자라기 시작합니다</h1>
@@ -945,21 +821,20 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
         <div class="tmsg ok">✔ 다음 단계로 자랐습니다 — <b>배운 걸 실제로 했다는 증거</b></div>
       </div>
     </div>
-    <div class="row" style="margin-top:13px;align-items:center;gap:14px">
-      <div style="font-size:13.5px;font-weight:800;color:var(--sub);flex:none">4단계 <span class="id">FR-030</span></div>
+    <div class="row" style="margin-top:14px;align-items:center;gap:14px">
+      <div style="font-size:13.5px;font-weight:800;color:var(--sub);flex:none">4단계 기준표</div>
       <div class="chips">
-        <span class="tag o">🌱 새싹 0 / 0 / 0</span><span class="tag">🌳 나무 학습 5 · 퀴즈 4 · 실천 2</span>
+        <span class="tag o">🌱 새싹 0 · 0 · 0</span><span class="tag">🌳 나무 학습 5 · 퀴즈 4 · 실천 2</span>
         <span class="tag">🌸 꽃나무 10 · 8 · 5</span><span class="tag">🍎 열매나무 15 · 12 · 8</span>
         <span class="tag a">실천 경로 5종 · 학습 경로 2종</span>
       </div>
     </div>
   </div>
-  <div class="src">SRS §4.4 <b>FR-030</b> 4단계 기준표 — 세 조건을 <b>모두</b> 충족해야 승급 · 실천 요건은 영역별(벌기·쓰기 2/5/8 · 모으기 1/2/3 · 불리기 1/1/1) · <b>수빈/prototype-wip/Tree.dc.html</b></div>
 </section>
 
-<!-- 16 ── 프로토타입 UX ② 계획 카드 -->
-<section class="slide" data-blk="블록 8 · 화면" data-sec="35"
- data-note="두 번째 핵심은 <em>돈을 쓰기 전에 적게 하는 것</em>입니다.<br>가게 가기 전에 세 가지만 적어요 — 날짜, 어디서, 얼마까지. <em>업종은 안 묻습니다.</em> 아까 말씀드린 대로 물어봐야 판정에 못 쓰거든요.<br>다녀오면 적어둔 것과 실제 쓴 걸 나란히 보여줍니다. 지켰으면 별을 주고, 넘겼으면 <em>별만 안 주지 결제를 막지는 않습니다.</em> 미지급은 보상의 부재지만 차단은 제재니까요.<br>이 판정에 <em>업종 코드는 쓰지 않습니다.</em> 오직 금액입니다."
+<!-- 11 ── [11p] 프로토타입 UX ② -->
+<section class="slide" data-blk="블록 8 · 화면" data-sec="30"
+ data-note="두 번째 핵심은 <em>돈을 쓰기 전에 적게 하는 것</em>입니다.<br>가게 가기 전에 세 가지만 적어요 — 날짜, 어디서, 얼마까지. <em>가게 종류는 안 묻습니다.</em> 물어봐야 판정에 못 쓰거든요. 카드 결제에는 가게마다 종류 코드가 하나뿐이라 편의점에서 과자랑 지우개를 같이 사면 어느 분류도 맞지 않습니다.<br>다녀오면 적어둔 것과 실제 쓴 걸 나란히 보여줍니다. 지켰으면 별을 주고, 넘겼으면 <em>별만 안 주지 결제를 막지는 않습니다.</em> 미지급은 보상의 부재지만 차단은 제재니까요."
  data-br="화면 여덟 개 전체와, 아직 못 한 배포 이야기를 하겠습니다.">
   <div class="kicker">화면 <span>· 쓰기 전에 적는다</span></div>
   <h1>돈을 쓰기 <em>전에</em> 아이가 소비 계획을 세웁니다</h1>
@@ -978,39 +853,38 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
         <div class="l"><span>실제 쓴 돈</span><b class="no">8,000원</b></div>
         <div class="l"><span>판정</span><span class="no">계획보다 3,000원 더 썼어요</span></div>
         <div class="fork">
-          <div class="y">✔ 지켰으면 → ⭐ 지급</div>
-          <div class="n2">넘겼으면 → ⭐만 미지급<br><span style="font-weight:600;font-size:13.5px">결제는 통과합니다</span></div>
+          <div class="y">✔ 지켰으면 → 별 지급</div>
+          <div class="n2">넘겼으면 → 별만 미지급<br><span style="font-weight:600;font-size:13.5px">결제는 통과합니다</span></div>
         </div>
       </div>
       <div class="col" style="width:300px;flex:none;gap:10px">
         <div class="card a" style="padding:14px 17px"><h3>묻지 않는 것</h3>
-          <p><strong>업종 · 품목을 받지 않습니다</strong><br>결제 승인에는 가맹점당 업종 코드가 하나뿐이고, 간편결제는 <strong>PG사로 찍힙니다</strong> — 받아도 대조가 성립하지 않습니다</p></div>
+          <p><strong>가게 종류 · 품목을 받지 않습니다</strong><br>카드 결제에는 가게마다 종류 코드가 <strong>하나뿐</strong>이고, 간편결제는 <strong>결제대행사 이름으로 찍힙니다</strong> — 받아도 대조가 안 됩니다</p></div>
         <div class="card g" style="padding:14px 17px"><h3>그래서 판정은</h3>
-          <p><strong>금액 하나</strong>로만 합니다 <span class="id" style="font-size:13px">AC-021-6</span><br>판정 로직이 <strong>MCC 를 참조하지 않습니다</strong></p></div>
+          <p><strong>금액 하나</strong>로만 합니다<br>판정 로직이 <strong>가게 종류를 참조하지 않습니다</strong></p></div>
       </div>
     </div>
   </div>
-  <div class="src">PRD 부록 E <b>ADR-001</b>(3필드 · ⭐ 판정은 금액만) · <b>ADR-002</b>(계획을 넘겨도 결제는 통과) · SRS §4.3 <b>FR-021</b> · <b>DR-05</b> · <b>AC-021-6</b> · <b>수빈/prototype-wip/Plan.dc.html · Spending.dc.html</b></div>
 </section>
 
-<!-- 17 ── 화면 8개 · 데모 · 배포 -->
-<section class="slide" data-blk="블록 8 · 화면" data-sec="35"
- data-note="화면은 여덟 개를 고쳤습니다. 부모 넷, 아이 넷이요.<br>여덟 개 <em>전부에 상태 네 가지</em>가 들어 있습니다. 이슈의 수용 기준에 그 줄이 박혀 있어서 빠뜨릴 수가 없었어요.<br>그리고 솔직하게 말씀드리면, <em>배포는 아직 못 했습니다.</em> 이 화면들은 디자인 캔버스 아트보드지 실행되는 웹앱이 아니에요.<br>그래서 오늘은 <em>화면을 직접 띄워서</em> 보여드리겠습니다."
+<!-- 12 ── [12p] 화면 8개 · 상태 · 데모 -->
+<section class="slide" data-blk="블록 8 · 화면" data-sec="30"
+ data-note="화면은 여덟 개를 고쳤습니다. 부모 넷, 아이 넷이요.<br>여덟 개 <em>전부에 상태 네 가지</em>가 들어 있습니다. 이슈의 판정 문장에 그 줄이 박혀 있어서 빠뜨릴 수가 없었어요.<br>그리고 솔직하게 말씀드리면, <em>배포는 아직 못 했습니다.</em> 이 화면들은 디자인 도구의 작업 파일이지 실행되는 웹앱이 아니에요.<br>그래서 오늘은 <em>화면을 직접 띄워서</em> 보여드리겠습니다."
  data-br="이 작업을 어떤 도구로 굴렸는지 말씀드리겠습니다.">
   <div class="kicker">화면 <span>· 여덟 개 · 상태 · 데모</span></div>
   <h1>화면 <em>8개</em>를 고쳤고, 여덟 개 <em>모두</em> 네 상태를 갖습니다</h1>
   <div class="body">
     <div class="g6" style="grid-template-columns:repeat(4,1fr);gap:10px">
-      <div class="cell" style="padding:13px 15px"><div class="k">부모 · #1</div><div class="v">가입 · 법정대리인 동의</div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">아이 · #2</div><div class="v">홈 · 실천하기 2×2</div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">아이 · #3</div><div class="v">학습 · 퀴즈</div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">아이 · #4</div><div class="v">소비 계획 카드</div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">부모 · #5</div><div class="v">소비 내역 대조</div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">부모 · #6</div><div class="v">성장 나무 <b>4단계</b></div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">부모 · #7</div><div class="v">월간 숲 · 전월 대비</div></div>
-      <div class="cell" style="padding:13px 15px"><div class="k">아이 · #8</div><div class="v">내 통장 · 적금 신청</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">부모 · 1</div><div class="v">가입 · 법정대리인 동의</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">아이 · 2</div><div class="v">홈 · 실천하기 네 칸</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">아이 · 3</div><div class="v">학습 · 퀴즈</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">아이 · 4</div><div class="v">소비 계획 카드</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">부모 · 5</div><div class="v">소비 내역 대조</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">부모 · 6</div><div class="v">성장 나무 <b>4단계</b></div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">부모 · 7</div><div class="v">월간 숲 · 전월 대비</div></div>
+      <div class="cell" style="padding:13px 15px"><div class="k">아이 · 8</div><div class="v">내 통장 · 적금 신청</div></div>
     </div>
-    <div class="row" style="margin-top:13px;align-items:flex-start">
+    <div class="row" style="margin-top:14px;align-items:flex-start">
       <div style="flex:1">
         <div style="font-size:13.5px;font-weight:800;color:var(--sub);margin-bottom:8px">화면마다 켜볼 수 있는 상태</div>
         <div class="stt">
@@ -1020,52 +894,50 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
           <div class="s2 ex"><div class="n3">오류</div></div>
         </div>
       </div>
-      <div class="card" style="width:430px;flex:none;padding:13px 17px"><p style="font-size:13.5px">여기에 더해 화면별 <strong>시나리오 토글</strong>이 있습니다 — 나무는 「퀴즈 100 · 실천 0」, 숲은 「첫 달 · 실천 0건」, 통장은 적금 <strong>4상태</strong></p></div>
+      <div class="card" style="width:430px;flex:none;padding:13px 17px"><p style="font-size:13.5px">여기에 더해 화면별 <strong>상황 토글</strong>이 있습니다 — 나무는 「퀴즈 100 · 실천 0」, 숲은 「첫 달 · 실천 0건」, 통장은 적금 <strong>4상태</strong></p></div>
     </div>
-    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>실제 데모 · Vercel · 도메인이 아직 0건입니다.</b> 화면은 <span class="id">.dc.html</span> — Design Canvas 아트보드지 실행되는 웹앱이 아닙니다. ① 정적 HTML 로 내보내 Vercel 에 올리거나 ② <b>라이브 데모를 화면 녹화로 대체</b>할지 정하고, 이 자리에 링크 또는 영상을 넣으세요.</div></div>
+    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>실제 데모 · 배포 주소가 아직 없습니다.</b> 화면은 디자인 도구의 작업 파일이지 실행되는 웹앱이 아닙니다. ① 웹으로 내보내 배포하거나 ② <b>라이브 데모를 화면 녹화로 대체</b>할지 정하고 이 자리에 링크나 영상을 넣으세요.</div></div>
   </div>
-  <div class="src">화면 8개 — <b>수빈/prototype-wip/</b> (프로토타입 원본은 그대로 두고 사본으로 작업) · Issue #1~#8 공통 수용 기준 「Loading / Empty / Error 상태 확인」 · 「모바일 · 데스크톱 핵심 레이아웃 확인」</div>
 </section>
 
-<!-- 18 ── AI 도구 -->
-<section class="slide" data-blk="블록 9 · AI 도구" data-sec="40"
- data-note="이 작업을 <em>에이전틱 루프</em>로 굴렸습니다.<br>먼저 <em>/goal-setting</em>으로 목표 프롬프트를 만들었어요. 네 항목이 필수입니다 — 목표와 범위, 세부 규칙, <em>종료 조건</em>, 제약. 종료 조건이 없으면 무한히 돕니다.<br>그다음 <em>/goal</em>로 이슈 열세 건을 순회시켰습니다. 결과가 PR 여덟 건, BLOCKED 다섯 건이에요.<br>그런데 <em>중요한 건 개입입니다.</em> 세 가지가 있었어요.<br>첫째, 루프가 <em>스스로 정하지 않고 유보</em>했습니다. 문서에 답이 없는 판단 세 건을 카운터만 올리고 넘겼어요.<br>둘째, 막힌 다섯 건을 <em>사유와 함께</em> 남겼습니다. 그게 그대로 다음 백로그가 됐고요.<br>셋째, <em>사람이 루프를 뒤집었습니다.</em> 적금 이자를 이율로 계산하게 짜놨는데, 저희 설계는 금액이었거든요. 그걸 되돌렸습니다."
+<!-- 13 ── [13p] AI 도구 -->
+<section class="slide" data-blk="블록 9 · AI 도구" data-sec="35"
+ data-note="이 작업을 <em>AI 에이전트 루프</em>로 굴렸습니다.<br>먼저 목표 설계 도구로 <em>목표 프롬프트</em>를 만들었어요. 네 항목이 필수입니다 — 목표와 범위, 세부 규칙, <em>종료 조건</em>, 제약. 종료 조건이 없으면 무한히 돕니다.<br>그다음 루프를 돌려 이슈 열세 건을 순회시켰습니다. 결과가 검토 요청 여덟 건, 막힘 다섯 건이에요.<br>그런데 <em>중요한 건 개입입니다.</em> 세 가지가 있었어요.<br>첫째, 루프가 <em>스스로 정하지 않고 유보</em>했습니다. 문서에 답이 없는 판단 세 건을 카운터만 올리고 넘겼어요.<br>둘째, 막힌 다섯 건을 <em>사유와 함께</em> 남겼습니다. 그게 그대로 다음 할 일이 됐고요.<br>셋째, <em>사람이 루프를 뒤집었습니다.</em> 적금 이자를 이율로 계산하게 짜놨는데, 저희 설계는 금액이었거든요. 되돌렸습니다."
  data-br="이제 검증과 남은 한계로 마무리하겠습니다.">
-  <div class="kicker">AI 도구 <span>· /goal-setting · /goal · /grill-it</span></div>
+  <div class="kicker">AI 도구 <span>· 목표 설계 · 자동 루프 · 문서 검증</span></div>
   <h1>루프를 돌리되, <em>결정은 사람이</em> 하게 막아뒀습니다</h1>
   <div class="body">
     <div class="flow" style="margin-bottom:13px">
-      <div class="n">/goal-setting <small>목표 프롬프트 설계</small></div><div class="s">→</div>
-      <div class="n">/goal <small>이슈 13건 순회</small></div><div class="s">→</div>
-      <div class="n">이슈별 브랜치 <small>1 이슈 = 1 PR</small></div><div class="s">→</div>
+      <div class="n">목표 설계 <small>4항목 프롬프트를 함께 만듦</small></div><div class="s">→</div>
+      <div class="n">자동 루프 <small>이슈 13건 순회</small></div><div class="s">→</div>
+      <div class="n">이슈별 브랜치 <small>이슈 1건 = 요청 1건</small></div><div class="s">→</div>
       <div class="n k">체크포인트 <small>카운터 · 사유 기록</small></div>
     </div>
     <div class="row">
       <div class="card grow" style="padding:15px 18px"><h3>개입 ① · 스스로 정하지 않게 막았습니다</h3>
-        <p>문서에 답이 없는 판단이 나오면 <strong>그 자리에서 정하지 말고</strong> 카운터만 올리게 했습니다. 결과 <strong>판단 유보 3건</strong> — 사람이 PRD ADR · SRS · wiki 에 씁니다</p></div>
+        <p>문서에 답이 없는 판단이 나오면 <strong>그 자리에서 정하지 말고</strong> 카운터만 올리게 했습니다. 결과 <strong>판단 유보 3건</strong> — 사람이 기획서와 명세서에 씁니다</p></div>
       <div class="card grow" style="padding:15px 18px"><h3>개입 ② · 막힌 자리를 사유와 함께 남겼습니다</h3>
-        <p>실행 가능한 백엔드를 요구하는 건 <strong>PR 없이 BLOCKED</strong>. <strong>5건</strong>이 사유 한 줄씩과 함께 남아 <strong>그대로 다음 로드맵</strong>이 됐습니다</p></div>
+        <p>실행되는 서버가 있어야 하는 건 <strong>요청 없이 막힘 처리</strong>. <strong>5건</strong>이 사유 한 줄씩과 함께 남아 <strong>그대로 다음 할 일</strong>이 됐습니다</p></div>
       <div class="card r grow" style="padding:15px 18px"><h3>개입 ③ · 사람이 루프를 뒤집었습니다</h3>
-        <p>루프가 적금 이자를 <strong>이율로 계산</strong>하게 구현했는데, 저희 설계는 <strong>금액</strong>이었습니다. 되돌리고 <span class="id">FR-031</span> 을 금액 기준으로 다시 맞췄습니다</p></div>
+        <p>루프가 적금 이자를 <strong>이율로 계산</strong>하게 구현했는데, 저희 설계는 <strong>금액</strong>이었습니다. 되돌리고 명세를 금액 기준으로 다시 맞췄습니다</p></div>
     </div>
     <div class="anz">
-      <div class="ah"><span class="m">종료 조건</span><span class="t">루프는 무한히 돌지 않게 조기 종료 조건을 미리 박아둡니다</span></div>
+      <div class="ah"><span class="m">종료 조건</span><span class="t">루프가 무한히 돌지 않게 조기 종료 조건을 미리 박아둡니다</span></div>
       <div class="ab">
-        <div class="kv"><div class="k">조기 종료</div><div class="v">핵심 판단 <b>3건</b> 누적 · 부수 판단 <b>10건</b> 누적 · 큐 소진</div></div>
+        <div class="kv"><div class="k">조기 종료</div><div class="v">핵심 판단 <b>3건</b> 누적 · 부수 판단 <b>10건</b> 누적 · 대기열 소진</div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">실제 종료</div><div class="v">CORE <b>0</b> · MINOR <b>3</b> · <b class="id">STOP REASON: QUEUE_EMPTY</b></div></div>
+        <div class="kv"><div class="k">실제 종료</div><div class="v">핵심 <b>0</b> · 부수 <b>3</b> · <b>대기열 소진으로 정상 종료</b></div></div>
         <div class="sep"></div>
-        <div class="kv"><div class="k">멀티에이전트</div><div class="v">카운터를 <b>별도 체크포인트 파일</b>에 둬 다른 세션도 읽습니다</div></div>
+        <div class="kv"><div class="k">여러 세션 공유</div><div class="v">카운터를 <b>별도 파일</b>에 둬 다른 작업 세션도 읽습니다</div></div>
       </div>
     </div>
-    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>/grill-it 대표 사례 한 건.</b> 어느 문서의 어떤 주장을 깨뜨렸고 그래서 문서가 어떻게 바뀌었는지 — <span class="id">wiki/log.md</span> 에 흔적은 있으나 <b>한 사례로 정리돼 있지 않습니다.</b></div></div>
+    <div class="todo"><span class="tg">채워 넣을 것</span><div class="tt"><b>문서 검증 도구 대표 사례 한 건</b> — 어느 문서의 어떤 주장을 깨뜨렸고 그래서 문서가 어떻게 바뀌었는지</div></div>
   </div>
-  <div class="src">근거 — <b>수빈/goals/finfriends-issue-loop.md</b>(/goal 프롬프트 전문 · 4섹션) · <b>수빈/goals/LOOP_CHECKPOINT.md</b>(카운터 · BLOCKED · 처리 이력 · STOP REASON) · Issue #1~#13 → PR #14~#21</div>
 </section>
 
-<!-- 19 ── 검증 결과 -->
-<section class="slide" data-blk="블록 10 · 마무리" data-sec="35"
- data-note="검증입니다. <em>솔직하게 말씀드리면 실측은 아직 없습니다.</em><br>대신 <em>무엇을 어떻게 판정할지는 다 정해뒀습니다.</em> 수용 기준 마흔아홉 개, 통과·보류·실패 3구간 판정 규칙, 그리고 실패했을 때 뭘 할지까지요.<br>이번에 자체 점검한 건 왼쪽입니다. 이슈 여덟 건의 수용 기준을 <em>PR 본문에 줄 단위로 대조</em>했어요. UI 여덟 건은 전부 충족했고, 시스템 다섯 건은 <em>판정 자체가 불가</em>했습니다.<br>사용자 대상 실측은 오른쪽인데 전부 비어 있습니다. 이게 저희의 가장 큰 한계예요."
+<!-- 14 ── [14p] 검증 -->
+<section class="slide" data-blk="블록 10 · 마무리" data-sec="30"
+ data-note="검증입니다. <em>솔직하게 말씀드리면 실측은 아직 없습니다.</em><br>대신 <em>무엇을 어떻게 판정할지는 다 정해뒀습니다.</em> 판정 문장 마흔아홉 개, 통과·보류·실패 3구간 규칙, 그리고 실패했을 때 뭘 할지까지요.<br>이번에 자체 점검한 건 왼쪽입니다. 이슈 여덟 건의 판정 문장을 <em>검토 요청 본문에 줄 단위로 대조</em>했어요. 화면 여덟 건은 전부 충족했고, 시스템 다섯 건은 <em>판정 자체가 불가</em>했습니다.<br>사용자 대상 실측은 오른쪽인데 전부 비어 있습니다. 이게 저희의 가장 큰 한계예요."
  data-br="남은 한계를 이어서 말씀드리겠습니다.">
   <div class="kicker">검증 <span>· 무엇을 확인했고 무엇이 비었나</span></div>
   <h1>판정 <em>규칙</em>은 다 만들었고, <b>실측은 아직 없습니다</b></h1>
@@ -1073,46 +945,44 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     <div class="row">
       <div class="col grow" style="gap:10px">
         <div class="card g" style="padding:15px 18px"><h3>✔ 이번에 실제로 확인한 것</h3>
-          <p><strong>이슈 8건의 수용 기준을 PR 본문에서 줄 단위로 대조</strong>했습니다<br>· UI 8건 — AC 충족 근거를 줄마다 기재<br>· SYS 5건 — <strong>판정 불가</strong>(백엔드·빌드 파이프라인 부재)로 사유 기록<br>· 명세 ↔ 화면 어긋남 <strong>4종</strong> 발견 · 수정(나무 3→4단계 · 아이 화면 % 3곳 · 불리기 잠금 · 시간 표현)</p></div>
+          <p><strong>이슈 8건의 판정 문장을 검토 요청 본문에서 줄 단위로 대조</strong>했습니다<br>· 화면 8건 — 충족 근거를 줄마다 기재<br>· 시스템 5건 — <strong>판정 불가</strong>(서버·빌드 환경 부재)로 사유 기록<br>· 명세와 화면이 어긋난 곳 <strong>4종</strong> 발견 · 수정</p></div>
         <div class="card" style="padding:14px 17px"><h3>판정 틀</h3>
-          <p>수용 기준 <strong>49개</strong>(정상 30 + 예외 19) · <strong>통과 · 보류 · 실패</strong> 3구간 판정 규칙 · 실패 시 처리까지 명시</p></div>
+          <p>판정 문장 <strong>49개</strong>(정상 30 + 예외 19) · <strong>통과 · 보류 · 실패</strong> 3구간 규칙 · 실패 시 무엇을 할지까지 명시</p></div>
       </div>
       <div class="col" style="width:452px;flex:none;gap:10px">
         <div class="card r" style="padding:15px 18px"><h3>🔴 아직 없는 것 — 사용자 대상 실측</h3>
-          <p>· 부모 인터뷰 <strong>0건</strong><br>· 계획 카드 작성률 <strong>미측정</strong>(목표 ≥50%)<br>· 나무 5초 회상 테스트 <strong>미실시</strong>(기준 8명 중 6명)<br>· 주간 실천 인정 비율 <strong>미측정</strong>(기준 40%)</p></div>
-        <div class="todo" style="margin-top:0"><span class="tg">정할 것</span><div class="tt">남은 시간에 <b>프로토타입 사용성 테스트를 돌릴지</b>, 아니면 <b>「수용 기준 49개 자체 점검 결과」를 검증으로 내세울지</b> 정하세요. 지금 상태로는 <b>「검증 설계」는 되고 「검증 결과」는 안 됩니다.</b></div></div>
+          <p>· 부모 인터뷰 <strong>0건</strong><br>· 계획 카드 작성률 <strong>미측정</strong> (목표 50% 이상)<br>· 나무 5초 회상 테스트 <strong>미실시</strong> (기준 8명 중 6명)<br>· 주간 실천 비율 <strong>미측정</strong> (기준 40%)</p></div>
+        <div class="todo" style="margin-top:0"><span class="tg">정할 것</span><div class="tt">남은 시간에 <b>프로토타입 사용성 테스트를 돌릴지</b>, 아니면 <b>「판정 문장 49개 자체 점검 결과」를 검증으로 내세울지</b> 정하세요. 지금은 <b>「검증 설계」는 되고 「검증 결과」는 안 됩니다.</b></div></div>
       </div>
     </div>
   </div>
-  <div class="src">🔴 <b>본 프로젝트의 목표 수치는 대부분 [가설]이고 기준선은 미측정</b>입니다 — SRS 머리말 문서 지위 · <b>wiki/60-규칙/PASS-HOLD-FAIL-3구간-판정</b> · <b>측정가능성-리뷰</b> · PR #14~#21 본문</div>
 </section>
 
-<!-- 20 ── 남은 한계 (v2 p16 계승 + 3차 추가) -->
-<section class="slide" data-blk="블록 10 · 마무리" data-sec="35"
- data-note="남은 한계는 다섯 가지입니다. 앞의 셋은 2차에서 이어진 거고, 뒤의 둘은 <em>3차에서 새로 생겼습니다.</em><br>부모님을 아직 한 분도 못 만났고, 아이가 계획을 안 적으면 그 소비는 그냥 지나가고, 게임 안 결제는 아예 못 잡습니다.<br>3차에서 새로 생긴 건 — 시스템 다섯 건이 <em>백엔드 없이는 검증이 안 된다</em>는 것, 그리고 <em>판단 유보 세 건이 아직 열려 있다</em>는 겁니다.<br>중요한 건 이걸 <em>숨기지 않고 번호로 남겼다</em>는 점이에요. 그래서 다음에 뭘 할지가 이미 정해져 있습니다."
+<!-- 15 ── [15p] 남은 한계 -->
+<section class="slide" data-blk="블록 10 · 마무리" data-sec="30"
+ data-note="남은 한계는 다섯 가지입니다. 앞의 셋은 2차에서 이어진 거고, 뒤의 둘은 <em>3차에서 새로 생겼습니다.</em><br>부모님을 아직 한 분도 못 만났고, 아이가 계획을 안 적으면 그 소비는 그냥 지나가고, 게임 안 결제는 아예 못 잡습니다.<br>3차에서 새로 생긴 건 — 시스템 다섯 건이 <em>서버 없이는 검증이 안 된다</em>는 것, 그리고 <em>판단 유보 세 건이 아직 열려 있다</em>는 겁니다.<br>중요한 건 이걸 <em>숨기지 않고 번호로 남겼다</em>는 점이에요. 그래서 다음에 뭘 할지가 이미 정해져 있습니다."
  data-br="그럼 다음에 무엇을 할지로 넘어가겠습니다.">
   <div class="kicker">한계 <span>· 남은 것</span></div>
   <h1>남은 한계 <b>다섯 가지</b> — 셋은 이어진 것, <em>둘은 이번에 생긴 것</em></h1>
   <div class="body">
     <div class="lrow">
       <div class="it"><div class="no">1</div><div class="tx"><b>부모님을 아직 한 분도 인터뷰하지 않았습니다.</b>
-        <small>페르소나는 통계와 자료를 근거로 구성한 것 → 여덟 집을 만나 확인</small></div></div>
+        <small>인물 설정은 통계와 자료를 근거로 구성한 것 → 여덟 집을 만나 확인</small></div></div>
       <div class="it"><div class="no">2</div><div class="tx"><b>아이가 계획을 안 적으면 그 소비는 그냥 지나갑니다.</b>
-        <small>매장 3분 체류 알림을 검토했으나 정작 돈이 새는 자판기는 30초면 끝나 못 잡음 → 위치 기능을 없애고 적는 방식으로</small></div></div>
+        <small>매장 3분 체류 알림을 검토했으나, 정작 돈이 새는 자판기는 30초면 끝나 못 잡음 → 위치 기능을 없애고 적는 방식으로 바꿈</small></div></div>
       <div class="it"><div class="no">3</div><div class="tx"><b>게임 안에서 3초에 끝나는 결제는 여전히 못 잡습니다.</b>
         <small>카드가 아니라 앱 안에서 일어나기 때문 — 대응 기능 0개로 확정하고 문서에 기록</small></div></div>
-      <div class="it" style="background:var(--amber-l);border-color:#EEDFBD"><div class="no" style="background:var(--amber)">4</div><div class="tx"><b>시스템 요구사항 5건은 백엔드 없이 검증이 불가능합니다. <span style="color:var(--amber)">(3차 신규)</span></b>
-        <small>오리진 분리 403 · 별 원장 정합성 · 사진 즉시파기 · 판정 엔진 · 탈퇴 파기 — 전부 실행 가능한 백엔드·빌드 파이프라인을 요구</small></div></div>
+      <div class="it" style="background:var(--amber-l);border-color:#EEDFBD"><div class="no" style="background:var(--amber)">4</div><div class="tx"><b>시스템 요구사항 5건은 서버 없이 검증이 불가능합니다. <span style="color:var(--amber)">(3차 신규)</span></b>
+        <small>앱 분리 차단 · 별 원장 정합성 · 사진 즉시 파기 · 계획 대조 판정 · 탈퇴 파기 — 전부 실행되는 서버와 빌드 환경을 요구</small></div></div>
       <div class="it" style="background:var(--amber-l);border-color:#EEDFBD"><div class="no" style="background:var(--amber)">5</div><div class="tx"><b>판단 유보 3건이 아직 열려 있습니다. <span style="color:var(--amber)">(3차 신규)</span></b>
-        <small>학년 → 난이도 기본값 매핑 · 초대 링크 URL 형식 · 오류 상태의 아이 언어 문구 — 문서에 답이 없어 루프가 정하지 않고 남긴 것</small></div></div>
+        <small>학년에서 난이도 기본값을 어떻게 정할지 · 초대 링크 주소 형식 · 오류 상태에서 아이에게 쓸 문구 — 문서에 답이 없어 루프가 정하지 않고 남긴 것</small></div></div>
     </div>
   </div>
-  <div class="src">인터뷰 0건 · 계획 카드 작성률 미측정 · 온라인 즉시 결제 대응 기능 0개 · <b>LOOP_CHECKPOINT.md</b> BLOCKED 5건 · 판단 유보 3건 · 위치 알림 삭제(2026-08-21)</div>
 </section>
 
-<!-- 21 ── 로드맵 · 회고 · 마무리 -->
-<section class="slide" data-blk="블록 10 · 마무리" data-sec="40"
- data-note="다음에 할 일은 이미 <em>순서까지 정해져 있습니다.</em> 막힌 다섯 건에 사유가 남아 있으니까요.<br>백엔드를 세우고, 판단 유보 세 건을 닫고, 그다음 부모 여덟 집을 만납니다.<br>마지막으로 이번 프로젝트를 한 문장으로 줄이면 — <em>「배웠다」가 아니라 「달라졌다」를 남깁니다.</em><br>그리고 3차에서 배운 건 이겁니다. <em>근거에서 화면까지 번호가 끊기지 않으면, 어긋난 곳이 저절로 드러납니다.</em> 나무 3단계 대 4단계가 그 증거예요.<br>감사합니다."
+<!-- 16 ── [16p] 로드맵 · 회고 -->
+<section class="slide" data-blk="블록 10 · 마무리" data-sec="35"
+ data-note="다음에 할 일은 이미 <em>순서까지 정해져 있습니다.</em> 막힌 다섯 건에 사유가 남아 있으니까요.<br>서버를 세우고, 판단 유보 세 건을 닫고, 그다음 부모 여덟 집을 만납니다.<br>마지막으로 이번 프로젝트를 한 문장으로 줄이면 — <em>「배웠다」가 아니라 「달라졌다」를 남깁니다.</em><br>그리고 3차에서 배운 건 이겁니다. <em>근거에서 화면까지 번호가 끊기지 않으면, 어긋난 곳이 저절로 드러납니다.</em> 나무 3단계 대 4단계가 그 증거예요.<br>감사합니다."
  data-br="">
   <div class="kicker">마무리 <span>· 다음 로드맵과 회고</span></div>
   <h1>「배웠다」가 아니라 <em>「달라졌다」</em>를 남깁니다</h1>
@@ -1121,9 +991,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
       <div class="col grow" style="gap:8px">
         <div style="font-size:13.5px;font-weight:800;color:var(--sub)">다음 개발 로드맵 — <span style="color:var(--green)">순서까지 이미 정해져 있습니다</span></div>
         <div class="chg" style="gap:7px">
-          <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">① 백엔드 스캐폴드</div><div class="fr">SYS-001 · 002</div><div class="to">오리진 분리 · 별 원장</div></div>
-          <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">② 판정·파기 파이프라인</div><div class="fr">SYS-003 · 004 · 005</div><div class="to">승인 · 대조 · 탈퇴</div></div>
-          <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">③ 판단 유보 3건 닫기</div><div class="fr">MINOR ×3</div><div class="to">PRD ADR · SRS</div></div>
+          <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">① 서버 기본 골격</div><div class="fr">막힘 1 · 2</div><div class="to">앱 분리 · 별 원장</div></div>
+          <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">② 판정 · 파기 파이프라인</div><div class="fr">막힘 3 · 4 · 5</div><div class="to">승인 · 대조 · 탈퇴</div></div>
+          <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">③ 판단 유보 3건 닫기</div><div class="fr">유보 ×3</div><div class="to">기획서 · 명세서</div></div>
           <div class="r2" style="padding:11px 17px;font-size:16px"><div class="nm">④ 부모 8집 인터뷰</div><div class="fr">인터뷰 0건</div><div class="to">가장 먼저 검증</div></div>
         </div>
       </div>
@@ -1133,26 +1003,25 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
           <p>결정을 <strong>세 곳에만</strong> 적고 나머지는 번호만 인용하게 했더니, <strong>명세와 화면이 어긋난 곳 4종</strong>이 저절로 드러났습니다</p></div>
         <div class="card a" style="padding:14px 17px"><h3>아쉬운 것</h3>
           <p>문서는 여섯 층까지 갔는데 <strong>실행되는 것</strong>은 아직 없습니다 — 배포도, 사용자 실측도</p></div>
-        <div class="todo" style="margin-top:0"><span class="tg">채워 넣을 것</span><div class="tt">팀원별 <b>한 줄 회고</b>를 넣으세요. 위 두 칸은 <b>공통 골격</b>입니다.</div></div>
+        <div class="todo" style="margin-top:0"><span class="tg">채워 넣을 것</span><div class="tt">팀원별 <b>한 줄 회고</b>. 위 두 칸은 <b>공통 골격</b>입니다.</div></div>
       </div>
     </div>
     <div class="bridge" style="margin-top:12px">근거에서 화면까지 <b style="color:#BFE6CF">번호가 끊기지 않으면</b>, 어긋난 곳이 <b style="color:#BFE6CF">저절로 드러납니다</b></div>
   </div>
-  <div class="src">🔴 인터뷰 0건 · 목표 수치는 대부분 <b>[가설]</b> · 어느 수치도 <b>성과로 인용할 수 없습니다</b> — SRS 문서 지위 · 저장소 <b>scene-one/team1_fin-friends</b></div>
 </section>
 
 
 </div></div>
 
 <div id="ov">
-  <h2>제목만 이어 읽기 — 21장</h2>
+  <h2>제목만 이어 읽기 — 16장</h2>
   <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
   <div class="grid" id="ovg"></div>
 </div>
 
 <div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
 <div id="tmr">⏱ —</div>
-<div id="hud"><span id="pg"><b>1</b> / 21</span><span id="blk"></span>
+<div id="hud"><span id="pg"><b>1</b> / 16</span><span id="blk"></span>
   <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
 
 <div id="help"><div class="box">
@@ -1164,7 +1033,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 21장 · 목표 12분 45초</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 16장 · 목표 8분 55초</p>
   <p style="color:#B8801F;font-size:14px">노란 점선 <b>「채워 넣을 것」</b> 박스는 발표 전에 채우고 지우세요.</p>
 </div></div>
 
@@ -1183,7 +1052,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     stage.style.transform='scale('+s+')';}
   addEventListener('resize',fit); fit();
 
-  var NAMES={1:'표지',2:'배경',3:'KB',4:'PRD·SRS',5:'추적성',6:'기술',7:'운영',8:'화면',9:'AI 도구',10:'마무리'};
+  var NAMES={1:'표지',2:'배경',3:'지식베이스',4:'기획·명세',5:'추적성',6:'기술',7:'운영',8:'화면',9:'AI 도구',10:'마무리'};
   var groups=[], gof=[];
   S.forEach(function(s,x){
     var no=+((s.dataset.blk.match(/블록\s*(\d+)/)||[])[1]||0);
