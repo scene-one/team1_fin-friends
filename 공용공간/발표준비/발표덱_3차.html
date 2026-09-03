@@ -175,6 +175,14 @@ h1 b{color:var(--red);font-weight:800}
 
 .techcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;
   display:flex;flex-direction:column;gap:11px;flex:1}
+.techcard .hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.techcard .st{font-size:11px;font-weight:800;letter-spacing:.02em;padding:3px 9px;
+  border-radius:999px;border:1px solid;white-space:nowrap}
+.techcard .st.done{color:var(--green);background:var(--green-l);border-color:#C3DECE}
+.techcard.solo .st{font-size:12.5px;padding:4px 11px}
+.techcard code,.src code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.92em;background:#F1F2EE;border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.src code{background:#F4F5F1;font-size:11.5px}
 .techcard .tn{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--green)}
 .techcard h3{font-size:18px;font-weight:800;color:var(--ink);line-height:1.35}
 .techcard .desc{font-size:13.5px;line-height:1.6;color:var(--sub)}
@@ -242,7 +250,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 
 <!-- 1 -->
 <section class="slide cover" data-blk="블록 1 · 표지" data-sec="15"
- data-note="핀프렌즈 마스터덱입니다. 오늘은 새 목차로 다시 짰습니다 — 문제 한 장, 아이 가치와 실천 기능, 부모 가치와 확인 기능, 그리고 이걸 구현하는 기술까지 네 덩어리로 보여드립니다."
+ data-note="핀프렌즈 마스터덱입니다. 오늘은 새 목차로 다시 짰습니다 — 문제 한 장, 아이 가치와 실천 기능, 부모 가치와 확인 기능, 그리고 이걸 실제로 어떻게 만들었는지까지 네 덩어리로 보여드립니다."
  data-br="먼저 문제부터 한 장으로 보여드리겠습니다.">
   <div class="brand">F I N F R I E N D S</div>
   <h1>아이가 얼마를 <em>‘썼는지’</em>보다,<br>얼마나 <em>‘자랐는지’</em> 보여줍니다</h1>
@@ -440,7 +448,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 <!-- 11 -->
 <section class="slide" data-blk="블록 4 · 부모" data-sec="35"
  data-note="부모 쪽 가치 선언은 — 아이가 배운 걸 얼마나 해봤는지 부모가 확인할 수 있다는 겁니다.<br>성장 나무는 벌기·잘쓰기·모으기·불리기 네 그루로, 학습과 퀴즈만으로는 안 자라고 실천 조건을 채워야 자랍니다.<br>월간 숲은 나무가 매달 초기화되는 대신, 그 달의 변화 — 사려다 멈춘 횟수, 가격을 비교해본 횟수, 저축 비율 — 를 지난달과 비교해서 보여줍니다."
- data-br="이걸 실제로 구현하려면 어떤 기술이 필요한지 보여드리겠습니다.">
+ data-br="이걸 실제로 어떻게 만들었는지, 데모에서 돌아가는 것만 보여드리겠습니다.">
   <div class="kicker">부모 <span>· 가치 선언 (3)</span></div>
   <h1>“아이가 배운 걸 얼마나 해봤는지 <em>부모가 확인</em>할 수 있습니다”</h1>
   <div class="body">
@@ -463,89 +471,124 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="src">출처: 공용공간/0. 확정 기능 정의/기능정의_v14.md §3(성장 나무) — 4분할(2×2) 레이아웃, 영역별 초기화 주기 상이 · 월간 숲 지표는 예시 수치</div>
 </section>
 
+<!-- 블록 5 · 구현 — 하영 2026-09-03: 데모 저장소(github.com/2ma1995/finfriends)의 실제 구현에 맞춰 다시 씀.
+     계획만 있고 구현이 없는 항목(오리진 2개 분리 · SW 오프라인 큐 · Bedrock 요약)은 16장으로 분리했습니다. -->
+
 <!-- 12 -->
 <section class="slide" data-blk="블록 5 · 구현" data-sec="30"
- data-note="배운 걸 실제로 했는지 증명하는 기술입니다. 아이가 퀴즈를 풀어 별을 받는 순간, 서버는 같은 주제의 실천 미션을 곧바로 연결해 보여줍니다. 사진으로 인증하면 부모 승인 후 별이 확정되고, 72시간 안에 확인이 없으면 자동 지급됩니다. 사진은 확인 즉시 삭제됩니다."
- data-br="다음은 부모와 아이 화면을 분리하는 기술입니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4) — ①</span></div>
-  <h1>이런 <em>기술</em>을 사용했습니다</h1>
+ data-note="여기서부터는 실제로 돌아가는 것만 보여드립니다. 첫째는 배운 걸 실제로 했는지 증명하는 흐름입니다. 아이가 퀴즈를 맞히면 서버가 같은 주제의 실천 미션을 곧바로 붙여 줍니다. 사진으로 인증하면 보호자에게 승인 요청이 가고, 승인하면 별이 확정됩니다. 72시간 안에 확인이 없으면 자동으로 지급돼서, 아이가 한 일이 부모 사정으로 사라지지 않습니다. 사진은 승인이든 반려든 판정하는 순간 서버에서 지워집니다."
+ data-br="다음은 아이 화면에 부모 기능이 섞이지 않게 만든 방법입니다.">
+  <div class="kicker">구현 <span>· 만든 것 (4) — ①</span></div>
+  <h1>이렇게 <em>만들었습니다</em></h1>
   <div class="body" style="display:flex;justify-content:center">
     <div class="techcard solo">
-      <div class="tn">기술 ①</div>
+      <div class="hd"><div class="tn">기술 ①</div><div class="st done">구현됨 · 데모에서 확인</div></div>
       <h3>배운 걸 실제로 했는지 증명하기</h3>
-      <p class="desc">아이가 퀴즈를 풀어 별을 받는 순간, 서버는 그 정답과 <strong>같은 주제의 실천 미션</strong>을 곧바로 연결해 보여줍니다. 미션을 사진으로 인증하면 부모에게 승인 요청이 가고, 부모가 승인하면 별이 지급됩니다. <strong>72시간 안에 부모 확인이 없으면 자동으로 지급</strong>되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다(ADR-016).</p>
-      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">서버(<b>Next.js 서버 런타임</b>)가 학습 이벤트와 미션 이벤트를 하나의 흐름으로 묶고, 이 지급을 원장(<b>PostgreSQL</b>) 이중 기입으로 기록</div></div>
-      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">“퀴즈 정답 → 별 1개 → 실천 카드 등장 → 사진 인증 → 부모 승인 → 별 확정 → 나무 성장”이 화면 안에서 끊기지 않고 이어짐. 승인용 사진은 확인 즉시 서버에서 삭제되어, 화면에는 <b>“승인됨”</b> 표시만 남음</div></div>
+      <p class="desc">아이가 퀴즈를 맞히는 순간, 서버가 그 정답과 <strong>같은 주제의 실천 미션</strong>을 곧바로 이어 붙입니다. 사진으로 인증하면 보호자에게 승인 요청이 가고, 승인하면 별이 확정됩니다. <strong>72시간 안에 보호자 확인이 없으면 자동으로 지급</strong>되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다(ADR-016).</p>
+      <div class="ttr"><div class="lbl">만든 방식</div><div class="val"><b>Next.js 16 Server Action</b>이 학습 이벤트와 미션 이벤트를 한 흐름으로 묶고, 지급은 <b>PostgreSQL</b> 원장에 남깁니다. 사진은 원장이 아니라 별도 테이블에 바이트로 두고, <b>승인·반려 판정 즉시 지웁니다</b></div></div>
+      <div class="ttr show"><div class="lbl">데모에서</div><div class="val">아이 <b>학습 → 퀴즈 → 실천</b>, 보호자 <b>미션 승인</b>까지 화면 안에서 끊기지 않고 이어집니다. 판정이 끝난 미션의 사진 주소는 <b>404</b>입니다 — 오류가 아니라 「지워졌다」는 뜻이라 화면이 자리를 비웁니다</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §1</div>
+  <div class="src">근거: 데모 저장소 <b>github.com/2ma1995/finfriends</b> — <code>app/src/app/actions/</code> · <code>prisma/migrations/…_mission_auto_done</code>(72시간) · <code>…_mission_photo_table</code> · <code>app/src/app/parent/bank/missions/photo/[missionId]/route.ts</code>(no-store · 판정 후 404)</div>
 </section>
 
 <!-- 13 -->
-<section class="slide" data-blk="블록 5 · 구현" data-sec="25"
- data-note="부모와 아이가 각자의 화면만 보게 하는 기술입니다. 겉보기엔 한 서비스지만 실제로는 서로 다른 주소로 배포된 별개의 PWA입니다. 아이 토큰으로는 부모 API를 아예 호출할 수 없습니다."
- data-br="이어서 오프라인에서도 안전한 기록 기술을 보여드리겠습니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4) — ②</span></div>
-  <h1>이런 <em>기술</em>을 사용했습니다</h1>
-  <div class="body" style="display:flex;justify-content:center">
-    <div class="techcard solo">
-      <div class="tn">기술 ②</div>
-      <h3>부모와 아이 화면 분리하기</h3>
-      <p class="desc">부모 앱과 아이 앱은 겉보기엔 한 서비스지만, 실제로는 <strong>서로 다른 주소(오리진)</strong>로 배포된 별개의 PWA입니다.</p>
-      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>PWA 2개</b>(부모/아이) + 오리진 분리, 아이 토큰으로는 부모 API를 아예 호출할 수 없게 서버가 막음</div></div>
-      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">부모는 초대 링크를 만들어 문자로 보내고, 아이는 그 링크로만 들어옴. 두 화면이 같은 코드베이스(Next.js)에서 나오지만, 사용자는 완전히 분리된 두 개의 앱처럼 경험함</div></div>
+<section class="slide" data-blk="블록 5 · 구현" data-sec="30"
+ data-note="둘째는 아이 화면에 부모 기능이 섞이지 않게 만든 방법입니다. 화면에서 링크를 지우는 것으로는 부족합니다. 주소를 직접 치면 열리니까요. 그래서 세 겹으로 막았습니다. 미들웨어가 아이 기기의 부모 화면 진입을 서버에서 막고, 보호자용 서버 함수는 각자 첫 줄에서 인가를 다시 확인하고, 빌드 게이트가 아이 번들에 부모 기능이 실려 나가는지 검사해서 하나라도 걸리면 빌드를 세웁니다. 솔직하게 말씀드리면 지금은 단일 앱이라 도메인을 가르는 진짜 오리진 격리는 아닙니다. 그 얘기는 마지막 장에서 하겠습니다."
+ data-br="셋째는 별이 사라지지도, 두 번 지급되지도 않게 만든 방법입니다.">
+  <div class="kicker">구현 <span>· 만든 것 (4) — ②</span></div>
+  <h1>이렇게 <em>만들었습니다</em></h1>
+  <div class="body">
+    <div class="techcard" style="max-width:1080px;margin:0 auto;padding:24px 28px">
+      <div class="hd"><div class="tn">기술 ②</div><div class="st done">구현됨 · 데모에서 확인</div></div>
+      <h3 style="font-size:21px">아이 화면에 부모 기능이 섞이지 않게 하기</h3>
+      <p class="desc" style="font-size:15px">화면에서 링크를 지우는 것으로는 부족합니다 — <strong>주소를 직접 치면 열립니다.</strong> 아이가 자기 미션을 스스로 승인할 수 있으면 보호자 승인이라는 절차가 무의미해지므로, 세 겹으로 막습니다.</p>
+      <div class="lrow" style="margin-top:2px">
+        <div class="it"><div class="no">1</div><div class="tx"><b>미들웨어</b> — 아이 기기로 표시된 브라우저가 부모 화면 주소로 들어오면 <b>서버가 그 자리에서 돌려보냅니다</b><small>1차 관문일 뿐입니다. 쿠키는 지울 수 있으므로 여기만 믿지 않습니다</small></div></div>
+        <div class="it"><div class="no">2</div><div class="tx"><b>서버 함수 인가</b> — 보호자 화면의 모든 서버 함수가 <b>각자 첫 줄에서 인가를 다시 확인</b>합니다<small>미션 사진을 내려주는 경로도 미션 번호만으로는 열리지 않고 보호자 계정을 함께 걸어 조회합니다</small></div></div>
+        <div class="it"><div class="no">3</div><div class="tx"><b>빌드 게이트</b> — 아이 화면이 부모 전용 모듈을 가져다 썼는지, 빌드 결과물의 아이 번들에 부모 경로 문자열이 남았는지 검사해 <b>하나라도 걸리면 빌드를 세웁니다</b><small>사람이 잊어도 배포가 먼저 멈춥니다</small></div></div>
+      </div>
+      <div class="ttr show" style="margin-top:2px"><div class="lbl">한계</div><div class="val"><b>단일 앱이라 도메인을 가르는 오리진 격리는 아닙니다.</b> 같은 요구(FR-003 · AC-003-2)를 위 세 겹으로 지키고 있고, 오리진 분리는 <b>다음 장</b>에 남겨 뒀습니다</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §2</div>
+  <div class="src">근거: 데모 저장소 — <code>app/src/middleware.ts</code> · <code>app/tools/scan_child_bundle.mjs</code>(빌드 게이트 — <code>prebuild</code>·<code>postbuild</code>에 물려 있음)</div>
 </section>
 
 <!-- 14 -->
-<section class="slide" data-blk="블록 5 · 구현" data-sec="25"
- data-note="인터넷이 끊겨도 성장 기록이 안전한 기술입니다. 아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않도록, 앱이 오프라인 큐에 잠깐 저장해두고 재연결되면 고유 키로 서버에 전송해 중복 지급을 막습니다."
- data-br="마지막은 월간 요약을 말로 설명하는 기술입니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4) — ③</span></div>
-  <h1>이런 <em>기술</em>을 사용했습니다</h1>
+<section class="slide" data-blk="블록 5 · 구현" data-sec="30"
+ data-note="셋째는 별이 사라지지도, 두 번 지급되지도 않게 만든 방법입니다. 잔액 컬럼을 아예 두지 않았습니다. 원장에 쌓인 증감의 합이 곧 잔액입니다. 잔액을 따로 저장하면 둘이 어긋나는 순간 어느 쪽이 맞는지 알 수 없기 때문입니다. 중복 지급은 코드로 검사하지 않고 데이터베이스의 고유 키 제약이 거부합니다. 같은 요청이 두 번 들어와도 두 번째가 아예 안 들어갑니다. 그리고 혹시 합이 어긋난 줄이 나오면 표시만 하고 아이 잔액은 건드리지 않습니다 — 아이가 잘못한 게 아닌데 별을 뺏으면 그 화면을 다시는 못 믿습니다."
+ data-br="넷째는 아이가 실제로 붙어 있게 만드는 3D 아바타와 방입니다.">
+  <div class="kicker">구현 <span>· 만든 것 (4) — ③</span></div>
+  <h1>이렇게 <em>만들었습니다</em></h1>
   <div class="body" style="display:flex;justify-content:center">
     <div class="techcard solo">
-      <div class="tn">기술 ③</div>
-      <h3>인터넷이 끊겨도 성장 기록 지키기</h3>
-      <p class="desc">아이가 오프라인 상태에서 미션을 완료해도 기록이 사라지지 않습니다.</p>
-      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">아이 앱의 <b>Service Worker</b>가 오프라인 큐에 행동을 잠깐 저장해두고, 재연결되면 <b>고유 키(멱등 키)</b>로 서버에 전송해 중복 지급을 막음</div></div>
-      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">화면엔 <b>“오프라인”</b> 표시만 뜨고, 다시 연결되면 자동으로 별이 반영됨 — 아이가 따로 뭘 다시 누를 필요가 없음</div></div>
+      <div class="hd"><div class="tn">기술 ③</div><div class="st done">구현됨 · 데모에서 확인</div></div>
+      <h3>별이 사라지거나 두 번 지급되지 않게 하기</h3>
+      <p class="desc"><strong>잔액을 따로 저장하지 않습니다.</strong> 원장에 쌓인 증감의 합이 곧 잔액입니다 — 둘을 따로 두면 어긋나는 순간 <strong>어느 쪽이 맞는지 알 수 없습니다.</strong></p>
+      <div class="ttr"><div class="lbl">만든 방식</div><div class="val">중복 지급은 코드 검사가 아니라 <b>고유 키(멱등 키) 제약</b>이 거부합니다 — 같은 요청이 두 번 와도 <b>두 번째가 데이터베이스에 못 들어갑니다.</b> 합이 어긋난 줄은 <b>표시만</b> 하고 아이 잔액은 건드리지 않습니다</div></div>
+      <div class="ttr show"><div class="lbl">데모에서</div><div class="val">아이의 <b>별 내역</b>과 보호자의 <b>성장 나무 · 월간 숲</b> 숫자가 <b>항상 같습니다.</b> 늦게 승인된 지난달 실천이 들어오면 그 달 기록을 <b>다시 계산해 덮어씁니다</b> — 부모 사정으로 늦어도 그 달 것으로 남습니다</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §3</div>
+  <div class="src">근거: 데모 저장소 — <code>app/src/modules/star-ledger/index.ts</code>(잔액 미저장 · 합산) · <code>prisma/migrations/…_star_quarantine</code>(격리 표시) · <code>app/src/modules/growth/index.ts</code>(월말 기록 재계산)</div>
 </section>
 
 <!-- 15 -->
 <section class="slide" data-blk="블록 5 · 구현" data-sec="30"
- data-note="이번 달 얼마나 자랐는지를 말로 설명해주는 기술입니다. AWS Bedrock을 이 기능 하나에만 한정해서 쓰고, 아동 식별 정보 없이 집계 수치만 넘깁니다. 이 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 있으면 좋은 설명이지 서비스의 전제가 아닙니다."
- data-br="이상으로 마스터덱을 마칩니다.">
-  <div class="kicker">구현 <span>· 필요 기술 (4) — ④</span></div>
-  <h1>이런 <em>기술</em>을 사용했습니다</h1>
+ data-note="넷째는 아이가 실제로 붙어 있게 만드는 부분입니다. 모은 별로 아이템을 사서 아바타와 방을 꾸밉니다. three.js 로 만들었고 아이 화면에서만 불러옵니다. 캐릭터 12종, 펫 11종, 일곱 가지 분류에 아이템 71개인데 에셋이 전부 CC0 라 3D 제작비가 들지 않았습니다. 얼굴은 수집하지 않고 생성형 AI 도 쓰지 않습니다 — 정책 P-13 입니다. 그리고 별은 앱 안 아이템으로만 바뀝니다. 현금이나 현물로 나가는 경로를 아예 만들지 않았습니다."
+ data-br="마지막으로, 아직 만들지 않은 것을 말씀드리겠습니다.">
+  <div class="kicker">구현 <span>· 만든 것 (4) — ④</span></div>
+  <h1>이렇게 <em>만들었습니다</em></h1>
   <div class="body" style="display:flex;justify-content:center">
     <div class="techcard solo">
-      <div class="tn">기술 ④</div>
-      <h3>이번 달 얼마나 자랐는지 말로 설명하기</h3>
-      <p class="desc">숫자(별 개수·완료 미션 수)만 보여주는 대신, 한 줄 요약 문장으로 성장을 설명합니다.</p>
-      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>AWS Bedrock</b>(Claude, 서울 리전)을 이 기능 하나에만 사용. 아동 식별 정보 없이 집계 수치만 넘김</div></div>
-      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">월간 숲 화면 상단에 “이번 달엔 저축을 3번 더 실천했어요” 같은 한 줄이 뜸. 기능이 꺼져 있어도 숫자·그래프 지표는 그대로 보이므로, AI는 <b>있으면 좋은 설명</b>이지 서비스의 전제가 아님</div></div>
+      <div class="hd"><div class="tn">기술 ④</div><div class="st done">구현됨 · 데모에서 확인</div></div>
+      <h3>여덟 살이 계속 오게 만드는 3D 아바타와 방</h3>
+      <p class="desc">모은 별로 아이템을 사서 <strong>아바타와 방</strong>을 꾸밉니다. 여덟 살에게는 나무·진도율보다 이 변화가 훨씬 잘 통합니다 — 같은 기록이 보호자 화면에서는 나무로 번역됩니다.</p>
+      <div class="ttr"><div class="lbl">만든 방식</div><div class="val"><b>three.js</b>를 아이 화면에서만 지연 로드합니다. 캐릭터 12종 · 펫 11종 · <b>7개 분류 71개 아이템</b>, 에셋은 전부 <b>CC0</b>라 3D 제작비가 들지 않습니다. 얼굴을 수집하지 않고 <b>생성형 AI를 쓰지 않습니다</b>(P-13)</div></div>
+      <div class="ttr show"><div class="lbl">데모에서</div><div class="val">상점에서 별로 사고, 방에서 <b>끌어 옮기고 돌립니다.</b> 별은 <b>앱 안 아이템으로만</b> 바뀝니다 — 현금·현물·제휴처 경로를 아예 만들지 않았습니다(P-21)</div></div>
     </div>
   </div>
-  <div class="src">출처: 공용공간/11. 기술기획 산출물/기술스택 슬라이드 계획.md — 이야기로 풀면 §4</div>
+  <div class="src">근거: 데모 저장소 — <code>app/src/components/child/Room3D.tsx</code> · <code>app/src/contracts/items.ts</code>(7분류 71개) · <code>app/public/models/</code>(Kenney CC0) · 어긋남 대장 <code>D2·D3·D4</code></div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-blk="블록 5 · 구현" data-sec="35"
+ data-note="마지막으로 아직 만들지 않은 것을 말씀드립니다. 설계는 확정했지만 데모에는 없는 것이 네 가지입니다. 오리진 2개 분리는 지금 단일 앱이라 도메인을 가르지 못했고, 대신 세 겹 인가로 같은 요구를 지킵니다. 서비스 워커 오프라인 큐는 못 만든 게 아니라 반대로 결정한 항목입니다 — 잔액이나 미션 상태처럼 낡으면 안 되는 숫자를 캐시가 되돌리면 부모와 아이가 다른 잔액을 보게 되기 때문에, 워커가 요청을 아예 가로채지 않게 했습니다. 중복 지급을 막는 멱등 키는 서버 원장에 이미 있습니다. 월간 요약 AI 문장은 붙이지 않았습니다. 숫자와 전월 대비 변화는 다 나오고, AI 는 없어도 지표가 그대로 보이므로 서비스의 전제가 아닙니다. 그래서 지금 보신 것은 전부 런타임 AI 호출 없이 돌아갑니다."
+ data-br="이상으로 마스터덱을 마칩니다.">
+  <div class="kicker">구현 <span>· 아직 만들지 않은 것</span></div>
+  <h1>설계는 확정했지만 <em>데모에는 없는 것</em>입니다</h1>
+  <div class="body">
+    <div class="techrow" style="max-width:1100px;margin:0 auto">
+      <div class="tr2"><div class="no2">1</div><div class="cols">
+        <div class="promise">오리진 2개로 분리<div style="font-weight:600;font-size:12.5px;color:var(--grey);margin-top:3px">PWA를 부모·아이로 나눠 배포</div></div>
+        <div class="stack">단일 앱이라 <b>도메인을 가르지 못했습니다.</b> 같은 요구는 미들웨어 · 서버 함수 인가 · 아이 번들 빌드 게이트 <b>세 겹</b>으로 지키는 중입니다(②)</div></div></div>
+      <div class="tr2"><div class="no2">2</div><div class="cols">
+        <div class="promise">오프라인 큐<div style="font-weight:600;font-size:12.5px;color:var(--grey);margin-top:3px">Service Worker로 행동을 쌓아 뒀다 전송</div></div>
+        <div class="stack"><b>반대로 결정했습니다.</b> 잔액·미션 상태처럼 낡으면 안 되는 숫자를 캐시가 되돌리면 <b>부모와 아이가 다른 잔액을 봅니다.</b> 그래서 워커가 요청을 가로채지 않고 <b>알림 수신만</b> 합니다 — 중복 지급을 막는 멱등 키는 서버 원장에 이미 있습니다(③)</div></div></div>
+      <div class="tr2"><div class="no2">3</div><div class="cols">
+        <div class="promise">월간 요약 한 줄<div style="font-weight:600;font-size:12.5px;color:var(--grey);margin-top:3px">AWS Bedrock · 서울 리전</div></div>
+        <div class="stack">월간 숲은 <b>획득 별과 전월 대비 변화</b>까지 나오지만 <b>AI 요약 문장은 붙이지 않았습니다.</b> 없어도 숫자·그래프가 그대로 보이므로 AI는 <b>있으면 좋은 설명</b>이지 서비스의 전제가 아닙니다</div></div></div>
+      <div class="tr2"><div class="no2">4</div><div class="cols">
+        <div class="promise">운영 인프라<div style="font-weight:600;font-size:12.5px;color:var(--grey);margin-top:3px">캐시 · 컨테이너 배포 · 관측</div></div>
+        <div class="stack">지금은 <b>로컬 데이터베이스</b>로 돌립니다. 아동 정보를 <b>국내에 두고 국외로 내보내지 않는다</b>는 조건은 그대로이고, 접속 대상을 바꾸는 일이 남았습니다</div></div></div>
+    </div>
+    <div class="card g" style="margin-top:16px;padding:15px 22px;max-width:1100px;margin-left:auto;margin-right:auto">
+      <p style="font-size:16px">지금까지 보신 것은 <strong>런타임 AI 호출이 한 건도 없이</strong> 돌아갑니다 — AI는 이 제품의 <strong>전제가 아니라 다음 항목</strong>입니다.</p>
+    </div>
+  </div>
+  <div class="src">근거: 데모 저장소 — <code>app/public/sw.js</code>(알림 수신 전용 · 요청 미개입) · <code>app/src/app/parent/forest/page.tsx</code> · <code>app/package.json</code>(AWS SDK 0건) · <code>docs/ops-docs/[Ops]Spec-Drift-Log.md</code></div>
 </section>
 
 </div></div>
 
 <div id="ov">
-  <h2>제목만 이어 읽기 — 15장</h2>
+  <h2>제목만 이어 읽기 — 16장</h2>
   <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
   <div class="grid" id="ovg"></div>
 </div>
 
 <div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
 <div id="tmr">⏱ —</div>
-<div id="hud"><span id="pg"><b>1</b> / 15</span><span id="blk"></span>
+<div id="hud"><span id="pg"><b>1</b> / 16</span><span id="blk"></span>
   <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
 
 <div id="help"><div class="box">
@@ -557,7 +600,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 15장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 16장 · 프로토타입 화면은 준비되는 대로 각 자리에 채워 넣습니다.</p>
 </div></div>
 
 <script>
