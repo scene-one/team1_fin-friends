@@ -633,7 +633,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
       <div class="tn">기술 ① · 구현됨 · 데모에서 확인</div>
       <h3>배운 걸 실천했는지 증명하기</h3>
       <p class="desc">아이가 퀴즈를 맞히는 순간, 서버가 그 정답과 <strong>같은 주제의 실천 미션</strong>을 곧바로 이어 붙입니다. 사진으로 인증하면 보호자에게 승인 요청이 가고, 승인하면 별이 확정됩니다. <strong>72시간 안에 보호자 확인이 없으면 자동으로 지급</strong>되어, 아이가 한 일이 부모 사정으로 사라지지 않습니다.</p>
-      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>Next.js 16</b> 서버 함수가 학습 이벤트와 미션 이벤트를 한 흐름으로 묶고, 지급은 <b>SUPABASE</b> 원장에 남김. 사진은 원장이 아니라 별도 표에 바이트로 두고, <b>승인·반려 판정 즉시 지움</b></div></div>
+      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>Next.js 16</b> 서버 함수가 학습 이벤트와 미션 이벤트를 한 흐름으로 묶고, 지급은 <b>SUPABASE</b> 원장에 남김. 사진은 원장이 아니라 별도 표에 바이트로 두고, </br><b>승인·반려 판정 즉시 지움</b></div></div>
       <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">아이 <b>학습 → 퀴즈 → 실천</b>, 보호자 <b>미션 승인</b>까지 화면 안에서 끊기지 않고 이어짐. 판정이 끝난 미션의 사진 주소는 <b>열리지 않음</b> — 오류가 아니라 「지워졌다」는 뜻이라 화면이 자리를 비움</div></div>
     </div>
   </div>
@@ -651,7 +651,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
       <h3>아이 화면에 부모 기능이 섞이지 않게 하기</h3>
       <p class="desc"><strong>주소를 직접 쳐서 아이 화면에서 부모 화면이 열리면 안 됩니다.</strong> 아이가 자기 미션을 스스로 승인할 수 있으면 보호자 승인 절차가 무의미해지므로, 세 겹으로 막습니다.</p>
       <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">① <b>미들웨어</b>가 아이 기기의 부모 화면 진입을 서버가 그 자리에서 돌려보냄 </br> ② <b>서버 함수 인가</b> — 보호자 화면의 모든 서버 함수가 각자 첫 줄에서 인가를 다시 확인 </br> ③ <b>빌드 게이트</b> — 아이 번들에 부모 경로가 섞였는지 검사해 하나라도 걸리면 빌드를 세움</div></div>
-      <div class="ttr show"><div class="lbl">한계</div><div class="val"><b>단일 앱이라 도메인을 가르는 오리진 격리는 아님.</b> 같은 요구를 위 세 겹으로 지키고 있고, 진짜 오리진 분리는 마지막 장에 남겨 둠</div></div>
+      <div class="ttr show"><div class="lbl">한계</div><div class="val"><b>단일 앱이라 도메인을 가르는 오리진 격리는 아님.</b> </br>같은 요구를 위 세 겹으로 지키고 있고, 진짜 오리진 분리는 마지막 장에 남겨 둠</div></div>
     </div>
   </div>
 </section>
@@ -666,7 +666,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     <div class="techcard solo">
       <div class="tn">기술 ③ · 구현됨 · 데모에서 확인</div>
       <h3>별이 사라지거나 두 번 지급되지 않게 하기</h3>
-      <p class="desc"><strong>잔액을 따로 저장하지 않습니다.</strong> 원장에 쌓인 증감의 합이 곧 잔액입니다 — 둘을 따로 두면 어긋나는 순간 <strong>어느 쪽이 맞는지 알 수 없습니다.</strong></p>
+      <p class="desc"><strong>잔액을 따로 저장하지 않습니다.</strong> 원장에 쌓인 증감의 합이 곧 잔액입니다 </br>— 둘을 따로 두면 어긋나는 순간 <strong>어느 쪽이 맞는지 알 수 없습니다.</strong></p>
       <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val">중복 지급은 코드 검사가 아니라 <b>고유 키(멱등 키) 제약</b>이 거부. 같은 요청이 두 번 와도 <b>두 번째가 데이터베이스에 못 들어감.</b> 합이 어긋난 줄은 <b>표시만</b> 하고 아이 잔액은 건드리지 않음</div></div>
       <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">아이의 <b>별 내역</b>과 보호자의 <b>성장 나무 · 월간 숲</b> 숫자가 <b>항상 같음.</b> 늦게 승인된 지난달 실천이 들어오면 그 달 기록을 <b>다시 계산해 덮어씀</b> — 부모 사정으로 늦어도 그 달 것으로 남음</div></div>
     </div>
@@ -683,9 +683,9 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     <div class="techcard solo">
       <div class="tn">기술 ④ · 구현됨 · 데모에서 확인</div>
       <h3>아이에게 지속적인 흥미를 제공하는 3D 아바타와 방</h3>
-      <p class="desc">모은 별로 아이템을 사서 <strong>아바타와 방</strong>을 꾸밉니다. 아이에게는 나무·진도율보다 이 변화가 훨씬 잘 통합니다 — 같은 기록이 보호자 화면에서는 나무로 번역됩니다.</p>
-      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>three.js</b>를 아이 화면에서만 지연 로드. 캐릭터 12종 · 펫 11종 · <b>7개 분류 71개 아이템</b>, 에셋은 전부 <b>무료 재사용 라이선스</b>라 3D 제작비가 들지 않음. 얼굴을 수집하지 않고 <b>생성형 AI를 쓰지 않음</b></div></div>
-      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">상점에서 별로 사고, 방에서 <b>끌어 옮기고 돌림</b>. 별은 <b>앱 안 아이템으로만</b> 바뀜 — 현금·현물·제휴처 경로를 아예 만들지 않음</div></div>
+      <p class="desc">모은 별로 아이템을 사서 <strong>아바타와 방</strong>을 꾸밉니다. 아이에게는 나무·진도율보다 이 변화가 훨씬 잘 통합니다 </br>— 같은 기록이 보호자 화면에서는 나무로 번역됩니다.</p>
+      <div class="ttr"><div class="lbl">쓰는 기술</div><div class="val"><b>three.js</b>를 아이 화면에서만 지연 로드. 캐릭터 12종 · 펫 11종 · <b>7개 분류 71개 아이템</b>, 에셋은 전부 <b>무료 재사용 라이선스</b>라 3D 제작비가 들지 않음. </div></div>
+      <div class="ttr show"><div class="lbl">보여주는 방식</div><div class="val">상점에서 별로 사고, 방에서 <b>끌어 옮기고 돌림</b>. 별은 <b>앱 안 아이템으로만</b> 바뀜 </br>— 현금·현물·제휴처 경로를 아예 만들지 않음</div></div>
     </div>
   </div>
 </section>
@@ -698,8 +698,8 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <h1>설계는 확정했지만 <em>데모에는 없는 것</em></h1>
   <div class="body">
     <div class="lrow">
-      <div class="it"><div class="no">1</div><div class="tx"><b>오리진 2개 분리</b> — 앱을 부모·아이로 나눠 배포<small>단일 앱이라 도메인을 가르지 못했습니다. 같은 요구는 미들웨어 · 서버 함수 인가 · 아이 번들 빌드 게이트 세 겹으로 지키는 중입니다(②).</small></div></div>
-      <div class="it"><div class="no">2</div><div class="tx"><b>오프라인 큐</b> — 끊긴 동안 행동을 쌓아 뒀다 전송<small>반대로 결정했습니다. 잔액·미션 상태처럼 낡으면 안 되는 숫자를 캐시가 되돌리면 부모와 아이가 다른 잔액을 봅니다. 워커는 알림 수신만 하고, 중복 지급을 막는 멱등 키는 서버 원장에 이미 있습니다(③).</small></div></div>
+      <div class="it"><div class="no">1</div><div class="tx"><b>오리진 2개 분리</b> — 앱을 부모·아이로 나눠 배포<small>단일 앱이라 도메인을 가르지 못했습니다. 같은 요구는 미들웨어 · 서버 함수 인가 · 아이 번들 빌드 게이트 세 겹으로 지키는 중입니다.</small></div></div>
+      <div class="it"><div class="no">2</div><div class="tx"><b>오프라인 큐</b> — 끊긴 동안 행동을 쌓아 뒀다 전송<small>반대로 결정했습니다. 잔액·미션 상태처럼 낡으면 안 되는 숫자를 캐시가 되돌리면 부모와 아이가 다른 잔액을 봅니다. 워커는 알림 수신만 하고, 중복 지급을 막는 멱등 키는 서버 원장에 이미 있습니다.</small></div></div>
       <div class="it"><div class="no">3</div><div class="tx"><b>월간 요약 한 줄</b> — 국내 리전 AI<small>월간 숲은 획득 별과 전월 대비 변화까지 나오지만 AI 요약 문장은 붙이지 않았습니다. 없어도 숫자·그래프가 그대로 보이므로 AI는 있으면 좋은 설명이지 서비스의 전제가 아닙니다.</small></div></div>
       <div class="it"><div class="no">4</div><div class="tx"><b>운영 인프라</b> — 캐시 · 컨테이너 배포 · 관측<small>지금은 로컬 데이터베이스로 돌립니다. 아동 정보를 국내에 두고 국외로 내보내지 않는다는 조건은 그대로이고, 접속 대상을 바꾸는 일이 남았습니다.</small></div></div>
     </div>

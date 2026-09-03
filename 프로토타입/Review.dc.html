@@ -108,7 +108,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 1px;">
           <path d="M12 3.2 14.7 9l6.3.8-4.6 4.3 1.2 6.2L12 17.4 6.4 20.3l1.2-6.2L3 9.8 9.3 9z" fill="none" stroke="#C4A98D" stroke-width="1.6" stroke-linejoin="round"></path>
         </svg>
-        <div style="font-size: 13px; line-height: 1.62; color: #6B5949;"><b>오늘은 별이 없어요</b> — 문구는 적은 대로 {{planLabel}}원. 그런데 <b>간식·음료</b>는 <b>적어두지 않은 가게</b>였어요.</div>
+        <div style="font-size: 13px; line-height: 1.62; color: #6B5949;"><b>오늘은 별이 없어요</b> — 문구는 적은 대로 썼는데, <b>간식·음료</b>는 <b>적어두지 않은 가게</b>였어요.</div>
       </div>
       <div style="display: flex; gap: 11px; align-items: flex-start;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 1px;">
@@ -162,6 +162,8 @@ class Component extends DCLogic {
     const actual = this.props.actual ?? 8000;
     const max = Math.max(plan, actual, 1);
     const met = actual <= plan;
+    // 계획한 업종(문구)에 실제로 쓴 금액 — 나머지는 계획 밖 업종으로 잡힌다
+    const inPlan = met ? actual : Math.round(plan * 0.6);
     const done = this.state.confirmed;
     return {
       met,
@@ -172,8 +174,8 @@ class Component extends DCLogic {
       cats: (met
         ? [{ name: '문구', swatch: '#7E93AC', amount: actual.toLocaleString('ko-KR'), tag: '✔ 적어둔 가게', ok: true }]
         : [
-            { name: '문구', swatch: '#7E93AC', amount: plan.toLocaleString('ko-KR'), tag: '✔ 적어둔 가게', ok: true },
-            { name: '간식·음료', swatch: '#D8956B', amount: (actual - plan).toLocaleString('ko-KR'), tag: '⚠ 적어두지 않은 가게', ok: false }
+            { name: '문구', swatch: '#7E93AC', amount: inPlan.toLocaleString('ko-KR'), tag: '✔ 적어둔 가게', ok: true },
+            { name: '간식·음료', swatch: '#D8956B', amount: (actual - inPlan).toLocaleString('ko-KR'), tag: '⚠ 적어두지 않은 가게', ok: false }
           ]
       ).map((c) => ({ ...c, nameColor: c.ok ? '#2A2724' : '#B36B3A', tagColor: c.ok ? '#7E9A73' : '#B36B3A' })),
       leftLabel: Math.max(0, plan - actual).toLocaleString('ko-KR'),
