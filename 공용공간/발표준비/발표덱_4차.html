@@ -64,7 +64,7 @@ h1 b{color:var(--red);font-weight:800}
 .cover .meta{position:absolute;left:90px;bottom:56px;font-size:14px;color:#9CCBAF;line-height:1.9}
 .cover h1{max-width:700px}
 .cover .lead{max-width:660px}
-.cover .phone{position:absolute;right:100px;top:50%;transform:translateY(-50%);
+.cover .phone{position:absolute;right:160px;top:50%;transform:translateY(-50%);
   width:246px;height:500px;border:10px solid #0D2A1C;border-radius:38px;background:#fff;
   box-shadow:0 26px 64px rgba(0,0,0,.38);display:grid;place-items:center}
 .cover .phone .nub{position:absolute;top:14px;left:50%;transform:translateX(-50%);
@@ -121,7 +121,7 @@ h1 b{color:var(--red);font-weight:800}
 .card.r{background:var(--red-l);border-color:#F0D6CE}
 .card h3{font-size:17px;font-weight:800;margin-bottom:10px;color:var(--green)}
 .card.r h3{color:var(--red)} .card.a h3{color:var(--amber)}
-.card p{font-size:16.5px;line-height:1.6;color:var(--sub)}
+.card p{font-size:16.5px;line-height:1.6;color:var(--sub);word-break:keep-all;overflow-wrap:break-word}
 .card p strong{color:var(--ink)}
 .big{font-size:40px;font-weight:800;letter-spacing:-.02em}
 .big.g{color:var(--green)} .big.r{color:var(--red)} .big.a{color:var(--amber)}
@@ -131,7 +131,7 @@ h1 b{color:var(--red);font-weight:800}
 .tag.a{background:var(--amber-l);color:var(--amber);border-color:#EEDFBD}
 .tag.o{background:#fff;color:var(--grey);border-color:var(--line)}
 .chips{display:flex;flex-wrap:wrap;gap:9px}
-.arrow{display:grid;place-items:center;font-size:26px;color:var(--grey);padding:0 4px}
+.arrow{display:grid;place-items:center;font-size:22px;color:var(--grey);padding:0 2px;flex:none}
 
 .g6{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .g6 .cell{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px 20px}
@@ -184,7 +184,7 @@ h1 b{color:var(--red);font-weight:800}
 .protoshot img{max-width:100%;max-height:100%;object-fit:contain;display:block}
 .protoshot.fill img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:top}
 
-.steps{display:flex;align-items:stretch;gap:14px}
+.steps{display:flex;align-items:stretch;gap:8px}
 .steps .stc{flex:1;display:flex;flex-direction:column;gap:8px}
 .steps .stc .stn{font-size:13px;font-weight:800;color:var(--green)}
 
@@ -381,13 +381,13 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <div class="body">
     <div class="steps">
       <div class="stc"><div class="stn">① 학습</div>
-        <div class="card grow"><p style="font-size:16px">오늘 배울 것을 짧게 <strong>퀴즈로 학습</strong>합니다. </br> 정답을 맞히면 그 자리에서 <strong>별 1개</strong>가 지급됩니다.</p></div></div>
+        <div class="card grow"><p style="font-size:16px">오늘 배울 것을 짧게 <strong>퀴즈로 학습</strong>합니다. 정답을 맞히면 그 자리에서 <strong>별 1개</strong>가 지급됩니다.</p></div></div>
       <div class="arrow">→</div>
       <div class="stc"><div class="stn">② 별 획득</div>
-        <div class="card grow"><p style="font-size:16px">학습과 퀴즈만으로는 부족합니다 — <strong>실제로 해봐야</strong> 별이 쌓입니다. </br> 오늘 모은 별과 실천 여부가 함께 표시됩니다.</p></div></div>
+        <div class="card grow"><p style="font-size:16px">학습과 퀴즈만으로는 부족합니다 — <strong>실제로 해봐야</strong> 별이 쌓입니다. 오늘 모은 별과 실천 여부가 함께 표시됩니다.</p></div></div>
       <div class="arrow">→</div>
       <div class="stc"><div class="stn">③ 구매</div>
-        <div class="card grow"><p style="font-size:16px">모은 별로 상점에서 아이템을 사서 <strong>아바타를 꾸밉니다</strong>. </br> 아이 눈에는 이게 성장입니다.</p></div></div>
+        <div class="card grow"><p style="font-size:16px">모은 별로 상점에서 아이템을 사서 <strong>아바타를 꾸밉니다</strong>. 아이 눈에는 이게 성장입니다.</p></div></div>
     </div>
     <div class="card g" style="margin-top:18px;padding:16px 22px">
       <p style="font-size:16.5px">이 흐름이 아이가 스스로 성장을 확인하는 자리입니다 — 다음 장부터 각 단계 화면을 순서대로 보여드립니다.</p>
@@ -693,7 +693,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
 <!-- 19 -->
 <section class="slide" data-blk="블록 6 · 구현" data-sec="30"
  data-note="마지막으로 아직 만들지 않은 것을 말씀드립니다. 설계는 확정했지만 데모에는 없는 것이 네 가지입니다. 오리진 2개 분리는 지금 단일 앱이라 도메인을 가르지 못했고, 대신 세 겹 인가로 같은 요구를 지킵니다. 서비스 워커 오프라인 큐는 못 만든 게 아니라 반대로 결정한 항목입니다 — 잔액이나 미션 상태처럼 낡으면 안 되는 숫자를 캐시가 되돌리면 부모와 아이가 다른 잔액을 보게 되기 때문에, 워커가 요청을 아예 가로채지 않게 했습니다. 중복 지급을 막는 멱등 키는 서버 원장에 이미 있습니다. 월간 요약 AI 문장은 붙이지 않았습니다. 숫자와 전월 대비 변화는 다 나오고, AI는 없어도 지표가 그대로 보이므로 서비스의 전제가 아닙니다. 그래서 지금 보신 것은 전부 런타임 AI 호출 없이 돌아갑니다."
- data-br="이상으로 마스터덱을 마칩니다.">
+ data-br="마지막으로 정리하고 마치겠습니다.">
   <div class="kicker">구현 <span>· 필요 기술 (4) — 남겨 둔 것</span></div>
   <h1>설계는 확정했지만 <em>데모에는 없는 것</em></h1>
   <div class="body">
@@ -709,17 +709,28 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   </div>
 </section>
 
+<!-- 20 -->
+<section class="slide cover" data-blk="블록 7 · 마무리" data-sec="20"
+ data-note="이상으로 마스터덱을 마칩니다. 지금 보여드린 화면은 랜딩페이지에서 직접 확인하실 수 있습니다. 감사합니다."
+ data-br="">
+  <div class="brand">F I N F R I E N D S</div>
+  <h1>아이가 얼마나 <em>자랐는지</em>,<br>지금 확인해보세요</h1>
+  <p class="lead">감사합니다</p>
+  <a href="../12. 랜딩페이지/landing.html" target="_blank" style="display:inline-block;margin-top:22px;padding:13px 28px;background:#fff;color:#12452F;font-weight:800;border-radius:999px;text-decoration:none;font-size:15px;letter-spacing:.02em;width:fit-content">랜딩페이지 보러 가기 →</a>
+  <div class="meta">팀 유림 · 병윤 · 하영 · 혜원</div>
+</section>
+
 </div></div>
 
 <div id="ov">
-  <h2>제목만 이어 읽기 — 19장</h2>
+  <h2>제목만 이어 읽기 — 20장</h2>
   <div class="sn">클릭하면 그 장으로 이동합니다 · <b>O</b> 또는 <b>Esc</b> 로 닫기</div>
   <div class="grid" id="ovg"></div>
 </div>
 
 <div id="notes"><div class="nh">발표 대본</div><div id="nx"></div></div>
 <div id="tmr">⏱ —</div>
-<div id="hud"><span id="pg"><b>1</b> / 19</span><span id="blk"></span>
+<div id="hud"><span id="pg"><b>1</b> / 20</span><span id="blk"></span>
   <span class="k">← →</span><span class="k">O 목차</span><span class="k">N 대본</span><span class="k">T 타이머</span><span class="k">? 도움</span></div>
 
 <div id="help"><div class="box">
@@ -731,7 +742,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
   <p><kbd>N</kbd> 발표 대본 켜기·끄기</p>
   <p><kbd>T</kbd> 타이머 시작·정지 &nbsp;<kbd>R</kbd> 초기화</p>
   <p><kbd>F</kbd> 전체화면 &nbsp;·&nbsp; <kbd>P</kbd> 인쇄(PDF)</p>
-  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 19장 · 프로토타입 캡처는 공용공간/13. 프로토타입 예시 화면, 설계·필요 기술 파트는 요구사항 추적.md · 기술 스택 수정본.md 기준으로 채웠습니다.</p>
+  <p style="margin-top:14px;color:#6B7268;font-size:14px">전체 20장 · 프로토타입 캡처는 공용공간/13. 프로토타입 예시 화면, 설계·필요 기술 파트는 요구사항 추적.md · 기술 스택 수정본.md 기준으로 채웠습니다.</p>
 </div></div>
 
 <script>
@@ -749,7 +760,7 @@ body.ov #wrap{display:none} body.ov #ov{display:block}
     stage.style.transform='scale('+s+')';}
   addEventListener('resize',fit); fit();
 
-  var NAMES={1:'표지',2:'문제',3:'아이',4:'부모',5:'설계',6:'구현'};
+  var NAMES={1:'표지',2:'문제',3:'아이',4:'부모',5:'설계',6:'구현',7:'마무리'};
   var groups=[], gof=[];
   S.forEach(function(s,x){
     var no=+((s.dataset.blk.match(/블록\s*(\d+)/)||[])[1]||0);
