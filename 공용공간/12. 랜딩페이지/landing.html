@@ -1,0 +1,1781 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>핀프렌즈 — 배운 걸 실제로 했는지, 한 눈에</title>
+<meta name="description" content="아이가 배운 금융 지식을 실제 돈 행동으로 잇고, 그 변화를 부모가 읽을 수 있게 합니다. 실천 없이는 자라지 않는 성장 나무.">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#fff; --bg-2:#F6F8F4; --paper:#fff; --sand:#EEF3E9;
+  --ink:#172019; --ink-2:#4E5A51; --ink-3:#7B877E;
+  --line:#E5EAE4; --line-2:#D8E0D7;
+  --green:#397343; --green-d:#285C31; --green-l:#75A86F; --green-p:#C8DDC5; --green-bg:#EDF6EA;
+  --clay:#B36B3A; --clay-bg:#F7EEE6; --gold:#E8B978;
+  --sans:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;
+  --serif:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',sans-serif;
+  --wrap:1180px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+/*
+  🔴 **「동작 줄이기」로도 효과를 끄지 않는다** (2026-09-02 사용자 결정, 재확인).
+
+     요구는 **「웹 화면과 핸드폰이 똑같이 나오는 것」** 하나다.
+     기기·설정에 따라 길이를 달리하면 그때부터 「왜 다르지」가 생긴다.
+     그래서 갈래를 아예 두지 않는다 — 어디서나 같은 애니메이션, 같은 길이다.
+
+     🔴 이 페이지는 화면 전체가 흔들리는 종류의 움직임이 없다. 목업 «안»의
+        전환과 페이드, 그리고 구역 넘김 하나뿐이다.
+*/
+}
+
+/*
+  🔴 **폰에서는 스냅을 걸지 않는다** (2026-09-02 사용자 지적, **두 번째**).
+
+     처음엔 「폰에서 섹션이 안 잡힌다」로 CSS 스냅을 켰다. 그랬더니
+     「짧게짧게만 내려간다」가 나왔고, 데모 단계만 풀어 줬다(`scroll-snap-align:none`).
+     그래도 같은 제보가 또 왔다 — **푼 자리가 모자랐던 게 아니라 방향이 틀렸다.**
+
+     남은 `[data-snap]` 은 히어로·문제·해법·안전·CTA 같은 **글 구역**이고,
+     높이가 화면이 아니라 **내용**만큼이다. 스냅이 그 시작점마다 붙잡으니
+     한 번 밀 때 반 화면쯤만 가고 멈춘다 — 그게 「짧게 짧게」다.
+     관성까지 끊기니 `IntersectionObserver` 가 애니메이션을 돌릴 틈도 없다.
+
+  🔴 **데스크톱과 같아 보이게 하려고 CSS 스냅을 쓰면 안 된다.**
+     데스크톱은 아래 스크립트가 **한 번에 한 구역씩, 780ms 로 부드럽게** 옮긴다.
+     CSS 스냅은 손가락을 뗀 뒤 **즉시 당긴다** — 같은 지점을 쓰더라도 느낌이 반대다.
+     흉내 내려다 둘 다 아닌 것이 됐다.
+
+  🔴 그래서 폰은 **그냥 스크롤**한다. 애니메이션은 스냅이 아니라
+     `IntersectionObserver` 가 돌리므로, 지나가기만 하면 그대로 재생된다.
+     폰에서 자연스러운 것은 원래 자유 스크롤이다.
+*/
+
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);
+     line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+section{padding:116px 0}
+h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.35rem);line-height:1.13;
+   margin:0 0 20px;font-weight:800;letter-spacing:-.045em;text-wrap:balance}
+h3{font-family:var(--serif);font-size:1.12rem;margin:0 0 7px;font-weight:700}
+p{margin:0 0 14px;max-width:62ch}
+.lead{font-size:1.08rem;color:var(--ink-2);line-height:1.75}
+.eyebrow{font-size:.74rem;letter-spacing:.14em;color:var(--green);
+   text-transform:uppercase;margin:0 0 16px;font-weight:800}
+.center{text-align:center}
+.center p{margin-left:auto;margin-right:auto}
+/* 헤더 */
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);
+   backdrop-filter:blur(18px);border-bottom:1px solid rgba(229,234,228,.85)}
+header .wrap{display:flex;align-items:center;gap:12px;padding-top:17px;padding-bottom:17px}
+.logo{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:-.04em}
+.logo span{color:var(--green)}
+header .sp{flex:1}
+header a.mini{font-size:.84rem;color:var(--ink-2);text-decoration:none;padding:8px 13px;border-radius:999px;font-weight:650}
+header a.mini:hover{background:var(--bg-2);color:var(--ink)}
+.cta{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;text-decoration:none;
+   padding:13px 23px;border-radius:999px;font-weight:750;font-size:.93rem;
+   box-shadow:0 1px 2px rgba(23,32,25,.1),0 10px 26px rgba(23,32,25,.14);transition:transform .2s,background .2s}
+.cta:hover{background:var(--green-d)}
+.cta:hover{transform:translateY(-2px)}
+.cta.sm{padding:9px 16px;font-size:.85rem;box-shadow:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+/* 히어로 */
+.hero{padding:108px 0 0;background:#fff;overflow:hidden}
+.hero .wrap{display:block;text-align:center}
+.hero-copy{max-width:850px;margin:0 auto}
+.hero h1{font-family:var(--serif);font-size:clamp(2.75rem,7.1vw,5.75rem);line-height:1.02;
+   margin:0 0 28px;font-weight:900;letter-spacing:-.065em;text-wrap:balance}
+/*
+  🔴 제목 안의 부분 강조는 `<em>` 하나로 통일한다.
+     `<b>` 는 `.strike b`(「달라졌나요?」)가 이미 쓰고 있어 뜻이 섞인다.
+*/
+.hero h1 em,h2 em{font-style:normal;color:var(--green)}
+.hero .sub{font-size:clamp(1rem,2vw,1.22rem);color:var(--ink-2);margin:0 auto 30px;max-width:590px;line-height:1.7}
+.hero .row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.free{font-size:.83rem;color:var(--green-d);background:var(--green-bg);
+   border:1px solid var(--green-p);border-radius:99px;padding:5px 13px;font-weight:700}
+.hero-stage{position:relative;margin:82px auto 0;min-height:510px;border-radius:34px 34px 0 0;
+   background:linear-gradient(145deg,#F1F7ED 0%,#E8F2E4 45%,#F6F9F3 100%);border:1px solid var(--line);
+   border-bottom:0;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;gap:24px;padding:58px 42px 0}
+.hero-stage::before,.hero-stage::after{content:"";position:absolute;border-radius:999px;filter:blur(2px)}
+.hero-stage::before{width:260px;height:260px;background:rgba(255,255,255,.64);top:-110px;right:9%}
+.hero-stage::after{width:190px;height:190px;background:rgba(117,168,111,.12);bottom:44px;left:6%}
+.hero-stage .phone{position:relative;z-index:2;margin:0;transform:translateY(20px)}
+.hero-stage .phone.side{width:282px;opacity:.92;transform:translateY(72px) rotate(-2deg)}
+.hero-stage .phone.side:last-child{transform:translateY(72px) rotate(2deg)}
+/* 폰 */
+.phone{width:328px;max-width:100%;margin:0 auto;background:var(--paper);
+   border:1px solid var(--line-2);border-radius:28px;overflow:hidden;
+   box-shadow:0 2px 8px rgba(23,32,25,.06),0 28px 70px rgba(43,66,47,.15)}
+.ph-h{padding:14px 16px 0;font-size:.64rem;color:var(--ink-3);display:flex;justify-content:space-between}
+.ph-b{padding:10px 16px 20px}
+.ph-role{font-size:.63rem;color:var(--ink-3);letter-spacing:.05em}
+.ph-t{font-family:var(--serif);font-size:1.15rem;font-weight:700;margin:2px 0 12px}
+.trees{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tree{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+.tree.hl{background:var(--green-bg);border-color:var(--green-p)}
+.tree .ic{font-size:1.5rem;line-height:1.1}
+.tree .nm{font-size:.74rem;font-weight:700;margin-top:3px}
+.tree .st{font-size:.63rem;color:var(--ink-3)}
+.tree .bar{height:4px;background:var(--line);border-radius:99px;margin-top:6px;overflow:hidden}
+.tree .bar i{display:block;height:100%;background:var(--green-l)}
+.ev{margin-top:10px;background:var(--green-bg);border:1px solid var(--green-p);
+   border-radius:11px;padding:10px 11px;font-size:.79rem;line-height:1.6}
+.ev b{color:var(--green-d)}
+/* 실제 화면 스크롤 시연 */
+.screen-intro{padding:108px 0 80px;background:#fff}
+.scroll-demo{display:grid;grid-template-columns:minmax(320px,.88fr) minmax(360px,1fr);gap:clamp(54px,9vw,120px);
+   align-items:start;margin-top:64px;text-align:left}
+.demo-phone-wrap{position:sticky;top:108px;display:flex;justify-content:center;padding:28px 0}
+.demo-phone{width:356px;margin:0;position:relative}
+.demo-viewport{position:relative;height:500px;overflow:hidden}
+.demo-panel{position:absolute;inset:0;padding:10px 18px 24px;opacity:0;visibility:hidden;
+   transform:translateY(28px) scale(.985);transition:opacity .42s ease,transform .42s ease,visibility .42s}
+.demo-panel.active{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.demo-panel.exit-up{transform:translateY(-28px) scale(.985)}
+.demo-sub{font-size:.68rem;color:var(--ink-3);margin:-8px 0 14px}
+.demo-sync{position:relative;height:34px;margin:0 0 10px;border:1px solid var(--line);border-radius:10px;
+   background:var(--bg-2);overflow:hidden;font-size:.69rem;font-weight:750;color:var(--ink-2)}
+.demo-sync span{position:absolute;inset:0;display:flex;align-items:center;padding:0 11px}
+.demo-sync .syncing{opacity:0}.demo-sync .synced{opacity:1;color:var(--green-d)}
+.demo-panel.running .demo-sync{animation:syncBox .85s ease both}
+.demo-panel.running .demo-sync .syncing{animation:syncOut .85s ease both}
+.demo-panel.running .demo-sync .synced{animation:syncIn .85s ease both}
+.demo-panel.running .tree .bar i{transform-origin:left;animation:barGrow .72s .18s cubic-bezier(.2,.8,.2,1) both}
+.demo-panel.running .tree.hl .ic{animation:treeGrow .48s .58s cubic-bezier(.2,1.5,.4,1) both}
+.demo-panel.running .demo-evidence{animation:demoReveal .4s .7s ease both}
+.demo-panel.running .actual-card{animation:demoSlideLeft .42s .3s ease both}
+.demo-panel.running .demo-retro{animation:demoReveal .4s .56s ease both}
+.demo-panel.running .demo-reward{animation:starPop .38s .78s cubic-bezier(.2,1.5,.4,1) both}
+.demo-panel.running .demo-confirm{animation:demoReveal .3s .9s ease both}
+.demo-panel.running .demo-stars{animation:starPop .45s .36s cubic-bezier(.2,1.25,.4,1) both}
+.demo-panel.running .demo-delta .demo-row{animation:demoSlideLeft .34s ease both}
+.demo-panel.running .demo-delta .demo-row:nth-of-type(1){animation-delay:.52s}
+.demo-panel.running .demo-delta .demo-row:nth-of-type(2){animation-delay:.65s}
+.demo-panel.running .demo-delta .demo-row:nth-of-type(3){animation-delay:.78s}
+@keyframes syncBox{0%,48%{background:var(--bg-2);border-color:var(--line)}100%{background:var(--green-bg);border-color:var(--green-p)}}
+@keyframes syncOut{0%,38%{opacity:1;transform:translateY(0)}55%,100%{opacity:0;transform:translateY(-8px)}}
+@keyframes syncIn{0%,48%{opacity:0;transform:translateY(8px)}68%,100%{opacity:1;transform:translateY(0)}}
+@keyframes barGrow{from{transform:scaleX(.08)}to{transform:scaleX(1)}}
+@keyframes treeGrow{from{transform:scale(.5);filter:saturate(.45)}to{transform:scale(1);filter:saturate(1)}}
+@keyframes demoReveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes demoSlideLeft{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes starPop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:scale(1)}}
+.demo-evidence{margin-top:12px;padding:13px 14px;border-radius:12px;background:var(--green-bg);border:1px solid var(--green-p)}
+.demo-evidence h4{font-size:.76rem;color:var(--green-d);margin:0 0 4px}
+.demo-evidence p{font-size:.72rem;line-height:1.55;margin:0;color:var(--ink-2)}
+.demo-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.demo-compare>div{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:11px}
+.demo-compare h4{font-size:.67rem;color:var(--ink-3);margin:0 0 8px}
+.demo-row{display:flex;justify-content:space-between;gap:8px;font-size:.72rem;padding:4px 0}
+.demo-total{margin-top:5px;padding-top:7px;border-top:1px solid var(--line);font-weight:750}
+.demo-retro{margin-top:10px;background:var(--green-bg);border:1px solid var(--green-p);border-radius:12px;padding:12px;font-size:.73rem}
+.demo-retro p{margin:0 0 7px;line-height:1.55}.demo-reward{font-weight:800;color:var(--green-d)}
+.demo-confirm{display:block;width:100%;margin-top:10px;border:0;border-radius:10px;padding:10px;background:var(--green);color:#fff;font:inherit;font-size:.74rem;font-weight:800}
+.demo-stars{display:flex;align-items:center;justify-content:space-between;background:var(--green-bg);border:1px solid var(--green-p);
+   border-radius:13px;padding:14px;margin-bottom:12px}
+.demo-stars span{font-size:.73rem;color:var(--ink-2)}.demo-stars b{font-size:1.22rem;color:var(--green-d)}
+.demo-delta{border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+.demo-delta h4{font-size:.72rem;margin:0 0 7px;color:var(--ink-3)}
+.demo-delta .demo-row{border-top:1px solid var(--line);padding:7px 0}.demo-delta .demo-row:first-of-type{border-top:0}
+.demo-delta strong{color:var(--green-d)}
+.demo-steps{position:relative}
+.demo-step{min-height:64vh;display:flex;flex-direction:column;justify-content:center;padding:38px 32px;
+   min-width:0;opacity:.34;transition:opacity .3s ease,transform .3s ease;transform:translateY(8px);border-left:2px solid var(--line)}
+.demo-step.active{opacity:1;transform:translateY(0);border-left-color:var(--green)}
+.demo-step .screen-no{font-size:.72rem;font-weight:850;letter-spacing:.12em;color:var(--green);margin-bottom:14px}
+.demo-step h3{font-size:clamp(1.55rem,3vw,2.25rem);letter-spacing:-.035em;line-height:1.2;margin:0 0 14px;overflow-wrap:break-word}
+.demo-step p{font-size:.96rem;color:var(--ink-2);line-height:1.75;margin:0;max-width:38ch}
+.demo-hint{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-size:.75rem;color:var(--ink-3)}
+.demo-hint::before{content:"↓";display:grid;place-items:center;width:25px;height:25px;border:1px solid var(--line-2);border-radius:50%;color:var(--green)}
+.problem{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+.quote{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 12px 34px rgba(23,32,25,.04)}
+.quote .who{font-size:.76rem;color:var(--ink-3);margin-bottom:9px}
+.quote .q{font-family:var(--serif);font-size:1.12rem;line-height:1.6;color:var(--ink);margin:0 0 11px}
+.quote .why{font-size:.86rem;color:var(--ink-2);margin:0}
+/* 숫자 → 질문 교차 연출 */
+.numstage{display:grid;justify-items:center;margin-top:26px;min-height:150px;align-content:center}
+/* 🔴 겹치기는 `.seq` 가 붙었을 때만. 스크립트가 못 돌면 예전처럼 위아래로 보인다 */
+.numstage.seq>*{grid-area:1/1;margin:0}
+.nums{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+   transition:opacity .55s ease,transform .55s ease}
+.num{background:var(--paper);border:1px solid var(--line);border-radius:18px;
+   padding:20px 26px;text-align:center;min-width:148px}
+.num b{display:block;font-size:2.6rem;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink-3)}
+.num span{display:block;margin-top:4px;font-size:.82rem;color:var(--ink-3)}
+.strike{margin-top:18px;font-family:var(--serif);
+   font-size:clamp(1.5rem,5.4vw,2.9rem);line-height:1.3;color:var(--clay)}
+/* 🔴 질문은 **숨지 않는다.** `.seq` 안에서만 숨었다가 나온다 —
+      스크립트가 안 돌면 처음부터 보여야 한다 */
+.numstage.seq .strike{margin-top:0;opacity:0;transform:scale(.9);
+   transition:opacity .55s ease,transform .55s ease}
+/*
+  🔴 **숫자가 사라져도 그 «자리»는 남아 있었다** (사용자 지적 — 「질문이랑 밑에
+     카드 나오는 거랑 갭이 너무 크다」).
+
+     겹쳐 둔 칸의 높이는 «둘 중 큰 쪽»으로 잡힌다. 숫자칸이 질문보다 훨씬 높으니,
+     숫자가 흐려져 안 보여도 **그 높이만큼 빈 자리가 그대로 남는다.**
+     투명해진 것과 자리를 비운 것은 다르다.
+
+     그래서 높이도 함께 접는다 — 질문이 뜨는 동안 빈 자리가 같이 닫힌다.
+*/
+.numstage.seq .nums{overflow:hidden;max-height:420px;
+   transition:opacity .55s ease,transform .55s ease,max-height .55s ease}
+.numstage.seq.asked .nums{opacity:0;transform:translateY(-14px) scale(.94);
+   max-height:0;pointer-events:none}
+/* 접히고 나면 무대는 질문 높이면 된다 */
+.numstage.seq{transition:min-height .55s ease}
+.numstage.seq.asked{min-height:0}
+.numstage.seq.asked .strike{opacity:1;transform:none}
+/*
+  🔴 **질문 다음에 리뷰 카드가 온다** (사용자 요청).
+     「달라졌나요?」로 물어 놓고 곧바로 답(부모의 말)이 같이 보이면 물음이 안 남는다.
+     한 박자 뒤에 올라오게 해서 **묻고 → 답하는** 순서를 만든다.
+
+  🔴 숨기는 것은 `.seq-quotes` 가 붙었을 때뿐이다. 스크립트가 못 돌면
+     지금처럼 처음부터 보인다 — 연출이 실패해도 내용은 남는다.
+*/
+.problem.seq-quotes .quotes{opacity:0;transform:translateY(14px);
+   transition:opacity .6s ease,transform .6s ease}
+.problem.seq-quotes.quotes-in .quotes{opacity:1;transform:none}
+@media (max-width:560px){
+  .num{padding:16px 20px;min-width:120px}
+  .num b{font-size:2.1rem}
+}
+/* 해법 */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.split.rev>div:first-child{order:2}
+.badge{display:inline-block;font-size:.73rem;font-weight:700;letter-spacing:.04em;
+   color:var(--clay);background:var(--clay-bg);border:1px solid #E5CDB8;
+   border-radius:99px;padding:4px 12px;margin-bottom:12px}
+.pts{list-style:none;padding:0;margin:20px 0 0}
+.pts li{position:relative;padding-left:26px;margin-bottom:11px;font-size:.95rem;color:var(--ink-2)}
+.pts li::before{content:"";position:absolute;left:4px;top:.62em;width:8px;height:8px;
+   border-radius:99px;background:var(--green-l)}
+.pts li b{color:var(--ink)}
+/* 두 갈래 */
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.br{border-radius:13px;padding:15px}
+.br.met{background:var(--green-bg);border:1px solid var(--green-p)}
+.br.exc{background:var(--clay-bg);border:1px solid #E5CDB8}
+.br h4{margin:0 0 6px;font-size:.82rem}
+.br.met h4{color:var(--green-d)} .br.exc h4{color:var(--clay)}
+.br p{font-size:.83rem;margin:0;color:var(--ink-2);line-height:1.6}
+.br .tag{display:block;margin-top:9px;font-size:.78rem;font-weight:700}
+.br.met .tag{color:var(--green-d)} .br.exc .tag{color:var(--clay)}
+/* 4영역 */
+/*
+  🔴 **웹 화면도 폰과 같은 물건이다** (사용자 요청 — 「웹 화면도 똑같이 해 줘」).
+
+     예전엔 데스크톱만 `grid` 로 네 칸을 늘어놓고, 폰만 「옆으로 미는 띠」였다.
+     같은 구역이 기기에 따라 다른 물건이면 고칠 때 한쪽만 고쳐진다.
+     이제 **어디서나 띠**다 — 하나씩 올라오고 강조가 옮겨간다.
+
+  🔴 **미는 것은 «안 들어갈 때만»** 일어난다. 넷이 다 들어오는 넓은 화면에서는
+     `shiftTo` 가 0 을 넣어 제자리에 선다 — 억지로 밀지 않는다.
+     좁아지면 그때부터 저절로 밀린다. 경계를 손으로 정하지 않는다.
+*/
+.four{display:flex;gap:14px;overflow:hidden;margin-top:24px;padding:12px 0}
+.f{flex:1 1 0;min-width:0;aspect-ratio:1;
+   display:flex;flex-direction:column;justify-content:center;gap:6px;
+   background:var(--paper);border:1px solid var(--line);border-radius:20px;
+   padding:22px 16px;text-align:center;transition:transform .2s,box-shadow .2s}
+.f:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(23,32,25,.08)}
+.f .ic{font-size:1.9rem}
+.f h4{font-family:var(--serif);margin:9px 0 4px;font-size:1.02rem}
+.f p{font-size:.83rem;color:var(--ink-2);margin:0}
+.f.soon{opacity:.72}
+/*
+  🔴 **네 칸이 하나씩 올라오며 강조가 옮겨간다** (사용자 요청 —
+     「네모들 때문에 화면이 이상한 것 같다」).
+
+     네 칸을 한 번에 늘어놓으면 그냥 네모 넷이다. 하나씩 올라오면서 강조가
+     옮겨가면 **「벌기 → 잘 쓰기 → 모으기 → 불리기」라는 순서 자체가 읽힌다** —
+     바로 아래 줄(💰→🛒→🐷→🌱)이 말하려는 것과 같다.
+
+  🔴 숨기는 것은 `.seq-cards` 가 붙었을 때뿐이다. 스크립트가 못 돌면
+     네 칸이 처음부터 그대로 보인다.
+*/
+/* 🔴 `--shift` 는 띠 전체가 왼쪽으로 밀린 양이다. 세 상태 모두에 실어야
+      「밀림」과 「올라옴 · 강조」가 서로를 지우지 않는다 */
+.four .f{transform:translateX(var(--shift,0px));
+   transition:opacity .42s ease,transform .45s cubic-bezier(.2,.9,.3,1),
+   border-color .3s ease,box-shadow .3s ease}
+.four.seq-cards .f{opacity:0;transform:translateX(var(--shift,0px)) translateY(16px)}
+.four.seq-cards .f.in{opacity:1;transform:translateX(var(--shift,0px))}
+/*
+  🔴 **`.hl` 은 「지금 어느 칸인지」만 말한다. 들어올리지 않는다**
+     (2026-09-03 사용자 요청 — 「4번 계속 올려져 있는 상태로 되어 있게 하지 말고」).
+
+     한동안 `.hl` 하나가 **두 일을 겸했다** — 초록 표시와 들어올림.
+     마지막 칸의 표시는 남겨 둬야 하는데(옆으로 밀 때의 기준) 들어올림까지
+     같이 남아서 **네 번째 칸이 계속 떠 있었다.**
+
+     들어올림은 아래 `.rise` 로 옮겼다. 잠깐 붙고 떨어진다.
+*/
+.four .f.hl{border-color:var(--green);box-shadow:0 10px 26px rgba(23,32,25,.10)}
+
+/*
+  🔴 **처음 들어올 때 한 칸씩 올라갔다 내려온다.** 잠깐만 붙는 클래스다 —
+     남겨 두면 그 칸이 계속 떠 있고, 그게 방금 고친 문제였다.
+     내려오는 것도 위 `transform .45s` 가 만든다.
+*/
+.four .f.rise{transform:translateX(var(--shift,0px)) translateY(-7px) scale(1.04)}
+
+/*
+  🔴 **칸을 옮겨 다닐 때 초록 선이 «따라 움직이게» 한다** (2026-09-03 사용자 요청).
+
+     hover 에는 선색 규칙이 **아예 없었다.** 초록 선은 스크롤로 붙는 `.hl` 뿐이라,
+     마우스로 훑으면 살짝 떠오르기만 하고 **선은 그대로**였다.
+
+  🔴 위 `.hl` 과 **같은 모양**으로 맞춘다. 강조가 스크롤일 때와 마우스일 때
+     달라 보이면 같은 화면에서 두 가지 언어를 쓰는 셈이다.
+
+  🔴 **`--shift` 를 반드시 실어 준다.** 원래 있던 `.f:hover`(위쪽)는 그것을 안 실어서,
+     띠가 밀린 상태에서 hover 하면 칸이 제자리로 튕겨 돌아갔다 —
+     그래서 이 구역에서는 그 규칙이 아예 안 먹고 있었다(뒤 규칙이 덮는다).
+
+  🔴 「이동」은 위 `.four .f` 의 `border-color .3s ease` 가 만든다.
+     떠나는 칸의 초록이 옅어지는 동안 들어오는 칸이 짙어져서, 선이 **건너가는 것처럼** 보인다.
+     따로 움직이는 조각을 두지 않는다 — 칸 사이 간격을 지나갈 것이 없다.
+*/
+@media (hover:hover){
+  /*
+    🔴 **마우스가 띠 안에 있으면 초록은 「마우스가 있는 칸」 것이다.**
+
+       `.hl` 은 「지금 어느 칸인지」를 말하는 표시라(옆으로 밀 때의 기준)
+       가만히 두면 마지막 칸에 계속 붙어 있다. 그 상태에서 hover 를 더하면
+       **초록이 둘**이 되어 어느 것이 지금인지 사라진다 — 사용자가
+       「불리기에 계속 붙어 있다」고 본 것이 이것이다.
+
+       그래서 띠에 마우스가 있는 동안은 «현재 칸 표시가 잠시 물러난다».
+       마우스가 띠를 벗어나면 원래 칸으로 초록이 돌아온다 —
+       위 `border-color .3s ease` 가 그 왕복도 부드럽게 만든다.
+  */
+  .four:hover .f.hl:not(:hover){border-color:var(--line);box-shadow:none;
+     transform:translateX(var(--shift,0px))}
+
+  .four .f:hover{border-color:var(--green);box-shadow:0 10px 26px rgba(23,32,25,.10);
+     transform:translateX(var(--shift,0px)) translateY(-7px) scale(1.04)}
+}
+
+.f .soon-t{display:inline-block;margin-top:8px;font-size:.68rem;color:var(--clay);
+   background:var(--clay-bg);border:1px solid #E5CDB8;border-radius:99px;padding:2px 9px}
+/*
+  🔴 **보조 버튼은 가입 버튼과 «다르게» 보여야 한다.** 같은 `cta` 모양 둘을
+     나란히 두면 어느 쪽이 본 길인지 사라진다. 테두리만 있는 형태로 낮춘다.
+  🔴 `button` 이라 글꼴이 상속되지 않는다 — `font:inherit` 가 필요하다.
+*/
+.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2);
+  box-shadow:none;cursor:pointer;margin-left:8px}
+
+/*
+  🔴 **`button` 은 글꼴을 물려받지 않는다.** 그래서 `<a class="cta">` 와
+     `<button class="cta">` 가 **다른 글꼴로** 그려진다 — 초대 구역의
+     「아이 화면 열기」가 그랬다.
+
+  🔴 **`font:inherit` 를 쓰지 않는다.** 단축이라 **글자 크기까지** 되돌려서
+     `.cta` 의 `font-size` 를 덮는다. 물려받을 것은 «글꼴»뿐이다.
+
+  🔴 **`font-size`·`font-weight` 도 물려받게 하면 안 된다.** `button.cta` 는
+     `.cta` 보다 특이도가 높아서(요소+클래스) `.cta` 가 정한 크기를 «되돌린다» —
+     `.final` 밖의 버튼이 본문 크기로 커진다. `font-family` 하나만 물려받는다.
+*/
+button.cta{font-family:inherit}
+.cta.ghost:hover{border-color:var(--green);color:var(--green-d)}
+@media (max-width:620px){
+  /*
+    🔴 **좁은 폰에서는 두 버튼을 같은 크기로 둔다** (2026-09-03 사용자 요청).
+
+       `.cta` 는 `inline-flex` 라 **글자 폭만큼** 넓어지는데 보조 버튼은
+       `width:100%` 였다. 그래서 「무료로 시작하기」는 좁고
+       「초대코드 입력」은 화면 폭이라 나란히 놓으면 어긋나 보였다.
+
+       마지막 두 구역(`.final`)에서만 둘 다 폭을 채운다 —
+       머리말의 작은 가입 버튼(`.cta.sm`)은 그대로 둔다.
+  */
+  .final .cta{display:block;width:100%;margin-left:auto;margin-right:auto}
+  .cta.ghost{display:block;width:100%;margin:10px auto 0}
+}
+
+.flow{margin-top:22px;text-align:center;font-family:var(--serif);font-size:1.02rem;color:var(--ink-2)}
+/* 장벽 */
+.barriers{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bl{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
+.b{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px}
+.b .q{font-size:.88rem;color:var(--ink-3);margin:0 0 8px}
+.b h4{font-family:var(--serif);font-size:1.05rem;margin:0 0 6px}
+.b p{font-size:.87rem;color:var(--ink-2);margin:0}
+/* 안전 */
+.safe{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.s{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px}
+.s .ic{font-size:1.35rem}
+.s h4{font-size:.95rem;margin:8px 0 5px;font-family:var(--serif)}
+.s p{font-size:.83rem;color:var(--ink-2);margin:0}
+/* CTA */
+.final{background:#fff;text-align:center;padding-top:30px}
+.final .wrap{background:linear-gradient(145deg,#EAF5E7,#DDEED9);border:1px solid var(--green-p);border-radius:32px;padding:88px 24px}
+.final h2{color:var(--green-d)}
+.final p{margin-left:auto;margin-right:auto;color:var(--ink-2)}
+.final .cta{margin-top:10px;font-size:1rem;padding:15px 34px}
+.fine{margin-top:16px;font-size:.79rem;color:var(--ink-3)}
+footer{background:#fff;color:var(--ink-3);padding:48px 0;font-size:.83rem;border-top:1px solid var(--line);margin-top:96px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+footer .lg{font-family:var(--serif);color:var(--ink);font-weight:850}
+footer .sp{flex:1}
+footer a{color:var(--ink-2)}
+@media (max-width:880px){
+  /*
+    🔴 **폰에서는 구역 여백을 절반 이하로 줄인다** (사용자 지적 — 「한 섹션에
+       모든 내용이 다 보여야 되는데 못 본다」).
+
+       데스크톱 값 `78px 0` 은 위아래 **156px** 이다. 폰 화면이 780px 안팎이니
+       **화면의 5분의 1이 빈 자리**였다. 2단이 1단으로 풀리면서 내용은 두 배로
+       길어지는데 여백만 그대로였다.
+
+       이것만으로 「안전 · CTA · 초대」가 한 화면에 들어온다. 나머지는
+       스크립트가 구역 «안에서» 훑어 준다 — 둘을 같이 써야 다 보인다.
+  */
+  section{padding:36px 0}
+  .hero .wrap,.split,.quotes,.branch,.bl{grid-template-columns:1fr;gap:32px}
+  .split.rev>div:first-child{order:0}
+  /*
+    🔴 **네 칸을 한 줄에 정사각형으로 둔다** (사용자 요청).
+       2열·1열로 쌓으면 이 구역이 폰에서 제일 길어진다 — 실측 1021px 로
+       화면(780px)을 241px 넘겼다. 한 줄로 두면 그 넘침이 통째로 사라진다.
+
+    🔴 **네 칸이 나란히 있는 것 자체가 내용이다.** 「돈의 네 가지 일」이고
+       아이 화면의 네 영역과 같은 묶음이라, 세로로 쌓으면 «넷이 한 벌»이라는
+       것이 안 보인다.
+  */
+  /*
+    🔴 **네 칸을 «옆으로 미는 띠»로 바꿨다** (사용자 지적 — 「모으기 다음 거 나올 때
+       벌기가 왼쪽으로 이동되게 해 줘, 마지막 게 안 보여」).
+
+       한 줄에 넷을 욱여넣으니 칸이 105px 밖에 안 돼 글이 안 읽혔고,
+       마지막 칸은 강조로 커질 자리도 없었다.
+       이제 칸을 크게 두고, 강조가 옮겨갈 때 **띠가 왼쪽으로 밀린다** —
+       지금 강조된 칸이 늘 화면 안에 있다.
+
+    🔴 미는 양은 스크립트가 실제 칸 폭을 재서 넣는다(`--shift`).
+       여기에 픽셀을 적어 두면 폭이 바뀔 때마다 어긋난다.
+  */
+  /* 🔴 `overflow:hidden` 은 위아래도 자른다. 강조된 칸이 `-7px` 떠오르고 4% 커지므로
+        그만큼 위아래 자리를 줘야 잘리지 않는다 */
+  .four{display:flex;gap:10px;overflow:hidden;margin-top:8px;padding:12px 0}
+  .f{flex:0 0 60%;aspect-ratio:1;padding:14px 10px;text-align:center;
+     display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .f .ic{font-size:2rem;line-height:1.1}
+  .f h4{font-size:1rem;margin:4px 0 0}
+  .f p{font-size:.78rem;line-height:1.42;word-break:keep-all}
+  .f .soon-t{margin-top:6px;font-size:.64rem;padding:2px 7px}
+
+  /*
+    🔴 **폰에서는 한 구역이 한 화면에 들어와야 한다** (사용자 요청 —
+       「모든 내용이 잘 보이게 해」).
+
+       1단으로 풀리면 내용은 두 배로 길어지는데 여백·글자는 데스크톱 값 그대로였다.
+       한 화면에 쓸 수 있는 높이는 **711px**(780 − 헤더 69)뿐이다.
+       재보고 넘치는 만큼만 깎았다 — 문구는 하나도 지우지 않았다.
+
+    🔴 그래도 남는 구역이 있으면 스크립트가 구역 «안에서» 훑는다.
+       이 깎기는 그 두 번째 손짓을 «줄이는» 것이지 없애는 장치가 아니다.
+  */
+  h2{font-size:clamp(1.65rem,7vw,2.2rem);line-height:1.2}
+  .lead{font-size:.96rem;line-height:1.62}
+  .eyebrow{font-size:.7rem}
+
+  /* 인용 카드 — `why` 에서 463px 을 쓰고 있었다 */
+  .quotes{gap:12px;margin-top:12px}
+  .quote{padding:18px;border-radius:18px;box-shadow:none}
+  .quote .who{font-size:.7rem;margin-bottom:6px}
+  .quote .q{font-size:.98rem;line-height:1.5;margin:0 0 8px}
+  .quote .why{font-size:.8rem}
+
+  /* 숫자 칸 — 키운 값이라 폰에서는 한 단계 낮춘다 */
+  .numstage{margin-top:16px;min-height:120px}
+  /*
+    🔴 **셋을 «한 줄»에 붙든다** (사용자 지적 — 「한 줄로만 나오게 해 줘, 이상하게 나와」).
+       `flex-wrap:wrap` 이라 폭이 조금만 모자라도 셋째 칸이 아래로 떨어졌다 —
+       그 순간 세 숫자가 한 묶음으로 안 읽힌다.
+       `nowrap` 으로 묶고, 대신 칸이 «같이 줄어들게» 최소 폭을 푼다.
+  */
+  .nums{flex-wrap:nowrap;gap:8px;width:100%}
+  .num{flex:1 1 0;min-width:0;padding:12px 6px;border-radius:14px}
+  .num b{font-size:1.72rem}
+  .num span{font-size:.66rem;margin-top:2px;white-space:nowrap}
+  .strike{font-size:clamp(1.3rem,4.8vw,2.2rem)}
+
+  /* 나머지 묶음들의 위 간격 */
+  .bl{gap:12px;margin-top:18px}
+  .branch{gap:10px}
+  .four{margin-top:20px}
+
+  /* 히어로 — h1 115px · 목업 자리 410px 이 화면을 넘겼다 */
+  .hero h1{font-size:clamp(2.05rem,10.5vw,3.2rem)}
+  .hero .sub{font-size:.95rem;line-height:1.6}
+  .hero-stage{margin-top:26px;min-height:330px;padding-top:24px}
+  .hero-stage .phone{width:250px}
+
+  /* 두 단이 1단으로 풀리면서 벌어진 간격 */
+  .split{gap:20px}
+  .pts{margin-top:12px}
+  .branch .b{padding:14px}
+  /* 마지막 한 뼘 — 재고 남은 만큼만 더 깎는다 */
+  .hero-stage{min-height:282px;padding-top:18px}
+  .hero-stage .phone{width:224px}
+  .split{gap:16px}
+  .pts{margin-top:10px}
+  .bl>*{padding:16px}
+  .safe{grid-template-columns:1fr}
+  .hero{padding:44px 0 0}
+  .hero-stage{min-height:440px;padding-left:20px;padding-right:20px}
+  .hero-stage .phone.side{display:none}
+  .scroll-demo{display:block}
+
+  /*
+    🔴 **폰에서 이 구간이 어긋나 있었다** (2026-09-02 사용자 지적 —
+       「컴퓨터 개발자 모드로는 잘 되는데 핸드폰으로 보면 이상하다」).
+
+       두 가지가 겹쳤다.
+
+    ① **`100vh` 는 실기기에서 「주소창이 숨은 높이」다.**
+       주소창이 보이는 동안은 화면보다 그만큼 큰 칸이 되어 아래가 잘린다.
+       **개발자 모드에는 주소창이 없어서 이 차이가 안 드러난다** — 그래서
+       거기서만 멀쩡했다. `svh` 는 반대로 「주소창이 보이는 높이」라,
+       주소창이 나오든 들어가든 **한 칸이 늘 화면에 들어온다.**
+
+    ② **글이 폰 목업 뒤에 깔려 있었다.** 목업은 위에서 `88+16+410+16 = 530px`
+       까지 차지하는데 글은 `padding-top:500px` 에서 시작했다 — **30px 가
+       목업 밑이다.** 두 숫자를 따로 적어 두면 하나를 고칠 때 반드시 어긋난다.
+
+    🔴 그래서 **목업 높이를 변수 하나로 두고 여백이 그것을 계산한다.**
+       목업을 키우거나 줄여도 글이 알아서 그 아래에서 시작한다.
+  */
+  :root{
+    /*
+      🔴 **목업을 데스크톱 크기(356×500)에 맞춘다** (2026-09-02 사용자 지적 —
+         「핸드폰에서는 크기를 키워줘, 내용들이 안 보여」).
+
+         내가 앞서 `42svh`(≈367px)로 줄여 놨는데, 목업 안 화면은 **500px 높이로
+         짜여 있고 `.demo-viewport` 가 `overflow:hidden`** 이다.
+         그래서 아래쪽 130px 이 **잘려 나가고 있었다** — 「안 보인다」가 그것이다.
+         글 자리를 벌자고 목업을 줄인 것이 목업의 내용을 지운 셈이다.
+
+      🔴 붙는 자리(`--demo-top`)도 88 → 68 로 올렸다. 목업이 커진 만큼
+         위를 아껴야 아래 글이 화면에 남는다.
+
+      🔴 아주 짧은 화면에서는 `62svh` 가 먼저 걸려 여전히 조금 잘린다.
+         고정 목업과 글을 한 화면에 같이 두는 이상 피할 수 없다 —
+         **자르더라도 최대한 늦게** 자르는 값이다.
+    */
+    --demo-top:68px;
+    --demo-h:min(500px,62svh);
+    /* 🔴 붙어 있는 헤더 높이. 구역은 이 아래에서 시작한다 — 여백 계산에 필요하다 */
+    --hdr:69px;
+    /* 🔴 목업과 글 사이. 사용자 요청으로 「거의 붙게」 */
+    --demo-gap:7px;
+  }
+  .demo-phone-wrap{top:var(--demo-top);z-index:5;padding:8px 0;background:linear-gradient(#fff 88%,rgba(255,255,255,0))}
+  /* 🔴 데스크톱과 같은 356px 를 목표로 하되 화면을 넘지 않게 */
+  .demo-phone{width:min(360px,94vw)}
+  .demo-viewport{height:var(--demo-h)}
+  /* 🔴 목업 안 아래 여백을 반으로 (사용자 요청) — 내용이 그만큼 더 들어간다 */
+  .demo-panel{padding:8px 14px 9px}
+  .demo-step{
+    min-height:100vh;            /* 🔴 `svh` 를 모르는 구형 브라우저용. 아래가 이긴다 */
+    min-height:100svh;
+    justify-content:flex-start;
+    /*
+      🔴 **여백 계산이 틀려 있었다** (사용자 지적 — 「간격이 너무 넓어」).
+
+         `--demo-top + --demo-h + 56` 은 **구역이 화면 맨 위에서 시작한다**고 친 값이다.
+         실제로는 붙어 있는 헤더(69px) 아래에서 시작하므로, 그만큼 글이 더 내려갔다.
+         56px 로 적어 놓고 실제로는 **93px** 이 벌어져 있었다.
+
+         맞는 값은 —
+           목업 바닥(화면 기준) = `--demo-top + 16 + --demo-h + 16`
+           글 시작(화면 기준)   = `--hdr + padding-top`
+         둘의 차이가 `--demo-gap` 이 되게 푼 것이 아래 식이다.
+    */
+    /*
+      🔴 **여백을 손으로 계산하지 않는다** (2026-09-03 사용자 지적 — 「01~03 글이
+         시연 화면에 겹쳐서 안 보여」).
+
+         계산식이 «화면 높이(--demo-h)»만 셌는데, 목업 틀에는 **상태바(9:41 ▮▮▮)가
+         얹혀 있어** 실제 높이가 28px 더 컸다. 그만큼 글이 목업 밑으로 들어갔다.
+         틀 안에 무엇이 더 붙으면 또 어긋난다 — 픽셀을 적는 한 계속 어긋난다.
+
+         그래서 스크립트가 **실제 목업 높이를 재서** `--demo-pad` 에 넣는다.
+         아래 값은 스크립트가 못 돌 때 쓰는 대비값이라 넉넉하게 잡는다.
+    */
+    padding:var(--demo-pad, calc(var(--demo-top) + 48px + var(--demo-h) + var(--demo-gap) - var(--hdr))) 22px 12px;
+    background:transparent;
+  }
+
+  /*
+    🔴 **목업이 500px 를 차지하니 글은 남는 자리에 들어가야 한다** (사용자 요청 —
+       「애니메이션을 넣어도 되니까 모든 내용이 잘 보이게 해」).
+       데스크톱 크기 그대로면 한 화면에 못 들어와 두 번 밀어야 한다.
+  */
+  .demo-step .screen-no{margin-bottom:8px}
+  .demo-step h3{font-size:1.42rem;margin-bottom:8px}
+  .demo-step p{font-size:.88rem;line-height:1.6}
+  .demo-hint{margin-top:12px;font-size:.7rem}
+}
+@media (max-width:620px){
+  header a.mini{display:none}
+  .wrap{padding-left:18px;padding-right:18px}
+  .hero h1{font-size:clamp(2.55rem,14vw,4rem)}
+  .hero-stage{margin-top:20px;min-height:266px;border-radius:24px 24px 0 0;padding-top:16px}
+  .hero-stage .phone{width:214px}
+  /* 🔴 여기서 1열로 되돌리지 않는다 — 위에서 「옆으로 미는 띠」로 잡았다 */
+  .f{flex-basis:64%;padding:12px 8px}
+  .f .ic{font-size:1.85rem}
+  .f h4{font-size:.94rem}
+  .f p{font-size:.74rem}
+  .final .wrap{border-radius:24px;padding:64px 18px}
+  .screen-intro{padding-top:44px}
+  .scroll-demo{margin-top:42px}
+  /* 🔴 `top` 을 직접 안 쓴다 — 변수를 바꾸면 글 여백도 같이 따라온다 */
+  :root{--demo-top:60px;--hdr:61px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="logo">핀<span>프렌즈</span></span>
+    <span class="sp"></span>
+    <a class="mini" href="#how">어떻게 되나요</a>
+    <a class="mini" href="#screens">화면 보기</a>
+    <!--
+      🔴 **로그인 자리가 없으면 막다른 길이 된다.** 배포본(`app/public/landing.html`)에서
+         실제로 그랬다 — 나가는 길이 「가입」뿐이었고, 홈 화면에 추가해 쓰면 주소창이
+         없어서 /login 을 칠 수도 없다. 보호자 세션이 14일이라 만료되면 갇힌다.
+         이 원본을 나중에 배포로 올릴 때 같은 구멍을 물려받지 않게 여기도 둔다.
+    -->
+    <a class="mini" href="/login">로그인</a>
+    <a class="cta sm" href="#start">무료로 시작하기</a>
+  </div>
+</header>
+
+<!-- ① 히어로 -->
+<div class="hero" id="top" data-snap>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">아이 금융교육</p>
+      <h1>금융 학습이<br><em>생활이 되는 순간</em></h1>
+      <p class="sub">문제를 몇 개 풀었는지 말고, 아이의 돈 쓰는 행동이 어떻게 달라졌는지를 보여드립니다.</p>
+      <div class="row">
+        <a class="cta" href="#start">무료로 시작하기</a>
+        <span class="free">부모도 아이도 무료</span>
+      </div>
+    </div>
+    <div class="hero-stage" aria-label="핀프렌즈의 세 가지 핵심 화면 예시">
+      <div class="phone side" aria-hidden="true">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">아이 화면</div>
+          <div class="ph-t">계획 ↔ 실제</div>
+          <div class="ev">적어둔 것 <b>문구 5,000원</b></div>
+          <div class="ev">실제로 쓴 것 <b>문구 3,000원</b></div>
+          <div class="ev">계획한 만큼 안에서 썼어요. <b>⭐ 1개</b></div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">부모 화면 · 예시값</div>
+          <div class="ph-t">성장 나무</div>
+          <div class="trees">
+            <div class="tree"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">나무</div><div class="bar"><i style="width:100%"></i></div></div>
+            <div class="tree hl"><div class="ic">🌿</div><div class="nm">잘 쓰기</div><div class="st">새싹</div><div class="bar"><i style="width:62%"></i></div></div>
+            <div class="tree"><div class="ic">🌱</div><div class="nm">모으기</div><div class="st">씨앗</div><div class="bar"><i style="width:28%"></i></div></div>
+            <div class="tree"><div class="ic">🌱</div><div class="nm">불리기</div><div class="st">씨앗</div><div class="bar"><i style="width:0%"></i></div></div>
+          </div>
+          <div class="ev">이번 달 달라진 것<br><b>사려다 멈춘 일이 2회 → 5회</b>로 늘었어요.</div>
+        </div>
+      </div>
+      <div class="phone side" aria-hidden="true">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">부모 화면 · 월말 기록 · 예시값</div>
+          <div class="ph-t">3월의 숲</div>
+          <div class="ev"><b>이번 달 획득 별 ⭐ 12개</b></div>
+          <div class="trees">
+            <div class="tree hl"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">실천 4회</div></div>
+            <div class="tree"><div class="ic">🌿</div><div class="nm">잘 쓰기</div><div class="st">실천 2회</div></div>
+          </div>
+          <div class="ev">다음 달에도 변화를 이어서 볼 수 있어요.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="screen-intro" id="screens" data-snap aria-labelledby="screen-title">
+  <div class="wrap center">
+    <p class="eyebrow">세 가지 핵심 화면</p>
+    <h2 id="screen-title">배움보다 <em>행동</em>을<br>먼저 보여줍니다</h2>
+    <p class="lead">아이의 실천을 세 화면에 나눠 담았습니다.</p>
+
+    <div class="scroll-demo" data-scroll-demo>
+      <div class="demo-phone-wrap">
+        <div class="phone demo-phone" aria-live="polite">
+          <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+          <div class="demo-viewport">
+            <div class="demo-panel active" data-panel="0" aria-hidden="false">
+              <div class="ph-role">부모 화면 · 예시값</div>
+              <div class="ph-t">성장 나무</div>
+              <div class="demo-sub">서연 · 3월 · 실시간</div>
+              <div class="demo-sync"><span class="syncing">실천 기록을 나무에 반영하고 있어요…</span><span class="synced">✓ 실천 1건이 나무에 반영됐어요</span></div>
+              <div class="trees">
+                <div class="tree"><div class="ic">🌳</div><div class="nm">벌기</div><div class="st">나무</div><div class="bar"><i style="width:100%"></i></div></div>
+                <div class="tree hl"><div class="ic">🌿</div><div class="nm">잘 쓰기</div><div class="st">새싹</div><div class="bar"><i style="width:62%"></i></div></div>
+                <div class="tree"><div class="ic">🌱</div><div class="nm">모으기</div><div class="st">씨앗</div><div class="bar"><i style="width:28%"></i></div></div>
+                <div class="tree"><div class="ic">🌱</div><div class="nm">불리기</div><div class="st">씨앗</div><div class="bar"><i style="width:0%"></i></div></div>
+              </div>
+              <div class="demo-evidence"><h4>이번 달 달라진 것</h4><p>사려다 멈춘 일이 <b>2회 → 5회</b>로 늘었어요.<br>「잘 쓰기」가 새싹까지 자랐습니다.</p></div>
+            </div>
+
+            <div class="demo-panel" data-panel="1" aria-hidden="true">
+              <div class="ph-role">아이 화면</div>
+              <div class="ph-t">계획 ↔ 실제</div>
+              <div class="demo-sub">어제 · 다이소 성수점</div>
+              <div class="demo-sync"><span class="syncing">계획 카드와 결제를 맞추고 있어요…</span><span class="synced">✓ 계획 안에서 사용했어요</span></div>
+              <div class="demo-compare">
+                <div><h4>적어둔 것</h4><div class="demo-row"><span>🖊 문구</span><span>5,000원</span></div><div class="demo-row demo-total"><span>합계</span><span>5,000원</span></div></div>
+                <div class="actual-card"><h4>실제로 쓴 것</h4><div class="demo-row"><span>🖊 문구</span><span>3,000원</span></div><div class="demo-row demo-total"><span>합계</span><span>3,000원</span></div></div>
+              </div>
+              <div class="demo-retro"><p>적은 대로 썼어요.<br>지우개랑 스티커, 계획한 만큼만 샀네요.</p><div class="demo-reward">⭐ 1개를 받았어요</div></div>
+              <button class="demo-confirm" type="button">확인했어요</button>
+            </div>
+
+            <div class="demo-panel" data-panel="2" aria-hidden="true">
+              <div class="ph-role">부모 화면 · 월말 기록</div>
+              <div class="ph-t">2026년 3월 숲</div>
+              <div class="demo-sub">서연</div>
+              <div class="demo-sync"><span class="syncing">3월 실천 기록을 모으고 있어요…</span><span class="synced">✓ 3월의 숲이 완성됐어요</span></div>
+              <div class="demo-stars"><span>이번 달 획득 별</span><b>⭐ <span data-count-from="38" data-count-to="46">46</span>개</b></div>
+              <div class="demo-evidence"><h4>이번 달 한 줄</h4><p><b>쓰기와 모으기가 함께 자랐습니다</b></p></div>
+              <div class="demo-delta"><h4>지난달과 비교</h4><div class="demo-row"><span>사려다 멈춤</span><strong>2회 → 5회</strong></div><div class="demo-row"><span>가격 비교</span><strong>0회 → 4회</strong></div><div class="demo-row"><span>저축률</span><strong>12% → 32%</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-steps">
+        <article class="demo-step active" id="screen-tree" data-step="0" data-snap><span class="screen-no">01 · 성장 나무</span><h3>실천해야<br>자라는 나무</h3><p>학습·퀴즈·실천이 모두 채워졌을 때만 다음 단계로 갑니다.</p><span class="demo-hint">계속 내려서 다음 화면 보기</span></article>
+        <article class="demo-step" id="screen-plan" data-step="1" data-snap><span class="screen-no">02 · 계획 ↔ 실제</span><h3>쓰기 전과 쓴 후를 대조</h3><p>계획한 소비와 실제 소비를 같은 자리에서 확인합니다.</p></article>
+        <article class="demo-step" id="screen-forest" data-step="2" data-snap><span class="screen-no">03 · 월간 숲</span><h3>한 달의 변화를 한눈에</h3><p>누적 숫자 대신 지난달과 달라진 행동을 보여줍니다.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ② 문제 -->
+<section class="problem" id="why" data-snap>
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">부모가 겪는 것</p>
+      <h2>숫자는 쌓이는데,<br>확신은 안 쌓입니다</h2>
+      <p class="lead">다른 용돈 앱을 쓰면 이런 숫자가 남습니다.</p>
+      <!--
+        🔴 **숫자와 질문을 같은 칸에 겹쳐 둔다.** 숫자가 사라지고 질문이 커지는
+           연출인데, 둘을 위아래로 두면 사라질 때 **아래 내용이 위로 튄다.**
+           `grid-area:1/1` 로 겹쳐 두면 칸 높이가 둘 중 큰 쪽으로 잡혀 안 움직인다.
+
+        🔴 **`.seq` 가 붙어야 겹친다.** 스크립트가 못 돌면(구형 · 오류) 겹치기가
+           안 걸려 **지금처럼 둘 다 위아래로 보인다.** 연출이 실패해도 내용은 남는다.
+      -->
+      <div class="numstage" data-numstage>
+        <div class="nums">
+          <!-- 🔴 `data-count-to` 는 이 파일이 이미 쓰는 관용구다 (아래 스크롤 데모) -->
+          <div class="num"><b data-count-to="116">116</b><span>학습 일수</span></div>
+          <div class="num"><b data-count-to="75">75</b><span>푼 문제</span></div>
+          <div class="num"><b data-count-to="6650">6,650</b><span>받은 보상액</span></div>
+        </div>
+        <p class="strike">그래서 우리 아이가 <b>달라졌나요?</b></p>
+      </div>
+    </div>
+
+    <div class="quotes">
+      <div class="quote">
+        <div class="who">중학교 교사 · 초2 아이 · 용돈 앱 8개월차</div>
+        <p class="q">“보고도 모르겠어요.<br>숫자가 늘어난 건 알겠는데<br>그게 뭘 뜻하는지를 모르겠어요.”</p>
+        <p class="why">확인은 됩니다. <b>그게 성장인지 알 수 없는 것</b>이 문제입니다.</p>
+      </div>
+      <div class="quote">
+        <div class="who">카페 자영업 · 초3 아이 · 현금 봉투 3년차</div>
+        <p class="q">“어디에 얼마 썼는지,<br>그거 하나만 알면 좋겠어요.<br>지금은 볼 게 아예 없어요.”</p>
+        <p class="why">현금으로 주면 <b>기록이 0건</b>입니다. 무엇을 가르칠지도 알 수 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 해법 1 -->
+<section id="how" data-snap>
+  <div class="wrap split">
+    <div>
+      <span class="badge">다른 점 하나</span>
+      <h2><em>배운 것을 행동으로 옮겨야</em><br>나무가 자랍니다</h2>
+      <p class="lead">나무가 다음 단계로 가려면 <b>학습 · 퀴즈 · 그리고 행동 실천</b>이 모두 필요합니다.</p>
+      <ul class="pts">
+        <li>나무 성장 단계의 기준을 알려드립니다</li>
+        <li>그래서 <b>나무가 자랐다 = 배운 걸 실제로 했다</b> 가 성립합니다</li>
+      </ul>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">부모 화면 · 예시값</div>
+          <div class="ph-t">왜 멈췄나요</div>
+          <div class="trees">
+            <div class="tree hl" style="grid-column:1/-1;background:var(--clay-bg);border-color:#E5CDB8">
+              <div class="ic">🌿</div><div class="nm">잘 쓰기</div>
+              <div class="st">14일째 그대로</div>
+            </div>
+          </div>
+          <div class="ev" style="background:var(--clay-bg);border-color:#E5CDB8">
+            <b style="color:var(--clay)">실천 1회가 남았어요</b><br>
+            학습·퀴즈는 이미 충족했어요.
+          </div>
+          <div class="ev">이건 아이 문제가 아니에요.<br>조건 하나가 남았을 뿐입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 해법 2 -->
+<section id="compare" data-snap style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap split rev">
+    <div>
+      <span class="badge">다른 점 둘</span>
+      <h2>쓰기 전에 적고,<br><em>쓴 뒤에 맞춰봅니다</em></h2>
+      <p class="lead">아이에게 <b>소비 계획을 미리 세우게 하는 것</b>입니다.
+      </br>어디서 · 얼마까지 살지 적어두면, 결제 이후 비교해서 보여줍니다.</p>
+      <div class="branch">
+        <div class="br met">
+          <h4>적은 대로 썼을 때</h4>
+          <p>“지우개랑 스티커, 계획한 만큼만 샀네요.”</p>
+          <span class="tag">⭐ 1개</span>
+        </div>
+        <div class="br exc">
+          <h4>계획을 넘겼을 때</h4>
+          <p>“젤리와 음료는 적어두지 않았던 가게예요.”</p>
+          <span class="tag">⭐ 없음 · 가진 별은 그대로</span>
+        </div>
+      </div>
+      <ul class="pts">
+        <li><b>별은 계획을 지켰을 때 받습니다.</b></li>
+      </ul>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="ph-h"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="ph-b">
+          <div class="ph-role">아이 화면</div>
+          <div class="ph-t">계획 ↔ 실제</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:11px">
+              <div style="font-size:.68rem;color:var(--ink-3);margin-bottom:6px">적어둔 것</div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem">🖊 문구<span>5,000원</span></div>
+            </div>
+            <div style="background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:11px">
+              <div style="font-size:.68rem;color:var(--ink-3);margin-bottom:6px">실제로 쓴 것</div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem">🖊 문구<span>3,000원</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--clay);font-weight:700">🍬 간식<span>3,000원</span></div>
+            </div>
+          </div>
+          <div class="ev" style="background:var(--clay-bg);border-color:#E5CDB8">
+            계획보다 <b style="color:var(--clay)">3,000원</b> 더 썼어요.<br>
+            젤리와 음료는 적어두지 않았던 가게예요.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 4영역 -->
+<section id="learning" data-snap>
+  <div class="wrap center">
+    <p class="eyebrow">배우는 것</p>
+    <h2>금융 활동의 흐름을<br><em>네 가지로 배웁니다</em></h2>
+    <p class="lead">배움이 실천으로 이어지는 네 개의 카테고리를 나눴습니다.</p>
+    <div class="four">
+      <div class="f"><div class="ic">💰</div><h4>벌기</h4><p>미션으로 용돈 벌기</p></div>
+      <div class="f"><div class="ic">🛒</div><h4>잘 쓰기</h4><p>소비 계획 세우기</p></div>
+      <div class="f"><div class="ic">🐷</div><h4>모으기</h4><p>위시리스트 저금하기</p></div>
+      <!-- 🔴 「곧 열려요」 딱지와 `soon`(흐리게)을 뺐다 (사용자 요청).
+             딱지만 빼고 흐린 것을 두면 «왜 이 칸만 연한지» 설명이 사라진다 -->
+        <div class="f"><div class="ic">🌱</div><h4>불리기</h4><p>예적금 가입하기</p></div>
+    </div>
+    <!-- 🔴 「💰 돈이 생기고 → …」 줄은 지웠다 (사용자 요청).
+            네 칸이 하나씩 «순서대로» 올라오며 강조가 옮겨가므로
+            같은 말을 글로 한 번 더 할 필요가 없다. -->
+  </div>
+</section>
+
+<!--
+  ⑥ 장벽 — 🔴 화면에서 뺐다 (2026-09-03 사용자 요청).
+
+  🔴 한동안 이 주석을 «⑦ 표시줄의 닫는 표시»가 닫고 있었다. HTML 주석은 중첩되지
+     않아 우연히 맞아떨어진 것이라, ⑦ 을 건드리면 ⑥ 이 화면에 되살아난다.
+     각자 닫게 고쳤다.
+
+  🔴 **주석 안에 닫는 표시를 «글자로» 적지 않는다.** 적는 순간 주석이 거기서 끝나고
+     뒤가 화면에 그대로 나온다 — 이 문장 자체가 그렇게 새어 나갔다.
+     설명하려는 규칙에 설명이 걸린 자리다.
+-->
+<!--
+<section class="barriers" id="questions" data-snap>
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">시작하기 전에</p>
+      <h2>망설이는 이유,<br>먼저 말씀드릴게요</h2>
+    </div>
+    <div class="bl">
+      <div class="b">
+        <p class="q">“돈 드나요?”</p>
+        <h4>부모도 아이도 무료입니다</h4>
+        <p>월 구독료가 없습니다. 카드 결제 수수료와 금융사 제휴로 운영합니다.</p>
+      </div>
+      <div class="b">
+        <p class="q">“한 번에 다 해야 하나요?”</p>
+        <h4>나눠서 하셔도 됩니다</h4>
+        <p>중간에 멈춰도 다음에 그 자리에서 이어집니다. 처음부터 다시 입력하지 않습니다.</p>
+      </div>
+      <div class="b">
+        <p class="q">“카드 올 때까지 못 쓰나요?”</p>
+        <h4>기다리는 동안에도 시작합니다</h4>
+        <p>카드가 도착하기 전에도 아이는 학습하고 별을 모을 수 있습니다.</p>
+      </div>
+      <div class="b">
+        <p class="q">“쓰던 앱 기록은요?”</p>
+        <h4>옮겨드리지는 못합니다</h4>
+        <p>다른 앱의 기록은 가져올 수 없습니다. <b>지금부터 쌓이는 기록</b>으로 보여드립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+
+<!--
+  ⑦ 안전 — 🔴 화면에서 뺐다 (2026-09-03 사용자 요청).
+
+  🔴 지우지 않고 주석으로 둔다. 「위치정보를 받지 않는다 · 동의가 먼저다 ·
+     별은 현금이 아니다」는 이 제품의 **규제 약속**이라, 다시 넣을 때
+     문구를 새로 쓰면 약속이 미묘하게 달라진다.
+-->
+<!-- <section id="safety" data-snap>
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">아이 정보</p>
+      <h2>덜 모으는 쪽을 택했습니다</h2>
+      <p class="lead">아이 서비스라서, 편해지는 기능이라도 정보를 더 받아야 하면 만들지 않았습니다.</p>
+    </div>
+    <div class="safe">
+      <div class="s"><div class="ic">📍</div><h4>위치정보를 받지 않습니다</h4>
+        <p>아이가 어디 있는지 수집하지 않습니다. 옵션으로 끄는 게 아니라 <b>기능 자체가 없습니다</b>.</p></div>
+      <div class="s"><div class="ic">🔐</div><h4>보호자 동의가 먼저입니다</h4>
+        <p>법정대리인 동의가 끝나기 전에는 아이 화면이 열리지 않습니다.</p></div>
+      <div class="s"><div class="ic">⭐</div><h4>별은 현금이 아닙니다</h4>
+        <p>별로는 앱 안의 꾸미기 아이템만 살 수 있습니다. 현금으로 바꾸거나 주고받을 수 없습니다.</p></div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ⑧ CTA -->
+<!--
+  ⑧ 마지막 칸 — **앞뒤 두 면이 한 자리를 쓴다** (사용자 요청).
+
+  🔴 예전엔 「가입」과 「초대 코드」가 «따로 선» 두 구역이었다. 그런데 이 둘은
+     **같은 질문에 대한 두 답**이다 — 「당신은 부모인가, 링크를 받은 아이인가」.
+     한 자리에서 뒤집으면 그 갈림이 보이고, 멈추는 지점도 하나로 준다.
+
+  🔴 **`data-snap` 은 하나뿐이다.** 두 면이 같은 자리를 쓰므로 멈춤 지점도 하나다.
+     숨은 면에 붙여 두면 높이가 0 인 지점이 생겨 스크롤 계산이 어긋난다.
+
+  🔴 **숨기는 것은 `hidden` 이다.** CSS 로만 감추면 화면 낭독기가 읽고,
+     숨은 폼의 `required` 가 제출을 막는다.
+-->
+<section class="final" id="start" data-snap>
+  <div class="wrap">
+
+    <div data-face="cta">
+      <h2>이번 달에 뭐가 달라졌는지,<br>한 문장으로 보세요</h2>
+      <p class="lead">가입하고 아이가 첫 실천을 하면 나무가 움직이기 시작합니다.</p>
+      <a class="cta" href="/signup">무료로 시작하기</a>
+      <!-- 🔴 가입 옆에 둔다 — 아이가 링크를 받아 왔을 때 여기서 갈라진다 -->
+      <button type="button" class="cta ghost" data-to="invite">초대코드 입력</button>
+      <p class="fine">부모·아이 모두 무료 · 월 구독료 없음 · 위치정보 미수집</p>
+    </div>
+
+    <!--
+      🔴 아이 기기가 이 화면에 닿을 수 있다. 홈 화면에 추가한 앱은 브라우저와
+         저장소가 갈릴 수 있어서, 부모가 브라우저에서 등록해도 앱 쪽에는 쿠키가 없다.
+         그러면 아이는 여기서 멈추는데 주소창이 없으니 나갈 방법이 없다.
+         초대 코드를 여기서 받으면 쿠키가 **이 앱의 저장소**에 앉는다.
+      🔴 평범한 GET 폼이다. `/child/enter` 는 쿠키를 굽는 Route Handler 라
+         **진짜 문서 이동**이어야 한다 (어긋남 대장 D66).
+    -->
+    <div data-face="invite" hidden aria-labelledby="invite-title">
+      <h2 id="invite-title">초대 링크를 받았나요?</h2>
+      <p class="lead">부모님이 보내 주신 링크를 아래에 붙여넣으면 아이 화면이 열려요.</p>
+      <form method="get" action="/child/enter"
+            style="display:grid;gap:10px;max-width:520px;margin:18px auto 0">
+        <label for="invite-t" style="text-align:left;font-size:14px;opacity:.7">초대 링크 또는 코드</label>
+        <input id="invite-t" name="t" required autocomplete="off"
+               placeholder="https://… 또는 코드"
+               style="min-height:48px;border:1px solid var(--line);border-radius:12px;
+                      padding:0 14px;font-size:16px;width:100%;box-sizing:border-box" />
+        <button class="cta" type="submit" style="border:0;cursor:pointer">아이 화면 열기</button>
+      </form>
+      <!-- 🔴 돌아갈 길 — 잘못 눌러 들어온 부모가 갇히지 않게 -->
+      <button type="button" class="cta ghost" data-to="cta">무료로 시작하기</button>
+      <p class="fine">링크는 24시간 동안만 쓸 수 있어요. 지났으면 부모님께 다시 받아 주세요.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer id="footer" data-snap>
+  <div class="wrap">
+    <span class="lg">핀프렌즈</span>
+    <span class="sp"></span>
+    <a href="service-example.html">서비스 화면 예시</a>
+    <span>·</span>
+    <span>본 페이지는 기획 산출물 예시입니다</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const demo = document.querySelector('[data-scroll-demo]');
+  if (!demo) return;
+
+  const steps = [...demo.querySelectorAll('[data-step]')];
+  const panels = [...demo.querySelectorAll('[data-panel]')];
+  let activeIndex = 0;
+  let visibleStepIndex = -1;
+
+  const playPanel = (index) => {
+    const panel = panels[index];
+    if (!panel) return;
+
+    panel.classList.remove('running');
+    void panel.offsetWidth;
+    panel.classList.add('running');
+
+    panel.querySelectorAll('[data-count-to]').forEach((counter) => {
+      const from = Number(counter.dataset.countFrom);
+      const to = Number(counter.dataset.countTo);
+      const startedAt = performance.now();
+      const updateCount = (now) => {
+        if (!panel.classList.contains('active')) return;
+        const progress = Math.min(1, (now - startedAt) / 850);
+        counter.textContent = String(Math.round(from + ((to - from) * progress)));
+        if (progress < 1) requestAnimationFrame(updateCount);
+      };
+      requestAnimationFrame(updateCount);
+    });
+  };
+
+  const activate = (nextIndex, replay = false) => {
+    if (!panels[nextIndex]) return;
+    panels.forEach((panel, index) => {
+      panel.classList.toggle('active', index === nextIndex);
+      panel.classList.toggle('exit-up', index < nextIndex);
+      panel.setAttribute('aria-hidden', String(index !== nextIndex));
+    });
+    steps.forEach((step, index) => step.classList.toggle('active', index === nextIndex));
+    activeIndex = nextIndex;
+    if (replay) playPanel(nextIndex);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) {
+        const nextIndex = Number(visible.target.dataset.step);
+        if (nextIndex !== visibleStepIndex) {
+          visibleStepIndex = nextIndex;
+          activate(nextIndex, true);
+        }
+      }
+    }, { rootMargin: '-34% 0px -42% 0px', threshold: [0, .25, .5, .75, 1] });
+    steps.forEach((step) => observer.observe(step));
+  }
+
+  const snapPoints = [...document.querySelectorAll('[data-snap]')];
+  playPanel(0);
+  let wheelLocked = false;
+  let wheelAmount = 0;
+  let wheelResetTimer;
+
+  const IGNORE = 'input, select, textarea, [contenteditable="true"]';
+
+  /**
+   * 🔴 **한 번에 한 구역씩 옮긴다 — 마우스와 손가락이 같은 함수를 쓴다.**
+   *
+   *    예전엔 이 계산이 `wheel` 리스너 안에만 있었다. **터치는 `wheel` 을
+   *    발생시키지 않으므로** 폰에서는 한 번도 돌지 않았고, 그래서
+   *    「구역이 안 잡힌다」가 됐다. CSS 스냅으로 흉내 내 봤지만 그건
+   *    손가락을 뗀 뒤 **즉시 당기는** 것이라 느낌이 반대였다 —
+   *    「짧게 짧게 끊긴다」가 그것이다.
+   *
+   *    멈추는 자리 목록(`snapPoints`)이 같으므로, 이제 폰과 데스크톱이
+   *    **같은 지점에 같은 속도로** 선다.
+   */
+  /**
+   * 🔴 **미끄러지는 것을 우리가 직접 굴린다** (2026-09-02 사용자 지적 —
+   *    「슬라이드 효과 없이 바로 해당 섹션이 나온다」).
+   *
+   *    예전엔 `scrollTo({behavior:'smooth'})` 로 브라우저에 맡겼다. 데스크톱에서는
+   *    돌았지만 **폰에서는 즉시 점프**했다 — 그 값을 안 지키는 브라우저가 있고,
+   *    지켜도 「움직임 줄이기」가 켜져 있으면 즉시로 바뀐다.
+   *    **맡긴 쪽이 안 해 주면 우리가 알 방법이 없다.**
+   *
+   *    직접 굴리면 어디서나 같은 속도로 같게 움직인다.
+   *
+   * 🔴 `scroll-behavior:smooth` 를 **잠시 끄고** 한 프레임씩 옮긴다.
+   *    안 끄면 우리가 옮기는 매 프레임을 브라우저가 또 애니메이션하려 들어
+   *    질질 끌린다. 끝나면 되돌려 놓는다 — 앵커 링크(`#how`)는 그 값을 쓴다.
+   */
+  let animToken = 0;
+
+  const glideTo = (top, whenDone) => {
+    const from = window.scrollY;
+    const distance = top - from;
+    animToken += 1;
+    const token = animToken;
+
+    if (Math.abs(distance) < 2) {
+      window.scrollTo(0, top);
+      whenDone();
+      return;
+    }
+
+    /**
+     * 🔴 **「동작 줄이기」에서도 미끄러진다 — 대신 절반 길이다** (사용자 결정).
+     *    예전엔 즉시 점프였는데, 그러면 「효과가 하나도 없다」가 된다.
+     *    구역 넘김은 이 페이지에서 폭이 가장 큰 움직임이라, 끄는 대신 **짧게** 지나간다.
+     */
+    const DURATION = 620;   // 🔴 어디서나 같다 — 기기로 갈래를 두지 않는다
+    const startedAt = performance.now();
+    const previous = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    /**
+     * 🔴 **`requestAnimationFrame` 이 «안 돌 수도» 있다.** 탭을 뒤로 보내면
+     *    브라우저가 프레임을 아예 안 준다. 그러면 이 애니메이션은 **중간에 굳고**
+     *    도착 콜백도 영영 안 온다 — 화면 전환도 안 돌고 다음 손짓도 안 먹는다.
+     *
+     *    그래서 **끝나야 할 시각에 시계로도 한 번 더 두드린다.** 둘 중 먼저 오는 쪽이
+     *    마무리하고, `settled` 가 두 번 실행되는 것을 막는다.
+     */
+    let settled = false;
+    let guard = 0;
+
+    const settle = (jump) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(guard);
+      // 🔴 **점프가 먼저, 되돌리기가 나중.** 순서를 바꾸면 `scroll-behavior:smooth` 가
+      //    되살아난 뒤에 점프해서 **그 점프까지 애니메이션이 된다** —
+      //    프레임이 안 오는 상황에서 쓰는 보험인데, 그 상황에서 정확히 안 듣는다
+      if (jump) window.scrollTo(0, top);
+      document.documentElement.style.scrollBehavior = previous;
+      whenDone();
+    };
+    guard = window.setTimeout(() => settle(true), DURATION + 250);
+
+    const frame = (now) => {
+      if (token !== animToken) {                       // 새 손짓이 왔으면 이건 버린다
+        settled = true;
+        window.clearTimeout(guard);
+        document.documentElement.style.scrollBehavior = previous;
+        return;
+      }
+      const t = Math.min(1, (now - startedAt) / DURATION);
+      // 시작과 끝에서 느리게 — 가운데만 빠르면 「튕겼다」로 보인다
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      window.scrollTo(0, from + distance * eased);
+      if (t < 1) { requestAnimationFrame(frame); return; }
+      settle(false);
+    };
+    requestAnimationFrame(frame);
+  };
+
+  /**
+   * 🔴 **화면보다 긴 구역은 «안에서» 먼저 훑는다** (2026-09-02 사용자 지적 —
+   *    「한 섹션에 모든 내용이 다 보여야 되는데 핸드폰에서는 모든 내용을 못 봐」).
+   *
+   *    구역 시작점 사이만 오가면, 구역이 화면보다 길 때 **그 아래는 갈 방법이 없다.**
+   *    폰 402×780 에서 12곳 중 10곳이 넘쳤다 (17px ~ 325px).
+   *    데스크톱에서 안 드러난 이유는 2단 배치라 구역이 짧기 때문이다.
+   *
+   *    그래서 한 번 밀 때 —
+   *      구역 바닥이 아직 화면 밖이면  → **그 바닥을 화면 바닥에 맞춘다** (한 번이면 닿는다)
+   *      이미 바닥에 서 있으면        → **다음 구역으로 미끄러진다** (예전 그대로)
+   *
+   * 🔴 **바닥을 「다음 스냅 지점」으로도 자른다.** `#screens` 는 데모 3단계를
+   *    품고 있어서 3424px 다 — 자기 바닥까지 훑으면 데모를 통째로 건너뛴다.
+   *    품고 있는 다음 지점이 있으면 거기가 이 구역의 끝이다.
+   *
+   * 🔴 **56px 까지는 넘친 것으로 치지 않는다.** 그만큼은 구역의 아래 여백이라,
+   *    그걸 보려고 한 번 더 밀게 하면 **17px 짜리 손짓**이 생긴다.
+   */
+  const FITS_SLACK = 56;
+
+  /**
+   * 🔴 **헤더 높이를 손으로 적지 않는다.** 92 는 데스크톱 값인데 폰에서는 69 다 —
+   *    그 23px 만큼 구역이 아래로 밀려서, 딱 맞는 구역도 넘치는 것으로 잡혔다.
+   *    붙어 있는 헤더면 그 높이를, 아니면 0 을 쓴다.
+   */
+  const headerEl = document.querySelector('header');
+  const headerHeight = () => {
+    if (!headerEl) return 0;
+    const style = window.getComputedStyle(headerEl);
+    if (style.position !== 'sticky' && style.position !== 'fixed') return 0;
+    return Math.round(headerEl.getBoundingClientRect().height);
+  };
+
+  const goToNeighbour = (direction) => {
+    const headerOffset = headerHeight();
+    const currentY = window.scrollY + headerOffset;
+    const positions = snapPoints.map((point) => point.getBoundingClientRect().top + window.scrollY);
+
+    // 지금 서 있는 구역 — 시작점이 화면 위쪽보다 위에 있는 것 중 마지막
+    let currentIndex = -1;
+    positions.forEach((position, index) => { if (position <= currentY + 4) currentIndex = index; });
+
+    /**
+     * 🔴 **다른 멈춤 지점을 «품고 있는» 구역은 안을 훑지 않는다**
+     *    (사용자 지적 — 「실제 화면은 이렇습니다 여기 왜 내릴 때 2번 끊겨서 넘어가?」).
+     *
+     *    `#screens` 는 데모 3단계를 품은 껍데기다. 그 안은 이미 단계마다 서므로,
+     *    껍데기까지 훑으면 **머리글에서 한 번 더 끊긴다.** 품은 것이 있으면
+     *    다음 지점으로 곧장 간다.
+     */
+    const containsInnerSnap = currentIndex >= 0
+      && snapPoints.some((point, index) => index > currentIndex && snapPoints[currentIndex].contains(point));
+
+    if (currentIndex >= 0 && !containsInnerSnap) {
+      const element = snapPoints[currentIndex];
+      /**
+       * 🔴 **상자가 아니라 «내용»이 끝나는 자리로 잰다.**
+       *    데모 단계는 `min-height:100svh` 라 **내용이 다 보이는데도 상자는 더 길다.**
+       *    상자로 재면 그 빈 자리를 보려고 한 번 더 밀게 된다 — 실제로 `screen-tree`
+       *    에서 두 번 끊겼다. 구역의 아래 여백도 같은 이유로 세지 않는다.
+       */
+      let contentBottom = positions[currentIndex];
+      Array.prototype.forEach.call(element.children, (child) => {
+        const box = child.getBoundingClientRect();
+        if (box.height > 0) contentBottom = Math.max(contentBottom, box.bottom + window.scrollY);
+      });
+      const nextTop = currentIndex + 1 < positions.length ? positions[currentIndex + 1] : Infinity;
+      const sectionEnd = Math.min(contentBottom, nextTop);
+
+      if (direction > 0) {
+        const viewBottom = window.scrollY + window.innerHeight;
+        if (sectionEnd > viewBottom + FITS_SLACK) {
+          wheelLocked = true;
+          glideTo(sectionEnd - window.innerHeight, () => { wheelLocked = false; });
+          window.setTimeout(() => { wheelLocked = false; }, 1200);
+          return true;
+        }
+      } else {
+        const sectionTop = Math.max(0, positions[currentIndex] - headerOffset);
+        if (window.scrollY > sectionTop + FITS_SLACK) {
+          wheelLocked = true;
+          glideTo(sectionTop, () => { wheelLocked = false; });
+          window.setTimeout(() => { wheelLocked = false; }, 1200);
+          return true;
+        }
+      }
+    }
+
+    let nextIndex = positions.findIndex((position) => position > currentY + 72);
+    if (direction < 0) {
+      nextIndex = -1;
+      for (let index = positions.length - 1; index >= 0; index -= 1) {
+        if (positions[index] < currentY - 72) {
+          nextIndex = index;
+          break;
+        }
+      }
+    }
+    if (nextIndex < 0) return false;
+
+    /**
+     * 🔴 **도착하면 그 화면을 «반드시» 돌린다** (2026-09-02 사용자 지적 —
+     *    「다음 섹션 넘어갈 때 화면 안 화면들이 동작을 안 해」).
+     *
+     *    지금까지는 `IntersectionObserver` 하나에만 맡겼다. 그건 **띠를 지나갈 때**
+     *    울리는 물건이라, 우리가 한 번에 옮겨 버리면 지나가는 순간에 울리고
+     *    **도착했을 때는 이미 끝나 있다.** 손가락으로 넘긴 사람은 아무것도 못 본다.
+     *
+     *    우리가 옮기는 것이니 **도착 시점을 우리가 안다.** 그 자리가 데모 단계면
+     *    그 화면을 그 자리에서 다시 튼다 — 관찰자가 울렸든 안 울렸든 같다.
+     */
+    const target = snapPoints[nextIndex];
+    const stepIndex = target && target.dataset ? Number(target.dataset.step) : NaN;
+
+    wheelLocked = true;
+    glideTo(Math.max(0, positions[nextIndex] - headerOffset), () => {
+      wheelLocked = false;
+      if (Number.isInteger(stepIndex)) activate(stepIndex, true);
+      /**
+       * 🔴 **도착했다고 알린다.** 연출을 가진 다른 덩이(숫자 → 질문 → 리뷰 카드)도
+       *    「지나갈 때」 울리는 관찰자에만 맡기면, 한 번에 옮겨 버릴 때 놓친다.
+       *    데모 화면에서 겪은 것과 같은 문제다 — 같은 해법을 쓴다.
+       *
+       * 🔴 사건으로 알린다. 저쪽 코드를 직접 부르면 두 덩이가 얽혀서
+       *    한쪽을 고칠 때 다른 쪽이 같이 죽는다.
+       */
+      document.dispatchEvent(new CustomEvent('ff:arrive', { detail: { element: target } }));
+    });
+    // 🔴 되돌림 보험 — 애니메이션이 어떤 이유로 끝을 못 봐도 잠금이 영원히 남지 않는다
+    window.setTimeout(() => { wheelLocked = false; }, 1200);
+    return true;
+  };
+
+  window.addEventListener('wheel', (event) => {
+    if (event.ctrlKey || event.metaKey || !event.deltaY) return;
+    if (event.target.closest(IGNORE)) return;
+
+    if (wheelLocked) {
+      event.preventDefault();
+      return;
+    }
+
+    event.preventDefault();
+    wheelAmount += event.deltaY;
+    window.clearTimeout(wheelResetTimer);
+    wheelResetTimer = window.setTimeout(() => { wheelAmount = 0; }, 140);
+    if (Math.abs(wheelAmount) < 8) return;
+
+    const direction = wheelAmount > 0 ? 1 : -1;
+    wheelAmount = 0;
+    goToNeighbour(direction);
+  }, { passive: false });
+
+  /**
+   * 손가락 — 🔴 **데스크톱의 `wheel` 과 같은 자리에서 같은 일을 한다.**
+   *
+   * 🔴 `touchmove` 를 막는 것은 마우스 휠을 막는 것과 **같은 결정**이다.
+   *    안 막으면 브라우저가 먼저 관성으로 밀어 버려서, 우리가 옮기려는 것과
+   *    다툰다 — 그게 「짧게 짧게」의 정체였다.
+   *
+   * 🔴 **글자를 넣는 칸에서 시작한 손짓은 건드리지 않는다** (초대 코드 칸).
+   *    거기까지 막으면 아이가 붙여넣기도 못 한다.
+   *
+   * 🔴 **막다가 오류가 나면 스스로 손을 뗀다.** `touchmove` 를 막아 놓고
+   *    옮기는 쪽이 죽으면 **화면이 아예 안 움직인다.** 그때는 리스너를 떼서
+   *    브라우저에게 돌려준다 — 연출을 잃을지언정 페이지가 굳지는 않는다.
+   */
+  let touchStartY = null;
+  let touchStartX = null;
+  let touchStartTarget = null;
+
+  const blockTouchMove = (event) => {
+    if (touchStartY === null) return;
+    event.preventDefault();
+  };
+
+  window.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1 || event.target.closest(IGNORE)) {
+      touchStartY = null;
+      return;
+    }
+    touchStartY = event.touches[0].clientY;
+    touchStartX = event.touches[0].clientX;
+    touchStartTarget = event.target;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', blockTouchMove, { passive: false });
+
+  window.addEventListener('touchend', (event) => {
+    const startY = touchStartY;
+    const startX = touchStartX;
+    const startTarget = touchStartTarget;
+    touchStartY = null;
+    touchStartX = null;
+    touchStartTarget = null;
+    if (startY === null || wheelLocked) return;
+
+    const touch = event.changedTouches && event.changedTouches[0];
+    if (!touch) return;
+    // 🔴 34px 은 「밀었다」와 「눌렀다」를 가르는 선이다. 링크를 누를 때도 손은 조금 움직인다
+    const delta = startY - touch.clientY;
+    const deltaX = startX === null ? 0 : startX - touch.clientX;
+
+    /**
+     * 🔴 **가로로 민 것은 세로 이동으로 치지 않는다** (사용자 요청 —
+     *    네 칸을 손으로 앞뒤로 넘기기).
+     *
+     *    세로보다 가로가 크면 「옆으로 넘겼다」는 뜻이다. 그때는 구역을 옮기지 않고
+     *    **그 자리에 있는 띠에게 알린다** — 듣는 쪽이 없으면 아무 일도 안 일어난다.
+     *
+     * 🔴 저쪽 코드를 직접 부르지 않는다. 사건으로 알려야 한쪽을 고칠 때
+     *    다른 쪽이 같이 죽지 않는다.
+     */
+    if (Math.abs(deltaX) > Math.abs(delta) && Math.abs(deltaX) >= 34) {
+      document.dispatchEvent(new CustomEvent('ff:swipe-x', {
+        detail: { direction: deltaX > 0 ? -1 : 1, from: startTarget },
+      }));
+      return;
+    }
+
+    if (Math.abs(delta) < 34) return;
+
+    try {
+      goToNeighbour(delta > 0 ? 1 : -1);
+    } catch {
+      window.removeEventListener('touchmove', blockTouchMove);
+    }
+  }, { passive: true });
+})();
+</script>
+
+
+<!--
+  시연 목업 아래 여백 — **재서** 넣는다.
+
+  🔴 CSS 로 계산하면 틀 안에 무엇이 붙을 때마다 어긋난다. 실제로 상태바 28px 을
+     빠뜨려 글이 목업 밑으로 들어갔다. 여기서 한 번 재고, 화면이 바뀌면 다시 잰다.
+-->
+<script>
+(() => {
+  const wrap = document.querySelector('.demo-phone-wrap');
+  const step = document.querySelector('[data-step]');
+  if (!wrap || !step) return;
+
+  const root = document.documentElement;
+  const header = document.querySelector('header');
+
+  const sync = () => {
+    /**
+     * 🔴 **쓰는 배치일 때만 넣는다.** 넓은 화면에서는 목업이 옆에 서고 `.demo-step` 이
+     *    이 값을 안 쓴다 — 그런데도 넣어 두면, 나중에 보는 사람이 「632px 이 왜 여기
+     *    있지」로 시간을 쓴다. 쓰지 않는 값은 남기지 않는다.
+     *
+     *    조건을 `position:sticky` 로 보면 안 된다 — 넓은 화면에서도 sticky 다.
+     *    이 값을 쓰는 CSS 와 **같은 조건**을 본다.
+     */
+    if (!window.matchMedia('(max-width:880px)').matches) {
+      root.style.removeProperty('--demo-pad');
+      return;
+    }
+    const stickyTop = parseFloat(window.getComputedStyle(wrap).top) || 0;
+    const wrapHeight = wrap.getBoundingClientRect().height;
+    const headerHeight = header ? header.getBoundingClientRect().height : 0;
+    const gap = parseFloat(window.getComputedStyle(root).getPropertyValue('--demo-gap')) || 8;
+    const pad = Math.max(0, Math.round(stickyTop + wrapHeight + gap - headerHeight));
+    root.style.setProperty('--demo-pad', `${pad}px`);
+  };
+
+  sync();
+  // 🔴 글꼴이 늦게 오면 높이가 바뀐다. 창을 돌려도 바뀐다
+  window.addEventListener('load', sync);
+  window.addEventListener('resize', sync);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+})();
+</script>
+
+<!--
+  마지막 칸 — 두 면 뒤집기.
+
+  🔴 작은 덩이로 따로 둔다. 이 구역만 보고, 없으면 조용히 물러난다.
+-->
+<script>
+(() => {
+  const faces = [...document.querySelectorAll('[data-face]')];
+  if (faces.length < 2) return;
+
+  const show = (name) => {
+    faces.forEach((face) => { face.hidden = face.dataset.face !== name; });
+    /**
+     * 🔴 **바꾼 뒤 그 칸의 첫 글자로 초점을 옮긴다.** 안 그러면 화면 낭독기를 쓰는
+     *    사람에게는 «아무 일도 일어나지 않은» 것이 된다 — 버튼만 눌리고 끝난다.
+     */
+    const heading = faces.find((f) => f.dataset.face === name)?.querySelector('h2');
+    if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+  };
+
+  document.querySelectorAll('[data-to]').forEach((button) => {
+    button.addEventListener('click', () => show(button.dataset.to));
+  });
+})();
+</script>
+
+<!--
+  네 칸 — 하나씩 올라오며 강조가 옮겨간다.
+
+  🔴 다른 덩이와 섞지 않는다. 이 구역만 보는 작은 덩이로 따로 둔다.
+-->
+<script>
+(() => {
+  const grid = document.querySelector('.four');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.f')];
+  if (!cards.length) return;
+
+  const section = grid.closest('section');
+  grid.classList.add('seq-cards');
+
+  const timers = [];
+  let current = 0;
+  let goTo = () => {};
+  const clear = () => {
+    timers.forEach(clearTimeout);
+    timers.length = 0;
+    grid.style.setProperty('--shift', '0px');
+  };
+
+  const run = () => {
+    clear();
+    cards.forEach((card) => card.classList.remove('in', 'hl', 'rise'));
+
+    // 🔴 사용자 요청으로 늦췄다 — 340ms 는 읽기 전에 다음 칸으로 넘어갔다
+    const RISE = 700;    // 한 칸이 올라오고 다음 칸까지의 간격
+
+    /**
+     * 🔴 **강조가 옮겨가면 띠도 따라 민다** (사용자 지적 — 「마지막 게 안 보여」).
+     *
+     *    칸을 크게 두면 넷이 한 화면에 안 들어간다. 그래서 지금 강조된 칸이
+     *    **늘 보이도록** 띠를 왼쪽으로 민다. 끝까지 밀어도 마지막 칸의 오른쪽이
+     *    화면 밖으로 나가지 않게 **밀 수 있는 최대치에서 멈춘다.**
+     *
+     * 🔴 픽셀을 코드에 적지 않는다. 칸 폭·간격·화면 폭은 기기마다 다르므로
+     *    **그때 재서** 넣는다.
+     */
+    const shiftTo = (index) => {
+      const view = grid.clientWidth;
+      const total = grid.scrollWidth;
+      if (total <= view + 1) { grid.style.setProperty('--shift', '0px'); return; }
+      const card = cards[index].getBoundingClientRect();
+      const gap = parseFloat(getComputedStyle(grid).columnGap || '0') || 0;
+      const want = index * (card.width + gap);
+      grid.style.setProperty('--shift', `${-Math.min(want, total - view)}px`);
+    };
+
+    /**
+     * 🔴 **한 칸을 세우는 일을 함수로 꺼낸다.** 자동으로 넘어갈 때와
+     *    손으로 밀 때가 **같은 함수**를 써야 두 길이 어긋나지 않는다.
+     */
+    goTo = (index) => {
+      const target = Math.max(0, Math.min(cards.length - 1, index));
+      cards.forEach((card, i) => {
+        if (i <= target) card.classList.add('in');
+        card.classList.toggle('hl', i === target);
+      });
+      shiftTo(target);
+      current = target;
+    };
+
+    goTo(0);
+
+    /**
+     * 🔴 **한 칸씩 올라갔다 내려온다** (사용자 요청).
+     *    `.rise` 를 붙였다가 떼는 것이 「올라갔다 내려옴」이다 —
+     *    안 떼면 그 칸이 계속 떠 있고, 그게 네 번째 칸에서 보이던 문제였다.
+     *
+     * 🔴 `DROP` 은 `RISE` 보다 짧다. 다음 칸이 올라오기 전에 내려와야
+     *    「하나씩」으로 읽힌다 — 같이 떠 있으면 그냥 다 떠 있는 것이다.
+     */
+    const DROP = 460;
+    const liftOnce = (card) => {
+      card.classList.add('rise');
+      timers.push(setTimeout(() => card.classList.remove('rise'), DROP));
+    };
+
+    liftOnce(cards[0]);
+    cards.forEach((card, index) => {
+      if (index === 0) return;
+      timers.push(setTimeout(() => { goTo(index); liftOnce(card); }, index * RISE));
+    });
+
+    /*
+      🔴 **마지막 «표시»는 놓지 않는다.** 손으로 앞뒤로 넘길 수 있게 되면서
+         초록이 **「지금 어느 칸인지」를 말해 주는 표시**가 됐다 —
+         꺼 버리면 옆으로 밀 때 기준이 사라진다.
+
+      🔴 **다만 «들어올림»은 놓는다.** 한동안 `.hl` 이 둘을 겸해서
+         네 번째 칸이 계속 떠 있었다 (사용자 지적). 들어올림은 `.rise` 가 맡고
+         `DROP` 뒤에 스스로 떨어진다.
+    */
+
+    /**
+     * 🔴 **프레임·시계가 어긋나도 네 칸은 결국 보여야 한다.** 위 타이머가 어떤
+     *    이유로 밀리면 칸이 숨은 채 남는다 — 그때는 전부 드러낸다.
+     */
+    timers.push(setTimeout(() => {
+      cards.forEach((card) => card.classList.add('in'));
+    }, cards.length * RISE + 1200));
+
+    /**
+     * 🔴 **끝나고 처음 자리로 되돌리지 않는다.** 되돌리면 방금 보여 준 마지막 칸이
+     *    다시 화면 밖으로 나간다 — 「마지막 게 안 보인다」로 돌아간다.
+     *    처음 자리로 돌아가는 것은 이 구역을 «떠날 때»다 (`clear`).
+     */
+  };
+
+  document.addEventListener('ff:arrive', (event) => {
+    const element = event.detail && event.detail.element;
+    if (element && (element === section || element.contains(grid))) run();
+  });
+
+  /**
+   * 🔴 **손으로도 앞뒤로 넘긴다** (사용자 요청 — 「슬라이드를 오른쪽으로 했을 때
+   *    전 칸이 나왔으면」). 오른쪽으로 밀면 앞 칸, 왼쪽으로 밀면 다음 칸이다.
+   *
+   * 🔴 자동으로 넘어가던 타이머는 **멈춘다.** 손이 개입했는데 뒤에서 계속
+   *    넘어가면 사람이 고른 칸이 곧 지워진다.
+   */
+  document.addEventListener('ff:swipe-x', (event) => {
+    const detail = event.detail || {};
+    /*
+      🔴 **띠 «위»에서 시작한 손짓만 받으면 너무 좁다.** 사람은 이 구역 아무 데서나
+         옆으로 민다 — 제목 위에서 밀어도 「다음 칸」이라고 생각한다.
+         그래서 이 구역 안이면 받는다. 밖이면 다른 구역 일이니 지나친다.
+    */
+    const from = detail.from;
+    const inside = from && ((section && section.contains(from)) || grid.contains(from) || from === grid);
+    if (!inside) return;
+    timers.forEach(clearTimeout);
+    timers.length = 0;
+    goTo(current + (detail.direction > 0 ? -1 : 1));
+  });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if (entry.isIntersecting) run(); else clear(); });
+    }, { threshold: .4 }).observe(grid);
+  } else {
+    run();
+  }
+})();
+</script>
+
+<!--
+  숫자 → 질문 연출.
+
+  🔴 **기존 스크롤 데모 코드와 섞지 않는다.** 저건 이미 도는 물건이라,
+     건드리면 랜딩 전체가 같이 죽는다. 여기만 보는 작은 덩이로 따로 둔다.
+-->
+<script>
+(() => {
+  const stage = document.querySelector('[data-numstage]');
+  if (!stage) return;
+
+  /**
+   * 🔴 **움직임을 줄이라는 사람에게는 연출을 아예 안 건다.**
+   *    `.seq` 를 안 붙이면 겹치기도 숨기기도 안 걸려 숫자와 질문이 **둘 다** 보인다.
+   *    「전환을 0초로」가 아니다 — 그러면 숫자가 사라진 마지막 상태만 남아
+   *    **숫자를 영영 못 본다.**
+   */
+  /**
+   * 🔴 **「동작 줄이기」에서도 돌린다** (사용자 결정). 예전엔 여기서 그냥 돌아섰다 —
+   *    그러면 숫자와 질문이 나란히 보일 뿐, **「숫자가 쌓여도 확신은 안 쌓인다」는
+   *    말 자체가 전달되지 않는다.** 이 연출은 장식이 아니라 그 페이지의 논지다.
+   *
+   * 🔴 대신 **짧게** 지나간다. 세는 시간과 쉬는 시간을 절반으로 줄인다.
+   */
+  // 🔴 기기·설정으로 갈래를 두지 않는다 — 어디서나 같은 연출, 같은 길이다 (사용자 결정)
+
+  stage.classList.add('seq');
+
+  // 🔴 리뷰 카드는 이 구역(`.problem`)이 갖고 있다 — 무대 밖이라 따로 잡는다
+  const section = stage.closest('.problem');
+  if (section) section.classList.add('seq-quotes');
+
+  const counters = [...stage.querySelectorAll('[data-count-to]')];
+  // 🔴 최종 표기(6,650)를 미리 챙겨 둔다 — 끝나면 이 글자를 그대로 되돌린다
+  const finals = counters.map((el) => el.textContent);
+  let timer;
+  let quoteTimer;
+
+  const run = () => {
+    clearTimeout(timer);
+    clearTimeout(quoteTimer);
+    stage.classList.remove('asked');
+    if (section) section.classList.remove('quotes-in');
+
+    const startedAt = performance.now();
+    const DUR = 1100;
+    const tick = (now) => {
+      const t = Math.min(1, (now - startedAt) / DUR);
+      // 🔴 끝에서 감속시킨다. 등속이면 「세는 것」이 아니라 「돌아가는 것」으로 보인다
+      const eased = 1 - Math.pow(1 - t, 3);
+      counters.forEach((el, i) => {
+        const to = Number(el.dataset.countTo);
+        el.textContent = t < 1
+          ? Math.round(to * eased).toLocaleString('ko-KR')
+          : finals[i];
+      });
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    counters.forEach((el) => { el.textContent = '0'; });
+    requestAnimationFrame(tick);
+    /**
+     * 🔴 **프레임이 안 오면 「0」인 채로 남는다.** 탭을 뒤로 보내면 브라우저가
+     *    `requestAnimationFrame` 을 주지 않는다 — 세기 시작만 하고 굳는다.
+     *    돌아온 사람은 116·75·6,650 대신 **0 세 개**를 본다.
+     *    끝나야 할 시각에 시계로도 두드려 최종값을 박아 둔다.
+     */
+    setTimeout(() => {
+      counters.forEach((el, i) => {
+        if (el.textContent === '0' || el.textContent !== finals[i]) el.textContent = finals[i];
+      });
+    }, DUR + 250);
+
+    // 🔴 다 센 뒤 **한 박자 쉬고** 넘긴다. 바로 지우면 읽을 새가 없다
+    timer = setTimeout(() => stage.classList.add('asked'), DUR + 900);
+    /**
+     * 🔴 **묻고 나서 한 박자 쉬고 답한다.** 질문이 뜨자마자 카드가 같이 올라오면
+     *    「달라졌나요?」가 읽히기 전에 지나간다 — 물음이 남아야 답이 답이 된다.
+     */
+    quoteTimer = setTimeout(() => {
+      if (section) section.classList.add('quotes-in');
+    }, DUR + 900 + 1000);
+  };
+
+  /**
+   * 🔴 **도착 소식을 듣는다.** 관찰자는 「띠를 지나갈 때」 울리므로,
+   *    손가락으로 한 번에 옮기면 도착 전에 울리고 끝나 있다.
+   *    옮기는 쪽이 도착을 알려 주면 그때 다시 튼다.
+   */
+  document.addEventListener('ff:arrive', (event) => {
+    const element = event.detail && event.detail.element;
+    if (element && (element === section || element.contains(stage))) run();
+  });
+
+  if ('IntersectionObserver' in window) {
+    // 🔴 나갔다 들어오면 다시 돈다. 이 구역은 스냅 화면이라 되돌아오는 일이 잦다
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) run();
+        else { clearTimeout(timer); clearTimeout(quoteTimer); }
+      });
+    }, { threshold: .5 }).observe(stage);
+  } else {
+    run();
+  }
+})();
+</script>
+
+</body>
+</html>
