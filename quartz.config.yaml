@@ -236,8 +236,9 @@ plugins:
     options:
       links:
         GitHub 저장소: https://github.com/scene-one/team1_fin-friends
-        발표덱 v2: /team1_fin-friends/공용공간/발표준비/발표덱_v2.html
-        프로토타입: /team1_fin-friends/프로토타입/Main.dc.html
+        랜딩페이지·데모: https://www.finfirends.online/
+        발표덱 3차: /team1_fin-friends/기획산출물/30-산출물/발표덱_3차.html
+        프로토타입: /team1_fin-friends/기획산출물/30-산출물/프로토타입/Main.dc.html
     layout:
       position: footer
       priority: 50

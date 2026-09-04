@@ -6,7 +6,7 @@
 #   · 저장소에 커밋되는 것은 quartz.config.yaml 과 이 워크플로 둘뿐이다.
 #
 # 기존 Pages 보존 — 이 저장소는 원래 legacy Pages(main 루트)로 정적 HTML을 서빙하고 있었다.
-#   발표덱·프로토타입·대시보드 HTML을 빌드 산출물에 그대로 얹어 기존 URL을 유지한다.
+#   발표덱·랜딩페이지·프로토타입 HTML을 빌드 산출물에 그대로 얹어 정적 URL을 유지한다.
 #
 # ⚠️ 최초 1회 수동 설정 필요
 #   Settings → Pages → Source 를 "GitHub Actions" 로 변경해야 한다.
@@ -24,7 +24,7 @@ on:
       - ".github/workflows/deploy-wiki.yml"
       # 기존 Pages가 서빙하던 정적 산출물이 바뀌어도 다시 배포한다
       - "**/*.html"
-      - "프로토타입/canvas.json"
+      - "기획산출물/30-산출물/프로토타입/canvas.json"
   workflow_dispatch:
 
 permissions:
@@ -102,12 +102,11 @@ jobs:
             echo "  얹음: $src"
           }
           echo "── 기존 Pages URL 보존 ──"
-          copy_if_exists "WBS_대시보드.html"
-          copy_if_exists "공용공간/발표준비/발표덱_v1.html"
-          copy_if_exists "공용공간/발표준비/발표덱_v2.html"
-          copy_if_exists "공용공간/4. TAM-SAM-SOM_Market-Segment/TAM-SAM-SOM_시장세분화.html"
-          copy_if_exists "수빈/샘플_네컷만화_퀴즈.html"
-          copy_if_exists "프로토타입"
+          copy_if_exists "기획산출물/30-산출물/발표덱_3차.html"
+          copy_if_exists "기획산출물/30-산출물/랜딩페이지/landing.html"
+          copy_if_exists "기획산출물/30-산출물/프로토타입"
+          copy_if_exists "기획산출물/20-분석근거/4-TAM-SAM-SOM_시장세분화.html"
+          copy_if_exists "조사/수빈/샘플_네컷만화_퀴즈.html"
 
       - name: 빌드 산출물 점검
         run: |
