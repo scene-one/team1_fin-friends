@@ -2,7 +2,7 @@
 
 | | 무엇 | 어디서 보나 |
 |:-:|---|---|
-| 🌐 | **랜딩페이지 · 데모** | **[www.finfirends.online](https://www.finfirends.online/)** — 배포본 · 소스는 [`랜딩페이지/landing.html`](%EB%9E%9C%EB%94%A9%ED%8E%98%EC%9D%B4%EC%A7%80/landing.html) |
+| 🌐 | **랜딩페이지 · 데모** | **[www.finfirends.online](https://www.finfirends.online/)** — 배포본. **소스는 이 저장소에 없습니다**(병윤 개인 저장소) |
 | 📊 | **발표덱 3차** | [브라우저에서 보기](https://scene-one.github.io/team1_fin-friends/%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/30-%EC%82%B0%EC%B6%9C%EB%AC%BC/%EB%B0%9C%ED%91%9C%EB%8D%B1_3%EC%B0%A8.html) — ←→ 방향키로 넘김 |
 | 📱 | **프로토타입 아트보드 10장** | [`프로토타입/README.md`](%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85/README.md) — `.dc.html` · Design Canvas에서 편집 가능 |
 
