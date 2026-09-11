@@ -2,7 +2,7 @@
 title: 인덱스
 description: "핀프렌즈 위키 전체 카탈로그 — 8개 카테고리·45장·어디부터 읽으면 되는지"
 type: 색인
-updated: 2026-09-03
+updated: 2026-09-11
 pages: 45
 sources: 5
 links: 775
