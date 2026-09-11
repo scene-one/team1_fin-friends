@@ -23,7 +23,6 @@
 | **2차** | **2026-08-14 ~ 08-21** | *"다른 업계는 이 문제를 어떻게 풀었나"* — 시장·경쟁·고객을 분석해 **고칠 것 1개**로 좁힘 | [분석 근거 16종](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/20-%EB%B6%84%EC%84%9D%EA%B7%BC%EA%B1%B0/) · PRD v0.1~v0.2 · 기능정의 v13 · [프로토타입 10장](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/30-%EC%82%B0%EC%B6%9C%EB%AC%BC/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85/README.md) |
 | **3차** | **2026-08-31 ~ 09-03** | 기획을 **개발 가능한 명세로 내리고 실제로 돌렸음** | [사양 3종](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/00-%EC%82%AC%EC%96%91/) · [기술설계 3건](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/10-%EA%B8%B0%EC%88%A0%EC%84%A4%EA%B3%84/) · [위키 45장](https://scene-one.github.io/team1_fin-friends/) · [이슈 13건](https://github.com/scene-one/team1_fin-friends/issues?q=is%3Aissue) · [랜딩페이지·데모](https://www.finfirends.online/) |
 
-> 📌 **팀은 항상 4명입니다.** 1·2차는 **송유림**(팀장) · 소병윤 · 신혜원 · 박하영, 3차는 **송유림 자리에 박수빈**이 들어왔습니다.
 
 ---
 
