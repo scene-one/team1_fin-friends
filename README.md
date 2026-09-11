@@ -19,7 +19,7 @@
 
 | 차수 | 기간 | 무엇을 했나 | 산출물 |
 |:-:|---|---|---|
-| **1차** | **2026-08-03 ~ 2026-08-04** | 퍼핀(FIRFIN)을 역기획해 **불편한 점을 찾고 고칠 것을 정함** | 서비스 개선 기획 *(최종 제출물은 저장소 밖)* · [1차 사업기획서](%EC%A1%B0%EC%82%AC/%EC%9C%A0%EB%A6%BC/%EC%82%AC%EC%97%85%EA%B8%B0%ED%9A%8D%EC%95%88/1%EC%B0%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%82%AC%EC%97%85%EA%B8%B0%ED%9A%8D%EC%84%9C.md) |
+| **1차** | **2026-08-03 ~ 08-04** | 퍼핀(FIRFIN)을 역기획해 **불편한 점을 찾고 고칠 것을 정함** | 서비스 개선 기획 *(최종 제출물은 저장소 밖)* · [1차 사업기획서](%EC%A1%B0%EC%82%AC/%EC%9C%A0%EB%A6%BC/%EC%82%AC%EC%97%85%EA%B8%B0%ED%9A%8D%EC%95%88/1%EC%B0%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%82%AC%EC%97%85%EA%B8%B0%ED%9A%8D%EC%84%9C.md) |
 | **2차** | **2026-08-14 ~ 08-21** | *"다른 업계는 이 문제를 어떻게 풀었나"* — 시장·경쟁·고객을 분석해 **고칠 것 1개**로 좁힘 | [분석 근거 16종](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/20-%EB%B6%84%EC%84%9D%EA%B7%BC%EA%B1%B0/) · PRD v0.1~v0.2 · 기능정의 v13 · [프로토타입 10장](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/30-%EC%82%B0%EC%B6%9C%EB%AC%BC/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85/README.md) |
 | **3차** | **2026-08-31 ~ 09-03** | 기획을 **개발 가능한 명세로 내리고 실제로 돌렸음** | [사양 3종](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/00-%EC%82%AC%EC%96%91/) · [기술설계 3건](%EA%B8%B0%ED%9A%8D%EC%82%B0%EC%B6%9C%EB%AC%BC/10-%EA%B8%B0%EC%88%A0%EC%84%A4%EA%B3%84/) · [위키 45장](https://scene-one.github.io/team1_fin-friends/) · [이슈 13건](https://github.com/scene-one/team1_fin-friends/issues?q=is%3Aissue) · [랜딩페이지·데모](https://www.finfirends.online/) |
 
